@@ -43,7 +43,16 @@ var drawTimer = setInterval(redraw, 1000 / fps);
 // Draw our scene
 function redraw() {
   // Clear the canvas
-  canvas.width = canvas.width;
+  // Store the current transformation matrix
+  context.save();
+
+  // Use the identity matrix while clearing the canvas
+  context.setTransform(1, 0, 0, 1, 0, 0);
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Restore the transform
+  context.restore();
+  
   // Draw the face, smile and eyes
   drawFace(curX, curY, faceRadius, 'yellow');
   if (smileType) {
@@ -125,17 +134,21 @@ function drawEye(x, y, width, height) {
 }
 
 // Draw a circle with optional border
-function drawCircle(x, y, radius, colour = 'clear', border = 'clear') {
+function drawCircle(x, y, radius, colour, border) {
+  // Set defaults
+  colour = typeof colour !== 'undefined' ? colour : 'clear';
+  border = typeof border !== 'undefined' ? border : 'clear';
+  
   // Draw our circle
   context.beginPath();
   context.arc(x, y, radius, 0, 2*Math.PI, false);
   // Colour it in
-  if (colour != 'clear') {
+  if (colour !== 'clear') {
     context.fillStyle = colour;
     context.fill();
   }
   // Add in optional border
-  if (border != 'clear') {
+  if (border !== 'clear') {
     context.lineWidth = 5;
     context.strokeStyle = border;
     context.stroke();
@@ -145,7 +158,12 @@ function drawCircle(x, y, radius, colour = 'clear', border = 'clear') {
 }
 
 // Draw an arc (either enclosed or open)
-function drawArc(x, y, radius, beginAng, endAng, enclosed = true, colour = 'clear', border = 'clear') {
+function drawArc(x, y, radius, beginAng, endAng, enclosed, colour, border) {
+  // Set defaults
+  enclosed = typeof enclosed !== 'undefined' ? enclosed : true;
+  colour = typeof colour !== 'undefined' ? colour : 'clear';
+  border = typeof border !== 'undefined' ? border : 'clear';
+  
   // Draw our arc
   context.beginPath();
   context.arc(x, y, radius, beginAng, endAng, false);
@@ -154,12 +172,12 @@ function drawArc(x, y, radius, beginAng, endAng, enclosed = true, colour = 'clea
     context.closePath();
   }
   // Colour it in
-  if (colour != 'clear') {
+  if (colour !== 'clear') {
     context.fillStyle = colour;
     context.fill();
   }
   // Draw the border
-  if (border != 'clear') {
+  if (border !== 'clear') {
     context.lineWidth = 5;
     context.strokeStyle = border;
     context.stroke();
@@ -169,7 +187,11 @@ function drawArc(x, y, radius, beginAng, endAng, enclosed = true, colour = 'clea
 }
 
 // Draw an ellipse
-function drawEllipse(x, y, width, height, colour = 'clear', border = 'clear') {
+function drawEllipse(x, y, width, height, colour, border) {
+  // Set defaults
+  colour = typeof colour !== 'undefined' ? colour : 'clear';
+  border = typeof border !== 'undefined' ? border : 'clear';
+  
   // Some reference points
   context.beginPath();
   xLeft = x - (width / 2);
@@ -182,12 +204,12 @@ function drawEllipse(x, y, width, height, colour = 'clear', border = 'clear') {
   context.bezierCurveTo(xRight, yTop, xRight, yBot, x, yBot);
   context.bezierCurveTo(xLeft, yBot, xLeft, yTop, x, yTop);
   // Colour it in
-  if (colour != 'clear') {
+  if (colour !== 'clear') {
     context.fillStyle = colour;
     context.fill();
   }
   // Draw the border
-  if (border != 'clear') {
+  if (border !== 'clear') {
     context.lineWidth = 5;
     context.strokeStyle = border;
     context.stroke();
