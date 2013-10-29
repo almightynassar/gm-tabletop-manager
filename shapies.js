@@ -1,20 +1,93 @@
-// Grab the Canvas and Drawing Context
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
+// The Canvas we will be drawing on
+function Canvas(element) {
+  /**
+   * PRIVATE
+   */
+  
+  // The private id value of the canvas element and it's getter/setters
+  this._id = (typeof element !== 'undefined') && (element !== null) ? element : 'stage';
+  
+  // Simple test that checks if the element with the specified ID exists
+  this._idExists = function() {
+    if(document.getElementById(this._id) !== null) {
+      return true;
+    }
+    return false;
+  };
+  
+  // Create a new canvas element
+  this._createCanvas = function() {
+    var elem = document.createElement('canvas');
+    elem.setAttribute('id', this._id);
+    elem.setAttribute('style','width:500px; height:500px;');
+    document.body.insertBefore(elem, document.body.firstChild);
+    return elem;
+  };
+  
+  // Private reference to the canvas element
+  this._canvas = this._idExists() ? document.getElementById(this._id) : this._createCanvas();
+  
+  /**
+   * PUBLIC
+   */
+  
+  // Getter/Setter for the ID value
+  this.setID = function(id) {
+    this._id = (typeof id !== 'undefined') && (id !== null) ? id : 'stage';
+  };
+  this.getID = function() { return this._id; };
+  
+  // Canvas values
+  this.getWidth = function() { return this._canvas.width; };
+  this.getHeight = function() { return this._canvas.height; };
+  this.getCenterX = function() { return this._canvas.width/2; };
+  this.getCenterY = function() { return this._canvas.height/2; };
+  
+  // Returns the context
+  this.context = function() { return this._canvas.getContext('2d'); };
+  
+  // Tests if canvas supported
+  this.isSupported = function() {
+    return !!(this._canvas.getContext && this._canvas.getContext('2d'));
+  };
+  
+  // Clear the canvas
+  this.clear = function() {
+    // Store the current transformation matrix
+    var ctx = this.context();
+    ctx.save();
 
-// Reference positions
-var centerX = canvas.width / 2;
-var centerY = canvas.height / 2;
+    // Use the identity matrix while clearing the canvas
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, this.getWidth(), this.getHeight());
+
+    // Restore the transform
+    ctx.restore();
+  };
+  
+  // Write some text onto the canvas
+  this.write = function (text, x, y) {
+    text = ((typeof text !== 'undefined') && (text !== null)) ? text : 'test';
+    x = ((typeof x !== 'undefined') && (x !== null)) ? x : this.getCenterX();
+    y = ((typeof y !== 'undefined') && (y !== null)) ? y : this.getCenterY();
+    this.context().font = "bold 12px sans-serif";
+    this.context().fillStyle = 'black';
+    this.context().fillText(text, x, y);
+  };
+}
+
+// Grab the Canvas and Drawing Context
+var canvas = new Canvas('canvas');
 
 // Our frames per second
 var fps = 24;
 
 // Object properties
-var curX = centerX;
-var curY = centerY;
+var curX = canvas.getCenterX();
+var curY = canvas.getCenterY();
 
 // Face properties
-var faceRadius = centerX / 4;
+var faceRadius = canvas.getCenterX() / 4;
 
 // Smile properties
 var smileType = true;
@@ -42,16 +115,9 @@ var drawTimer = setInterval(redraw, 1000 / fps);
 
 // Draw our scene
 function redraw() {
-  // Clear the canvas
-  // Store the current transformation matrix
-  context.save();
-
-  // Use the identity matrix while clearing the canvas
-  context.setTransform(1, 0, 0, 1, 0, 0);
-  context.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Restore the transform
-  context.restore();
+  canvas.clear();
+  
+  canvas.write();
   
   // Draw the face, smile and eyes
   drawFace(curX, curY, faceRadius, 'yellow');
@@ -62,12 +128,6 @@ function redraw() {
   }
   drawEye(curX + (faceRadius / 2), curY - (faceRadius / 2), curEyeWidth, curEyeHeight);
   drawEye(curX - (faceRadius / 2), curY - (faceRadius / 2), curEyeWidth, curEyeHeight);
-}
-
-// Write some text
-function writeText(text, x, y) {
-  context.font = "bold 12px sans-serif";
-  context.fillText(text, x, y);
 }
 
 // Determines if we are in the blink state
@@ -98,7 +158,7 @@ function updateMove() {
     }
   } else {
     curX += 1;
-    if (curX >= (canvas.width - faceRadius)) {
+    if (curX >= (canvas.getWidth() - faceRadius)) {
       moveDir = true;
     }
   }
@@ -140,21 +200,21 @@ function drawCircle(x, y, radius, colour, border) {
   border = typeof border !== 'undefined' ? border : 'clear';
   
   // Draw our circle
-  context.beginPath();
-  context.arc(x, y, radius, 0, 2*Math.PI, false);
+  canvas.context().beginPath();
+  canvas.context().arc(x, y, radius, 0, 2*Math.PI, false);
   // Colour it in
   if (colour !== 'clear') {
-    context.fillStyle = colour;
-    context.fill();
+    canvas.context().fillStyle = colour;
+    canvas.context().fill();
   }
   // Add in optional border
   if (border !== 'clear') {
-    context.lineWidth = 5;
-    context.strokeStyle = border;
-    context.stroke();
+    canvas.context().lineWidth = 1;
+    canvas.context().strokeStyle = border;
+    canvas.context().stroke();
   }
   // Finish the drawing
-  context.closePath();
+  canvas.context().closePath();
 }
 
 // Draw an arc (either enclosed or open)
@@ -165,25 +225,25 @@ function drawArc(x, y, radius, beginAng, endAng, enclosed, colour, border) {
   border = typeof border !== 'undefined' ? border : 'clear';
   
   // Draw our arc
-  context.beginPath();
-  context.arc(x, y, radius, beginAng, endAng, false);
+  canvas.context().beginPath();
+  canvas.context().arc(x, y, radius, beginAng, endAng, false);
   // Enclose the arc
   if (enclosed) {
-    context.closePath();
+    canvas.context().closePath();
   }
   // Colour it in
   if (colour !== 'clear') {
-    context.fillStyle = colour;
-    context.fill();
+    canvas.context().fillStyle = colour;
+    canvas.context().fill();
   }
   // Draw the border
   if (border !== 'clear') {
-    context.lineWidth = 5;
-    context.strokeStyle = border;
-    context.stroke();
+    canvas.context().lineWidth = 1;
+    canvas.context().strokeStyle = border;
+    canvas.context().stroke();
   }
   // Finish the drawing
-  context.closePath();
+  canvas.context().closePath();
 }
 
 // Draw an ellipse
@@ -193,27 +253,27 @@ function drawEllipse(x, y, width, height, colour, border) {
   border = typeof border !== 'undefined' ? border : 'clear';
   
   // Some reference points
-  context.beginPath();
+  canvas.context().beginPath();
   xLeft = x - (width / 2);
   xRight = x + (width / 2);
   yTop = y - (height / 2);
   yBot = y + (height / 2);
   // NOTE: The moveTo() is needed to start the drawing from the correct spot
-  context.moveTo(x, yTop);
+  canvas.context().moveTo(x, yTop);
   // Start drawing two bezier curves to create an ellipse
-  context.bezierCurveTo(xRight, yTop, xRight, yBot, x, yBot);
-  context.bezierCurveTo(xLeft, yBot, xLeft, yTop, x, yTop);
+  canvas.context().bezierCurveTo(xRight, yTop, xRight, yBot, x, yBot);
+  canvas.context().bezierCurveTo(xLeft, yBot, xLeft, yTop, x, yTop);
   // Colour it in
   if (colour !== 'clear') {
-    context.fillStyle = colour;
-    context.fill();
+    canvas.context().fillStyle = colour;
+    canvas.context().fill();
   }
   // Draw the border
   if (border !== 'clear') {
-    context.lineWidth = 5;
-    context.strokeStyle = border;
-    context.stroke();
+    canvas.context().lineWidth = 1;
+    canvas.context().strokeStyle = border;
+    canvas.context().stroke();
   }
   // Finish the drawing
-  context.closePath();
+  canvas.context().closePath();
 }
