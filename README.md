@@ -8,3 +8,8 @@ A simple, barebones Javascript and HTML5 based game. What started out as a test 
  - Capturing involves battling a wild Shapie until it is weak, and then springing a trap. A succesful capture means the Shapie will join your growing brood!
  - Breeding involves getting two Shapies to share genetic code to form a new baby Shapie, who hopefully will inherit the best features from their parents!
  - Battling wild Shapies is necessary to harvest resources to maintain your growing brood of Shapies. Let your resources drop too low and some of your Shapies may die!
+
+Notes
+=======
+
+The 'src' folder contains the uncompressed javascript file. For most purposes you will only need to use the minified version 'Shapies.min.js'

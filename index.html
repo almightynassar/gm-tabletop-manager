@@ -1,9 +1,23 @@
 <!doctype html>
 <html>
 <body>
-	<button onclick='blink()'>Blink!</button>
-	<button onclick='smileType = !(smileType);'>Smile!</button>
-	<button onclick='moveDir = !(moveDir);'>Move!</button>
-	<script src="shapies.js"></script>
+    <br />
+    <button onclick='smilie1.attack();'>ATTACK!</button>
+    <button onclick='smilie1.heal();'>Heal!</button>
+    <button onclick='smilie1.move();'>Move!</button>
 </body>
+<script src="Shapies.min.js"></script>
+<script>
+    var smilie1 = Shapies.actors.create('smilie');
+    smilie1.colour = 'yellow';
+    smilie1.border = 'red';
+    smilie1.smilecolour = 'red';
+    smilie1.eyecolour = 'blue';
+    smilie1.radius = 50;
+    window.onload = function() {
+        Shapies.canvas().start();
+        smilie1.point = Shapies.canvas().midpoint();
+        Shapies.canvas().addActor('smilie1', smilie1);
+    };
+</script>
 </html>
