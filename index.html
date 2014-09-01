@@ -5,6 +5,10 @@
     <button onclick='smilie1.attack();'>ATTACK!</button>
     <button onclick='smilie1.heal();'>Heal!</button>
     <button onclick='smilie1.move();'>Move!</button>
+    <button onclick='smilie1.left();'>Left!</button>
+    <button onclick='smilie1.right();'>Right!</button>
+    <button onclick='smilie1.up();'>Up!</button>
+    <button onclick='smilie1.down();'>Down!</button>
 </body>
 <script src="Shapies.min.js"></script>
 <script>
@@ -14,6 +18,23 @@
         Shapies.canvas().start();
         smilie1.point = Shapies.canvas().midpoint();
         Shapies.canvas().addActor('smilie1', smilie1);
+    };
+    document.onkeydown = function(evt) {
+        evt = evt || window.event;
+        switch (evt.keyCode) {
+        	case 40:
+        		smilie1.down();
+        		break;
+        	case 39:
+        		smilie1.right();
+        		break;
+        	case 38:
+        		smilie1.up();
+        		break;
+        	case 37:
+        		smilie1.left();
+        		break;
+        }
     };
 </script>
 </html>

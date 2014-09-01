@@ -574,6 +574,18 @@ var Shapies = (function(window) {
             this.move = function() {
                 alert("MOVE!");
             };
+            this.left = function() {
+            	this.point[0] = this.point[0] - (this.radius * 0.25);
+            };
+            this.right = function() {
+            	this.point[0] = this.point[0] + (this.radius * 0.25);
+            };
+            this.up = function() {
+            	this.point[1] = this.point[1] - (this.radius * 0.25);
+            };
+            this.down = function() {
+            	this.point[1] = this.point[1] + (this.radius * 0.25);
+            };
             
             /**
              * Draw an ellipse onto the canvas
