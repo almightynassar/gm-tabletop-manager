@@ -3,81 +3,33 @@
  * ===========================================
  */
 var dragSrcEl = null;
+
 /* ===========================================
- * Dice object and number sort
+ * Number sorter
  * ===========================================
  */
 function sortNumber(a,b) {
     return a - b;
 }
 
-function Dice() {
-	/**
-	 * D20 dice
-	 */
-	this.d20 = (function () {
-		return Math.round(Math.random()*19)+1;
-	});
-	
-	/**
-	 * D4 dice
-	 */
-	this.d4 = (function () {
-		return Math.round(Math.random()*3)+1;
-	});
-	
-	/**
-	 * D6 dice
-	 */
-	this.d6 = (function () {
-		return Math.round(Math.random()*5)+1;
-	});
-	
-	/**
-	 * D8 dice
-	 */
-	this.d8 = (function () {
-		return Math.round(Math.random()*7)+1;
-	});
-	
-	/**
-	 * D10 dice
-	 */
-	this.d10 = (function () {
-		return Math.round(Math.random()*9)+1;
-	});
-	
-	/**
-	 * D30 dice
-	 */
-	this.d30 = (function () {
-		return Math.round(Math.random()*29)+1;
-	});
-	
-	/**
-	 * Multiple D6 dice
-	 */
-	this.d6multi = (function (multi) {
-		var roll = 0;
-		var number = (multi > 0) ? multi : 1; 
-		// Add all the rolls
-		for (var i = 1; i <= number; ++i) {
-			roll += this.d6();
-		}
-		return roll;
-	});
-	
-	/**
-	 * For Character Attribute rolls
-	 */
-	this.charAttribute = (function () {
-		var roll = [this.d6(),
-		            this.d6(),
-		            this.d6(),
-		            this.d6()];
-		roll.sort(sortNumber); 
-		return roll[1] + roll[2] + roll[3];
-	});
+/* ===========================================
+ * Print only part of a webpage
+ * ===========================================
+ */
+function PrintElem(id)
+{
+    Popup(window.document.getElementById(id).innerHTML);
+}
+
+function Popup(data) 
+{
+    var mywindow = window.open('', 'DnD Character', 'height=400,width=600');
+    mywindow.document.write('<html><head><title>DnD Character</title></head><body >');
+    mywindow.document.write(data);
+    mywindow.document.write('</body></html>');
+    mywindow.print();
+    mywindow.close();
+    return true;
 }
 
 /* ===========================================
@@ -267,6 +219,87 @@ window.onload = (function ()
  * This will handle the instantiation of our variables (including drawing)
  */
 var DnD = (function(window) {
+	/* ============================================
+     * Dice Object
+     * ============================================
+     */
+	this.dice = new function Dice() {
+		/**
+		 * Standard dice
+		 */
+		function roll (type, number) {
+			type = (type && (typeof type === "number")) ? type : 20;
+			number = (number && (typeof number === "number")) ? number : 1;
+			var result = 0;
+			for (var i = 0; i < number; ++i) {
+				result += Math.round(Math.random()*(type-1))+1;
+			}
+			return result;
+		};
+		
+		return {
+			/**
+			 * D2 dice
+			 */
+			d2: (function (number) { return roll(2,number); }),
+		
+			/**
+			 * D3 dice
+			 */
+			d3: (function (number) { return roll(3,number); }),
+		
+			/**
+			 * D4 dice
+			 */
+			d4: (function (number) { return roll(4,number); }),
+		
+			/**
+			 * D6 dice
+			 */
+			d6: (function (number) { return roll(6,number); }),
+		
+			/**
+			 * D8 dice
+			 */
+			d8: (function (number) { return roll(8,number); }),
+		
+			/**
+			 * D10 dice
+			 */
+			d10: (function (number) { return roll(10,number); }),
+		
+			/**
+			 * D12 dice
+			 */
+			d12: (function (number) { return roll(12,number); }),
+		
+			/**
+			 * D20 dice
+			 */
+			d20: (function (number) { return roll(20,number); }),
+			
+			/**
+			 * D30 dice
+			 */
+			d30: (function (number) { return roll(30,number); }),
+			
+			/**
+			 * D100 dice
+			 */
+			d100: (function (number) { return roll(100,number); }),
+		
+			/**
+			 * For Character Attribute rolls
+			 */
+			charAttribute: (function () {
+				var result = new Array(roll(6),roll(6,1),roll(6,1),roll(6,1));
+				result.sort(sortNumber); 
+				return result[1] + result[2] + result[3];
+			})
+		};
+	};
+	
+	
     /**
      * Base Creature
      */
@@ -550,6 +583,7 @@ var DnD = (function(window) {
 					return this.size-1;
 					break;
 			}
+			return 1;
 		});
 		
 		/**
@@ -1297,6 +1331,8 @@ var DnD = (function(window) {
         /**
          * Return a new creature object
          */
-        newCreature: (function() {return new Creature;})
+        newCreature: (function() {return new Creature;}),
+        
+        dice: this.dice
     };
 })(window);
