@@ -241,53 +241,43 @@ var DnD = (function(window) {
 			/**
 			 * D2 dice
 			 */
-			d2: (function (number) { return roll(2,number); }),
-		
+			d2: (function (number) { return roll(2,number); }),	
 			/**
 			 * D3 dice
 			 */
 			d3: (function (number) { return roll(3,number); }),
-		
 			/**
 			 * D4 dice
 			 */
 			d4: (function (number) { return roll(4,number); }),
-		
 			/**
 			 * D6 dice
 			 */
 			d6: (function (number) { return roll(6,number); }),
-		
 			/**
 			 * D8 dice
 			 */
 			d8: (function (number) { return roll(8,number); }),
-		
 			/**
 			 * D10 dice
 			 */
 			d10: (function (number) { return roll(10,number); }),
-		
 			/**
 			 * D12 dice
 			 */
 			d12: (function (number) { return roll(12,number); }),
-		
 			/**
 			 * D20 dice
 			 */
 			d20: (function (number) { return roll(20,number); }),
-			
 			/**
 			 * D30 dice
 			 */
 			d30: (function (number) { return roll(30,number); }),
-			
 			/**
 			 * D100 dice
 			 */
 			d100: (function (number) { return roll(100,number); }),
-		
 			/**
 			 * For Character Attribute rolls
 			 */
@@ -299,69 +289,41 @@ var DnD = (function(window) {
 		};
 	};
 	
-	
-    /**
-     * Base Creature
+	/* ============================================
+     * Attributes Object
+     * ============================================
      */
-	function Creature() {
-		
-		// ======== BASICS ===========
-		
+	function Attributes() {
 		/**
-		 * Details
-		 */
-		this.race = "Unknown";
-		this.level = 1;
-		this.xp = 0;
-		// Size is how big the character is on the board
-		// 0 = Tiny, 1 = Small, 2 = Medium, 3 = Large, 4 = Huge, 5 = Massive
-		this.size = 2;
-		// Role-playing
-		this.age = 0;
-		this.gender = "Unknown";
-		this.deity = "Unknown";
-		this.alignment = "Neutral";
-		//Class is a keyword so it now becomes 'career'
-		this.career = "Unknown";
-		// Speed
-		this.speedBase = 6;
-		this.speedMod = 0;
-		// Iniative
-		this.initiativeMod = 0;
-		// Hit Point values
-		this.hpBase = 10;
-		this.hpLevel = 4;
-		this.hpBonus = 0;
-		this.surgeBonus = 0;
-		this.spdBase = 6;
-		this.spdBonus = 0;
-		
-		
-		/**
-		 * Attributes
-		 * 
 		 * Order is STR, CON, DEX, INT, WIS, CHA
 		 */
-		this.attributes = [10,10,10,10,10,10];
-		
+		var attributes = [0,0,0,0,0,0];
+		return {
+			// Reset values
+			reset: function() { attributes = [0,0,0,0,0,0]; },
+			// Get values
+			getStr: function() { return parseInt(attributes[0]); },
+			getCon: function() { return parseInt(attributes[1]); },
+			getDex: function() { return parseInt(attributes[2]); },
+			getInt: function() { return parseInt(attributes[3]); },
+			getWis: function() { return parseInt(attributes[4]); },
+			getCha: function() { return parseInt(attributes[5]); },
+			// Set Values
+			setStr: function(value) { attributes[0] = parseInt(value); },
+			setCon: function(value) { attributes[1] = parseInt(value); },
+			setDex: function(value) { attributes[2] = parseInt(value); },
+			setInt: function(value) { attributes[3] = parseInt(value); },
+			setWis: function(value) { attributes[4] = parseInt(value); },
+			setCha: function(value) { attributes[5] = parseInt(value); },
+		};
+	}
+	
+	/* ============================================
+     * Skills Object
+     * ============================================
+     */
+	function Skills() {
 		/**
-		 * Racial Attribute Modifiers
-		 */
-		this.racialAttributes = [0,0,0,0,0,0];
-		
-		/**
-		 * Class Attribute Modifiers
-		 */
-		this.classAttributes = [0,0,0,0,0,0];
-		
-		/**
-		 * Misc Attribute Modifiers
-		 */
-		this.miscAttributes = [0,0,0,0,0,0];
-		
-		/**
-		 * Trained Skills
-		 * 
 		 * Order is:
 		 * 
 		 * 0 - Acrobatics
@@ -382,17 +344,395 @@ var DnD = (function(window) {
 		 * 15 - Streetwise
 		 * 16 - Thievery
 		 */
-		this.trainedSkills = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		var skills = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		
+		return {
+			// Reset values
+			reset: function() { skills = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; },
+			// Get values
+			getAcrobatics: function() { return skills[0]; },
+			getArcana: function() { return skills[1]; },
+			getAthletics: function() { return skills[2]; },
+			getBluff: function() { return skills[3]; },
+			getDiplomacy: function() { return skills[4]; },
+			getDungeoneering: function() { return skills[5]; },
+			getEndurance: function() { return skills[6]; },
+			getHeal: function() { return skills[7]; },
+			getHistory: function() { return skills[8]; },
+			getInsight: function() { return skills[9]; },
+			getIntimidate: function() { return skills[10]; },
+			getNature: function() { return skills[11]; },
+			getPerception: function() { return skills[12]; },
+			getReligion: function() { return skills[13]; },
+			getStealth: function() { return skills[14]; },
+			getStreetwise: function() { return skills[15]; },
+			getThievery: function() { return skills[16]; },
+			// Set Values
+			setAcrobatics: function(value) { skills[0] = parseInt(value); },
+			setArcana: function(value) { skills[1] = parseInt(value); },
+			setAthletics: function(value) { skills[2] = parseInt(value); },
+			setBluff: function(value) { skills[3] = parseInt(value); },
+			setDiplomacy: function(value) { skills[4] = parseInt(value); },
+			setDungeoneering: function(value) { skills[5] = parseInt(value); },
+			setEndurance: function(value) { skills[6] = parseInt(value); },
+			setHeal: function(value) { skills[7] = parseInt(value); },
+			setHistory: function(value) { skills[8] = parseInt(value); },
+			setInsight: function(value) { skills[9] = parseInt(value); },
+			setIntimidate: function(value) { skills[10] = parseInt(value); },
+			setNature: function(value) { skills[11] = parseInt(value); },
+			setPerception: function(value) { skills[12] = parseInt(value); },
+			setReligion: function(value) { skills[13] = parseInt(value); },
+			setStealth: function(value) { skills[14] = parseInt(value); },
+			setStreetwise: function(value) { skills[15] = parseInt(value); },
+			setThievery: function(value) { skills[16] = parseInt(value); }
+		};
+	}
+	
+	/* ============================================
+     * Resistances, Vulnerabilities and Immunities Object
+     * ============================================
+     */
+	function Resistances() {
+		/**
+		 * Order is:
+		 * 
+		 * 0 - Acid
+		 * 1 - Cold
+		 * 2 - Fire
+		 * 3 - Lightning
+		 * 4 - Poison
+		 * 5 - Thunder
+		 * 6 - Necrotic
+		 * 7 - Radiant
+		 * 8 - Psychic
+		 * 9 - Force
+		 * 10 - Charm
+		 * 11 - Fear
+		 * 12 - Sleep
+		 * 13 - Disease
+		 * 14 - Illusion
+		 * 15 - Petrification
+		 * 16 - Other
+		 */
+		var resist = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		
+		return {
+			// Reset values
+			reset: function() { resist = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; },
+			// Get values
+			getAcid: function() { return parseInt(resist[0]); },
+			getCold: function() { return parseInt(resist[1]); },
+			getFire: function() { return parseInt(resist[2]); },
+			getLightning: function() { return parseInt(resist[3]); },
+			getPoison: function() { return parseInt(resist[4]); },
+			getThunder: function() { return parseInt(resist[5]); },
+			getNecrotic: function() { return parseInt(resist[6]); },
+			getRadiant: function() { return parseInt(resist[7]); },
+			getPsychic: function() { return parseInt(resist[8]); },
+			getForce: function() { return parseInt(resist[9]); },
+			getCharm: function() { return parseInt(resist[10]); },
+			getFear: function() { return parseInt(resist[11]); },
+			getSleep: function() { return parseInt(resist[12]); },
+			getDisease: function() { return parseInt(resist[13]); },
+			getIllusion: function() { return parseInt(resist[14]); },
+			getPetrification: function() { return parseInt(resist[15]); },
+			getOther: function() { return parseInt(resist[16]); },
+			// Set Values
+			setAcid: function(value) { resist[0] = parseInt(value);},
+			setCold: function(value) { resist[1] = parseInt(value);},
+			setFire: function(value) { resist[2] = parseInt(value);},
+			setLightning: function(value) { resist[3] = parseInt(value);},
+			setPoison: function(value) { resist[4] = parseInt(value);},
+			setThunder: function(value) { resist[5] = parseInt(value);},
+			setNecrotic: function(value) { resist[6] = parseInt(value);},
+			setRadiant: function(value) { resist[7] = parseInt(value);},
+			setPsychic: function(value) { resist[8] = parseInt(value);},
+			setForce: function(value) { resist[9] = parseInt(value);},
+			setCharm: function(value) { resist[10] = parseInt(value);},
+			setFear: function(value) { resist[11] = parseInt(value);},
+			setSleep: function(value) { resist[12] = parseInt(value);},
+			setDisease: function(value) { resist[13] = parseInt(value);},
+			setIllusion: function(value) { resist[14] = parseInt(value);},
+			setPetrification: function(value) { resist[15] = parseInt(value);},
+			setOther: function(value) { resist[16] = parseInt(value);}
+		};
+	}
+	
+	/* ============================================
+     * Defences Object
+     * ============================================
+     */
+	function Defences() {
+		/**
+		 * Order is AC, Fortitude, Reflex, Willpower
+		 */
+		var attributes = [0,0,0,0];
+		return {
+			// Reset values
+			reset: function() { attributes = [0,0,0,0]; },
+			// Get values
+			getAC: function() { return parseInt(attributes[0]); },
+			getFort: function() { return parseInt(attributes[1]); },
+			getReflex: function() { return parseInt(attributes[2]); },
+			getWill: function() { return parseInt(attributes[3]); },
+			// Set Values
+			setAC: function(value) { attributes[0] = parseInt(value); },
+			setFort: function(value) { attributes[1] = parseInt(value); },
+			setReflex: function(value) { attributes[2] = parseInt(value); },
+			setWill: function(value) { attributes[3] = parseInt(value); }
+		};
+	}
+	
+	/* ============================================
+     * Race Object
+     * ============================================
+     */
+	function Race() {
+		/**
+		 * Details
+		 */
+		var name = "Unknown";
+		var origin = "Natural";
+		var heightMin = 155;
+		var heightMax = 185;
+		var weightMin = 60;
+		var weightMax = 80;
+		var speed = 6;
+		var hasLowVision = false;
+		var hasDarkVision = false;
+		var size = 2; // 0 = Tiny, 1 = Small, 2 = Medium, 3 = Large, 4 = Gigantic
+		var attributes = new Attributes();
+		var bonusAttributes = 0;
+		var skills = new Skills();
+		var bonusSkills = 0;
+		var defence = new Defences();;
+		var bonusAtWill = 0;
+		var resistances = new Resistances();
+		var vulnerable = new Resistances();
+		var immunity = new Resistances();
+		/**
+		 * Resets the race object
+		 */
+		function reset() {
+			name = "Unknown";
+			origin = "Natural";
+			heightMin = 155;
+			heightMax = 185;
+			weightMin = 60;
+			weightMax = 80;
+			speed = 6;
+			hasLowVision = false;
+			hasDarkVision = false;
+			size = 2;
+			attributes.reset();
+			bonusAttributes = 0;
+			skills.reset();
+			bonusSkills = 0;
+			defence.reset();
+			bonusAtWill = 0;
+			resistances.reset();
+			vulnerable.reset();
+			immunity.reset();
+		};
+		
+		return {
+			//Getters
+			getName: function () { return name;},
+			getOrigin: function () { return origin;},
+			getSpeed: function () { return speed;},
+			getVision: function () { return (hasDarkVision) ? "Dark Vision" : ((hasLowVision) ? "Low Vision" : "Normal Vision");},
+			getAttributes: function () { return attributes; },
+			getSkills: function () { return skills; },
+			getResistances: function () { return resistances; },
+			getVulnerabilities: function () { return vulnerable; },
+			getImmunities: function () { return immunity; },
+			getBonusAttributes: function () { return bonusAttributes; },
+			getBonusSkills: function () { return bonusSkills; },
+			getBonusAtWills: function () { return bonusAtWill; },
+			getMinHeight: function () { return heightMin; },
+			getMinWeight: function () { return weightMin; },
+			getMaxHeight: function () { return heightMax; },
+			getMaxWeight: function () { return weightMax; },
+			getSize: function () { 
+				switch(size) {
+					case 0:
+						return "Tiny";
+						break;
+					case 1:
+						return "Small";
+						break;
+					case 3:
+						return "Large";
+						break;
+					case 4:
+						return "Gigantic";
+						break;
+				}
+				return "Medium";
+			},
+			
+			/**
+			 * Sets the Race details
+			 */
+			set: function (selection) {
+				reset();
+				switch (selection) {
+					case 'Dragonborn':
+						heightMin = 190;
+						heightMax = 205;
+						weightMin = 100;
+						weightMax = 150;
+						attributes.setStr(2);
+						attributes.setCha(2);
+						skills.setHistory(2);
+						skills.setIntimidate(2);
+						break;
+					case "Dwarf":
+						heightMin = 130;
+						heightMax = 145;
+						weightMin = 70;
+						weightMax = 100;
+						hasLowVision = true;
+						speed = 5;
+						skills.setDungeoneering(2);
+						skills.setEndurance(2);
+						attributes.setCon(2);
+						attributes.setWis(2);
+						resistances.setPoison(5);
+						break;
+					case "Eladrin":
+						origin = "Fey";
+						heightMin = 165;
+						heightMax = 185;
+						skills.setArcana(2);
+						skills.History(2);
+						attributes.setDex(2);
+						attributes.setInt(2);
+						defence.setWill(1);
+						hasLowVision = true;
+						bonusSkills = 1;
+						resistance.setCharm(5);
+						break;
+					case "Elf":
+						origin = "Fey";
+						speed = 7;
+						heightMin = 145;
+						weightMin = 55;
+						weightMax = 75;
+						skills.setNature(2);
+						skills.setPerception(2);
+						attributes.setDex(2);
+						attributes.setWis(2);
+						hasLowVision = true;
+						break;
+					case "Half-Elf":
+						heightMin = 165;
+						heightMax = 190;
+						weightMax = 85;
+						skills.setDiplomacy(2);
+						skills.setInsight(2);
+						attributes.setCon(2);
+						attributes.setCha(2);
+						hasLowVision = true;
+						break;
+					case "Halfling":
+						heightMin = 115;
+						heightMax = 130;
+						weightMin = 35;
+						weightMax = 40;
+						size = 1;
+						skills.setAcrobatics(2);
+						skills.setThievery(2);
+						attributes.setDex(2);
+						attributes.setCha(2);
+						resistances.setFear(5);
+						break;
+					case 'Human':
+						heightMin = 165;
+						heightMax = 190;
+						weightMax = 100;
+						bonusAttributes = 2;
+						bonusSkills = 1;
+						defence.setFort(1);
+						defence.setReflex(1);
+						defence.setWill(1);
+						bonusAtWill = 1;
+						break;
+					case "Tiefling":
+						heightMin = 170;
+						heightMax = 195;
+						weightMin = 65;
+						weightMax = 110;
+						hasLowVision = true;
+						skills.setBluff(2);
+						skills.setStealth(2);
+						attributes.setInt(2);
+						attributes.setCha(2);
+						resistances.setFire(5);
+						break;
+				};
+				name = selection;
+			}
+		};
+	}
+	
+	
+    /**
+     * Base Creature
+     */
+	function Creature() {
+		/**
+		 * Details
+		 */
+		this.race = new Race();
+		this.level = 1;
+		this.xp = 0;
+		// Role-playing
+		this.age = 0;
+		this.gender = "Unknown";
+		this.deity = "Unknown";
+		this.alignment = "Neutral";
+		//Class is a keyword so it now becomes 'career'
+		this.career = "Unknown";
+		// Speed
+		this.speedMod = 0;
+		// Iniative
+		this.initiativeMod = 0;
+		// Hit Point values
+		this.hpBase = 10;
+		this.hpLevel = 4;
+		this.hpBonus = 0;
+		this.surgeBonus = 0;
+		this.spdBase = 6;
+		this.spdBonus = 0;
+		
 		
 		/**
-		 * Race Skills
+		 * Attributes
+		 * 
+		 * Order is STR, CON, DEX, INT, WIS, CHA
 		 */
-		this.raceSkills = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		this.attributes = new Attributes();
+		
+		/**
+		 * Class Attribute Modifiers
+		 */
+		this.classAttributes = [0,0,0,0,0,0];
+		
+		/**
+		 * Misc Attribute Modifiers
+		 */
+		this.miscAttributes = [0,0,0,0,0,0];
+		
+		/**
+		 * Trained Skills
+		 */
+		this.trainedSkills = new Skills();
 		
 		/**
 		 * Class Skills
 		 */
-		this.miscSkills = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+		this.classSkills = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 		
 		/**
 		 * Misc Skills
@@ -672,22 +1012,22 @@ var DnD = (function(window) {
 		 * ATTRIBUTES
 		 */
 		this.getStrength = (function () {
-			return parseInt(this.attributes[0]) + parseInt(this.racialAttributes[0]) + parseInt(this.classAttributes[0]) + this.miscAttributes[0];
+			return this.attributes.getStr() + this.race.getAttributes().getStr() + parseInt(this.classAttributes[0]) + this.miscAttributes[0];
 		});
 		this.getConstitution = (function () {
-			return parseInt(this.attributes[1]) + parseInt(this.racialAttributes[1]) + parseInt(this.classAttributes[1]) + this.miscAttributes[1];
+			return this.attributes.getCon() + this.race.getAttributes().getCon() + parseInt(this.classAttributes[1]) + this.miscAttributes[1];
 		});
 		this.getDexterity = (function () {
-			return parseInt(this.attributes[2]) + parseInt(this.racialAttributes[2]) + parseInt(this.classAttributes[2]) + this.miscAttributes[2];
+			return this.attributes.getDex() + this.race.getAttributes().getDex() + parseInt(this.classAttributes[2]) + this.miscAttributes[2];
 		});
 		this.getIntelligence = (function () {
-			return parseInt(this.attributes[3]) + parseInt(this.racialAttributes[3]) + parseInt(this.classAttributes[3]) + this.miscAttributes[3];
+			return this.attributes.getInt() + this.race.getAttributes().getInt() + parseInt(this.classAttributes[3]) + this.miscAttributes[3];
 		});
 		this.getWisdom = (function () {
-			return parseInt(this.attributes[4]) + parseInt(this.racialAttributes[4]) + parseInt(this.classAttributes[4]) + this.miscAttributes[4];
+			return this.attributes.getWis() + this.race.getAttributes().getWis() + parseInt(this.classAttributes[4]) + this.miscAttributes[4];
 		});
 		this.getCharisma = (function () {
-			return parseInt(this.attributes[5]) + parseInt(this.racialAttributes[5]) + parseInt(this.classAttributes[5]) + this.miscAttributes[5];
+			return this.attributes.getCha() + this.race.getAttributes().getCha() + parseInt(this.classAttributes[5]) + this.miscAttributes[5];
 		});
 		
 		/**
@@ -818,162 +1158,7 @@ var DnD = (function(window) {
 			return this.getLevelMod() + this.getChaMod(); 
 		});
 		
-		// ======== CLASS STUFF ===========
-		
-		/**
-		 * Scrubs a given race from the character (including modifiers)
-		 */
-		this.removeRace = (function () {
-			// Name
-			this.race = "Unknown";
-			// Speed
-			this.speedBase = 6;
-			// Iniative
-			this.initiativeMod = 0;
-			// Remove any attributes
-			this.raceSkills = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-			this.racialAttributes = [0, 0, 0, 0, 0, 0];
-		});
-		
-		/*
-		 * Attributes
-		 * 
-		 * Order is:
-		 * 
-		 * 0 - STR
-		 * 1 - CON
-		 * 2 - DEX
-		 * 3 - INT
-		 * 4 - WIS
-		 * 5 - CHA
-		 * 
-		 * Defences
-		 * 
-		 * Order is:
-		 * 
-		 * 0 - AC
-		 * 1 - FOR
-		 * 2 - REF
-		 * 3 - WIL
-		 * 
-		 * Skills
-		 * 
-		 * Order is:
-		 * 
-		 * 0 - Acrobatics
-		 * 1 - Arcana (Knowledge)
-		 * 2 - Athletics
-		 * 3 - Bluff
-		 * 4 - Diplomacy
-		 * 5 - Dungeoneering
-		 * 6 - Endurance
-		 * 7 - Heal
-		 * 8 - History
-		 * 9 - Insight
-		 * 10 - Intimidate
-		 * 11 - Nature
-		 * 12 - Perception
-		 * 13 - Religion
-		 * 14 - Stealth
-		 * 15 - Streetwise
-		 * 16 - Thievery
-		 */
-		
-		/**
-		 * Adds bonuses dependant on race
-		 */
-		this.addRace = (function(name) {
-			this.removeRace();
-			this.race = name;
-			switch (this.race) {
-				case "Dragonborn":
-					// Speed
-					this.speedBase = 6;
-					// Iniative
-					this.initiativeMod = 0;
-					// Add any attributes
-					this.raceSkills[8] = 2;
-					this.raceSkills[10] = 2;
-					this.racialAttributes[0] = 2;
-					this.racialAttributes[5] = 2;
-					break;
-				case "Dwarf":
-					// Speed
-					this.speedBase = 5;
-					this.speedMod = 0;
-					// Iniative
-					this.initiativeMod = 0;
-					// Add any attributes
-					this.raceSkills[5] = 2;
-					this.raceSkills[6] = 2;
-					this.racialAttributes[1] = 2;
-					this.racialAttributes[4] = 2;
-					break;
-				case "Eladrin":
-					// Speed
-					this.speedBase = 6;
-					// Iniative
-					this.initiativeMod = 0;
-					// Add any attributes
-					this.raceSkills[1] = 2;
-					this.raceSkills[8] = 2;
-					this.racialAttributes[2] = 2;
-					this.racialAttributes[3] = 2;
-					break;
-				case "Elf":
-					// Speed
-					this.speedBase = 7;
-					// Iniative
-					this.initiativeMod = 0;
-					// Add any attributes
-					this.raceSkills[11] = 2;
-					this.raceSkills[12] = 2;
-					this.racialAttributes[2] = 2;
-					this.racialAttributes[4] = 2;
-					break;
-				case "Half-Elf":
-					// Speed
-					this.speedBase = 6;
-					// Iniative
-					this.initiativeMod = 0;
-					// Add any attributes
-					this.raceSkills[4] = 2;
-					this.raceSkills[9] = 2;
-					this.racialAttributes[1] = 2;
-					this.racialAttributes[5] = 2;
-					break;
-				case "Halfling":
-					// Speed
-					this.speedBase = 6;
-					// Iniative
-					this.initiativeMod = 0;
-					// Add any attributes
-					this.raceSkills[8] = 2;
-					this.raceSkills[9] = 2;
-					this.racialAttributes[0] = 2;
-					this.racialAttributes[16] = 2;
-					break;
-				case "Human":
-					// Speed
-					this.speedBase = 6;
-					// Iniative
-					this.initiativeMod = 0;
-					// Add any attributes
-					this.raceDefence = [0,1,1,1];
-					break;
-				case "Tiefling":
-					// Speed
-					this.speedBase = 6;
-					// Iniative
-					this.initiativeMod = 0;
-					// Add any attributes
-					this.raceSkills[3] = 2;
-					this.raceSkills[14] = 2;
-					this.racialAttributes[3] = 2;
-					this.racialAttributes[5] = 2;
-					break;
-			}
-		});
+		this.setRace = function (race) { this.race.set(race); };
 		
 		// ======== CLASS STUFF ===========
 		

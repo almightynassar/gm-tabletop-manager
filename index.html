@@ -47,7 +47,7 @@
 		</table>
 		<p><button onclick='rollArray();'>Roll Attributes</button><button onclick='standardArray();'>Standard Array</button></p>
 		<hr />
-		<h2>ARMOUR</h2>
+		<h2>Equipment</h2>
 		<p><b>Type:</b> <span id="armour_type">
 			<select id="armour_input" name="armour_input">
 				<option value="Cloth">Cloth (Light)</option>
@@ -64,52 +64,58 @@
 			<h2 id="txt_character">Character Card</h2>
 			<table border=1 >
 				<tr>
-					<td>Strength</td>
+					<th>HP</th>
+					<th>Bloodied</th>
+					<th>Surge Value</th>
+					<th># Surges</th>
+					<th>Initiative</th>
+					<th>Speed</th>
+					<th>Vision</th>
+				</tr>
+				<tr>
+					<td id="txt_hp"></td>
+					<td id="txt_blood"></td>
+					<td id="txt_surge"></td>
+					<td id="txt_spd"></td>
+					<td id="txt_init"></td>
+					<td id="txt_speed"></td>
+					<td id="txt_vision"></td>
+				</tr>
+				<tr>
+					<th></th>
+					<th>STR</th>
+					<th>CON</th>
+					<th>DEX</th>
+					<th>INT</th>
+					<th>WIS</th>
+					<th>CHA</th>
+				</tr>
+				<tr>
+					<th>Score</th>
 					<td id="txt_str"></td>
-				</tr>
-				<tr>
-					<td>Constitution</td>
 					<td id="txt_con"></td>
-				</tr>
-				<tr>
-					<td>Dexterity</td>
 					<td id="txt_dex"></td>
-				</tr>
-				<tr>
-					<td>Intelligence</td>
 					<td id="txt_int"></td>
-				</tr>
-				<tr>
-					<td>Wisdom</td>
 					<td id="txt_wis"></td>
-				</tr>
-				<tr>
-					<td>Cha</td>
 					<td id="txt_cha"></td>
 				</tr>
 				<tr>
-					<td>Initiative</td>
-					<td id="txt_init"></td>
+					<th>Mod</th>
+					<td id="txt_str_mod"></td>
+					<td id="txt_con_mod"></td>
+					<td id="txt_dex_mod"></td>
+					<td id="txt_int_mod"></td>
+					<td id="txt_wis_mod"></td>
+					<td id="txt_cha_mod"></td>
 				</tr>
 				<tr>
-					<td>Speed</td>
-					<td id="txt_speed"></td>
-				</tr>
-				<tr>
-					<td>Hit Points</td>
-					<td id="txt_hp"></td>
-				</tr>
-				<tr>
-					<td>Bloodied</td>
-					<td id="txt_blood"></td>
-				</tr>
-				<tr>
-					<td>Surge</td>
-					<td id="txt_surge"></td>
-				</tr>
-				<tr>
-					<td>Surge Per Day</td>
-					<td id="txt_spd"></td>
+					<th>Attack</th>
+					<td id="txt_str_attack"></td>
+					<td id="txt_con_attack"></td>
+					<td id="txt_dex_attack"></td>
+					<td id="txt_int_attack"></td>
+					<td id="txt_wis_attack"></td>
+					<td id="txt_cha_attack"></td>
 				</tr>
 				<tr>
 					<td>AC</td>
@@ -135,7 +141,7 @@
 		</div>
 		<br />
 		<div id="shapies">
-		    <canvas id="Shapies" style="border: 5px solid black;" width="500" height="500"></canvas>
+		    <canvas id="Shapies" style="border: 5px solid black;" width="100" height="100"></canvas>
 		</div>
 	</div>
 </body>
@@ -181,18 +187,18 @@
     var create = (function () {
     	var creature = DnD.newCreature();
     	creature.level = window.document.getElementById('level_input').value;
-    	creature.attributes = [window.document.getElementById('str_input').value,
-    	                       window.document.getElementById('con_input').value,
-    	                       window.document.getElementById('dex_input').value,
-    	                       window.document.getElementById('int_input').value,
-    	                       window.document.getElementById('wis_input').value,
-    	                       window.document.getElementById('cha_input').value];
-    	creature.addRace(window.document.getElementById('race_input').value);
+    	creature.attributes.setStr(window.document.getElementById('str_input').value);
+    	creature.attributes.setCon(window.document.getElementById('con_input').value);
+    	creature.attributes.setDex(window.document.getElementById('dex_input').value);
+    	creature.attributes.setInt(window.document.getElementById('int_input').value);
+    	creature.attributes.setWis(window.document.getElementById('wis_input').value);
+    	creature.attributes.setCha(window.document.getElementById('cha_input').value);
+    	creature.race.set(window.document.getElementById('race_input').value);
     	creature.addClass(window.document.getElementById('class_input').value);
     	creature.addArmour(window.document.getElementById('armour_input').value);
     	                       
     	// Display our character
-    	window.document.getElementById('txt_character').innerHTML = " - Level " + creature.level + " " + creature.race + " " + creature.career;
+    	window.document.getElementById('txt_character').innerHTML = " - Level " + creature.level + " " + creature.race.getName() + " " + creature.career;
         window.document.getElementById('txt_str').innerHTML = creature.getStrength();
         window.document.getElementById('txt_con').innerHTML = creature.getConstitution();
         window.document.getElementById('txt_dex').innerHTML = creature.getDexterity();
@@ -209,7 +215,20 @@
         window.document.getElementById('txt_for').innerHTML = creature.getFort();
         window.document.getElementById('txt_ref').innerHTML = creature.getRef();
         window.document.getElementById('txt_wil').innerHTML = creature.getWil();
+        window.document.getElementById('txt_str_mod').innerHTML = creature.getStrMod();
+        window.document.getElementById('txt_con_mod').innerHTML = creature.getConMod();
+        window.document.getElementById('txt_dex_mod').innerHTML = creature.getDexMod();
+        window.document.getElementById('txt_int_mod').innerHTML = creature.getIntMod();
+        window.document.getElementById('txt_wis_mod').innerHTML = creature.getWisMod();
+        window.document.getElementById('txt_cha_mod').innerHTML = creature.getChaMod();
+        window.document.getElementById('txt_str_attack').innerHTML = creature.getStrAttack();
+        window.document.getElementById('txt_con_attack').innerHTML = creature.getConAttack();
+        window.document.getElementById('txt_dex_attack').innerHTML = creature.getDexAttack();
+        window.document.getElementById('txt_int_attack').innerHTML = creature.getIntAttack();
+        window.document.getElementById('txt_wis_attack').innerHTML = creature.getWisAttack();
+        window.document.getElementById('txt_cha_attack').innerHTML = creature.getChaAttack();
         window.document.getElementById('txt_armour').innerHTML = creature.armour.name;
+        window.document.getElementById('txt_vision').innerHTML = creature.race.getVision();
         
         Shapies.canvas().start();
         var smilie1 = Shapies.actors.create('smilie');
