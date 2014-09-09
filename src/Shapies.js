@@ -16,8 +16,8 @@ if (window.CanvasRenderingContext2D) {
      * Rounded Rectangle
      */
     CanvasRenderingContext2D.prototype.roundedRect = function(x, y, width, height, radius, colour, border, lineWidth, alpha) {
-        // if certain values are not set just exit
-        if(!x || !y || !width || !height) { return true; }
+        // if certain values are not set just set defaults
+        if(!x || !y || !width || !height) { x = 10; y=10; width=5; height=5; }
         // Set other values
         if (!radius) { radius = 5; }
         if (!alpha) { alpha=1; }

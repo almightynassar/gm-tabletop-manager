@@ -1,40 +1,254 @@
 <!doctype html>
 <html>
+<head>
+	<style>
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+.dnd_pref_input {
+  border: 2px solid #666666;
+  background-color: #ccc;
+  cursor: move;
+}
+.dnd_pref_input .over {
+  border: 2px solid #000;
+  background-color: #fff;
+}
+	</style>
+</head>
 <body>
-    <br />
-    <button onclick='smilie1.attack();'>ATTACK!</button>
-    <button onclick='smilie1.heal();'>Heal!</button>
-    <button onclick='smilie1.move();'>Move!</button>
-    <button onclick='smilie1.left();'>Left!</button>
-    <button onclick='smilie1.right();'>Right!</button>
-    <button onclick='smilie1.up();'>Up!</button>
-    <button onclick='smilie1.down();'>Down!</button>
+	<div id="DnD">
+		<h2>BASICS</h2>
+		<p><b>Level:</b> <span id="levels"></span></p>
+		<p><b>Race:</b> <span id="races"></span></p>
+		<p><b>Class:</b> <span id="classes"></span></p>
+		<hr />
+		<h2>ATTRIBUTES</h2>
+		<p><b>Attribute Preferences (drag and drop):</b> <span id="prefs"></span></p>
+		<p><b>Base Attributes</b></p>
+		<table>
+			<thead>
+				<tr>
+					<th>STR</th>
+					<th>CON</th>
+					<th>DEX</th>
+					<th>INT</th>
+					<th>WIS</th>
+					<th>CHA</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><span id="str"></span></td>
+					<td><span id="con"></span></td>
+					<td><span id="dex"></span></td>
+					<td><span id="int"></span></td>
+					<td><span id="wis"></span></td>
+					<td><span id="cha"></span></td>
+				</tr>
+			</tbody>
+		</table>
+		<p><button onclick='rollArray();'>Roll Attributes</button><button onclick='standardArray();'>Standard Array</button></p>
+		<hr />
+		<h2>ARMOUR</h2>
+		<p><b>Type:</b> <span id="armour_type">
+			<select id="armour_input" name="armour_input">
+				<option value="Cloth">Cloth (Light)</option>
+				<option value="Leather">Leather (Light)</option>
+				<option value="Hide">Hide (Light)</option>
+				<option value="Chainmail">Chainmail</option>
+				<option value="Scale">Scale armour</option>
+				<option value="Plate">Plate armour</option>
+			</select>
+		</span></p>
+		<p class="human_bonus"><b>Human Ability Bonus:</b></p>
+		<p class="human_bonus">
+			<select id="human_bonus_input" name="human bonus_input">
+				<option value="str">Strength</option>
+				<option value="con">Constitution</option>
+				<option value="dex">Dexterity</option>
+				<option value="int">Intelligence</option>
+				<option value="wis">Wisdom</option>
+				<option value="cha">Charisma</option>
+			</select>
+		</p>
+		<button onclick='create();'>Submit</button>
+		<br />
+		<br />
+		<table border=1 >
+			<tr>
+				<td>Level</td>
+				<td id="txt_level"></td>
+			</tr>
+			<tr>
+				<td>Race</td>
+				<td id="txt_race"></td>
+			</tr>
+			<tr>
+				<td>Class</td>
+				<td id="txt_class"></td>
+			</tr>
+			<tr>
+				<td>Strength</td>
+				<td id="txt_str"></td>
+			</tr>
+			<tr>
+				<td>Constitution</td>
+				<td id="txt_con"></td>
+			</tr>
+			<tr>
+				<td>Dexterity</td>
+				<td id="txt_dex"></td>
+			</tr>
+			<tr>
+				<td>Intelligence</td>
+				<td id="txt_int"></td>
+			</tr>
+			<tr>
+				<td>Wisdom</td>
+				<td id="txt_wis"></td>
+			</tr>
+			<tr>
+				<td>Cha</td>
+				<td id="txt_cha"></td>
+			</tr>
+			<tr>
+				<td>Initiative</td>
+				<td id="txt_init"></td>
+			</tr>
+			<tr>
+				<td>Speed</td>
+				<td id="txt_speed"></td>
+			</tr>
+			<tr>
+				<td>Hit Points</td>
+				<td id="txt_hp"></td>
+			</tr>
+			<tr>
+				<td>Bloodied</td>
+				<td id="txt_blood"></td>
+			</tr>
+			<tr>
+				<td>Surge</td>
+				<td id="txt_surge"></td>
+			</tr>
+			<tr>
+				<td>Surge Per Day</td>
+				<td id="txt_spd"></td>
+			</tr>
+			<tr>
+				<td>AC</td>
+				<td id="txt_ac"></td>
+			</tr>
+			<tr>
+				<td>Fortitude</td>
+				<td id="txt_for"></td>
+			</tr>
+			<tr>
+				<td>Reflex</td>
+				<td id="txt_ref"></td>
+			</tr>
+			<tr>
+				<td>Will</td>
+				<td id="txt_wil"></td>
+			</tr>
+			<tr>
+				<td>Armour</td>
+				<td id="txt_armour"></td>
+			</tr>
+		</table>
+	</div>
+	<br />
+	<div id="shapies">
+	    <canvas id="Shapies" style="border: 5px solid black;" width="500" height="500"></canvas>
+	</div>
 </body>
 <script src="Shapies.min.js"></script>
+<script src="src/DnD.js"></script>
 <script>
-    var smilie1 = Shapies.actors.create('smilie');
-    smilie1.radius = 50;
-    window.onload = function() {
+	// For our dice rolls
+	var die = new Dice();
+	var rollArray = (function () {
+		// Generate our values and sort them
+		var attributes = [die.charAttribute(),
+		                  die.charAttribute(),
+		                  die.charAttribute(),
+		                  die.charAttribute(),
+		                  die.charAttribute(),
+		                  die.charAttribute()];
+		attributes.sort(sortNumber);
+		// Get our attribute preference and put the values as preferenced
+		var prefs = window.document.getElementsByClassName('dnd_pref_input');
+		window.document.getElementById(prefs[5].innerHTML.toLowerCase()+'_input').value = attributes[0];
+		window.document.getElementById(prefs[4].innerHTML.toLowerCase()+'_input').value = attributes[1];
+		window.document.getElementById(prefs[3].innerHTML.toLowerCase()+'_input').value = attributes[2];
+		window.document.getElementById(prefs[2].innerHTML.toLowerCase()+'_input').value = attributes[3];
+		window.document.getElementById(prefs[1].innerHTML.toLowerCase()+'_input').value = attributes[4];
+		window.document.getElementById(prefs[0].innerHTML.toLowerCase()+'_input').value = attributes[5];
+	});
+	
+	// Standard array
+	var standardArray = (function () {
+		// Generate our values and sort them
+		var attributes = [10,11,12,13,14,16];
+		attributes.sort(sortNumber);
+		// Get our attribute preference and put the values as preferenced
+		var prefs = window.document.getElementsByClassName('dnd_pref_input');
+		window.document.getElementById(prefs[5].innerHTML.toLowerCase()+'_input').value = attributes[0];
+		window.document.getElementById(prefs[4].innerHTML.toLowerCase()+'_input').value = attributes[1];
+		window.document.getElementById(prefs[3].innerHTML.toLowerCase()+'_input').value = attributes[2];
+		window.document.getElementById(prefs[2].innerHTML.toLowerCase()+'_input').value = attributes[3];
+		window.document.getElementById(prefs[1].innerHTML.toLowerCase()+'_input').value = attributes[4];
+		window.document.getElementById(prefs[0].innerHTML.toLowerCase()+'_input').value = attributes[5];
+	});
+
+    // Create the creature
+    var create = (function () {
+    	var creature = DnD.newCreature();
+    	creature.level = window.document.getElementById('level_input').value;
+    	creature.attributes = [window.document.getElementById('str_input').value,
+    	                       window.document.getElementById('con_input').value,
+    	                       window.document.getElementById('dex_input').value,
+    	                       window.document.getElementById('int_input').value,
+    	                       window.document.getElementById('wis_input').value,
+    	                       window.document.getElementById('cha_input').value];
+    	creature.addRace(window.document.getElementById('race_input').value);
+    	creature.addClass(window.document.getElementById('class_input').value);
+    	creature.addArmour(window.document.getElementById('armour_input').value);
+    	                       
+    	// Display our character
+    	window.document.getElementById('txt_level').innerHTML = creature.level;
+        window.document.getElementById('txt_race').innerHTML = creature.race;
+        window.document.getElementById('txt_class').innerHTML = creature.career;
+        window.document.getElementById('txt_str').innerHTML = creature.getStrength();
+        window.document.getElementById('txt_con').innerHTML = creature.getConstitution();
+        window.document.getElementById('txt_dex').innerHTML = creature.getDexterity();
+        window.document.getElementById('txt_int').innerHTML = creature.getIntelligence();
+        window.document.getElementById('txt_wis').innerHTML = creature.getWisdom();
+        window.document.getElementById('txt_cha').innerHTML = creature.getCharisma();
+        window.document.getElementById('txt_init').innerHTML = creature.getInitiative();
+        window.document.getElementById('txt_speed').innerHTML = creature.getSpeed();
+        window.document.getElementById('txt_hp').innerHTML = creature.getHP();
+        window.document.getElementById('txt_blood').innerHTML = Math.floor(creature.getHP() / 2);
+        window.document.getElementById('txt_surge').innerHTML = creature.getSurge();
+        window.document.getElementById('txt_spd').innerHTML = creature.getSurgePerDay();
+        window.document.getElementById('txt_ac').innerHTML = creature.getAC();
+        window.document.getElementById('txt_for').innerHTML = creature.getFort();
+        window.document.getElementById('txt_ref').innerHTML = creature.getRef();
+        window.document.getElementById('txt_wil').innerHTML = creature.getWil();
+        window.document.getElementById('txt_armour').innerHTML = creature.armour.name;
+        
         Shapies.canvas().start();
+        var smilie1 = Shapies.actors.create('smilie');
+        smilie1.radius = 50;
         smilie1.point = Shapies.canvas().midpoint();
         Shapies.canvas().addActor('smilie1', smilie1);
-    };
-    document.onkeydown = function(evt) {
-        evt = evt || window.event;
-        switch (evt.keyCode) {
-        	case 40:
-        		smilie1.down();
-        		break;
-        	case 39:
-        		smilie1.right();
-        		break;
-        	case 38:
-        		smilie1.up();
-        		break;
-        	case 37:
-        		smilie1.left();
-        		break;
-        }
-    };
+    });
 </script>
 </html>
