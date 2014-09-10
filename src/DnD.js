@@ -77,8 +77,7 @@ function Forms() {
 	 * The class of the creature
 	 */
 	this.classDropdown = (function (cssClass) {
-		var classes = ["Adept",
-		               "Aristocrat",
+		var classes = ["Aristocrat",
 		               "Artillery",
 		               "Artisan",
 		               "Avenger",
@@ -108,8 +107,7 @@ function Forms() {
 		               "Warlock",
 		               "Warlord",
 		               "Wizard",
-		               "Warden",
-		               "Warrior"];
+		               "Warden"];
 		var text = "<select id='class_input' class='"+cssClass+"' name='class_input'>";
 		
 		classes.forEach(function(type) {
@@ -236,7 +234,6 @@ var DnD = (function(window) {
 			}
 			return result;
 		};
-		
 		return {
 			/**
 			 * D2 dice
@@ -345,7 +342,6 @@ var DnD = (function(window) {
 		 * 16 - Thievery
 		 */
 		var skills = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-		
 		return {
 			// Reset values
 			reset: function() { skills = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; },
@@ -415,7 +411,6 @@ var DnD = (function(window) {
 		 * 16 - Other
 		 */
 		var resist = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-		
 		return {
 			// Reset values
 			reset: function() { resist = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; },
@@ -462,8 +457,8 @@ var DnD = (function(window) {
      * Defences Object
      * ============================================
      */
-	function Defences() {
-		/**
+	function Defence() {
+		/**tFear
 		 * Order is AC, Fortitude, Reflex, Willpower
 		 */
 		var attributes = [0,0,0,0];
@@ -505,11 +500,12 @@ var DnD = (function(window) {
 		var bonusAttributes = 0;
 		var skills = new Skills();
 		var bonusSkills = 0;
-		var defence = new Defences();;
+		var defence = new Defence();;
 		var bonusAtWill = 0;
 		var resistances = new Resistances();
 		var vulnerable = new Resistances();
 		var immunity = new Resistances();
+		var bonusInitiative = 0;
 		/**
 		 * Resets the race object
 		 */
@@ -530,11 +526,11 @@ var DnD = (function(window) {
 			bonusSkills = 0;
 			defence.reset();
 			bonusAtWill = 0;
+			bonusInitiative = 0;
 			resistances.reset();
 			vulnerable.reset();
 			immunity.reset();
 		};
-		
 		return {
 			//Getters
 			getName: function () { return name;},
@@ -543,6 +539,7 @@ var DnD = (function(window) {
 			getVision: function () { return (hasDarkVision) ? "Dark Vision" : ((hasLowVision) ? "Low Vision" : "Normal Vision");},
 			getAttributes: function () { return attributes; },
 			getSkills: function () { return skills; },
+			getDefence: function () { return defence; },
 			getResistances: function () { return resistances; },
 			getVulnerabilities: function () { return vulnerable; },
 			getImmunities: function () { return immunity; },
@@ -553,6 +550,7 @@ var DnD = (function(window) {
 			getMinWeight: function () { return weightMin; },
 			getMaxHeight: function () { return heightMax; },
 			getMaxWeight: function () { return weightMax; },
+			getInitiative: function () {return bonusInitiative; },
 			getSize: function () { 
 				switch(size) {
 					case 0:
@@ -577,6 +575,17 @@ var DnD = (function(window) {
 			set: function (selection) {
 				reset();
 				switch (selection) {
+					case 'Bugbear':
+						heightMin = 200;
+						heightMax = 220;
+						weightMin = 110;
+						weightMax = 135;
+						attributes.setStr(2);
+						attributes.setDex(2);
+						skills.setStealth(2);
+						skills.setIntimidate(2);
+						hasLowVision = true;
+						break;
 					case 'Dragonborn':
 						heightMin = 190;
 						heightMax = 205;
@@ -586,6 +595,16 @@ var DnD = (function(window) {
 						attributes.setCha(2);
 						skills.setHistory(2);
 						skills.setIntimidate(2);
+						break;
+					case 'Drow':
+						origin = "Fey";
+						heightMin = 160;
+						heightMax = 180;
+						attributes.setCha(2);
+						attributes.setDex(2);
+						skills.setStealth(2);
+						skills.setIntimidate(2);
+						hasDarkVision = true;
 						break;
 					case "Dwarf":
 						heightMin = 130;
@@ -625,6 +644,56 @@ var DnD = (function(window) {
 						attributes.setWis(2);
 						hasLowVision = true;
 						break;
+					case "Gnoll":
+						speed = 7;
+						heightMin = 210;
+						heightMax = 230;
+						weightMin = 125;
+						weightMax = 145;
+						skills.setIntimidate(2);
+						attributes.setCon(2);
+						attributes.setDex(2);
+						hasLowVision = true;
+						break;
+					case "Gnome":
+						origin = "Fey";
+						speed = 5;
+						heightMin = 100;
+						heightMax = 115;
+						weightMin = 20;
+						weightMax = 35;
+						size = 1;
+						skills.setArcana(2);
+						skills.setStealth(2);
+						attributes.setCha(2);
+						attributes.setInt(2);
+						resistances.setIllusion(5);
+						hasLowVision = true;
+						break;
+					case "Goblin":
+						heightMin = 100;
+						heightMax = 115;
+						weightMin = 20;
+						weightMax = 30;
+						size = 1;
+						skills.setThievery(2);
+						skills.setStealth(2);
+						attributes.setDex(2);
+						attributes.setCha(2);
+						defence.setReflex(1);
+						hasLowVision = true;
+						break;
+					case "Goliath":
+						heightMin = 200;
+						heightMax = 230;
+						weightMin = 125;
+						weightMax = 155;
+						skills.setAthletics(2);
+						skills.setNature(2);
+						attributes.setStr(2);
+						attributes.setCon(2);
+						defence.setWill(1);
+						break;
 					case "Half-Elf":
 						heightMin = 165;
 						heightMax = 190;
@@ -633,6 +702,17 @@ var DnD = (function(window) {
 						skills.setInsight(2);
 						attributes.setCon(2);
 						attributes.setCha(2);
+						hasLowVision = true;
+						break;
+					case "Half-Orc":
+						heightMin = 175;
+						heightMax = 195;
+						weightMin = 70;
+						weightMax = 105;
+						skills.setEndurance(2);
+						skills.setIntimidate(2);
+						attributes.setStr(2);
+						attributes.setDex(2);
 						hasLowVision = true;
 						break;
 					case "Halfling":
@@ -647,6 +727,18 @@ var DnD = (function(window) {
 						attributes.setCha(2);
 						resistances.setFear(5);
 						break;
+					case "Hobgoblin":
+						heightMin = 180;
+						heightMax = 195;
+						weightMin = 85;
+						weightMax = 110;
+						skills.setAthletics(2);
+						skills.setHistory(2);
+						attributes.setCon(2);
+						attributes.setCha(2);
+						bonusInitiative = 2;
+						hasLowVision = true;
+						break;
 					case 'Human':
 						heightMin = 165;
 						heightMax = 190;
@@ -657,6 +749,36 @@ var DnD = (function(window) {
 						defence.setReflex(1);
 						defence.setWill(1);
 						bonusAtWill = 1;
+						break;
+					case "Kobold":
+						heightMin = 105;
+						heightMax = 120;
+						weightMin = 30;
+						weightMax = 35;
+						size = 1;
+						skills.setStealth(2);
+						skills.setThievery(2);
+						attributes.setCon(2);
+						attributes.setDex(2);
+						break;
+					case "Minotaur":
+						heightMin = 210;
+						heightMax = 230;
+						weightMin = 145;
+						weightMax = 160;
+						attributes.setStr(2);
+						attributes.setCon(2);
+						skills.setNature(2);
+						skills.setPerception(2);
+						break;
+					case "Orc":
+						heightMin = 180;
+						heightMax = 195;
+						weightMin = 90;
+						weightMax = 105;
+						attributes.setStr(2);
+						attributes.setCon(2);
+						hasLowVision = true;
 						break;
 					case "Tiefling":
 						heightMin = 170;
@@ -676,90 +798,413 @@ var DnD = (function(window) {
 		};
 	}
 	
+	/* ============================================
+     * Career Object
+     * ============================================
+     */
+	function Career() {
+		//Details
+		var name = "Unknown";
+		var speed = 0;
+		// Iniative
+		var bonusInitiative = 0;
+		// Hit Point values
+		var hpBase = 10;
+		var hpLevel = 4;
+		var hpBonus = 0;
+		var surgeBonus = 0;
+		var spdBase = 6;
+		var spdBonus = 0;
+		var attributes = new Attributes();
+		var bonusAttributes = 0;
+		var skills = new Skills();
+		var bonusSkills = 0;
+		var defence = new Defence();;
+		var resistances = new Resistances();
+		var vulnerable = new Resistances();
+		var immunity = new Resistances();
+		/**
+		 * Resets the race object
+		 */
+		function reset() {
+			name = "Unknown";
+			speed = 0;
+			bonusInitiative = 0;
+			hpBase = 10;
+			hpLevel = 4;
+			hpBonus = 0;
+			surgeBonus = 0;
+			spdBase = 6;
+			spdBonus = 0;
+			attributes.reset();
+			bonusAttributes = 0;
+			skills.reset();
+			bonusSkills = 0;
+			defence.reset();
+			resistances.reset();
+			vulnerable.reset();
+			immunity.reset();
+		};
+		return {
+			//Getters
+			getName: function () { return name;},
+			getSpeed: function () { return speed;},
+			getInitiative: function () {return bonusInitiative; },
+			getBaseHP: function () { return hpBase; },
+			getLevelHP: function () { return hpLevel; },
+			getBonusHP: function () { return hpBonus; },
+			getSurgeBonus: function () { return surgeBonus; },
+			getBaseSPD: function () { return spdBase; },
+			getBonusSPD: function () { return spdBonus; },
+			getAttributes: function () { return attributes; },
+			getSkills: function () { return skills; },
+			getDefence: function () { return defence; },
+			getResistances: function () { return resistances; },
+			getVulnerabilities: function () { return vulnerable; },
+			getImmunities: function () { return immunity; },
+			getBonusAttributes: function () { return bonusAttributes; },
+			getBonusSkills: function () { return bonusSkills; },
+			/**
+			 * Sets the Race details
+			 */
+			set: function (selection, npc) {
+				reset();
+				switch (selection) {
+					// Base Player Classes
+					case "Cleric":
+						if (npc) {
+							attribute.setWis(1);
+							skill.setReligion(5);
+							skill.setHeal(5);
+						}
+						hpBase = 12;
+						hpLevel = 5;
+						spdBase = 7;
+						defence.setWill(2);
+						break;
+					case "Fighter":
+						if (npc) {
+							attribute.setStr(1);
+							skill.setAthletics(5);
+							skill.setEndurance(5);
+						}
+						hpBase = 15;
+						hpLevel = 6;
+						spdBase = 9;
+						defence.setFort(2);
+						break;
+					case "Paladin":
+						if (npc) {
+							attribute.setCon(1);
+							skill.setReligion(5);
+							skill.setHeal(5);
+						}
+						hpBase = 15;
+						hpLevel = 6;
+						spdBase = 10;
+						defence.setFort(1);
+						defence.setReflex(1);
+						defence.setWill(1);
+						break;
+					case "Ranger":
+						if (npc) {
+							attribute.setDex(1);
+							skill.setDungeoneering(5);
+							skill.setNature(5);
+						}
+						hpBase = 12;
+						hpLevel = 5;
+						spdBase = 6;
+						defence.setFort(1);
+						defence.setReflex(1);
+						break;
+					case "Rogue":
+						if (npc) {
+							attribute.setWis(1);
+							skill.setThievery(5);
+							skill.setStealth(5);
+						}
+						hpBase = 12;
+						hpLevel = 5;
+						spdBase = 6;
+						defence.setReflex(2);
+						break;
+					case "Warlock":
+						if (npc) {
+							attribute.setInt(1);
+							skill.setArcana(5);
+							skill.setInsight(5);
+						}
+						hpBase = 12;
+						hpLevel = 5;
+						spdBase = 6;
+						defence.setReflex(1);
+						defence.setWill(1);
+						break;
+					case "Warlord":
+						if (npc) {
+							attribute.setCha(1);
+							skill.setIntimidate(5);
+							skill.setPerception(5);
+						}
+						hpBase = 12;
+						hpLevel = 5;
+						spdBase = 7;
+						defence.setFort(1);
+						defence.setWill(1);
+						break;
+					case "Wizard":
+						if (npc) {
+							attribute.setInt(1);
+							skill.setArcana(5);
+							skill.setHistory(5);
+						}
+						hpBase = 10;
+						hpLevel = 4;
+						spdBase = 6;
+						defence.setWill(2);
+						break;
+					// NPC Classes
+					case "Aristocrat":
+						if (npc) {
+							attribute.setCha(1);
+							skill.setBluff(5);
+							skill.setDiplomacy(5);
+						}
+						hpBase = 8;
+						hpLevel = 3;
+						spdBase = 5;
+						defence.setWill(2);
+						break;
+					case "Artisan":
+						if (npc) {
+							attribute.setInt(1);
+							skill.setAthletics(5);
+							skill.setDiplomacy(5);
+						}
+						hpBase = 10;
+						hpLevel = 4;
+						spdBase = 6;
+						defence.setFort(2);
+						break;
+					case "Commoner":
+						if (npc) {
+							attribute.setCon(1);
+							skill.setEndurance(5);
+							skill.setStreetwise(5);
+						}
+						hpBase = 8;
+						hpLevel = 3;
+						spdBase = 5;
+						defence.setFort(2);
+						break;
+					case "Courtesan":
+						if (npc) {
+							attribute.setCha(1);
+							skill.setBluff(5);
+							skill.setStreetwise(5);
+						}
+						hpBase = 8;
+						hpLevel = 3;
+						spdBase = 5;
+						defence.setWill(2);
+						break;
+					case "Criminal":
+						if (npc) {
+							attribute.setDex(1);
+							skill.setStealth(5);
+							skill.setThievery(5);
+						}
+						hpBase = 8;
+						hpLevel = 3;
+						spdBase = 5;
+						defence.setReflex(2);
+						break;
+					case "Healer":
+						if (npc) {
+							attribute.setWis(1);
+							skill.setHeal(10);
+						}
+						hpBase = 8;
+						hpLevel = 3;
+						spdBase = 5;
+						defence.setWill(2);
+						break;
+					case "Labourer":
+						if (npc) {
+							attribute.setCon(1);
+							skill.setAthletics(5);
+							skill.setEndurance(5);
+						}
+						hpBase = 10;
+						hpLevel = 4;
+						spdBase = 6;
+						defence.setFort(2);
+						break;
+					case "Merchant":
+						if (npc) {
+							attribute.setCha(1);
+							skill.setBluff(5);
+							skill.setDiplomacy(5);
+						}
+						hpBase = 8;
+						hpLevel = 3;
+						spdBase = 5;
+						defence.setWill(2);
+						break;
+					case "Priest":
+						if (npc) {
+							attribute.setWis(1);
+							skill.setReligion(10);
+						}
+						hpBase = 8;
+						hpLevel = 3;
+						spdBase = 5;
+						defence.setWill(2);
+						break;
+					case "Scholar":
+						if (npc) {
+							attribute.setInt(1);
+							skill.setHistory(5);
+							skill.setInsight(5);
+						}
+						hpBase = 8;
+						hpLevel = 3;
+						spdBase = 5;
+						defence.setWill(2);
+						break;
+					// Warrior Classes
+					case "Artillery":
+						if (npc) {
+							attribute.setDex(1);
+							skill.setPerception(5);
+							skill.setInsight(5);
+						}
+						hpBase = 8;
+						hpLevel = 4;
+						spdBase = 6;
+						defence.setAC(2);
+						defence.setFort(2);
+						defence.setReflex(2);
+						defence.setWill(2);
+						break;
+					case "Brute":
+						if (npc) {
+							attribute.setCon(1);
+							skill.setAthletics(5);
+							skill.setEndurance(5);
+						}
+						hpBase = 10;
+						hpLevel = 5;
+						spdBase = 7;
+						defence.setAC(2);
+						defence.setFort(2);
+						defence.setReflex(2);
+						defence.setWill(2);
+						break;
+					case "Controller":
+						if (npc) {
+							attribute.setWis(1);
+							skill.setHeal(5);
+							skill.setIntimidate(5);
+						}
+						hpBase = 8;
+						hpLevel = 4;
+						spdBase = 6;
+						defence.setAC(4);
+						defence.setFort(2);
+						defence.setReflex(2);
+						defence.setWill(2);
+						break;
+					case "Lurker":
+						if (npc) {
+							attribute.setDex(1);
+							skill.setStealth(10);
+						}
+						bonusInitiative = 4;
+						hpBase = 6;
+						hpLevel = 3;
+						spdBase = 5;
+						defence.setAC(4);
+						defence.setFort(2);
+						defence.setReflex(2);
+						defence.setWill(2);
+						break;
+					case "Skirmisher":
+						if (npc) {
+							attribute.setStr(1);
+							skill.setStealth(5);
+							skill.setAcrobatics(5);
+						}
+						hpBase = 8;
+						hpLevel = 4;
+						spdBase = 6;
+						defence.setAC(4);
+						defence.setFort(2);
+						defence.setReflex(2);
+						defence.setWill(2);
+						break;
+					case "Soldier":
+						if (npc) {
+							attribute.setCon(1);
+							skill.setAthletics(5);
+							skill.setEndurance(5);
+						}
+						hpBase = 8;
+						hpLevel = 4;
+						spdBase = 6;
+						defence.setAC(6);
+						defence.setFort(2);
+						defence.setReflex(2);
+						defence.setWill(2);
+						break;
+				}
+				name = selection;
+			}
+		};
+	}
 	
-    /**
-     * Base Creature
+	/* ============================================
+     * Creature Object
+     * ============================================
      */
 	function Creature() {
-		/**
-		 * Details
-		 */
-		this.race = new Race();
-		this.level = 1;
-		this.xp = 0;
+		// Details
+		var race = new Race();
+		var level = 1;
 		// Role-playing
-		this.age = 0;
-		this.gender = "Unknown";
-		this.deity = "Unknown";
-		this.alignment = "Neutral";
+		var age = 0;
+		var gender = "Unknown";
+		var deity = "Unknown";
+		var alignment = "Neutral";
 		//Class is a keyword so it now becomes 'career'
-		this.career = "Unknown";
+		var career = new Career();
 		// Speed
-		this.speedMod = 0;
+		var speedMod = 0;
 		// Iniative
-		this.initiativeMod = 0;
-		// Hit Point values
-		this.hpBase = 10;
-		this.hpLevel = 4;
-		this.hpBonus = 0;
-		this.surgeBonus = 0;
-		this.spdBase = 6;
-		this.spdBonus = 0;
-		
+		var initiativeMod = 0;	
+		// Height mod. 0 = Small, 1 = Average, 2 = Tall
+		var heightMod = 0;
 		
 		/**
 		 * Attributes
-		 * 
-		 * Order is STR, CON, DEX, INT, WIS, CHA
 		 */
-		this.attributes = new Attributes();
-		
-		/**
-		 * Class Attribute Modifiers
-		 */
-		this.classAttributes = [0,0,0,0,0,0];
-		
-		/**
-		 * Misc Attribute Modifiers
-		 */
-		this.miscAttributes = [0,0,0,0,0,0];
+		var attributes = new Attributes();
 		
 		/**
 		 * Trained Skills
 		 */
-		this.trainedSkills = new Skills();
+		var skills = new Skills();
 		
 		/**
-		 * Class Skills
+		 * Defences
 		 */
-		this.classSkills = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-		
-		/**
-		 * Misc Skills
-		 */
-		this.miscSkills = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-		
-		/**
-		 * Class Defences
-		 * 
-		 * Order is AC, FORT, REF, WIL
-		 */
-		this.classDefence = [0,0,0,0];
-		
-		/**
-		 * Misc Defences
-		 */
-		this.raceDefence = [0,0,0,0];
-		
-		/**
-		 * Misc Defences
-		 */
-		this.miscDefence = [0,0,0,0];
+		var defence = new Defence();
 		
 		/**
 		 * Armour
 		 */
-		this.armour = {
+		var armour = {
 				name: "Cloth",
 				ac: 0,
 				bonus: 1,
@@ -769,130 +1214,95 @@ var DnD = (function(window) {
 				weight: 4
 		};
 		
+		/**
+		 * Level modifier
+		 */
+		function getLevelMod() { return Math.floor(level * 0.5); };
+		
+		/**
+		 * Attributes
+		 */
+		function str() { return attributes.getStr() + race.getAttributes().getStr() + career.getAttributes().getStr(); };
+		function con() { return attributes.getCon() + race.getAttributes().getCon() + career.getAttributes().getCon(); };
+		function dex() { return attributes.getDex() + race.getAttributes().getDex() + career.getAttributes().getDex(); };
+		function int() { return attributes.getInt() + race.getAttributes().getInt() + career.getAttributes().getInt(); };
+		function wis() { return attributes.getWis() + race.getAttributes().getWis() + career.getAttributes().getWis(); };
+		function cha() { return attributes.getCha() + race.getAttributes().getCha() + career.getAttributes().getCha(); };
+		
+		/**
+		 * Attribute modifier
+		 */
+		function strMod() {return Math.floor((str() - 10)/2); };
+		function conMod() {return Math.floor((con() - 10)/2); };
+		function dexMod() {return Math.floor((dex() - 10)/2); };
+		function intMod() {return Math.floor((int() - 10)/2); };
+		function wisMod() {return Math.floor((wis() - 10)/2); };
+		function chaMod() {return Math.floor((cha() - 10)/2); };
+		
+		/**
+		 * Base Attack Rolls
+		 */
+		function strAttack() { return getLevelMod() + strMod(); };
+		function conAttack() { return getLevelMod() + conMod(); };
+		function dexAttack() { return getLevelMod() + dexMod(); };
+		function intAttack() { return getLevelMod() + intMod(); };
+		function wisAttack() { return getLevelMod() + wisMod(); };
+		function chaAttack() { return getLevelMod() + chaMod(); };
+		
+		/**
+		 * Skills
+		 */
+		function acrobatics() { return getLevelMod() + dexMod() + skills.getAcrobatics() + race.skills.getAcrobatics() + career.skills.getAcrobatics() + armour.check; };
+		function arcana() { return getLevelMod() + intMod() + skills.getArcana() + race.skills.getArcana() + career.skills.getArcana(); };
+		function athletics() { return getLevelMod() + strMod() + skills.getAthletics() + race.skills.getAtheletics() + career.skills.getAthletics() + armour.check; };
+		function bluff() { return getLevelMod() + chaMod() + skills.getBluff() + race.skills.getBluff() + career.skills.getBluff(); };
+		function diplomacy() { return getLevelMod() + chaMod() + skills.getDiplomacy() + race.skills.getDiplomacy() + career.skills.getDiplomacy(); };
+		function dugeon() { return getLevelMod() + wisMod() + skills.getDugeoneering() + race.skills.getDugeoneering() + career.skills.getDugeoneering(); };
+		function endurance() { return getLevelMod() + conMod() + skills.getEndurance() + race.skills.getEndurance() + career.skills.getEndurance() + armour.check; };
+		function heal() { return getLevelMod() + wisMod() + skills.getHeal() + race.skills.getHeal() + career.skills.getHeal(); };
+		function history() { return getLevelMod() + intMod() + skills.getHistory() + race.skills.getHistory() + career.skills.getHistory(); };
+		function insight() { return getLevelMod() + wisMod() + skills.getInsight() + race.skills.getInsight() + career.skills.getInsight(); };
+		function intimidate() { return getLevelMod() + chaMod() + skills.getIntimidate() + race.skills.getIntimidate() + career.skills.getIntimidate(); };
+		function nature() { return getLevelMod() + wisMod() + skills.getNature() + race.skills.getNature() + career.skills.getNature(); };
+		function perception() { return getLevelMod() + wisMod() + skills.getPerception() + race.skills.getPerception() + career.skills.getPerception(); };
+		function religion() { return getLevelMod() + intMod() + skills.getReligion() + race.skills.getReligion() + career.skills.getReligion(); };
+		function stealth() { return getLevelMod() + dexMod() + skills.getStealth() + race.skills.getStealth() + career.skills.getStealth() + armour.check; };
+		function streetwise() { return getLevelMod() + chaMod() + skills.getStreetwise() + race.skills.getStreetwise() + career.skills.getStreetwise(); };
+		function thievery() { return getLevelMod() + dexMod() + skills.getThievery() + race.skills.getThievery() + career.skills.getThievery() +armour.check; };
+		
+		/**
+		 * Defences
+		 */
+		function ac() { return 10 + getLevelMod() + armour.ac + race.getDefence().getAC() + career.getDefence().getAC() + defence.getAC() + ((armour.bonus) ? ((intMod() > dexMod()) ? intMod() : dexMod()) : 0);	};
+		function fort() { return 10 + getLevelMod() + ((strMod() > conMod()) ? strMod() : conMod()) + race.getDefence().getFort() + career.getDefence().getFort() + defence.getAC(); };
+		function reflex() { return 10 + getLevelMod() + ((dexMod() > intMod()) ? dexMod() : intMod()) + race.getDefence().getReflex() + career.getDefence().getReflex() + defence.getAC(); };
+		function will() { return 10 + getLevelMod() + ((wisMod() > chaMod()) ? wisMod() : chaMod()) + race.getDefence().getWill() + career.getDefence().getWill() + defence.getWill(); };
+		
+		/**
+		 * Weight and Height Calculation
+		 */
+		function weight() { return Math.round(race.getMinWeight() + ((race.getMaxWeight() - race.getMinWeight()) * (con() / 30))); };
+		function height() { return (heightMod) ? ((heightMod > 1) ? race.getMaxHeight() : race.getMinHeight() + ((race.getMaxHeight() - race.getMinHeight())/2)) : race.getMinHeight; };
+		
+		/**
+		 * Speed Calculations
+		 */
+		function speed() { return race.getSpeed() + career.getSpeed() + speedMod + armour.speed; };
+		function speedFeet(minutes) { return Math.round((speed() * 5)*(minutes/6)); };
+		function speedMetre(minutes) { return (speedFeet(minutes) * 0.305).toFixed(1); };
+		function speedYard(minutes) { return (speedFeet(minutes)/3).toFixed(1); };
+		function speedMile(hours) { return Math.round(speedYard(60*hours)/1760); };
+		function speedKilometre(hours) { return Math.round(speedMetre(60*hours)/1000); };
+		
+		/**
+		 * Hit Points
+		 */
+		function hp() { return career.getBaseHP() + con() + career.getBonusHP() + ((level - 1) * career.getLevelHP()); };
+		
 		// ======== INFORMATION ===========
-		
-		/**
-		 * The normal weight limit (pounds)
-		 */
-		this.getNormalLoadPounds = (function () {
-			return this.getStrength() * 10;
-		});
-		
-		/**
-		 * The normal weight limit (kilos)
-		 */
-		this.getNormalLoadKilos = (function () {
-			return Math.floor(this.getNormalLoadPounds() * 0.45);
-		});
-		
-		/**
-		 * The heavy weight limit (pounds)
-		 */
-		this.getHeavyLoadPounds = (function () {
-			return this.getNormalLoadPounds() * 2;
-		});
-		
-		/**
-		 * The heavy weight limit (kilos)
-		 */
-		this.getHeavyLoadKilos = (function () {
-			return Math.floor(this.getHeavyLoadPounds() * 0.45);
-		});
-		
-		/**
-		 * The heavy weight limit (pounds)
-		 */
-		this.getDragLoadPounds = (function () {
-			return this.getNormalLoadPounds() * 5;
-		});
-		
-		/**
-		 * The drag weight limit (kilos)
-		 */
-		this.getDragLoadKilos = (function () {
-			return Math.floor(this.getDragLoadPounds() * 0.45);
-		});
-		
-		/**
-		 * Speed in squares
-		 */
-		this.getSpeed = (function () {
-			return this.speedBase + this.speedMod + this.armour.speed;
-		});
-		
-		/**
-		 * Speed in feet (per turn)
-		 */
-		this.getSpeedFeet = (function () {
-			return this.getSpeed() * 5;
-		});
-		
-		/**
-		 * Speed in metres (per turn)
-		 */
-		this.getSpeedMetre = (function () {
-			return (this.getSpeedFeet() * 0.305).toFixed(1);
-		});
-		
-		/**
-		 * Speed in feet (per minute)
-		 */
-		this.getSpeedFpm = (function () {
-			return this.getSpeedFeet() * 10;
-		});
-		
-		/**
-		 * Speed in metres (per minute)
-		 */
-		this.getSpeedMpm = (function () {
-			return (this.getSpeedFpm() * 0.305).toFixed(1);
-		});
-		
-		/**
-		 * Speed in feet (per hour)
-		 */
-		this.getSpeedFph = (function () {
-			return this.getSpeedFpm() * 60;
-		});
-		
-		/**
-		 * Speed in metres (per hour)
-		 */
-		this.getSpeedMph = (function () {
-			return (this.getSpeedFph() * 0.305).toFixed(1);
-		});
-		
-		/**
-		 * Speed in miles (per hour)
-		 */
-		this.getSpeedMiles = (function() {
-			return Math.floor(this.getSpeedFph() * 0.000189);
-		});
-		
-		/**
-		 * Speed in kilometres (per hour)
-		 */
-		this.getSpeedKm = (function() {
-			return (this.getSpeedMiles() * 1.61).toFixed(1);
-		});
-		
-		/**
-		 * Speed in miles (per day)
-		 */
-		this.getSpeedMilesPerDay = (function() {
-			return this.getSpeedMiles() * 8;
-		});
-		
-		/**
-		 * Speed in kilometres (per day)
-		 */
-		this.getSpeedKmPerDay = (function() {
-			return (this.getSpeedMilesPerDay() * 1.61).toFixed(1);
-		});
-		
 		/**
 		 * Reach
-		 */
+		 
 		this.getReach = (function () {
 			switch (this.size) {
 				case 0:
@@ -910,7 +1320,7 @@ var DnD = (function(window) {
 		
 		/**
 		 * Square space needed
-		 */
+		 
 		this.getSquare = (function () {
 			switch (this.size) {
 				case 0:
@@ -928,21 +1338,21 @@ var DnD = (function(window) {
 		
 		/**
 		 * Number of at will spells
-		 */
+		 
 		this.getAtWillNumber = (function () {
 			return 2 + ((this.race == "Human") ? 1 : 0);
 		});
 		
 		/**
 		 * Number of Feats known
-		 */
+		 
 		this.getFeatsNum = (function () {
 			return 1 + Math.floor(this.level/2) + Math.floor((this.level-1)/10) + ((this.race == "Human") ? 1: 0);
 		});
 		
 		/**
 		 * Number of Encounters known
-		 */
+		 
 		this.getEncountersNum = (function () {
 			if (this.level > 2 && this.level < 7) {
 				return 2;
@@ -956,7 +1366,7 @@ var DnD = (function(window) {
 		
 		/**
 		 * Number of Dailies known
-		 */
+		 
 		this.getDailiesNum = (function () {
 			var multi = (this.career == "Wizard") ? 2 : 1;
 			if (this.level > 4 && this.level < 9) {
@@ -971,7 +1381,7 @@ var DnD = (function(window) {
 		
 		/**
 		 * Number of Utilities known
-		 */
+		 
 		this.getUtilitiesNum = (function () {
 			var multi = (this.career == "Wizard") ? 2 : 1;
 			if (this.level > 1 && this.level < 6) {
@@ -994,138 +1404,10 @@ var DnD = (function(window) {
 		
 		// ======== ATTRIBUTES, INITIATIVE AND SKILLS ===========
 		
-		/**
-		 * LEVEL MODIFIER
-		 */
-		this.getLevelMod = (function () {
-			return Math.floor(this.level * 0.5);
-		});
-		
-		/**
-		 * INITIATIVE
-		 */
-		this.getInitiative = (function () {
-			return this.getLevelMod() + this.getDexMod() + this.initiativeMod;
-		});
-		
-		/**
-		 * ATTRIBUTES
-		 */
-		this.getStrength = (function () {
-			return this.attributes.getStr() + this.race.getAttributes().getStr() + parseInt(this.classAttributes[0]) + this.miscAttributes[0];
-		});
-		this.getConstitution = (function () {
-			return this.attributes.getCon() + this.race.getAttributes().getCon() + parseInt(this.classAttributes[1]) + this.miscAttributes[1];
-		});
-		this.getDexterity = (function () {
-			return this.attributes.getDex() + this.race.getAttributes().getDex() + parseInt(this.classAttributes[2]) + this.miscAttributes[2];
-		});
-		this.getIntelligence = (function () {
-			return this.attributes.getInt() + this.race.getAttributes().getInt() + parseInt(this.classAttributes[3]) + this.miscAttributes[3];
-		});
-		this.getWisdom = (function () {
-			return this.attributes.getWis() + this.race.getAttributes().getWis() + parseInt(this.classAttributes[4]) + this.miscAttributes[4];
-		});
-		this.getCharisma = (function () {
-			return this.attributes.getCha() + this.race.getAttributes().getCha() + parseInt(this.classAttributes[5]) + this.miscAttributes[5];
-		});
-		
-		/**
-		 * ATTRIBUTE MODIFIER
-		 */
-		this.getStrMod = (function () {
-			return Math.floor((this.getStrength() - 10) / 2);
-		});
-		this.getConMod = (function () {
-			return Math.floor((this.getConstitution() - 10) / 2);
-		});
-		this.getDexMod = (function () {
-			return Math.floor((this.getDexterity() - 10) / 2);
-		});
-		this.getIntMod = (function () {
-			return Math.floor((this.getIntelligence() - 10) / 2);
-		});
-		this.getWisMod = (function () {
-			return Math.floor((this.getWisdom() - 10) / 2);
-		});
-		this.getChaMod = (function () {
-			return Math.floor((this.getCharisma() - 10) / 2);
-		});
-		
-		/**
-		 * SKILLS
-		 */
-		this.getAcrobatics = (function () {
-			return this.getLevelMod() + this.getDexMod() + parseInt(this.trainedSkills[0]) + this.raceSkills[0] + this.classSkills[0] + this.miscSkills[0] + this.armour.check;
-		});
-		this.getArcana = (function () {
-			return this.getLevelMod() + this.getIntMod() + parseInt(this.trainedSkills[1]) + this.raceSkills[1] + this.classSkills[1] + this.miscSkills[1];
-		});
-		this.getAthletics = (function () {
-			return this.getLevelMod() + this.getStrMod() + this.trainedSkills[2] + this.raceSkills[2] + this.classSkills[2] + this.miscSkills[2] + this.armour.check;
-		});
-		this.getBluff = (function () {
-			return this.getLevelMod() + this.getChaMod() + this.trainedSkills[3] + this.raceSkills[3] + this.classSkills[3] + this.miscSkills[3];
-		});
-		this.getDiplomacy = (function () {
-			return this.getLevelMod() + this.getChaMod() + this.trainedSkills[4] + this.raceSkills[4] + this.classSkills[4] + this.miscSkills[4];
-		});
-		this.getDungeon = (function () {
-			return this.getLevelMod() + this.getWisMod() + this.trainedSkills[5] + this.raceSkills[5] + this.classSkills[5] + this.miscSkills[5];
-		});
-		this.getEndurance = (function () {
-			return this.getLevelMod() + this.getConMod() + this.trainedSkills[6] + this.raceSkills[6] + this.classSkills[6] + this.miscSkills[6] + this.armour.check;
-		});
-		this.getHeal = (function () {
-			return this.getLevelMod() + this.getWisMod() + this.trainedSkills[7] + this.raceSkills[7] + this.classSkills[7] + this.miscSkills[7];
-		});
-		this.getHistory = (function () {
-			return this.getLevelMod() + this.getIntMod() + this.trainedSkills[8] + this.raceSkills[8] + this.classSkills[8] + this.miscSkills[8];
-		});
-		this.getInsight = (function () {
-			return this.getLevelMod() + this.getWisMod() + this.trainedSkills[9] + this.raceSkills[9] + this.classSkills[9] + this.miscSkills[9];
-		});
-		this.getIntimidate = (function () {
-			return this.getLevelMod() + this.getChaMod() + this.trainedSkills[10] + this.raceSkills[10] + this.classSkills[10] + this.miscSkills[10];
-		});
-		this.getNature = (function () {
-			return this.getLevelMod() + this.getWisMod() + this.trainedSkills[11] + this.raceSkills[11] + this.classSkills[11] + this.miscSkills[11];
-		});
-		this.getPerception = (function () {
-			return this.getLevelMod() + this.getWisMod() + this.trainedSkills[12] + this.raceSkills[12] + this.classSkills[12] + this.miscSkills[12];
-		});
-		this.getReligion = (function () {
-			return this.getLevelMod() + this.getIntMod() + this.trainedSkills[13] + this.raceSkills[13] + this.classSkills[13] + this.miscSkills[13];
-		});
-		this.getStealth = (function () {
-			return this.getLevelMod() + this.getDexMod() + this.trainedSkills[14] + this.raceSkills[14] + this.classSkills[14] + this.miscSkills[14] + this.armour.check;
-		});
-		this.getStreetwise = (function () {
-			return this.getLevelMod() + this.getChaMod() + this.trainedSkills[15] + this.raceSkills[15] + this.classSkills[15] + this.miscSkills[15];
-		});
-		this.getThievery = (function () {
-			return this.getLevelMod() + this.getDexMod() + this.trainedSkills[16] + this.raceSkills[16] + this.classSkills[16] + this.miscSkills[16] + this.armour.check;
-		});
-		
-		/**
-		 * Defences
-		 */
-		this.getAC = (function () {
-			return 10 + this.getLevelMod() + this.armour.ac + parseInt(this.raceDefence[0]) + parseInt(this.classDefence[0]) + parseInt(this.miscDefence[0]) + ((this.armour.bonus) ? ((this.getIntMod() > this.getDexMod()) ? this.getIntMod() : this.getDexMod()) : 0);
-		});
-		this.getFort = (function () {
-			return 10 + this.getLevelMod() + ((this.getStrMod() > this.getConMod()) ? this.getStrMod() : this.getConMod()) + this.raceDefence[1] + this.classDefence[1] + this.miscDefence[1];
-		});
-		this.getRef = (function () {
-			return 10 + this.getLevelMod() + ((this.getDexMod() > this.getIntMod()) ? this.getDexMod() : this.getIntMod()) + this.raceDefence[2] + this.classDefence[2] + this.miscDefence[2];
-		});
-		this.getWil = (function () {
-			return 10 + this.getLevelMod() + ((this.getWisMod() > this.getChaMod()) ? this.getWisMod() : this.getChaMod()) + this.raceDefence[3] + this.classDefence[3] + this.miscDefence[3];
-		});
 		
 		/**
 		 * Hit Points
-		 */
+		
 		this.getHP = (function () {
 			return this.hpBase + this.getConstitution() + this.hpBonus + ((this.level - 1) * this.hpLevel);
 		});
@@ -1136,299 +1418,11 @@ var DnD = (function(window) {
 			return (this.spdBase + this.getConMod() + this.spdBonus);
 		});
 		
-		/**
-		 * Base Attack Rolls
-		 */
-		this.getStrAttack = (function () {
-			return this.getLevelMod() + this.getStrMod(); 
-		});
-		this.getConAttack = (function () {
-			return this.getLevelMod() + this.getConMod(); 
-		});
-		this.getDexAttack = (function () {
-			return this.getLevelMod() + this.getDexMod(); 
-		});
-		this.getIntAttack = (function () {
-			return this.getLevelMod() + this.getIntMod(); 
-		});
-		this.getWisAttack = (function () {
-			return this.getLevelMod() + this.getWisMod(); 
-		});
-		this.getChaAttack = (function () {
-			return this.getLevelMod() + this.getChaMod(); 
-		});
-		
-		this.setRace = function (race) { this.race.set(race); };
-		
-		// ======== CLASS STUFF ===========
-		
-		/**
-		 * Scrubs a given class from the character (including modifiers)
-		 */
-		this.removeClass = (function () {
-			// Name
-			this.career = "Unknown";
-			// Iniative
-			this.initiativeMod = 0;
-			// Hit Point values
-			this.hpBase = 10;
-			this.hpLevel = 4;
-			this.hpBonus = 0;
-			this.surgeBonus = 0;
-			this.spdBase = 6;
-			this.spdBonus = 0;
-			// Remove any attributes
-			this.classAttributes = [0, 0, 0, 0, 0, 0];
-			this.classDefence = [0, 0, 0, 0];
-			this.classSkills = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-		});
-		
-		/**
-		 * Adds bonuses dependant on class
-		 */
-		this.addClass = (function(name) {
-			this.removeClass();
-			this.career = name;
-			switch (this.career) {
-				case "Cleric":
-					this.hpBase = 12;
-					this.hpLevel = 5;
-					this.hpBonus = 0;
-					this.surgeBonus = 0;
-					this.spdBase = 7;
-					this.spdBonus = 0;
-					this.classDefence = [0,0,0,2];
-					break;
-				case "Fighter":
-					this.hpBase = 15;
-					this.hpLevel = 6;
-					this.hpBonus = 0;
-					this.surgeBonus = 0;
-					this.spdBase = 9;
-					this.spdBonus = 0;
-					this.classDefence = [0,2,0,0];
-					break;
-				case "Paladin":
-					this.hpBase = 15;
-					this.hpLevel = 6;
-					this.hpBonus = 0;
-					this.surgeBonus = 0;
-					this.spdBase = 10;
-					this.spdBonus = 0;
-					this.classDefence = [0,1,1,1];
-					break;
-				case "Ranger":
-					this.hpBase = 12;
-					this.hpLevel = 5;
-					this.hpBonus = 0;
-					this.surgeBonus = 0;
-					this.spdBase = 0;
-					this.spdBonus = 0;
-					this.classDefence = [0,1,1,0];
-					break;
-				case "Rogue":
-					this.hpBase = 12;
-					this.hpLevel = 5;
-					this.hpBonus = 0;
-					this.surgeBonus = 0;
-					this.spdBase = 6;
-					this.spdBonus = 0;
-					this.classDefence = [0,0,2,0];
-					break;
-				case "Warlock":
-					this.hpBase = 12;
-					this.hpLevel = 5;
-					this.hpBonus = 0;
-					this.surgeBonus = 0;
-					this.spdBase = 6;
-					this.spdBonus = 0;
-					this.classDefence = [0,0,1,1];
-					break;
-				case "Warlord":
-					this.hpBase = 12;
-					this.hpLevel = 5;
-					this.hpBonus = 0;
-					this.surgeBonus = 0;
-					this.spdBase = 7;
-					this.spdBonus = 0;
-					this.classDefence = [0,1,0,1];
-					break;
-				case "Wizard":
-					this.hpBase = 10;
-					this.hpLevel = 4;
-					this.hpBonus = 0;
-					this.surgeBonus = 0;
-					this.spdBase = 6;
-					this.spdBonus = 0;
-					this.classDefence = [0,0,0,2];
-					break;
-				case "Adept":
-					// Add bonuses to Intelligence, Arcana and Insight
-					this.classAttributes[3] = 1; 
-					this.classSkills[1] = 2;
-					this.classSkills[9] = 2;
-					this.hpBase = 6;
-					this.hpLevel = 3;
-					this.classDefence = [0,0,0,2];
-					break;
-				case "Artisan":
-					// Add bonuses to Wisdom, Diplomacy and Endurance
-					this.classAttributes[4] = 1;
-					this.classSkills[4] = 2;
-					this.classSkills[6] = 2;
-					this.hpBase = 8;
-					this.hpLevel = 4;
-					this.classDefence = [0,2,2,0];
-					break;
-				case "Aristocrat":
-					// Add bonuses to Intelligence, Diplomacy and Bluff
-					this.classAttributes[3] = 1;
-					this.classSkills[4] = 2;
-					this.classSkills[3] = 2;
-					this.hpBase = 8;
-					this.hpLevel = 4;
-					this.classDefence = [0,0,2,2];
-					break;
-				case "Commoner":
-					// Add bonuses to Constitution, Streetwise and Endurance
-					this.classAttributes[1] = 1;
-					this.classSkills[15] = 2;
-					this.classSkills[6] = 2;
-					this.hpBase = 6;
-					this.hpLevel = 3;
-					this.classDefence = [0,0,0,0];
-					break;
-				case "Courtesan":
-					// Add bonuses to Charisma, Streetwise and Insight
-					this.classAttributes[5] = 1;
-					this.classSkills[15] = 2;
-					this.classSkills[9] = 2;
-					this.hpBase = 6;
-					this.hpLevel = 3;
-					this.classDefence = [0,0,2,2];
-					break;
-				case "Criminal":
-					// Add bonuses to Dexterity, Stealth and Thievery
-					this.classAttributes[2] = 1;
-					this.classSkills[14] = 2;
-					this.classSkills[16] = 2;
-					this.hpBase = 8;
-					this.hpLevel = 4;
-					this.classDefence = [0,2,2,0];
-					break;
-				case "Expert":
-					// Add bonuses to Intelligence, Perception and Insight
-					this.classAttributes[3] = 1;
-					this.classSkills[10] = 2;
-					this.classSkills[12] = 2;
-					this.hpBase = 6;
-					this.hpLevel = 3;
-					this.classDefence = [0,0,0,2];
-					break;
-				case "Healer":
-					// Add bonuses to Wisdom, Heal and Nature
-					this.classAttributes[4] = 1;
-					this.classSkills[7] = 2;
-					this.classSkills[11] = 2;
-					this.hpBase = 6;
-					this.hpLevel = 3;
-					this.classDefence = [0,0,2,2];
-					break;
-				case "Labourer":
-					// Add bonuses to Constitution, Athletics and Endurance
-					this.classAttributes[1] = 1;
-					this.classSkills[2] = 2;
-					this.classSkills[6] = 2;
-					this.hpBase = 10;
-					this.hpLevel = 5;
-					this.classDefence = [0,2,2,0];
-					break;
-				case "Merchant":
-					// Add bonuses to Charisma, Bluff and Insight
-					this.classAttributes[5] = 1;
-					this.classSkills[3] = 2;
-					this.classSkills[9] = 2;
-					this.hpBase = 8;
-					this.hpLevel = 4;
-					this.classDefence = [0,0,0,2];
-					break;
-				case "Priest":
-					// Add bonuses to Wisdom, Heal and Religion
-					this.classAttributes[4] = 1;
-					this.classSkills[7] = 2;
-					this.classSkills[13] = 2;
-					this.hpBase = 6;
-					this.hpLevel = 3;
-					this.classDefence = [0,0,0,2];
-					break;
-				case "Scholar":
-					// Add bonuses to Intelligence, History and Religion
-					this.classAttributes[3] = 1;
-					this.classSkills[8] = 2;
-					this.classSkills[13] = 2;
-					this.hpBase = 6;
-					this.hpLevel = 3;
-					this.classDefence = [0,0,0,2];
-					break;
-				case "Warrior":
-					// Add bonuses to Strength, Athletics and Intimidate
-					this.classAttributes[0] = 1;
-					this.classSkills[2] = 2;
-					this.classSkills[9] = 2;
-					this.hpBase = 12;
-					this.hpLevel = 8;
-					this.classDefence = [6,2,2,2];
-					break;
-				case "Artillery":
-					this.classAttributes[2] = 2;
-					this.initiativeMod = 0;
-					this.hpBase = 6;
-					this.hpLevel = 6;
-					this.classDefence = [2,2,2,2];
-					break;
-				case "Brute":
-					this.classAttributes[0] = 2;
-					this.initiativeMod = 0;
-					this.hpBase = 10;
-					this.hpLevel = 10;
-					this.classDefence = [2,2,2,2];
-					break;
-				case "Controller":
-					this.classAttributes = [0,0,0,1,1,1];
-					this.initiativeMod = 0;
-					this.hpBase = 8;
-					this.hpLevel = 8;
-					this.classDefence = [4,2,2,2];
-					break;
-				case "Lurker":
-					this.classAttributes[2] = 2;
-					this.initiativeMod = 4;
-					this.hpBase = 6;
-					this.hpLevel = 6;
-					this.classDefence = [4,2,2,2];
-					break;
-				case "Skirmisher":
-					this.classAttributes[2] = 2;
-					this.initiativeMod = 2;
-					this.hpBase = 8;
-					this.hpLevel = 8;
-					this.classDefence = [4,2,2,2];
-					break;
-				case "Soldier":
-					this.classAttributes[1] = 2;
-					this.initiativeMod = 2;
-					this.hpBase = 8;
-					this.hpLevel = 8;
-					this.classDefence = [6,2,2,2];
-					break;
-			}
-		});
-		
 		// ======== ARMOUR STUFF ===========
 		
 		/**
 		 * Scrubs a given amour from the character (including modifiers)
-		 */
+		
 		this.removeArmour = (function () {
 			this.armour = {
 					name: "Cloth",
@@ -1443,7 +1437,7 @@ var DnD = (function(window) {
 		
 		/**
 		 * Adds bonuses dependant on class
-		 */
+		 
 		this.addArmour = (function(name) {
 			this.removeArmour();
 			switch (name) {
@@ -1504,6 +1498,86 @@ var DnD = (function(window) {
 					break;
 			}
 		});
+		*/
+		
+		return {
+			// Level
+			getLevel: function () { return level; },
+			setLevel: function (value) { level = parseInt(value); },
+			//Age
+			getAge: function () { return age; },
+			setAge: function (value) { age = parseInt(value); },
+			// Deity
+			getDeity: function () { return deity; },
+			setDeity: function (value) { deity = value; },
+			// Gender
+			getGender: function () { return gender; },
+			setGender: function (value) { gender = value; },
+			// Alignment
+			getAlignment: function () { return alignment; },
+			setAlignment: function (value) { alignment = value; },
+			// Initiative
+			getInitiative: function () { return getLevelMod() + dexMod() + initiativeMod + career.getInitiative() + race.getInitiative(); },
+			// Attributes
+			getStr: function () { return str(); },
+			getCon: function () { return con(); },
+			getDex: function () { return dex(); },
+			getInt: function () { return int(); },
+			getWis: function () { return wis(); },
+			getCha: function () { return cha(); },
+			setStr: function (value) { attributes.setStr(value); },
+			setCon: function (value) { attributes.setCon(value); },
+			setDex: function (value) { attributes.setDex(value); },
+			setInt: function (value) { attributes.setInt(value); },
+			setWis: function (value) { attributes.setWis(value); },
+			setCha: function (value) { attributes.setCha(value); },
+			// Modifiers
+			getStrMod: function () { return strMod(); },
+			getConMod: function () { return conMod(); },
+			getDexMod: function () { return dexMod(); },
+			getIntMod: function () { return intMod(); },
+			getWisMod: function () { return wisMod(); },
+			getChaMod: function () { return chaMod(); },
+			// Attack rolls
+			getStrAttack: function () { return strAttack(); },
+			getConAttack: function () { return conAttack(); },
+			getDexAttack: function () { return dexAttack(); },
+			getIntAttack: function () { return intAttack(); },
+			getWisAttack: function () { return wisAttack(); },
+			getChaAttack: function () { return chaAttack(); },
+			// Defence
+			getAC: function () { return ac(); },
+			getFort: function () { return fort(); },
+			getReflex: function () { return reflex(); },
+			getWill: function () { return will(); },
+			// Weight and loads
+			getWeight: function () { return weight(); },
+			getHeavyLoad: function () { return Math.round(weight() * (str()/10)); },
+			getDragLoad: function () { return Math.round(weight() * (str()/3)); },
+			// Height
+			setHeight: function (value) { heightMod = value; },
+			getHeight: function () { return height(); },
+			// Speed calculations
+			getSpeed: function () { return speed(); },
+			getSpeedFeet: function (minutes) { return speedFeet(minutes); },
+			getSpeedMetre: function (minutes) { return speedMetre(minutes); },
+			getSpeedYard: function (minutes) { return speedYard(minutes); },
+			getSpeedMile: function (hours) { return speedMile(hours); },
+			getSpeedKilometre: function (hours) { return speedKilometre(hours); },
+			// Race information
+			getRaceName: function () { return race.getName(); },
+			getRace: function () { return race; },
+			setRace: function (selection) { race.set(selection); },
+			// Class information
+			getClassName: function () { return career.getName(); },
+			getClass: function () { return career; },
+			setClass: function (selection) { career.set(selection); },
+			// HP information
+			getHP: function () { return hp(); },
+			getBloodied: function () { return Math.floor(hp() / 2); },
+			getSurge: function () { return Math.floor(hp() * 0.25 + ((race.name == "Dragonborn") ? conMod() : 0)); },
+			getSurgePerDay: function () { return career.getBaseSPD() + conMod() + career.getBonusSPD(); }
+		};
 	}
 	
 	/* ============================================
@@ -1516,7 +1590,7 @@ var DnD = (function(window) {
         /**
          * Return a new creature object
          */
-        newCreature: (function() {return new Creature;}),
+        creature: new Creature(),
         
         dice: this.dice
     };

@@ -71,6 +71,7 @@
 					<th>Initiative</th>
 					<th>Speed</th>
 					<th>Vision</th>
+					<th>Size/Origin</th>
 				</tr>
 				<tr>
 					<td id="txt_hp"></td>
@@ -80,6 +81,7 @@
 					<td id="txt_init"></td>
 					<td id="txt_speed"></td>
 					<td id="txt_vision"></td>
+					<td id="txt_misc"></td>
 				</tr>
 				<tr>
 					<th></th>
@@ -89,6 +91,7 @@
 					<th>INT</th>
 					<th>WIS</th>
 					<th>CHA</th>
+					<th></th>
 				</tr>
 				<tr>
 					<th>Score</th>
@@ -98,6 +101,7 @@
 					<td id="txt_int"></td>
 					<td id="txt_wis"></td>
 					<td id="txt_cha"></td>
+					<td></td>
 				</tr>
 				<tr>
 					<th>Mod</th>
@@ -107,6 +111,7 @@
 					<td id="txt_int_mod"></td>
 					<td id="txt_wis_mod"></td>
 					<td id="txt_cha_mod"></td>
+					<td></td>
 				</tr>
 				<tr>
 					<th>Attack</th>
@@ -116,21 +121,16 @@
 					<td id="txt_int_attack"></td>
 					<td id="txt_wis_attack"></td>
 					<td id="txt_cha_attack"></td>
+					<td></td>
 				</tr>
 				<tr>
-					<td>AC</td>
+					<th>AC</th>
 					<td id="txt_ac"></td>
-				</tr>
-				<tr>
-					<td>Fortitude</td>
+					<th>FORT</th>
 					<td id="txt_for"></td>
-				</tr>
-				<tr>
-					<td>Reflex</td>
+					<th>REF</th>
 					<td id="txt_ref"></td>
-				</tr>
-				<tr>
-					<td>Will</td>
+					<th>WILL</th>
 					<td id="txt_wil"></td>
 				</tr>
 				<tr>
@@ -185,36 +185,36 @@
 
     // Create the creature
     var create = (function () {
-    	var creature = DnD.newCreature();
-    	creature.level = window.document.getElementById('level_input').value;
-    	creature.attributes.setStr(window.document.getElementById('str_input').value);
-    	creature.attributes.setCon(window.document.getElementById('con_input').value);
-    	creature.attributes.setDex(window.document.getElementById('dex_input').value);
-    	creature.attributes.setInt(window.document.getElementById('int_input').value);
-    	creature.attributes.setWis(window.document.getElementById('wis_input').value);
-    	creature.attributes.setCha(window.document.getElementById('cha_input').value);
-    	creature.race.set(window.document.getElementById('race_input').value);
-    	creature.addClass(window.document.getElementById('class_input').value);
-    	creature.addArmour(window.document.getElementById('armour_input').value);
+    	var creature = DnD.creature;
+    	creature.setLevel(window.document.getElementById('level_input').value);
+    	creature.setStr(window.document.getElementById('str_input').value);
+    	creature.setCon(window.document.getElementById('con_input').value);
+    	creature.setDex(window.document.getElementById('dex_input').value);
+    	creature.setInt(window.document.getElementById('int_input').value);
+    	creature.setWis(window.document.getElementById('wis_input').value);
+    	creature.setCha(window.document.getElementById('cha_input').value);
+    	creature.setRace(window.document.getElementById('race_input').value);
+    	creature.setClass(window.document.getElementById('class_input').value);
+    	//creature.addArmour(window.document.getElementById('armour_input').value);
     	                       
     	// Display our character
-    	window.document.getElementById('txt_character').innerHTML = " - Level " + creature.level + " " + creature.race.getName() + " " + creature.career;
-        window.document.getElementById('txt_str').innerHTML = creature.getStrength();
-        window.document.getElementById('txt_con').innerHTML = creature.getConstitution();
-        window.document.getElementById('txt_dex').innerHTML = creature.getDexterity();
-        window.document.getElementById('txt_int').innerHTML = creature.getIntelligence();
-        window.document.getElementById('txt_wis').innerHTML = creature.getWisdom();
-        window.document.getElementById('txt_cha').innerHTML = creature.getCharisma();
+    	window.document.getElementById('txt_character').innerHTML = " - Level " + creature.getLevel() + " " + creature.getRaceName() + " " + creature.getClassName();
+        window.document.getElementById('txt_str').innerHTML = creature.getStr();
+        window.document.getElementById('txt_con').innerHTML = creature.getCon();
+        window.document.getElementById('txt_dex').innerHTML = creature.getDex();
+        window.document.getElementById('txt_int').innerHTML = creature.getInt();
+        window.document.getElementById('txt_wis').innerHTML = creature.getWis();
+        window.document.getElementById('txt_cha').innerHTML = creature.getCha();
         window.document.getElementById('txt_init').innerHTML = creature.getInitiative();
-        window.document.getElementById('txt_speed').innerHTML = creature.getSpeed();
+        window.document.getElementById('txt_speed').innerHTML = creature.getSpeed() + " squares";
         window.document.getElementById('txt_hp').innerHTML = creature.getHP();
-        window.document.getElementById('txt_blood').innerHTML = Math.floor(creature.getHP() / 2);
+        window.document.getElementById('txt_blood').innerHTML = creature.getBloodied();
         window.document.getElementById('txt_surge').innerHTML = creature.getSurge();
         window.document.getElementById('txt_spd').innerHTML = creature.getSurgePerDay();
         window.document.getElementById('txt_ac').innerHTML = creature.getAC();
         window.document.getElementById('txt_for').innerHTML = creature.getFort();
-        window.document.getElementById('txt_ref').innerHTML = creature.getRef();
-        window.document.getElementById('txt_wil').innerHTML = creature.getWil();
+        window.document.getElementById('txt_ref').innerHTML = creature.getReflex();
+        window.document.getElementById('txt_wil').innerHTML = creature.getWill();
         window.document.getElementById('txt_str_mod').innerHTML = creature.getStrMod();
         window.document.getElementById('txt_con_mod').innerHTML = creature.getConMod();
         window.document.getElementById('txt_dex_mod').innerHTML = creature.getDexMod();
@@ -227,8 +227,8 @@
         window.document.getElementById('txt_int_attack').innerHTML = creature.getIntAttack();
         window.document.getElementById('txt_wis_attack').innerHTML = creature.getWisAttack();
         window.document.getElementById('txt_cha_attack').innerHTML = creature.getChaAttack();
-        window.document.getElementById('txt_armour').innerHTML = creature.armour.name;
-        window.document.getElementById('txt_vision').innerHTML = creature.race.getVision();
+        //window.document.getElementById('txt_armour').innerHTML = creature.armour.name;
+        window.document.getElementById('txt_vision').innerHTML = creature.getRace().getVision();
         
         Shapies.canvas().start();
         var smilie1 = Shapies.actors.create('smilie');
