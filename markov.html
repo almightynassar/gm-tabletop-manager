@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style>
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+	</style>
+</head>
+<body>
+	<div id="Menu">
+		<ul>
+			<li><a href="index.html">Character Creator</a>
+			<li><a href="markov.html">Name Generator</a>
+			<li><a href="dice.html">Dice Roller</a>
+		</ul>
+	</div>
+	<div id="Markov">
+		<p>
+			<button onclick='loadName("human", false);'>Load Male Human</button>
+			<button onclick='loadName("human", true);'>Load Female Human</button>
+			<button onclick='loadName("elf", false);'>Load Male Elf</button>
+			<button onclick='loadName("elf", true);'>Load Female Elf</button>
+		</p>
+		<p>
+			<b>Number:</b>
+		   	<select id="number" name="number">
+				<option value="1">1</option>
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="25">25</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+			</select>
+			<b>Length:</b>
+		   	<select id="length" name="length">
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+			</select>
+		</p>
+		<p><button onclick='generate();'>Submit</button></p>
+	</div>
+	<div id="Result">
+	</div>
+	<script src="markov.min.js"></script>
+	<script src="names.js"></script>
+	<script>
+		// Load the default list (Human males)
+		Markov.create(Names.human(false));
+		// Generates names
+		var generate = function () {
+			var text = "";
+			var number = parseInt(window.document.getElementById('number').value, 10);
+			var length = parseInt(window.document.getElementById('length').value, 10);
+			for (var i = 0; i < number; i++) {
+				var name = Markov.make(1,length);
+				text += "<p>" + name.charAt(0).toUpperCase() + name.slice(1); + "</p>";
+			}
+			window.document.getElementById('Result').innerHTML = text;
+		};
+		// Load names
+		var loadName = function (name, isFemale) {
+			var gender = isFemale ? true : false;
+			switch (name) {
+			case 'elf':
+				Markov.create(Names.elf(gender));
+				break;
+			default:
+				Markov.create(Names.human(gender));
+				break;
+			}
+		}
+	</script>
+</body>
+</html>

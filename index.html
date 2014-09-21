@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<style>
 [draggable] {
   -moz-user-select: none;
@@ -14,11 +15,19 @@
 	</style>
 </head>
 <body>
+	<div id="Menu">
+		<ul>
+			<li><a href="index.html">Character Creator</a>
+			<li><a href="markov.html">Name Generator</a>
+			<li><a href="dice.html">Dice Roller</a>
+		</ul>
+	</div>
 	<div id="DnD">
 		<h2>BASICS</h2>
 		<p><b>Level:</b> <span id="levels"></span></p>
 		<p><b>Race:</b> <span id="races"></span></p>
 		<p><b>Class:</b> <span id="classes"></span></p>
+		<p><input id="npc_input" type="checkbox" value="true" name="npc_input"><b>NPC?</b> (<em>Calculations are different</em>)</p>
 		<hr />
 		<h2>ATTRIBUTES</h2>
 		<p><b>Attribute Preferences (drag and drop):</b> <span id="prefs"></span></p>
@@ -146,7 +155,10 @@
 	</div>
 </body>
 <script src="Shapies.min.js"></script>
-<script src="src/DnD.js"></script>
+<script src="markov.min.js"></script>
+<script src="dice.min.js"></script>
+<script src="names.js"></script>
+<script src="src/dnd.js"></script>
 <script>
 	// For our dice rolls
 	var rollArray = (function () {
@@ -194,8 +206,8 @@
     	creature.setWis(window.document.getElementById('wis_input').value);
     	creature.setCha(window.document.getElementById('cha_input').value);
     	creature.setRace(window.document.getElementById('race_input').value);
-    	creature.setClass(window.document.getElementById('class_input').value);
-    	//creature.addArmour(window.document.getElementById('armour_input').value);
+    	creature.setClass(window.document.getElementById('class_input').value, window.document.getElementById('npc_input').checked);
+    	creature.setArmour(window.document.getElementById('armour_input').value);
     	                       
     	// Display our character
     	window.document.getElementById('txt_character').innerHTML = " - Level " + creature.getLevel() + " " + creature.getRaceName() + " " + creature.getClassName();
@@ -227,8 +239,9 @@
         window.document.getElementById('txt_int_attack').innerHTML = creature.getIntAttack();
         window.document.getElementById('txt_wis_attack').innerHTML = creature.getWisAttack();
         window.document.getElementById('txt_cha_attack').innerHTML = creature.getChaAttack();
-        //window.document.getElementById('txt_armour').innerHTML = creature.armour.name;
+        window.document.getElementById('txt_armour').innerHTML = creature.getArmour().getType();
         window.document.getElementById('txt_vision').innerHTML = creature.getRace().getVision();
+        window.document.getElementById('txt_misc').innerHTML = creature.getRace().getSize() + " / " + creature.getRace().getOrigin();
         
         Shapies.canvas().start();
         var smilie1 = Shapies.actors.create('smilie');
