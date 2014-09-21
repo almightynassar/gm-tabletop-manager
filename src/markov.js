@@ -4,6 +4,8 @@
  * This will handle the instantiation of our variables
  */
 var Markov = new function() {
+	// The name of our chain
+	var chain_name = "unknown_unknown";
 	// Stores our initial Markov values
 	var start_chain = {};
 	var start_weights = {};
@@ -14,6 +16,14 @@ var Markov = new function() {
 	var terminal_weights = {};
 	// Create our chain from a list of names
 	function construct (names) {
+		// Stores our initial Markov values
+		start_chain = {};
+		start_weights = {};
+		// Stores our actual word and terminal chains
+		word_chain = {};
+		terminal_chain = {};
+		word_weights = {};
+		terminal_weights = {};
 		for (var i = 0; i < names.length; i++) {
 			var name = names[i];
 			start_chain = incr_single(start_chain,name.charAt(0),name.charAt(1));
@@ -161,7 +171,8 @@ var Markov = new function() {
 	    return names.join(' ');
 	}
 	return {
-		create: function(names) { construct(names); },
+		chain: function () { return chain_name; },
+		generate: function (names, title) { construct(names); chain_name= title; },
 		make: function (number, length) { return name(number, length); }
 		
 	};

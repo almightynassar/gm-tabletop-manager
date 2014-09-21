@@ -2,6 +2,9 @@
  *  Dice Object
  */
 var Dice = new function () {
+	function sortNumber(a,b) {
+	    return a - b;
+	};
     function roll (type, number) {
         type = (type && (typeof type === "number")) ? parseInt(type,10) : 20;
         number = (number && (typeof number === "number")) ? parseInt(number,10) : 1;
@@ -11,6 +14,11 @@ var Dice = new function () {
         }
         return result;
     };
+    function rollAbilityScore () {
+        var result = new Array(roll(6),roll(6,1),roll(6,1),roll(6,1));
+        result.sort(sortNumber); 
+        return result[1] + result[2] + result[3];
+    }
     return {
         d2: (function (number) {
             return roll(2,number);
@@ -42,10 +50,20 @@ var Dice = new function () {
         d100: (function (number) {
             return roll(100,number);
         }),
-        charAttribute: (function () {
-            var result = new Array(roll(6),roll(6,1),roll(6,1),roll(6,1));
-            result.sort(sortNumber); 
-            return result[1] + result[2] + result[3];
+        characterAttribute: (function () {
+        	return rollAbilityScore();
+        }),
+        randomArray: (function () {
+    		var attributes = [rollAbilityScore(),
+    		                  rollAbilityScore(),
+    		                  rollAbilityScore(),
+    		                  rollAbilityScore(),
+    		                  rollAbilityScore(),
+    		                  rollAbilityScore()];
+    		return attributes.sort(sortNumber);
+        }),
+        standardArray: (function () {
+        	return [10,11,12,13,14,16];
         })
     };
 };

@@ -24,10 +24,14 @@
 	</div>
 	<div id="DnD">
 		<h2>BASICS</h2>
+		<p><input id="npc_input" type="checkbox" value="true" name="npc_input"><b>NPC?</b> (<em>Calculations are different</em>)</p>
+		<p><input id="noble_input" type="checkbox" value="true" name="noble_input"><b>Noble?</b> (<em>Creatures of noble birth have a lastname</em>)</p>
 		<p><b>Level:</b> <span id="levels"></span></p>
 		<p><b>Race:</b> <span id="races"></span></p>
 		<p><b>Class:</b> <span id="classes"></span></p>
-		<p><input id="npc_input" type="checkbox" value="true" name="npc_input"><b>NPC?</b> (<em>Calculations are different</em>)</p>
+		<p><b>Template:</b> <span id="templates"></span></p>
+		<p><b>Gender: </b><select id="gender_input"><option value="male">Male</option><option value="female">Female</option></select></p>
+		<p><b>Name: </b><input id="name_input" name="name_input" /> <button onclick='markovName();'>Generate Short</button> <button onclick='markovName(8);'>Generate Long</button></p>
 		<hr />
 		<h2>ATTRIBUTES</h2>
 		<p><b>Attribute Preferences (drag and drop):</b> <span id="prefs"></span></p>
@@ -54,25 +58,37 @@
 				</tr>
 			</tbody>
 		</table>
-		<p><button onclick='rollArray();'>Roll Attributes</button><button onclick='standardArray();'>Standard Array</button></p>
+		<p><button id="randomRoll">Random Array</button><button id="standardRoll">Standard Array</button></p>
 		<hr />
-		<h2>Equipment</h2>
-		<p><b>Type:</b> <span id="armour_type">
-			<select id="armour_input" name="armour_input">
-				<option value="Cloth">Cloth (Light)</option>
-				<option value="Leather">Leather (Light)</option>
-				<option value="Hide">Hide (Light)</option>
-				<option value="Chainmail">Chainmail</option>
-				<option value="Scale">Scale armour</option>
-				<option value="Plate">Plate armour</option>
-			</select>
-		</span></p>
-		<p><button onclick='create();'>Submit</button><button onclick='PrintElem("character_card");'>Print</button></p>
+		<h2>EQUIPMENT</h2>
+		<p><b>Armour:</b> <span id="armour"></span></p>
+		<p><b>Melee:</b> <span id="melee"></span></p>
+		<p><b>Offhand:</b> <span id="offhand"></span></p>
+		<p><b>Range:</b> <span id="range"></span></p>
+		<p><button onclick='create();'>Submit</button><button id="printCard">Print</button></p>
 		<hr />
 		<div id="character_card">
 			<h2 id="txt_character">Character Card</h2>
-			<table border=1 >
+			<table border=1 style="text-align: center;">
+				<tr style="background-color: lightgrey;">
+					<th>Level</th>
+					<th>Race</th>
+					<th>Class</th>
+					<th>Sub-class</th>
+					<th>Origin</th>
+					<th>Size</th>
+					<th>XP</th>
+				</tr>
 				<tr>
+					<td id="txt_level"></td>
+					<td id="txt_race"></td>
+					<td id="txt_class"></td>
+					<td id="txt_template"></td>
+					<td id="txt_origin"></td>
+					<td id="txt_size">Medium</td>
+					<td id="txt_xp">0</td>
+				</tr>
+				<tr style="background-color: lightgrey;">
 					<th>HP</th>
 					<th>Bloodied</th>
 					<th>Surge Value</th>
@@ -80,19 +96,35 @@
 					<th>Initiative</th>
 					<th>Speed</th>
 					<th>Vision</th>
-					<th>Size/Origin</th>
 				</tr>
 				<tr>
-					<td id="txt_hp"></td>
-					<td id="txt_blood"></td>
-					<td id="txt_surge"></td>
-					<td id="txt_spd"></td>
-					<td id="txt_init"></td>
-					<td id="txt_speed"></td>
+					<td id="txt_hp">0</td>
+					<td id="txt_blood">0</td>
+					<td id="txt_surge">0</td>
+					<td id="txt_spd">0</td>
+					<td id="txt_init">0</td>
+					<td id="txt_speed">0</td>
 					<td id="txt_vision"></td>
-					<td id="txt_misc"></td>
+				</tr>
+				<tr style="background-color: lightgrey;">
+					<th>AC</th>
+					<th>FORT</th>
+					<th>REF</th>
+					<th>WILL</th>
+					<th>RESIST</th>
+					<th>VULN</th>
+					<th>IMMUNE</th>
 				</tr>
 				<tr>
+					<td id="txt_ac">10</td>
+					<td id="txt_for">10</td>
+					<td id="txt_ref">10</td>
+					<td id="txt_wil">10</td>
+					<td id="txt_resist"></td>
+					<td id="txt_vuln"></td>
+					<td id="txt_immune"></td>
+				</tr>
+				<tr style="background-color: lightgrey;">
 					<th></th>
 					<th>STR</th>
 					<th>CON</th>
@@ -100,7 +132,6 @@
 					<th>INT</th>
 					<th>WIS</th>
 					<th>CHA</th>
-					<th></th>
 				</tr>
 				<tr>
 					<th>Score</th>
@@ -110,7 +141,6 @@
 					<td id="txt_int"></td>
 					<td id="txt_wis"></td>
 					<td id="txt_cha"></td>
-					<td></td>
 				</tr>
 				<tr>
 					<th>Mod</th>
@@ -120,7 +150,6 @@
 					<td id="txt_int_mod"></td>
 					<td id="txt_wis_mod"></td>
 					<td id="txt_cha_mod"></td>
-					<td></td>
 				</tr>
 				<tr>
 					<th>Attack</th>
@@ -130,21 +159,122 @@
 					<td id="txt_int_attack"></td>
 					<td id="txt_wis_attack"></td>
 					<td id="txt_cha_attack"></td>
-					<td></td>
+				</tr>
+				<tr style="background-color: lightgrey;">
+					<th>ARMOUR</th>
+					<th>MELEE</th>
+					<th>OFF-HAND</th>
+					<th>RANGED</th>
+					<th>SEX</th>
+					<th>HEIGHT</th>
+					<th>WEIGHT</th>
 				</tr>
 				<tr>
-					<th>AC</th>
-					<td id="txt_ac"></td>
-					<th>FORT</th>
-					<td id="txt_for"></td>
-					<th>REF</th>
-					<td id="txt_ref"></td>
-					<th>WILL</th>
-					<td id="txt_wil"></td>
+					<td id="txt_armour">+0 Cloth</td>
+					<td id="txt_weapon">Empty</td>
+					<td id="txt_offhand">Empty</td>
+					<td id="txt_range">Empty</td>
+					<td id="txt_gender">Male</td>
+					<td id="txt_height">155 cm</td>
+					<td id="txt_weight">55 kg</td>
 				</tr>
+			</table>
+			<table>
 				<tr>
-					<td>Armour</td>
-					<td id="txt_armour"></td>
+					<td>
+						<h3>Skills</h3>
+						<table border=1 style="text-align: center;">
+							<tr style="background-color: lightgrey;">
+								<th colspan=2>STR</th>
+							</tr>
+							<tr>
+								<td>Athletics</td>
+								<td id="txt_athletics">0</td>
+							</tr>
+							<tr style="background-color: lightgrey;">
+								<th colspan=2>CON</th>
+							</tr>
+							<tr>
+								<td>Endurance</td>
+								<td id="txt_endurance">0</td>
+							</tr>
+							<tr style="background-color: lightgrey;">
+								<th colspan=2>DEX</th>
+							</tr>
+							<tr>
+								<td>Acrobatics</td>
+								<td id="txt_acrobatics">0</td>
+							</tr>
+							<tr>
+								<td>Stealth</td>
+								<td id="txt_stealth">0</td>
+							</tr>
+							<tr>
+								<td>Thievery</td>
+								<td id="txt_thievery">0</td>
+							</tr>
+							<tr style="background-color: lightgrey;">
+								<th colspan=2>INT SKILL</th>
+							</tr>
+							<tr>
+								<td>Arcana</td>
+								<td id="txt_arcana">0</td>
+							</tr>
+							<tr>
+								<td>History</td>
+								<td id="txt_history">0</td>
+							</tr>
+							<tr>
+								<td>Religion</td>
+								<td id="txt_religion">0</td>
+							</tr>
+							<tr style="background-color: lightgrey;">
+								<th colspan=2>WIS</th>
+							</tr>
+							<tr>
+								<td>Dungeoneering</td>
+								<td id="txt_dungeon">0</td>
+							</tr>
+							<tr>
+								<td>Heal</td>
+								<td id="txt_heal">0</td>
+							</tr>
+							<tr>
+								<td>Insight</td>
+								<td id="txt_insight">0</td>
+							</tr>
+							<tr>
+								<td>Nature</td>
+								<td id="txt_nature">0</td>
+							</tr>
+							<tr>
+								<td>Perception</td>
+								<td id="txt_perception">0</td>
+							</tr>
+							<tr style="background-color: lightgrey;">
+								<th colspan=2>CHA</th>
+							</tr>
+							<tr>
+								<td>Bluff</td>
+								<td id="txt_bluff">0</td>
+							</tr>
+							<tr>
+								<td>Diplomacy</td>
+								<td id="txt_diplomacy">0</td>
+							</tr>
+							<tr>
+								<td>Intimidate</td>
+								<td id="txt_intimidate">0</td>
+							</tr>
+							<tr>
+								<td>Streetwise</td>
+								<td id="txt_streetwise">0</td>
+							</tr>
+						</table>
+					</td>
+					<td>
+					<p>placeholder</p>
+					</td>
 				</tr>
 			</table>
 		</div>
@@ -158,96 +288,166 @@
 <script src="markov.min.js"></script>
 <script src="dice.min.js"></script>
 <script src="names.js"></script>
+<script src="src/form.js"></script>
 <script src="src/dnd.js"></script>
 <script>
-	// For our dice rolls
-	var rollArray = (function () {
-		// Generate our values and sort them
-		var attributes = [DnD.dice.charAttribute(),
-		                  DnD.dice.charAttribute(),
-		                  DnD.dice.charAttribute(),
-		                  DnD.dice.charAttribute(),
-		                  DnD.dice.charAttribute(),
-		                  DnD.dice.charAttribute()];
-		attributes.sort(sortNumber);
-		// Get our attribute preference and put the values as preferenced
-		var prefs = window.document.getElementsByClassName('dnd_pref_input');
-		window.document.getElementById(prefs[5].innerHTML.toLowerCase()+'_input').value = attributes[0];
-		window.document.getElementById(prefs[4].innerHTML.toLowerCase()+'_input').value = attributes[1];
-		window.document.getElementById(prefs[3].innerHTML.toLowerCase()+'_input').value = attributes[2];
-		window.document.getElementById(prefs[2].innerHTML.toLowerCase()+'_input').value = attributes[3];
-		window.document.getElementById(prefs[1].innerHTML.toLowerCase()+'_input').value = attributes[4];
-		window.document.getElementById(prefs[0].innerHTML.toLowerCase()+'_input').value = attributes[5];
+	var creature = DnD.blank;
+	/* ===========================================
+	 * Environment and Form set-up
+	 * ===========================================
+	 */
+	window.onload = (function ()
+	{
+		// Our form elements
+		var form = new Form();
+		// Form dropdowns
+		window.document.getElementById('armour').innerHTML = form.dropdown("armour");
+		window.document.getElementById('melee').innerHTML = form.dropdown("melee");
+		window.document.getElementById('offhand').innerHTML = form.dropdown("offhand");
+		window.document.getElementById('range').innerHTML = form.dropdown("range");
+	    window.document.getElementById('races').innerHTML = form.dropdown("race");
+	    window.document.getElementById('classes').innerHTML = form.dropdown("class");
+	    window.document.getElementById('levels').innerHTML = form.dropdown("level");
+	    window.document.getElementById('templates').innerHTML = form.dropdown("template");
+	    window.document.getElementById('str').innerHTML = form.dropdown('str');
+	    window.document.getElementById('con').innerHTML = form.dropdown('con');
+	    window.document.getElementById('dex').innerHTML = form.dropdown('dex');
+	    window.document.getElementById('int').innerHTML = form.dropdown('int');
+	    window.document.getElementById('wis').innerHTML = form.dropdown('wis');
+	    window.document.getElementById('cha').innerHTML = form.dropdown('cha');
+	    // Form draggables
+	    window.document.getElementById('prefs').innerHTML = form.draggable("attributes");
+	    form.draggableListeners("attributes");
+	    window.document.getElementById('randomRoll').onclick = function () { form.draggableAssign("attributes", Dice.randomArray()) };
+	    window.document.getElementById('standardRoll').onclick = function () { form.draggableAssign("attributes", Dice.standardArray()) };
+	    // Form printers
+	    window.document.getElementById('printCard').onclick = function () { form.print("character_card"); };
 	});
-	
-	// Standard array
-	var standardArray = (function () {
-		// Generate our values and sort them
-		var attributes = [10,11,12,13,14,16];
-		attributes.sort(sortNumber);
-		// Get our attribute preference and put the values as preferenced
-		var prefs = window.document.getElementsByClassName('dnd_pref_input');
-		window.document.getElementById(prefs[5].innerHTML.toLowerCase()+'_input').value = attributes[0];
-		window.document.getElementById(prefs[4].innerHTML.toLowerCase()+'_input').value = attributes[1];
-		window.document.getElementById(prefs[3].innerHTML.toLowerCase()+'_input').value = attributes[2];
-		window.document.getElementById(prefs[2].innerHTML.toLowerCase()+'_input').value = attributes[3];
-		window.document.getElementById(prefs[1].innerHTML.toLowerCase()+'_input').value = attributes[4];
-		window.document.getElementById(prefs[0].innerHTML.toLowerCase()+'_input').value = attributes[5];
-	});
-
+	// Generate Markov Name
+	var markovName = function (length) {
+		var gender = window.document.getElementById('gender_input').value === "female" ? true : false;
+		if (Markov.chain() !== window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value) {
+			switch (window.document.getElementById('race_input').value) {
+			case "Elf":
+				Markov.generate(Names.elf(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
+				break;
+			case "Orc":
+				Markov.generate(Names.orc(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
+				break;
+			default:
+				Markov.generate(Names.human(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
+				break;
+			}
+		}
+		var size = length ? parseInt(length, 10) : 5;
+		var name = Markov.make(1,size);
+		window.document.getElementById('name_input').value = name.charAt(0).toUpperCase() + name.slice(1);
+	};
     // Create the creature
-    var create = (function () {
-    	var creature = DnD.creature;
-    	creature.setLevel(window.document.getElementById('level_input').value);
-    	creature.setStr(window.document.getElementById('str_input').value);
-    	creature.setCon(window.document.getElementById('con_input').value);
-    	creature.setDex(window.document.getElementById('dex_input').value);
-    	creature.setInt(window.document.getElementById('int_input').value);
-    	creature.setWis(window.document.getElementById('wis_input').value);
-    	creature.setCha(window.document.getElementById('cha_input').value);
-    	creature.setRace(window.document.getElementById('race_input').value);
-    	creature.setClass(window.document.getElementById('class_input').value, window.document.getElementById('npc_input').checked);
-    	creature.setArmour(window.document.getElementById('armour_input').value);
-    	                       
-    	// Display our character
-    	window.document.getElementById('txt_character').innerHTML = " - Level " + creature.getLevel() + " " + creature.getRaceName() + " " + creature.getClassName();
-        window.document.getElementById('txt_str').innerHTML = creature.getStr();
-        window.document.getElementById('txt_con').innerHTML = creature.getCon();
-        window.document.getElementById('txt_dex').innerHTML = creature.getDex();
-        window.document.getElementById('txt_int').innerHTML = creature.getInt();
-        window.document.getElementById('txt_wis').innerHTML = creature.getWis();
-        window.document.getElementById('txt_cha').innerHTML = creature.getCha();
-        window.document.getElementById('txt_init').innerHTML = creature.getInitiative();
-        window.document.getElementById('txt_speed').innerHTML = creature.getSpeed() + " squares";
-        window.document.getElementById('txt_hp').innerHTML = creature.getHP();
-        window.document.getElementById('txt_blood').innerHTML = creature.getBloodied();
-        window.document.getElementById('txt_surge').innerHTML = creature.getSurge();
-        window.document.getElementById('txt_spd').innerHTML = creature.getSurgePerDay();
-        window.document.getElementById('txt_ac').innerHTML = creature.getAC();
-        window.document.getElementById('txt_for').innerHTML = creature.getFort();
-        window.document.getElementById('txt_ref').innerHTML = creature.getReflex();
-        window.document.getElementById('txt_wil').innerHTML = creature.getWill();
-        window.document.getElementById('txt_str_mod').innerHTML = creature.getStrMod();
-        window.document.getElementById('txt_con_mod').innerHTML = creature.getConMod();
-        window.document.getElementById('txt_dex_mod').innerHTML = creature.getDexMod();
-        window.document.getElementById('txt_int_mod').innerHTML = creature.getIntMod();
-        window.document.getElementById('txt_wis_mod').innerHTML = creature.getWisMod();
-        window.document.getElementById('txt_cha_mod').innerHTML = creature.getChaMod();
-        window.document.getElementById('txt_str_attack').innerHTML = creature.getStrAttack();
-        window.document.getElementById('txt_con_attack').innerHTML = creature.getConAttack();
-        window.document.getElementById('txt_dex_attack').innerHTML = creature.getDexAttack();
-        window.document.getElementById('txt_int_attack').innerHTML = creature.getIntAttack();
-        window.document.getElementById('txt_wis_attack').innerHTML = creature.getWisAttack();
-        window.document.getElementById('txt_cha_attack').innerHTML = creature.getChaAttack();
-        window.document.getElementById('txt_armour').innerHTML = creature.getArmour().getType();
-        window.document.getElementById('txt_vision').innerHTML = creature.getRace().getVision();
-        window.document.getElementById('txt_misc').innerHTML = creature.getRace().getSize() + " / " + creature.getRace().getOrigin();
-        
+    var create = function () {
+    	/*
+    	 * Get basic information
+    	 */
+    	var name = window.document.getElementById('name_input').value;
+    	var level = window.document.getElementById('level_input').value;
+    	var race = window.document.getElementById('race_input').value;
+    	var npc = window.document.getElementById('npc_input').value;
+    	var str =  window.document.getElementById('str_input').value;
+    	var con =  window.document.getElementById('con_input').value;
+    	var dex =  window.document.getElementById('dex_input').value;
+    	var intel =  window.document.getElementById('int_input').value;
+    	var wis =  window.document.getElementById('wis_input').value;
+    	var cha =  window.document.getElementById('cha_input').value;
+    	// Creates the creature
+    	creature = new DnD.create4E(name, level, race, 'career', 'template', npc, str, con, dex, intel, wis, cha);
+    	// Add additional extras
+    	creature.career = window.document.getElementById('class_input').value;
+    	creature.template = window.document.getElementById('template_input').value;
+    	creature.gender = window.document.getElementById('gender_input').value;                      
+    	/*
+    	 * Display basic info
+    	 */
+    	window.document.getElementById('txt_character').innerHTML = creature.name;
+    	window.document.getElementById('txt_level').innerHTML = creature.level;
+    	window.document.getElementById('txt_race').innerHTML = creature.race;
+    	window.document.getElementById('txt_class').innerHTML = creature.career;
+    	window.document.getElementById('txt_xp').innerHTML = creature.xp();
+    	window.document.getElementById('txt_template').innerHTML = creature.template;
+    	window.document.getElementById('txt_gender').innerHTML = creature.gender;
+        window.document.getElementById('txt_vision').innerHTML = creature.vision();
+        window.document.getElementById('txt_size').innerHTML = creature.size;
+        window.document.getElementById('txt_origin').innerHTML = creature.origin;
+        window.document.getElementById('txt_height').innerHTML = creature.height + " cm";
+        window.document.getElementById('txt_weight').innerHTML = creature.weight + " kg";
+    	/*
+    	 * Display ability scores
+    	 */
+        window.document.getElementById('txt_str').innerHTML = creature.get("str");
+        window.document.getElementById('txt_con').innerHTML = creature.get("con");
+        window.document.getElementById('txt_dex').innerHTML = creature.get("dex");
+        window.document.getElementById('txt_int').innerHTML = creature.get("int");
+        window.document.getElementById('txt_wis').innerHTML = creature.get("wis");
+        window.document.getElementById('txt_cha').innerHTML = creature.get("cha");
+        /*
+         * Ability mods and attacks
+         */
+        window.document.getElementById('txt_str_mod').innerHTML = creature.mod("str");
+        window.document.getElementById('txt_con_mod').innerHTML = creature.mod("con");
+        window.document.getElementById('txt_dex_mod').innerHTML = creature.mod("dex");
+        window.document.getElementById('txt_int_mod').innerHTML = creature.mod("int");
+        window.document.getElementById('txt_wis_mod').innerHTML = creature.mod("wis");
+        window.document.getElementById('txt_cha_mod').innerHTML = creature.mod("cha");
+        window.document.getElementById('txt_str_attack').innerHTML = creature.attack("str");
+        window.document.getElementById('txt_con_attack').innerHTML = creature.attack("con");
+        window.document.getElementById('txt_dex_attack').innerHTML = creature.attack("dex");
+        window.document.getElementById('txt_int_attack').innerHTML = creature.attack("int");
+        window.document.getElementById('txt_wis_attack').innerHTML = creature.attack("wis");
+        window.document.getElementById('txt_cha_attack').innerHTML = creature.attack("cha");
+        /*
+         * Health, Speed and initiative
+         */
+        //window.document.getElementById('txt_init').innerHTML = creature.getInitiative();
+        window.document.getElementById('txt_speed').innerHTML = creature.speed + " squares";
+        //window.document.getElementById('txt_hp').innerHTML = creature.getHP();
+        //window.document.getElementById('txt_blood').innerHTML = creature.getBloodied();
+        //window.document.getElementById('txt_surge').innerHTML = creature.getSurge();
+        //window.document.getElementById('txt_spd').innerHTML = creature.getSurgePerDay();
+        /*
+         * Defences and resistances
+         */
+       //window.document.getElementById('txt_ac').innerHTML = creature.getAC();
+        window.document.getElementById('txt_for').innerHTML = creature.getDefence("fort");
+        window.document.getElementById('txt_ref').innerHTML = creature.getDefence("reflex");
+        window.document.getElementById('txt_wil').innerHTML = creature.getDefence("will");
+        window.document.getElementById('txt_resist').innerHTML = creature.getResists();
+        /*
+         * Skills
+         */
+        window.document.getElementById('txt_athletics').innerHTML = creature.getSkill("athletics");
+        window.document.getElementById('txt_endurance').innerHTML = creature.getSkill("endurance");
+        window.document.getElementById('txt_acrobatics').innerHTML = creature.getSkill("acrobatics");
+        window.document.getElementById('txt_stealth').innerHTML = creature.getSkill("stealth");
+        window.document.getElementById('txt_thievery').innerHTML = creature.getSkill("thievery");
+        window.document.getElementById('txt_arcana').innerHTML = creature.getSkill("arcana");
+        window.document.getElementById('txt_history').innerHTML = creature.getSkill("history");
+        window.document.getElementById('txt_religion').innerHTML = creature.getSkill("religion");
+        window.document.getElementById('txt_dungeon').innerHTML = creature.getSkill("dungeon");
+        window.document.getElementById('txt_heal').innerHTML = creature.getSkill("heal");
+        window.document.getElementById('txt_insight').innerHTML = creature.getSkill("insight");
+        window.document.getElementById('txt_nature').innerHTML = creature.getSkill("nature");
+        window.document.getElementById('txt_perception').innerHTML = creature.getSkill("perception");
+        window.document.getElementById('txt_bluff').innerHTML = creature.getSkill("bluff");
+        window.document.getElementById('txt_diplomacy').innerHTML = creature.getSkill("diplomacy");
+        window.document.getElementById('txt_intimidate').innerHTML = creature.getSkill("intimidate");
+        window.document.getElementById('txt_streetwise').innerHTML = creature.getSkill("streetwise");
+        /*
+         * Crappy portrait
+         */
         Shapies.canvas().start();
         var smilie1 = Shapies.actors.create('smilie');
         smilie1.radius = 50;
         smilie1.point = Shapies.canvas().midpoint();
         Shapies.canvas().addActor('smilie1', smilie1);
-    });
+    };
 </script>
 </html>

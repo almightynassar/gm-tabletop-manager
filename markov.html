@@ -57,7 +57,7 @@
 	<script src="names.js"></script>
 	<script>
 		// Load the default list (Human males)
-		Markov.create(Names.human(false));
+		Markov.generate(Names.human(false), 'Human_male');
 		// Generates names
 		var generate = function () {
 			var text = "";
@@ -74,10 +74,13 @@
 			var gender = isFemale ? true : false;
 			switch (name) {
 			case 'elf':
-				Markov.create(Names.elf(gender));
+				Markov.generate(Names.elf(gender), 'Elf_male');
+				break;
+			case 'orc':
+				Markov.generate(Names.elf(gender), 'Orc_male');
 				break;
 			default:
-				Markov.create(Names.human(gender));
+				Markov.generate(Names.human(gender), 'Human_male');
 				break;
 			}
 		}
