@@ -59,6 +59,7 @@ var DnD = (function (window) {
     function Creature(name, level, npc) {
     	// The name and details of the creature
     	this.name = name ? name : "Unknown";
+    	this.npc = npc ? true : false;
     	this.race = "Unknown";
     	this.career = "Unknown";
     	this.template = "Unknown";
@@ -83,6 +84,8 @@ var DnD = (function (window) {
     	this.modLevel = function () {
     		return Math.floor(this.level * 0.5);
     	};
+    	// The bonus level stuff
+    	
     	// Returns our attribute modifiers
         this.mod = function (key) {
             if (this.attributes[key]) {
@@ -131,8 +134,22 @@ var DnD = (function (window) {
     		}
     		return text;
     	};
-    	this.vulnerable = Storage();
-    	this.immunity =  Storage();
+    	this.vulnerable = new Storage();
+    	this.getVulnerable = function () {
+    		var text = "";
+    		for (var key in this.vulnerable.attributes) {
+    			text += key + " +" + this.vulnerable.get(key) + "<br />";
+    		}
+    		return text;
+    	};
+    	this.immunity = new Storage();
+    	this.getImmune = function () {
+    		var text = "";
+    		for (var key in this.immunity.attributes) {
+    			text += key + " +" + this.immunity.get(key) + "<br />";
+    		}
+    		return text;
+    	};
     	// XP stats
     	this.xp = function () {
     		var base =100+(25*Math.max(this.level-1))+(25*Math.max(0,this.level-5))+(50*Math.max(0,this.level-9))+(100*Math.max(0,this.level-13))+(200*Math.max(0,this.level-17))+(550*Math.max(0,this.level-21))+(1050*Math.max(0,this.level-25))+(2000*Math.max(0,this.level-29))+(4000*Math.max(0,this.level-33))+(8000*Math.max(0,this.level-37));
@@ -386,6 +403,59 @@ var DnD = (function (window) {
         	temp.addSkill("thievery", "dex", 0);
         	temp.applyRacial(race, 1, 1, 1);
         	return temp;
+        }),
+        serialise: (function (creature) {
+        	// The attributes are not saved when stringified, so we create a temporary storage space for it
+        	if (creature.attributes) {
+        		creature.abilities = creature.attributes;
+        	}
+        	return JSON.stringify(creature);
+        }),
+        deserialise: (function (creature) {
+        	var hydrated = JSON.parse(creature);
+        	if (hydrated !== null && typeof hydrated === 'object') {
+	        	var toReturn = new Creature(hydrated.name, hydrated.level, hydrated.npc);
+	        	for (key in hydrated) {
+	        		if (typeof hydrated[key] === "object") {
+	        			switch (key) {
+	        			case 'abilities':
+	        				for (attribute in hydrated[key]) {
+	        					toReturn.set(attribute, hydrated[key][attribute]);
+	        				}
+	        				break;
+	        			case 'defence':
+	        				for (defence in hydrated[key]) {
+	        					toReturn.addDefence(defence, hydrated[key][defence].attribute1, hydrated[key][defence].attribute1, hydrated[key][defence].value);
+	        				}
+	        				break;
+	        			case 'immunity':
+	        				for (immunity in hydrated[key].attributes) {
+	        					toReturn.immunity.set(immunity, hydrated[key][immunity]);
+	        				}
+	        				break;
+	        			case 'resistance':
+	        				for (resist in hydrated[key].attributes) {
+	        					toReturn.resistance.set(resist, hydrated[key][resist]);
+	        				}
+	        				break;
+	        			case 'skill':
+	        				for (skill in hydrated[key]) {
+	        					toReturn.addSkill(skill, hydrated[key][skill].key, hydrated[key][skill].value);
+	        				}
+	        				break;
+	        			case 'vulnerable':
+	        				for (vuln in hydrated[key].attributes) {
+	        					toReturn.vulnerable.set(vuln, hydrated[key][vuln]);
+	        				}
+	        				break;
+	        			}
+	        		} else {
+	        			toReturn[key] = hydrated[key];
+	        		}
+	        	}
+	        	return toReturn;
+        	}
+        	return null;
         })
     };
 })(window);

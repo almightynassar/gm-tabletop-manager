@@ -1,0 +1,340 @@
+<html>
+<body>
+	<p><button id="printCard">Print</button><button id="saveCreature">Save</button></p>
+	<div id="character_card">
+		<h2 id="txt_character">Character Card</h2>
+		<table border=1 style="text-align: center;">
+			<tr style="background-color: lightgrey;">
+				<th>Level</th>
+				<th>Race</th>
+				<th>Class</th>
+				<th>Sub-class</th>
+				<th>Origin</th>
+				<th>Size</th>
+					<th>XP</th>
+			</tr>
+			<tr>
+				<td id="txt_level"></td>
+				<td id="txt_race"></td>
+				<td id="txt_class"></td>
+				<td id="txt_template"></td>
+				<td id="txt_origin"></td>
+				<td id="txt_size">Medium</td>
+				<td id="txt_xp">0</td>
+			</tr>
+				<tr style="background-color: lightgrey;">
+				<th>HP</th>
+				<th>Bloodied</th>
+				<th>Surge Value</th>
+				<th># Surges</th>
+				<th>Initiative</th>
+				<th>Speed</th>
+				<th>Vision</th>
+			</tr>
+			<tr>
+				<td id="txt_hp">0</td>
+				<td id="txt_blood">0</td>
+				<td id="txt_surge">0</td>
+				<td id="txt_spd">0</td>
+				<td id="txt_init">0</td>
+				<td id="txt_speed">0</td>
+				<td id="txt_vision"></td>
+			</tr>
+			<tr style="background-color: lightgrey;">
+				<th>AC</th>
+				<th>FORT</th>
+				<th>REF</th>
+				<th>WILL</th>
+				<th>RESIST</th>
+				<th>VULN</th>
+				<th>IMMUNE</th>
+			</tr>
+			<tr>
+				<td id="txt_ac">10</td>
+				<td id="txt_for">10</td>
+				<td id="txt_ref">10</td>
+				<td id="txt_wil">10</td>
+				<td id="txt_resist"></td>
+				<td id="txt_vulnerable"></td>
+				<td id="txt_immune"></td>
+			</tr>
+			<tr style="background-color: lightgrey;">
+				<th></th>
+				<th>STR</th>
+				<th>CON</th>
+				<th>DEX</th>
+				<th>INT</th>
+				<th>WIS</th>
+				<th>CHA</th>
+			</tr>
+			<tr>
+				<th>Score</th>
+				<td id="txt_str"></td>
+				<td id="txt_con"></td>
+				<td id="txt_dex"></td>
+				<td id="txt_int"></td>
+				<td id="txt_wis"></td>
+				<td id="txt_cha"></td>
+			</tr>
+			<tr>
+				<th>Mod</th>
+				<td id="txt_str_mod"></td>
+				<td id="txt_con_mod"></td>
+				<td id="txt_dex_mod"></td>
+				<td id="txt_int_mod"></td>
+				<td id="txt_wis_mod"></td>
+				<td id="txt_cha_mod"></td>
+			</tr>
+			<tr>
+				<th>Attack</th>
+				<td id="txt_str_attack"></td>
+				<td id="txt_con_attack"></td>
+				<td id="txt_dex_attack"></td>
+				<td id="txt_int_attack"></td>
+				<td id="txt_wis_attack"></td>
+				<td id="txt_cha_attack"></td>
+			</tr>
+			<tr style="background-color: lightgrey;">
+				<th>ARMOUR</th>
+				<th>MELEE</th>
+				<th>OFF-HAND</th>
+				<th>RANGED</th>
+				<th>SEX</th>
+				<th>HEIGHT</th>
+				<th>WEIGHT</th>
+			</tr>
+			<tr>
+				<td id="txt_armour">+0 Cloth</td>
+				<td id="txt_weapon">Empty</td>
+				<td id="txt_offhand">Empty</td>
+				<td id="txt_range">Empty</td>
+				<td id="txt_gender">Male</td>
+				<td id="txt_height">155 cm</td>
+				<td id="txt_weight">55 kg</td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td>
+					<h3>Skills</h3>
+					<table border=1 style="text-align: center;">
+						<tr style="background-color: lightgrey;">
+							<th colspan=2>STR</th>
+						</tr>
+						<tr>
+							<td>Athletics</td>
+							<td id="txt_athletics">0</td>
+						</tr>
+						<tr style="background-color: lightgrey;">
+							<th colspan=2>CON</th>
+						</tr>
+						<tr>
+							<td>Endurance</td>
+							<td id="txt_endurance">0</td>
+						</tr>
+						<tr style="background-color: lightgrey;">
+							<th colspan=2>DEX</th>
+						</tr>
+						<tr>
+							<td>Acrobatics</td>
+							<td id="txt_acrobatics">0</td>
+						</tr>
+						<tr>
+							<td>Stealth</td>
+							<td id="txt_stealth">0</td>
+						</tr>
+						<tr>
+							<td>Thievery</td>
+							<td id="txt_thievery">0</td>
+						</tr>
+						<tr style="background-color: lightgrey;">
+							<th colspan=2>INT SKILL</th>
+						</tr>
+						<tr>
+							<td>Arcana</td>
+							<td id="txt_arcana">0</td>
+						</tr>
+						<tr>
+							<td>History</td>
+							<td id="txt_history">0</td>
+						</tr>
+						<tr>
+							<td>Religion</td>
+							<td id="txt_religion">0</td>
+						</tr>
+						<tr style="background-color: lightgrey;">
+							<th colspan=2>WIS</th>
+						</tr>
+						<tr>
+							<td>Dungeoneering</td>
+							<td id="txt_dungeon">0</td>
+						</tr>
+						<tr>
+							<td>Heal</td>
+							<td id="txt_heal">0</td>
+						</tr>
+						<tr>
+							<td>Insight</td>
+							<td id="txt_insight">0</td>
+						</tr>
+						<tr>
+							<td>Nature</td>
+							<td id="txt_nature">0</td>
+						</tr>
+						<tr>
+							<td>Perception</td>
+							<td id="txt_perception">0</td>
+						</tr>
+						<tr style="background-color: lightgrey;">
+							<th colspan=2>CHA</th>
+						</tr>
+						<tr>
+							<td>Bluff</td>
+							<td id="txt_bluff">0</td>
+						</tr>
+						<tr>
+							<td>Diplomacy</td>
+							<td id="txt_diplomacy">0</td>
+						</tr>
+						<tr>
+							<td>Intimidate</td>
+							<td id="txt_intimidate">0</td>
+						</tr>
+						<tr>
+							<td>Streetwise</td>
+							<td id="txt_streetwise">0</td>
+						</tr>
+					</table>
+				</td>
+				<td>
+				<p>placeholder</p>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<br />
+	<div id="shapies">
+	    <canvas id="Shapies" style="border: 5px solid black;" width="100" height="100"></canvas>
+	</div>
+	<script src="Shapies.min.js"></script>
+	<script src="src/form.js"></script>
+	<script src="src/dnd.js"></script>
+	<script>
+	// Grabs our information
+	function getURLParameter(name) {
+		return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+	}
+	var creature = null;
+	if (getURLParameter('load')) {
+		var param = getURLParameter('load');
+		creature = DnD.deserialise(localStorage.getItem(param));
+	} else {
+		creature = DnD.deserialise(localStorage.getItem('DnD.form'));
+	}
+	if (creature === null || typeof creature !== 'object') {
+		window.location.replace("index.html");
+	}
+	function saveCreature() {
+		localStorage.setItem('DnD.creature.' + creature.name + '-' + creature.race + '-' + creature.career, DnD.serialise(creature));
+	}
+	/* ===========================================
+	 * Environment and Form set-up
+	 * ===========================================
+	 */
+	window.onload = (function ()
+	{
+		// Our form elements
+		var form = new Form();
+		// Form printers
+	    window.document.getElementById('printCard').onclick = function () { form.print("character_card"); };
+	    window.document.getElementById('saveCreature').onclick = saveCreature;
+		/*
+    	 * Display basic info
+    	 */
+    	window.document.getElementById('txt_character').innerHTML = creature.name;
+    	window.document.getElementById('txt_level').innerHTML = creature.level;
+    	window.document.getElementById('txt_race').innerHTML = creature.race;
+    	window.document.getElementById('txt_class').innerHTML = creature.career;
+    	window.document.getElementById('txt_xp').innerHTML = creature.xp();
+    	window.document.getElementById('txt_template').innerHTML = creature.template;
+    	window.document.getElementById('txt_gender').innerHTML = creature.gender;
+        window.document.getElementById('txt_vision').innerHTML = creature.vision();
+        window.document.getElementById('txt_size').innerHTML = creature.size;
+        window.document.getElementById('txt_origin').innerHTML = creature.origin;
+        window.document.getElementById('txt_height').innerHTML = creature.height + " cm";
+        window.document.getElementById('txt_weight').innerHTML = creature.weight + " kg";
+    	/*
+    	 * Display ability scores
+    	 */
+        window.document.getElementById('txt_str').innerHTML = creature.get("str");
+        window.document.getElementById('txt_con').innerHTML = creature.get("con");
+        window.document.getElementById('txt_dex').innerHTML = creature.get("dex");
+        window.document.getElementById('txt_int').innerHTML = creature.get("int");
+        window.document.getElementById('txt_wis').innerHTML = creature.get("wis");
+        window.document.getElementById('txt_cha').innerHTML = creature.get("cha");
+        /*
+         * Ability mods and attacks
+         */
+        window.document.getElementById('txt_str_mod').innerHTML = creature.mod("str");
+        window.document.getElementById('txt_con_mod').innerHTML = creature.mod("con");
+        window.document.getElementById('txt_dex_mod').innerHTML = creature.mod("dex");
+        window.document.getElementById('txt_int_mod').innerHTML = creature.mod("int");
+        window.document.getElementById('txt_wis_mod').innerHTML = creature.mod("wis");
+        window.document.getElementById('txt_cha_mod').innerHTML = creature.mod("cha");
+        window.document.getElementById('txt_str_attack').innerHTML = creature.attack("str");
+        window.document.getElementById('txt_con_attack').innerHTML = creature.attack("con");
+        window.document.getElementById('txt_dex_attack').innerHTML = creature.attack("dex");
+        window.document.getElementById('txt_int_attack').innerHTML = creature.attack("int");
+        window.document.getElementById('txt_wis_attack').innerHTML = creature.attack("wis");
+        window.document.getElementById('txt_cha_attack').innerHTML = creature.attack("cha");
+        /*
+         * Health, Speed and initiative
+         */
+        //window.document.getElementById('txt_init').innerHTML = creature.getInitiative();
+        window.document.getElementById('txt_speed').innerHTML = creature.speed + " squares";
+        //window.document.getElementById('txt_hp').innerHTML = creature.getHP();
+        //window.document.getElementById('txt_blood').innerHTML = creature.getBloodied();
+        //window.document.getElementById('txt_surge').innerHTML = creature.getSurge();
+        //window.document.getElementById('txt_spd').innerHTML = creature.getSurgePerDay();
+        /*
+         * Defences and resistances
+         */
+       //window.document.getElementById('txt_ac').innerHTML = creature.getAC();
+        window.document.getElementById('txt_for').innerHTML = creature.getDefence("fort");
+        window.document.getElementById('txt_ref').innerHTML = creature.getDefence("reflex");
+        window.document.getElementById('txt_wil').innerHTML = creature.getDefence("will");
+        window.document.getElementById('txt_resist').innerHTML = creature.getResists();
+        window.document.getElementById('txt_vulnerable').innerHTML = creature.getVulnerable();
+        window.document.getElementById('txt_immune').innerHTML = creature.getImmune();
+        /*
+         * Skills
+         */
+        window.document.getElementById('txt_athletics').innerHTML = creature.getSkill("athletics");
+        window.document.getElementById('txt_endurance').innerHTML = creature.getSkill("endurance");
+        window.document.getElementById('txt_acrobatics').innerHTML = creature.getSkill("acrobatics");
+        window.document.getElementById('txt_stealth').innerHTML = creature.getSkill("stealth");
+        window.document.getElementById('txt_thievery').innerHTML = creature.getSkill("thievery");
+        window.document.getElementById('txt_arcana').innerHTML = creature.getSkill("arcana");
+        window.document.getElementById('txt_history').innerHTML = creature.getSkill("history");
+        window.document.getElementById('txt_religion').innerHTML = creature.getSkill("religion");
+        window.document.getElementById('txt_dungeon').innerHTML = creature.getSkill("dungeon");
+        window.document.getElementById('txt_heal').innerHTML = creature.getSkill("heal");
+        window.document.getElementById('txt_insight').innerHTML = creature.getSkill("insight");
+        window.document.getElementById('txt_nature').innerHTML = creature.getSkill("nature");
+        window.document.getElementById('txt_perception').innerHTML = creature.getSkill("perception");
+        window.document.getElementById('txt_bluff').innerHTML = creature.getSkill("bluff");
+        window.document.getElementById('txt_diplomacy').innerHTML = creature.getSkill("diplomacy");
+        window.document.getElementById('txt_intimidate').innerHTML = creature.getSkill("intimidate");
+        window.document.getElementById('txt_streetwise').innerHTML = creature.getSkill("streetwise");
+        /*
+         * Crappy portrait
+         */
+        Shapies.canvas().start();
+        var smilie1 = Shapies.actors.create('smilie');
+        smilie1.radius = 50;
+        smilie1.point = Shapies.canvas().midpoint();
+        Shapies.canvas().addActor('smilie1', smilie1);
+	});
+	</script>
+</body>
+</html>
