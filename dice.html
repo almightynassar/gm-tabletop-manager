@@ -21,7 +21,14 @@
 			<li><a href="dice.html">Dice Roller</a>
 		</ul>
 	</div>
+	<p><button onclick='d6();'>d6</button><button onclick='d10();'>d10</button><button onclick='d20();'>d20</button></p>
 	<div id="Dice">
 	</div>
+	<script src="dice.min.js"></script>
+	<script>
+	function d6() { window.document.getElementById("Dice").innerHTML = Dice.d6(); }
+	function d10() { window.document.getElementById("Dice").innerHTML = Dice.d10(); }
+	function d20() { window.document.getElementById("Dice").innerHTML = Dice.d20(); }
+	</script>
 </body>
 </html>

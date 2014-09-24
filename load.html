@@ -18,7 +18,7 @@
 	{
 		var text = "";
 		for (creature in localStorage) {
-			text += "<p><a href='creature.html?load=" + creature + "'>" + creature + "</a></p>";
+			text += "<p><a href='creature.html?load=" + creature + "'>" + creature + "</a> <button onclick='localStorage.removeItem(\"" + creature + "\");'>Delete</button></p>";
 		}
 		// Form dropdowns
 		window.document.getElementById('CreatureList').innerHTML = text;

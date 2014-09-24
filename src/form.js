@@ -127,6 +127,10 @@ function Form() {
 	             // Superior melee - two handed
 	             "Spiked chain"];
 	var offhand = ["Empty",
+	               //Shields
+	               "Light shield",
+	               "Heavy shield",
+	               "Barbed shield",
 	               // Simple melee - single handed
 	               "Dagger",
 	               "Light Mace",

@@ -113,8 +113,11 @@
 				<td id="txt_weight">55 kg</td>
 			</tr>
 		</table>
+		<br />
+		<hr />
+		<br />
 		<table>
-			<tr>
+			<tr style="vertical-align: top;">
 				<td>
 					<h3>Skills</h3>
 					<table border=1 style="text-align: center;">
@@ -206,8 +209,40 @@
 						</tr>
 					</table>
 				</td>
+				<td>&nbsp;&nbsp;&nbsp;</td>
 				<td>
-				<p>placeholder</p>
+					<h3>Skill Bonus</h3>
+					<div id="skill_bonus"></div>
+					<hr />
+					<h3>Feat Bonus</h3>
+					<div id="feat_bonus"></div>
+					<hr />
+					<h3>Weapon Power/Attack</h3>
+					<div id="power_weapon"></div>
+					<hr />
+					<h3>Off-hand Power/Attack</h3>
+					<div id="power_offhand"></div>
+					<hr />
+					<h3>Ranged Power/Attack</h3>
+					<div id="power_ranged"></div>
+					<hr />
+					<h3>At-Will Power</h3>
+					<div id="power_atwill"></div>
+					<hr />
+					<h3>Encounter Power</h3>
+					<div id="power_encounter"></div>
+					<hr />
+					<h3>Daily Power</h3>
+					<div id="power_daily"></div>
+					<hr />
+					<h3>Utility Power</h3>
+					<div id="power_utility"></div>
+					<hr />
+					<h3>Armour Power/Attack</h3>
+					<div id="power_armour"></div>
+					<hr />
+					<h3>Enchantment Power</h3>
+					<div id="power_enchantment"></div>
 				</td>
 			</tr>
 		</table>
@@ -290,16 +325,16 @@
         /*
          * Health, Speed and initiative
          */
-        //window.document.getElementById('txt_init').innerHTML = creature.getInitiative();
+        window.document.getElementById('txt_init').innerHTML = creature.initiative();
         window.document.getElementById('txt_speed').innerHTML = creature.speed + " squares";
-        //window.document.getElementById('txt_hp').innerHTML = creature.getHP();
-        //window.document.getElementById('txt_blood').innerHTML = creature.getBloodied();
-        //window.document.getElementById('txt_surge').innerHTML = creature.getSurge();
-        //window.document.getElementById('txt_spd').innerHTML = creature.getSurgePerDay();
+        window.document.getElementById('txt_hp').innerHTML = creature.hp();
+        window.document.getElementById('txt_blood').innerHTML = creature.bloodied();
+        window.document.getElementById('txt_surge').innerHTML = creature.surge();
+        window.document.getElementById('txt_spd').innerHTML = creature.surgePerDay();
         /*
          * Defences and resistances
          */
-       //window.document.getElementById('txt_ac').innerHTML = creature.getAC();
+        window.document.getElementById('txt_ac').innerHTML = creature.ac();
         window.document.getElementById('txt_for').innerHTML = creature.getDefence("fort");
         window.document.getElementById('txt_ref').innerHTML = creature.getDefence("reflex");
         window.document.getElementById('txt_wil').innerHTML = creature.getDefence("will");
@@ -326,6 +361,17 @@
         window.document.getElementById('txt_diplomacy').innerHTML = creature.getSkill("diplomacy");
         window.document.getElementById('txt_intimidate').innerHTML = creature.getSkill("intimidate");
         window.document.getElementById('txt_streetwise').innerHTML = creature.getSkill("streetwise");
+        /**
+         * Other details
+         */
+        window.document.getElementById('txt_armour').innerHTML = creature.armour.name + "<br />(+" + creature.armour.enchantment + " " + creature.armour.type + ")";
+        window.document.getElementById('skill_bonus').innerHTML = creature.bonusSkill;
+        window.document.getElementById('feat_bonus').innerHTML = creature.getFeats();
+        window.document.getElementById('power_armour').innerHTML = creature.getArmourPower();
+        window.document.getElementById('power_atwill').innerHTML = creature.getAtWill();
+        window.document.getElementById('power_encounter').innerHTML = creature.getEncounter();
+        window.document.getElementById('power_daily').innerHTML = creature.getDaily();
+        window.document.getElementById('power_utility').innerHTML = creature.getUtility();
         /*
          * Crappy portrait
          */

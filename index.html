@@ -26,12 +26,13 @@
 	<div id="DnD">
 		<h2>BASICS</h2>
 		<p><input id="npc_input" type="checkbox" value="true" name="npc_input"><b>NPC?</b> (<em>Calculations are different</em>)</p>
-		<p><input id="noble_input" type="checkbox" value="true" name="noble_input"><b>Noble?</b> (<em>Creatures of noble birth have a lastname</em>)</p>
 		<p><b>Level:</b> <span id="levels"></span></p>
 		<p><b>Race:</b> <span id="races"></span></p>
 		<p><b>Class:</b> <span id="classes"></span></p>
 		<p><b>Template:</b> <span id="templates"></span></p>
 		<p><b>Gender: </b><select id="gender_input"><option value="male">Male</option><option value="female">Female</option></select></p>
+		<p><b>Height: </b><select id="height_input"><option value="0">Tiny</option><option value="1">Short</option><option value="2">Average</option><option value="3">Tall</option><option value="4">Big</option></select></p>
+		<p><b>Weight: </b><select id="weight_input"><option value="0">Very Light</option><option value="1">Light</option><option value="2">Average</option><option value="3">Heavy</option><option value="4">Very Heavy</option></select></p>
 		<p><b>Name: </b><input id="name_input" name="name_input" /> <button onclick='markovName();'>Generate Short</button> <button onclick='markovName(8);'>Generate Long</button></p>
 		<hr />
 		<h2>ATTRIBUTES</h2>
@@ -105,7 +106,10 @@
 	    window.document.getElementById('randomRoll').onclick = function () { form.draggableAssign("attributes", Dice.randomArray()) };
 	    window.document.getElementById('standardRoll').onclick = function () { form.draggableAssign("attributes", Dice.standardArray()) };
 	});
-	// Generate Markov Name
+	/* ===========================================
+	 * Generate Markov Name
+	 * ===========================================
+	 */
 	var markovName = function (length) {
 		var gender = window.document.getElementById('gender_input').value === "female" ? true : false;
 		if (Markov.chain() !== window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value) {
@@ -125,7 +129,10 @@
 		var name = Markov.make(1,size);
 		window.document.getElementById('name_input').value = name.charAt(0).toUpperCase() + name.slice(1);
 	};
-    // Create the creature
+	/* ===========================================
+	 * Create creature
+	 * ===========================================
+	 */
     var create = function () {
     	/*
     	 * Get basic information
@@ -133,19 +140,23 @@
     	var name = window.document.getElementById('name_input').value;
     	var level = window.document.getElementById('level_input').value;
     	var race = window.document.getElementById('race_input').value;
-    	var npc = window.document.getElementById('npc_input').value;
-    	var str =  window.document.getElementById('str_input').value;
-    	var con =  window.document.getElementById('con_input').value;
-    	var dex =  window.document.getElementById('dex_input').value;
-    	var intel =  window.document.getElementById('int_input').value;
-    	var wis =  window.document.getElementById('wis_input').value;
-    	var cha =  window.document.getElementById('cha_input').value;
+    	var career = window.document.getElementById('class_input').value;
+    	var template = window.document.getElementById('template_input').value;
+    	var npc = window.document.getElementById('npc_input').checked ? 1 : 0;
+    	var attributes = [window.document.getElementById('str_input').value,
+    	                  window.document.getElementById('con_input').value,
+    	                  window.document.getElementById('dex_input').value,
+    	                  window.document.getElementById('int_input').value,
+    	                  window.document.getElementById('wis_input').value,
+    	                  window.document.getElementById('cha_input').value];
+    	var prefs = window.document.getElementsByClassName('attributes_drag');
+    	var height = window.document.getElementById('height_input').value;
+    	var weight = window.document.getElementById('weight_input').value;
     	// Creates the creature
-    	creature = new DnD.create4E(name, level, race, 'career', 'template', npc, str, con, dex, intel, wis, cha);
-    	// Add additional extras
-    	creature.career = window.document.getElementById('class_input').value;
-    	creature.template = window.document.getElementById('template_input').value;
+    	creature = new DnD.create4E(name, level, race, career, template, npc, attributes, [prefs[0].innerHTML.toLowerCase(), prefs[1].innerHTML.toLowerCase()], height, weight);
     	creature.gender = window.document.getElementById('gender_input').value;
+    	// Add armour and weapons
+    	creature.applyArmour("Armour", window.document.getElementById('armour_input').value, window.document.getElementById('armour_bonus_input').value);    	
     	// Save the object and go to the other form
     	localStorage.setItem('DnD.form', DnD.serialise(creature));
     	window.location.href = "creature.html";
