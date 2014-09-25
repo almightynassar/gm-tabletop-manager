@@ -63,10 +63,10 @@
 		<p><button id="randomRoll">Random Array</button><button id="standardRoll">Standard Array</button></p>
 		<hr />
 		<h2>EQUIPMENT</h2>
-		<p><b>Armour:</b> <span id="armour"></span></p>
-		<p><b>Melee:</b> <span id="melee"></span></p>
-		<p><b>Offhand:</b> <span id="offhand"></span></p>
-		<p><b>Range:</b> <span id="range"></span></p>
+		<p><b>Armour:</b> <span id="armour"></span><input id="armour_name_input" placeholder="Armour Name">: <input id="armour_enchantment_input" placeholder="Armour Enchanment Name" > - <input id="armour_effect_input" placeholder="Armour Enchantment Effect"></p>
+		<p><b>Melee:</b> <span id="melee"></span><input id="melee_name_input" placeholder="Melee Weapon Name">: <input id="melee_enchantment_input" placeholder="Melee Enchanment Name" > - <input id="melee_effect_input" placeholder="Melee Enchantment Effect"></p>
+		<p><b>Offhand:</b> <span id="offhand"></span><input id="offhand_name_input" placeholder="Offhand implement Name">: <input id="offhand_enchantment_input" placeholder="Offhand Enchanment Name" > - <input id="offhand_effect_input" placeholder="Offhand Enchantment Effect"></p>
+		<p><b>Range:</b> <span id="range"></span><input id="range_name_input" placeholder="Ranged Weapon Name">: <input id="range_enchantment_input" placeholder="Range Enchanment Name" > - <input id="range_effect_input" placeholder="Ranged Enchantment Effect"></p>
 		<p><button onclick='create();'>Submit</button></p>
 	</div>
 </body>
@@ -114,9 +114,15 @@
 		var gender = window.document.getElementById('gender_input').value === "female" ? true : false;
 		if (Markov.chain() !== window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value) {
 			switch (window.document.getElementById('race_input').value) {
+			case "Dwarf":
+				Markov.generate(Names.dwarf(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
+				break;
+			case "Eladrin":
 			case "Elf":
+			case "Half-Elf":
 				Markov.generate(Names.elf(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
 				break;
+			case "Half-Orc":
 			case "Orc":
 				Markov.generate(Names.orc(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
 				break;
@@ -156,7 +162,8 @@
     	creature = new DnD.create4E(name, level, race, career, template, npc, attributes, [prefs[0].innerHTML.toLowerCase(), prefs[1].innerHTML.toLowerCase()], height, weight);
     	creature.gender = window.document.getElementById('gender_input').value;
     	// Add armour and weapons
-    	creature.applyArmour("Armour", window.document.getElementById('armour_input').value, window.document.getElementById('armour_bonus_input').value);    	
+    	creature.applyArmour(window.document.getElementById('armour_name_input').value, window.document.getElementById('armour_input').value, window.document.getElementById('armour_bonus_input').value);
+    	creature.armour.properties[window.document.getElementById('armour_enchantment_input').value] = window.document.getElementById('armour_effect_input').value;
     	// Save the object and go to the other form
     	localStorage.setItem('DnD.form', DnD.serialise(creature));
     	window.location.href = "creature.html";

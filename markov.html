@@ -26,8 +26,12 @@
 		<p>
 			<button onclick='loadName("human", false);'>Load Male Human</button>
 			<button onclick='loadName("human", true);'>Load Female Human</button>
+			<button onclick='loadName("dwarf", false);'>Load Male Dwarf</button>
+			<button onclick='loadName("dwarf", true);'>Load Female Dwarf</button>
 			<button onclick='loadName("elf", false);'>Load Male Elf</button>
 			<button onclick='loadName("elf", true);'>Load Female Elf</button>
+			<button onclick='loadName("orc", false);'>Load Male Orc</button>
+			<button onclick='loadName("orc", true);'>Load Female Orc</button>
 		</p>
 		<p>
 			<b>Number:</b>
@@ -73,11 +77,14 @@
 		var loadName = function (name, isFemale) {
 			var gender = isFemale ? true : false;
 			switch (name) {
+			case 'dwarf':
+				Markov.generate(Names.dwarf(gender), 'Dwarf_male');
+				break;
 			case 'elf':
 				Markov.generate(Names.elf(gender), 'Elf_male');
 				break;
 			case 'orc':
-				Markov.generate(Names.elf(gender), 'Orc_male');
+				Markov.generate(Names.orc(gender), 'Orc_male');
 				break;
 			default:
 				Markov.generate(Names.human(gender), 'Human_male');

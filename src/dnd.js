@@ -63,7 +63,6 @@ var DnD = (function (window) {
     	this.race = "Unknown";
     	this.career = "Unknown";
     	this.template = "Unknown";
-    	this.speed = 6;
     	this.size = "Medium";
     	this.origin = "Natural";
     	this.gender = "male";
@@ -89,6 +88,25 @@ var DnD = (function (window) {
     		}
     		return this.ap;
     	};
+    	this.speed = 6;
+    	this.getSpeed = function () {
+    		return this.speed + (this.race === "Dwarf" ? 0 : this.armour.speed);
+    	};
+		this.getSpeedInFeet = function (minutes) {
+			return Math.round((this.getSpeed() * 5) * (minutes / 6));
+		};
+		this.getSpeedInMetres = function (minutes) {
+			return (this.getSpeedInFeet(minutes) * 0.305).toFixed(1);
+		};
+		this.getSpeedInYards = function (minutes) {
+			return (this.getSpeedInFeet(minutes)/3).toFixed(1);
+		};
+		this.getSpeedInMiles = function (hours) {
+			return Math.round(this.getSpeedInYards(60 * hours) / 1760);
+		};
+		this.getSpeedInKm = function (hours) {
+			return Math.round(this.getSpeedInMetre(60 * hours) / 1000);
+		};
     	// The health stuff
     	this.hpBase = 10;
 		this.hpLevel = 4;
@@ -188,7 +206,7 @@ var DnD = (function (window) {
     		}
     	};
     	this.getSkill = function (skill) {
-    		return this.mod(this.skill[skill].key) + this.modLevel() + this.skill[skill].value;
+    		return this.mod(this.skill[skill].key) + this.modLevel() + this.skill[skill].value + (this.skill[skill].key === "str" || this.skill[skill].key === "dex" ? this.armour.check : 0);
     	};
     	// Our resistances, vulnerabilities and immunities
     	this.resistance =  new Storage();
@@ -248,7 +266,7 @@ var DnD = (function (window) {
     	};
     	this.getArmourPower = function () {
     		var text = "";
-    		for (power in this.armour.properties) {
+    		for (var power in this.armour.properties) {
     			text += "<p><b>" + power + "</b><br />" + this.armour.properties[power] + "</p>";
     		}
     		return text;
@@ -374,42 +392,55 @@ var DnD = (function (window) {
 			return (this.npc) ? 0 : 1 + Math.floor(this.level/2) + Math.floor((this.level-1)/10) + ((this.race === "Human") ? 1: 0);
 		});
 		this.getEncounter = (function () {
-			if (this.level > 2 && this.level < 7) {
-				return 2;
-			} else if (this.level >= 7 && this.level < 11) {
-				return 3;
-			} else if (this.level >= 11) {
-				return 4;
+			if (this.npc) {
+				if (this.level > 10 && this.level <= 20 ) {
+					return 2;
+				} else if (this.level > 20) {
+					return 3;
+				}
+			} else {
+				if (this.level > 2 && this.level < 7) {
+					return 2;
+				} else if (this.level >= 7 && this.level < 11) {
+					return 3;
+				} else if (this.level >= 11) {
+					return 4;
+				}
 			}
 			return 1;
 		});
 		this.getDaily = (function () {
-			var multi = (this.career === "Wizard") ? 2 : 1;
-			if (this.level > 4 && this.level < 9) {
-				return 2 * multi;
-			} else if (this.level >= 9 && this.level < 21) {
-				return 3 * multi;
-			} else if (this.level >= 21) {
-				return 4 * multi;
+			if (!this.npc) {
+				var multi = (this.career === "Wizard") ? 2 : 1;
+				if (this.level > 4 && this.level < 9) {
+					return 2 * multi;
+				} else if (this.level >= 9 && this.level < 21) {
+					return 3 * multi;
+				} else if (this.level >= 21) {
+					return 4 * multi;
+				}
+				return 1 * multi;
 			}
-			return 1 * multi;
+			return 0;
 		});
 		this.getUtility = (function () {
-			var multi = (this.career === "Wizard") ? 2 : 1;
-			if (this.level > 1 && this.level < 6) {
-				return 1 * multi;
-			} else if (this.level >= 6 && this.level < 10) {
-				return 2 * multi;
-			} else if (this.level >= 10 && this.level < 12) {
-				return 3 * multi;
-			} else if (this.level >= 12 && this.level < 16) {
-				return 5 * multi;
-			} else if (this.level >= 16 && this.level < 22) {
-				return 5 * multi;
-			} else if (this.level >= 22 && this.level < 26) {
-				return 6 * multi;
-			} else if (this.level >= 26) {
-				return 7 * multi;
+			if (!this.npc) {
+				var multi = (this.career === "Wizard") ? 2 : 1;
+				if (this.level > 1 && this.level < 6) {
+					return 1 * multi;
+				} else if (this.level >= 6 && this.level < 10) {
+					return 2 * multi;
+				} else if (this.level >= 10 && this.level < 12) {
+					return 3 * multi;
+				} else if (this.level >= 12 && this.level < 16) {
+					return 5 * multi;
+				} else if (this.level >= 16 && this.level < 22) {
+					return 5 * multi;
+				} else if (this.level >= 22 && this.level < 26) {
+					return 6 * multi;
+				} else if (this.level >= 26) {
+					return 7 * multi;
+				}
 			}
 			return 0;
 		});
@@ -1155,36 +1186,36 @@ var DnD = (function (window) {
         	var hydrated = JSON.parse(creature);
         	if (hydrated !== null && typeof hydrated === 'object') {
 	        	var toReturn = new Creature(hydrated.name, hydrated.level, hydrated.npc);
-	        	for (key in hydrated) {
+	        	for (var key in hydrated) {
 	        		if (typeof hydrated[key] === "object") {
 	        			switch (key) {
 	        			case 'abilities':
-	        				for (attribute in hydrated[key]) {
+	        				for (var attribute in hydrated[key]) {
 	        					toReturn.set(attribute, hydrated[key][attribute]);
 	        				}
 	        				break;
 	        			case 'defence':
-	        				for (defence in hydrated[key]) {
+	        				for (var defence in hydrated[key]) {
 	        					toReturn.addDefence(defence, hydrated[key][defence].attribute1, hydrated[key][defence].attribute1, hydrated[key][defence].value);
 	        				}
 	        				break;
 	        			case 'immunity':
-	        				for (immunity in hydrated[key].attributes) {
+	        				for (var immunity in hydrated[key].attributes) {
 	        					toReturn.immunity.set(immunity, hydrated[key].attributes[immunity]);
 	        				}
 	        				break;
 	        			case 'resistance':
-	        				for (resist in hydrated[key].attributes) {
+	        				for (var resist in hydrated[key].attributes) {
 	        					toReturn.resistance.set(resist, hydrated[key].attributes[resist]);
 	        				}
 	        				break;
 	        			case 'skill':
-	        				for (skill in hydrated[key]) {
+	        				for (var skill in hydrated[key]) {
 	        					toReturn.addSkill(skill, hydrated[key][skill].key, hydrated[key][skill].value);
 	        				}
 	        				break;
 	        			case 'vulnerable':
-	        				for (vuln in hydrated[key].attributes) {
+	        				for (var vuln in hydrated[key].attributes) {
 	        					toReturn.vulnerable.set(vuln, hydrated[key].attributes[vuln]);
 	        				}
 	        				break;
