@@ -115,7 +115,7 @@ var DnD = (function (window) {
 		this.hp = function () {
 			var hp = 1;
 			if (this.npc) {
-				var segment = (this.hpBase / 2) + 2;
+				var segment = Math.floor(this.hpBase / 2) + 2;
 				hp = this.get("con") + ((level+1) * segment);
 			} else {
 				hp = this.hpBase + this.get("con") + ((level - 1) * this.hpLevel);
@@ -193,7 +193,7 @@ var DnD = (function (window) {
     	};
     	this.bonusAC = 0;
     	this.ac = function () {
-    		return 10 + parseInt(this.bonusAC, 10) + this.modLevel() + parseInt(this.armour.ac, 10) + parseInt(this.armour.enchantment, 10) + parseInt((this.armour.light ? (this.mod("dex") > this.mod("int") ? this.mod("dex") : this.mod("int")) : 0));
+    		return 10 + parseInt(this.bonusAC, 10) + this.modLevel() + parseInt(this.armour.ac, 10) + parseInt(this.armour.enchantment, 10) + parseInt((this.armour.light ? (this.mod("dex") > this.mod("int") ? this.mod("dex") : this.mod("int")) : 0)) + (this.offhand.shield ? this.offhand.prof + this.offhand.enchantment : 0);
     	};
         // Our skill stuff
     	this.skill = {};
@@ -206,7 +206,7 @@ var DnD = (function (window) {
     		}
     	};
     	this.getSkill = function (skill) {
-    		return this.mod(this.skill[skill].key) + this.modLevel() + this.skill[skill].value + (this.skill[skill].key === "str" || this.skill[skill].key === "dex" ? this.armour.check : 0);
+    		return this.mod(this.skill[skill].key) + this.modLevel() + this.skill[skill].value + (this.skill[skill].key === "str" || this.skill[skill].key === "dex" ? this.armour.check + (this.offhand.shield ? this.offhand.check : 0) : 0);
     	};
     	// Our resistances, vulnerabilities and immunities
     	this.resistance =  new Storage();
@@ -265,7 +265,7 @@ var DnD = (function (window) {
 			properties: {}
     	};
     	this.getArmourPower = function () {
-    		var text = "";
+    		var text = "<p><b>" + this.armour.type + (this.armour.light ? " (Light)" : "") + "</b><br / > AC Bonus = " + this.armour.ac + "</p>";
     		for (var power in this.armour.properties) {
     			text += "<p><b>" + power + "</b><br />" + this.armour.properties[power] + "</p>";
     		}
@@ -381,6 +381,644 @@ var DnD = (function (window) {
 				this.armour.price = 1;
 				this.armour.weight = 4;
 				this.armour.properties = {};
+				break;
+			};
+		};
+		// Melee Weapon Stats
+    	this.melee = {
+    		name: "Unarmed",
+    		type: "Empty",
+    		prof: 0,
+    		enchantment: 0,
+    		dice: 1,
+    		side: 4,
+    		twohands: 0,
+			price: 0,
+			weight: 0,
+			properties: {}
+    	};
+    	this.getMeleePower = function () {
+    		var text = "<p><b>Basic Melee - " + this.melee.type + "</b>" + (this.melee.twohands ? "(Two-handed)" : "") + "<br />+" + (this.melee.prof + this.melee.enchantment + this.mod("str") + this.modLevel()) + " vs AC; Hit Damage = " + this.melee.dice + "d" + this.melee.side + " + " + (this.mod("str") + this.melee.enchantment) + "</p>";
+    		for (var power in this.melee.properties) {
+    			text += "<p><b>" + power + "</b><br />" + this.melee.properties[power] + "</p>";
+    		}
+    		return text;
+    	};
+		this.applyMelee = function (name, type, enchantment) {
+			this.melee.name = name;
+			this.melee.type = type;
+			this.melee.enchantment = parseInt(enchantment,10);
+			switch (type) {
+			case "Club":
+				this.melee.prof = 2;
+				this.melee.side = 6;
+				this.melee.price = 1;
+				this.melee.weight = 3;
+				break;
+			case "Dagger":
+				this.melee.prof = 3;
+				this.melee.price = 1;
+				this.melee.weight = 1;
+				this.melee.properties["Light Thrown"] = "Can be used as a ranged basic attack (use dexterity modifier instead). Range 5/10.";
+				break;
+			case "Javelin":
+				this.melee.prof = 2;
+				this.melee.side = 6;
+				this.melee.price = 5;
+				this.melee.weight = 2;
+				this.melee.properties["Heavy Thrown"] = "Can be used as a ranged basic attack (use strength modifier). Range 10/20";
+				break;
+			case "Light mace":
+				this.melee.prof = 2;
+				this.melee.side = 6;
+				this.melee.price = 3;
+				this.melee.weight = 2;
+				this.melee.properties["Small"] = "A small creature can use this weapon in the same manner as a medium creature can";
+				break;
+			case "Mace":
+				this.melee.prof = 2;
+				this.melee.side = 8;
+				this.melee.price = 5;
+				this.melee.weight = 6;
+				this.melee.properties["Versatile"] = "Can be used as a two handed weapon for an extra point of damage";
+				break;
+			case "Sickle":
+				this.melee.prof = 2;
+				this.melee.side = 6;
+				this.melee.price = 2;
+				this.melee.weight = 2;
+				break;
+			case "Short spear":
+				this.melee.prof = 2;
+				this.melee.side = 6;
+				this.melee.price = 2;
+				this.melee.weight = 1;
+				this.melee.properties["Light Thrown"] = "Can be used as a ranged basic attack (use dexterity modifier instead). Range 5/10.";
+				this.melee.properties["Small"] = "A small creature can use this weapon in the same manner as a medium creature can";
+				break;
+			case "Spear":
+				this.melee.prof = 2;
+				this.melee.side = 8;
+				this.melee.price = 5;
+				this.melee.weight = 6;
+				this.melee.properties["Versatile"] = "Can be used as a two handed weapon for an extra point of damage";
+				break;
+			case "Greatclub":
+				this.melee.twohands = 1;
+				this.melee.prof = 2;
+				this.melee.dice = 2;
+				this.melee.side = 4;
+				this.melee.price = 1;
+				this.melee.weight = 10;
+				break;
+			case "Morningstar":
+				this.melee.twohands = 1;
+				this.melee.prof = 2;
+				this.melee.side = 10;
+				this.melee.price = 10;
+				this.melee.weight = 8;
+				break;
+			case "Quaterstaff":
+				this.melee.twohands = 1;
+				this.melee.prof = 2;
+				this.melee.side = 8;
+				this.melee.price = 5;
+				this.melee.weight = 4;
+				break;
+			case "Scythe":
+				this.melee.twohands = 1;
+				this.melee.prof = 2;
+				this.melee.dice = 2;
+				this.melee.side = 4;
+				this.melee.price = 5;
+				this.melee.weight = 10;
+				break;
+			case "Battleaxe":
+				this.melee.prof = 2;
+				this.melee.side = 10;
+				this.melee.price = 15;
+				this.melee.weight = 6;
+				this.melee.properties["Versatile"] = "Can be used as a two handed weapon for an extra point of damage";
+				break;
+			case "Broadsword":
+				this.melee.prof = 2;
+				this.melee.side = 10;
+				this.melee.price = 20;
+				this.melee.weight = 5;
+				this.melee.properties["Versatile"] = "Can be used as a two handed weapon for an extra point of damage";
+				break;
+			case "Flail":
+				this.melee.prof = 2;
+				this.melee.side = 10;
+				this.melee.price = 15;
+				this.melee.weight = 6;
+				this.melee.properties["Versatile"] = "Can be used as a two handed weapon for an extra point of damage";
+				break;
+			case "Handaxe":
+				this.melee.prof = 2;
+				this.melee.side = 6;
+				this.melee.price = 5;
+				this.melee.weight = 3;
+				this.melee.properties["Heavy Thrown"] = "Can be used as a ranged basic attack (use strength modifier). Range 5/10.";
+				break;
+			case "Lance":
+				this.melee.prof = 2;
+				this.melee.side = 10;
+				this.melee.price = 12;
+				this.melee.weight = 10;
+				this.melee.properties["Versatile"] = "Can be used as a two handed weapon for an extra point of damage";
+				this.melee.properties["Mounted"] = "More effective when on mount. When used not on a mount, take -2 attack penalty. When mounted, charges do an addition 1[W] extra damage";
+				break;
+			case "Light warpick":
+				this.melee.prof = 2;
+				this.melee.side = 6;
+				this.melee.price = 10;
+				this.melee.weight = 4;
+				this.melee.properties["High Crit"] = "On critical, deal an extra 1[W] damage @ 1-10, 2[W] @ 11-20, 3[W] @ >21";
+				this.melee.properties["Small"] = "A small creature can use this weapon in the same manner as a medium creature can";
+				break;
+			case "Longsword":
+				this.melee.prof = 3;
+				this.melee.side = 8;
+				this.melee.price = 15;
+				this.melee.weight = 4;
+				this.melee.properties["Versatile"] = "Can be used as a two handed weapon for an extra point of damage";
+				break;
+			case "Rapier":
+				this.melee.prof = 3;
+				this.melee.side = 8;
+				this.melee.price = 25;
+				this.melee.weight = 2;
+				break;
+			case "Scimitar":
+				this.melee.prof = 2;
+				this.melee.side = 8;
+				this.melee.price = 10;
+				this.melee.weight = 4;
+				this.melee.properties["High Crit"] = "On critical, deal an extra 1[W] damage @ 1-10, 2[W] @ 11-20, 3[W] @ >21";
+				break;
+			case "Short sword":
+				this.melee.prof = 3;
+				this.melee.side = 6;
+				this.melee.price = 10;
+				this.melee.weight = 2;
+				break;
+			case "Throwing hammer":
+				this.melee.prof = 2;
+				this.melee.side = 6;
+				this.melee.price = 5;
+				this.melee.weight = 2;
+				this.melee.properties["Heavy Thrown"] = "Can be used as a ranged basic attack (use strength modifier). Range 5/10.";
+				break;
+			case "Warhammer":
+				this.melee.prof = 2;
+				this.melee.side = 10;
+				this.melee.price = 15;
+				this.melee.weight = 5;
+				this.melee.properties["Versatile"] = "Can be used as a two handed weapon for an extra point of damage";
+				break;
+			case "Warpick":
+				this.melee.prof = 2;
+				this.melee.side = 8;
+				this.melee.price = 15;
+				this.melee.weight = 6;
+				this.melee.properties["High Crit"] = "On critical, deal an extra 1[W] damage @ 1-10, 2[W] @ 11-20, 3[W] @ >21";
+				this.melee.properties["Versatile"] = "Can be used as a two handed weapon for an extra point of damage";
+				break;
+			case "Falchion":
+				this.melee.twohands = 1;
+				this.melee.prof = 3;
+				this.melee.dice = 2;
+				this.melee.side = 4;
+				this.melee.price = 25;
+				this.melee.weight = 7;
+				this.melee.properties["High Crit"] = "On critical, deal an extra 1[W] damage @ 1-10, 2[W] @ 11-20, 3[W] @ >21";
+				break;
+			case "Glaive":
+				this.melee.twohands = 1;
+				this.melee.prof = 2;
+				this.melee.dice = 2;
+				this.melee.side = 4;
+				this.melee.price = 25;
+				this.melee.weight = 10;
+				this.melee.properties["Reach"] = "Can attack enemies that are 2 squares away from you (as well as adjacent enemies)";
+				break;
+			case "Greataxe":
+				this.melee.twohands = 1;
+				this.melee.prof = 2;
+				this.melee.dice = 1;
+				this.melee.side = 12;
+				this.melee.price = 30;
+				this.melee.weight = 8;
+				this.melee.properties["High Crit"] = "On critical, deal an extra 1[W] damage @ 1-10, 2[W] @ 11-20, 3[W] @ >21";
+				break;
+			case "Greatsword":
+				this.melee.twohands = 1;
+				this.melee.prof = 3;
+				this.melee.dice = 1;
+				this.melee.side = 10;
+				this.melee.price = 30;
+				this.melee.weight = 8;
+				break;
+			case "Halberd":
+				this.melee.twohands = 1;
+				this.melee.prof = 2;
+				this.melee.dice = 1;
+				this.melee.side = 10;
+				this.melee.price = 25;
+				this.melee.weight = 12;
+				this.melee.properties["Reach"] = "Can attack enemies that are 2 squares away from you (as well as adjacent enemies)";
+				break;
+			case "Heavy flail":
+				this.melee.twohands = 1;
+				this.melee.prof = 2;
+				this.melee.dice = 2;
+				this.melee.side = 6;
+				this.melee.price = 25;
+				this.melee.weight = 10;
+				break;
+			case "Longspear":
+				this.melee.twohands = 1;
+				this.melee.prof = 2;
+				this.melee.dice = 1;
+				this.melee.side = 10;
+				this.melee.price = 10;
+				this.melee.weight = 9;
+				this.melee.properties["Reach"] = "Can attack enemies that are 2 squares away from you (as well as adjacent enemies)";
+				break;
+			case "Maul":
+				this.melee.twohands = 1;
+				this.melee.prof = 2;
+				this.melee.dice = 2;
+				this.melee.side = 6;
+				this.melee.price = 30;
+				this.melee.weight = 12;
+				break;
+			case "Pike":
+				this.melee.twohands = 1;
+				this.melee.prof = 2;
+				this.melee.dice = 1;
+				this.melee.side = 10;
+				this.melee.price = 15;
+				this.melee.weight = 6;
+				this.melee.properties["Reach"] = "Can attack enemies that are 2 squares away from you (as well as adjacent enemies)";
+				this.melee.properties["Small"] = "A small creature can use this weapon in the same manner as a medium creature can";
+				break;
+			case "Bastard sword":
+				this.melee.prof = 3;
+				this.melee.dice = 1;
+				this.melee.side = 10;
+				this.melee.price = 30;
+				this.melee.weight = 6;
+				this.melee.properties["Versatile"] = "Can be used as a two handed weapon for an extra point of damage";
+				break;
+			case "Katar":
+				this.melee.prof = 3;
+				this.melee.dice = 1;
+				this.melee.side = 6;
+				this.melee.price = 3;
+				this.melee.weight = 1;
+				this.melee.properties["High Crit"] = "On critical, deal an extra 1[W] damage @ 1-10, 2[W] @ 11-20, 3[W] @ >21";
+				break;
+			case "Serrated pick":
+				this.melee.prof = 2;
+				this.melee.dice = 1;
+				this.melee.side = 10;
+				this.melee.price = 15;
+				this.melee.weight = 4;
+				this.melee.properties["High Crit"] = "On critical, deal an extra 1[W] damage @ 1-10, 2[W] @ 11-20, 3[W] @ >21";
+				this.melee.properties["Small"] = "A small creature can use this weapon in the same manner as a medium creature can";
+				break;
+			case "War axe":
+				this.melee.prof = 2;
+				this.melee.dice = 1;
+				this.melee.side = 12;
+				this.melee.price = 30;
+				this.melee.weight = 10;
+				this.melee.properties["Versatile"] = "Can be used as a two handed weapon for an extra point of damage";
+				break;
+			case "Whip":
+				this.melee.prof = 3;
+				this.melee.dice = 1;
+				this.melee.side = 4;
+				this.melee.price = 10;
+				this.melee.weight = 2;
+				this.melee.properties["Reach"] = "Can attack enemies that are 2 squares away from you (as well as adjacent enemies)";
+				break;
+			case "Spiked chain":
+				this.melee.twohands = 1;
+				this.melee.prof = 3;
+				this.melee.dice = 2;
+				this.melee.side = 4;
+				this.melee.price = 30;
+				this.melee.weight = 10;
+				this.melee.properties["Reach"] = "Can attack enemies that are 2 squares away from you (as well as adjacent enemies)";
+				break;
+			default:
+	    		this.melee.prof = 0;
+	    		this.melee.dice = 1;
+	    		this.melee.side = 4;
+	    		this.melee.twohands = 0;
+				this.melee.price = 0;
+				this.melee.weight = 0;
+				this.melee.properties = {};
+				break;
+			};
+		};
+		// Offhand Stats
+    	this.offhand = {
+    		name: "Unarmed",
+    		type: "Empty",
+    		prof: 0,
+    		enchantment: 0,
+    		dice: 1,
+    		side: 4,
+    		shield: 0,
+    		check: 0,
+			price: 0,
+			weight: 0,
+			properties: {}
+    	};
+    	this.getOffhandPower = function () {
+    		var text = "";
+    		if (this.offhand.shield) {
+    			text = "<p><b>" + this.offhand.type + "</b><br /> AC Bonus = " + this.offhand.prof + "</p>";
+    		} else {
+    			text = "<p><b>" + this.offhand.type + "</b><br />+" + (this.offhand.prof + this.mod("str") + this.modLevel()) + " vs AC; Hit Damage = " + this.offhand.dice + "d" + this.offhand.side + " + " + (this.offhand.enchantment + this.mod("str")) + "</p>";
+    		}
+    		for (var power in this.offhand.properties) {
+    			text += "<p><b>" + power + "</b><br />" + this.offhand.properties[power] + "</p>";
+    		}
+    		return text;
+    	};
+		this.applyOffhand = function (name, type, enchantment) {
+			this.offhand.name = name;
+			this.offhand.type = type;
+			this.offhand.enchantment = parseInt(enchantment,10);
+			switch (type) {
+			case "Light shield":
+				this.offhand.shield = 1;
+				this.offhand.prof = 1;
+				this.offhand.check = 0;
+				this.offhand.price = 5;
+				this.offhand.weight = 6;
+				break;
+			case "Heavy shield":
+				this.offhand.shield = 1;
+				this.offhand.prof = 2;
+				this.offhand.check = -2;
+				this.offhand.price = 10;
+				this.offhand.weight = 15;
+				break;
+			case "Barbed shield":
+				this.offhand.shield = 1;
+				this.offhand.prof = 2;
+				this.offhand.check = -3;
+				this.offhand.price = 20;
+				this.offhand.weight = 18;
+				this.offhand.properties["Barbed"] = "Creature takes damage 2 + one-half your level when you escape a grab or a creature escapes your grab";
+				break;
+			case "Dagger":
+				this.offhand.shield = 0;
+				this.offhand.check = 0;
+				this.offhand.prof = 3;
+				this.offhand.price = 1;
+				this.offhand.weight = 1;
+				this.offhand.properties["Light Thrown"] = "Can be used as a ranged basic attack (use dexterity modifier instead). Range 5/10.";
+				break;
+			case "Light mace":
+				this.offhand.shield = 0;
+				this.offhand.check = 0;
+				this.offhand.prof = 2;
+				this.offhand.side = 6;
+				this.offhand.price = 3;
+				this.offhand.weight = 2;
+				this.offhand.properties["Small"] = "A small creature can use this weapon in the same manner as a medium creature can";
+				break;
+			case "Sickle":
+				this.offhand.shield = 0;
+				this.offhand.check = 0;
+				this.offhand.prof = 2;
+				this.offhand.side = 6;
+				this.offhand.price = 2;
+				this.offhand.weight = 2;
+				break;
+			case "Short spear":
+				this.offhand.shield = 0;
+				this.offhand.check = 0;
+				this.offhand.prof = 2;
+				this.offhand.side = 6;
+				this.offhand.price = 2;
+				this.offhand.weight = 1;
+				this.offhand.properties["Light Thrown"] = "Can be used as a ranged basic attack (use dexterity modifier instead). Range 5/10.";
+				this.offhand.properties["Small"] = "A small creature can use this weapon in the same manner as a medium creature can";
+				break;
+			case "Handaxe":
+				this.offhand.shield = 0;
+				this.offhand.check = 0;
+				this.offhand.prof = 2;
+				this.offhand.side = 6;
+				this.offhand.price = 5;
+				this.offhand.weight = 3;
+				this.offhand.properties["Heavy Thrown"] = "Can be used as a ranged basic attack (use strength modifier). Range 5/10.";
+				break;
+			case "Light warpick":
+				this.offhand.shield = 0;
+				this.offhand.check = 0;
+				this.offhand.prof = 2;
+				this.offhand.side = 6;
+				this.offhand.price = 10;
+				this.offhand.weight = 4;
+				this.offhand.properties["High Crit"] = "On critical, deal an extra 1[W] damage @ 1-10, 2[W] @ 11-20, 3[W] @ >21";
+				this.offhand.properties["Small"] = "A small creature can use this weapon in the same manner as a medium creature can";
+				break;
+			case "Short sword":
+				this.offhand.shield = 0;
+				this.offhand.check = 0;
+				this.offhand.prof = 3;
+				this.offhand.side = 6;
+				this.offhand.price = 10;
+				this.offhand.weight = 2;
+				break;
+			case "Throwing hammer":
+				this.offhand.shield = 0;
+				this.offhand.check = 0;
+				this.offhand.prof = 2;
+				this.offhand.side = 6;
+				this.offhand.price = 5;
+				this.offhand.weight = 2;
+				this.offhand.properties["Heavy Thrown"] = "Can be used as a ranged basic attack (use strength modifier). Range 5/10.";
+				break;
+			case "Katar":
+				this.offhand.shield = 0;
+				this.offhand.check = 0;
+				this.offhand.prof = 3;
+				this.offhand.dice = 1;
+				this.offhand.side = 6;
+				this.offhand.price = 3;
+				this.offhand.weight = 1;
+				this.offhand.properties["High Crit"] = "On critical, deal an extra 1[W] damage @ 1-10, 2[W] @ 11-20, 3[W] @ >21";
+				break;
+			default:
+				this.offhand.shield = 0;
+				this.offhand.check = 0;
+	    		this.offhand.prof = 0;
+	    		this.offhand.dice = 1;
+	    		this.offhand.side = 4;
+	    		this.offhand.twohands = 0;
+				this.offhand.price = 0;
+				this.offhand.weight = 0;
+				this.offhand.properties = {};
+				break;
+			};
+		};
+		// Range Stats
+    	this.range = {
+    		name: "Improvised",
+    		type: "Improvised",
+    		key: "dex",
+    		twohands: 0,
+    		prof: 0,
+    		enchantment: 0,
+    		dice: 1,
+    		side: 4,
+    		short: 5,
+    		long: 10,
+			price: 0,
+			weight: 0,
+			properties: {}
+    	};
+    	this.getRangePower = function () {
+    		var text = "<p><b>" + this.range.type + (this.range.twohands ? " (Two-handed)" : "") + " (Range: " + this.range.short + "/" + this.range.long + ")</b><br />+" + (this.range.prof + this.mod(this.range.key)) + " vs AC; Hit Damage = " + this.range.dice + "d" + this.range.side + " + " + (this.mod(this.range.key) + this.range.enchantment) + "</p>";
+    		for (var power in this.range.properties) {
+    			text += "<p><b>" + power + "</b><br />" + this.range.properties[power] + "</p>";
+    		}
+    		return text;
+    	};
+		this.applyRange = function (name, type, enchantment) {
+			this.range.name = name;
+			this.range.type = type;
+			this.range.enchantment = parseInt(enchantment,10);
+			switch (type) {
+			case "Hand crossbow":
+				this.range.prof = 2;
+				this.range.side = 6;
+				this.range.short = 10;
+				this.range.long = 20;
+				this.range.price = 25;
+				this.range.weight = 2;
+				this.range.properties["Load free"] = "Draw and load as a free action (Requires two hands)";
+				break;
+			case "Sling":
+				this.range.prof = 2;
+				this.range.side = 6;
+				this.range.short = 10;
+				this.range.long = 20;
+				this.range.price = 1;
+				this.range.weight = 0;
+				this.range.properties["Load free"] = "Draw and load as a free action (Requires two hands)";
+				break;
+			case "Crossbow":
+				this.range.twohands = 1;
+				this.range.prof = 2;
+				this.range.side = 8;
+				this.range.short = 15;
+				this.range.long = 30;
+				this.range.price = 25;
+				this.range.weight = 4;
+				this.range.properties["Load minor"] = "Draw and load as a minor action (Requires two hands)";
+				break;
+			case "Longbow":
+				this.range.twohands = 1;
+				this.range.prof = 2;
+				this.range.side = 10;
+				this.range.short = 20;
+				this.range.long = 40;
+				this.range.price = 30;
+				this.range.weight = 3;
+				this.range.properties["Load free"] = "Draw and load as a free action (Requires two hands)";
+				break;
+			case "Shortbow":
+				this.range.twohands = 1;
+				this.range.prof = 2;
+				this.range.side = 8;
+				this.range.short = 15;
+				this.range.long = 30;
+				this.range.price = 25;
+				this.range.weight = 2;
+				this.range.properties["Load free"] = "Draw and load as a free action (Requires two hands)";
+				this.range.properties["Small"] = "Small creatures can use in the same way a medium creature can";
+				break;
+			case "Shuriken":
+				this.range.prof = 3;
+				this.range.side = 4;
+				this.range.short = 6;
+				this.range.long = 12;
+				this.range.price = 1;
+				this.range.weight = 1;
+				this.offhand.properties["Light Thrown"] = "Can be used as a ranged basic attack (use dexterity modifier instead)";
+				break;
+			case "Javelin":
+				this.range.key = "str";
+				this.range.short = 10;
+				this.range.long = 20;
+				this.range.prof = 2;
+				this.range.side = 6;
+				this.range.price = 5;
+				this.range.weight = 2;
+				this.range.properties["Heavy Thrown"] = "Can be used as a ranged basic attack (use strength modifier)";
+				break;
+			case "Dagger":
+				this.range.short = 5;
+				this.range.long = 10;
+				this.range.prof = 2;
+				this.range.side = 4;
+				this.range.price = 1;
+				this.range.weight = 1;
+				this.offhand.properties["Light Thrown"] = "Can be used as a ranged basic attack (use dexterity modifier instead)";
+				break;
+			case "Short spear":
+				this.range.short = 5;
+				this.range.long = 10;
+				this.range.prof = 2;
+				this.range.side = 6;
+				this.range.price = 2;
+				this.range.weight = 1;
+				this.range.properties["Light Thrown"] = "Can be used as a ranged basic attack (use dexterity modifier instead). Range 5/10.";
+				this.range.properties["Small"] = "A small creature can use this weapon in the same manner as a medium creature can";
+				break;
+			case "Handaxe":
+				this.range.short = 5;
+				this.range.long = 10;
+				this.range.prof = 2;
+				this.range.side = 6;
+				this.range.price = 5;
+				this.range.weight = 3;
+				this.range.properties["Heavy Thrown"] = "Can be used as a ranged basic attack (use strength modifier). Range 5/10.";
+				break;
+			case "Throwing hammer":
+				this.range.short = 5;
+				this.range.long = 10;
+				this.range.prof = 2;
+				this.range.side = 6;
+				this.range.price = 5;
+				this.range.weight = 2;
+				this.range.properties["Heavy Thrown"] = "Can be used as a ranged basic attack (use strength modifier). Range 5/10.";
+				break;
+			default:
+				this.range.name = "Improvised";
+				this.range.type = "Improvised";
+				this.range.key = "dex";
+				this.range.twohands = 0;
+				this.range.prof = 0;
+				this.range.enchantment = 0;
+				this.range.dice = 1;
+				this.range.side = 4;
+				this.range.short = 5;
+				this.range.long = 10;
+				this.range.price = 0;
+				this.range.weight = 0;
+				this.range.properties = {};
 				break;
 			};
 		};
@@ -867,9 +1505,9 @@ var DnD = (function (window) {
 			// Warrior Classes
 			case "Artillery":
 				this.increaseSkill("perception", 5);
-				this.increaseDefence("fort", 2);
-				this.increaseDefence("reflex", 2);
-				this.increaseDefence("will", 2);
+				this.increaseDefence("fort", 1);
+				this.increaseDefence("reflex", 1);
+				this.increaseDefence("will", 1);
 				if (this.npc) {
 					this.bonusSkill += 1;
 				} else {
@@ -881,9 +1519,9 @@ var DnD = (function (window) {
 				break;
 			case "Brute":
 				this.increaseSkill("athletics", 5);
-				this.increaseDefence("fort", 2);
-				this.increaseDefence("reflex", 2);
-				this.increaseDefence("will", 2);
+				this.increaseDefence("fort", 1);
+				this.increaseDefence("reflex", 1);
+				this.increaseDefence("will", 1);
 				if (this.npc) {
 					this.bonusSkill += 1;
 				} else {
@@ -895,9 +1533,9 @@ var DnD = (function (window) {
 				break;
 			case "Controller":
 				this.increaseSkill("perception", 5);
-				this.increaseDefence("fort", 2);
-				this.increaseDefence("reflex", 2);
-				this.increaseDefence("will", 2);
+				this.increaseDefence("fort", 1);
+				this.increaseDefence("reflex", 1);
+				this.increaseDefence("will", 1);
 				if (this.npc) {
 					this.bonusSkill += 1;
 				} else {
@@ -909,9 +1547,9 @@ var DnD = (function (window) {
 				break;
 			case "Lurker":
 				this.increaseSkill("stealth", 5);
-				this.increaseDefence("fort", 2);
-				this.increaseDefence("reflex", 2);
-				this.increaseDefence("will", 2);
+				this.increaseDefence("fort", 1);
+				this.increaseDefence("reflex",1);
+				this.increaseDefence("will", 1);
 				this.bonusInitiative += 4;
 				if (this.npc) {
 					this.bonusSkill += 1;
@@ -924,9 +1562,9 @@ var DnD = (function (window) {
 				break;
 			case "Skirmisher":
 				this.increaseSkill("athletics", 5);
-				this.increaseDefence("fort", 2);
-				this.increaseDefence("reflex", 2);
-				this.increaseDefence("will", 2);
+				this.increaseDefence("fort", 1);
+				this.increaseDefence("reflex", 1);
+				this.increaseDefence("will", 1);
 				this.bonusInitiative += 2;
 				if (this.npc) {
 					this.bonusSkill += 1;
@@ -939,9 +1577,9 @@ var DnD = (function (window) {
 				break;
 			case "Soldier":
 				this.increaseSkill("endurance", 5);
-				this.increaseDefence("fort", 2);
-				this.increaseDefence("reflex", 2);
-				this.increaseDefence("will", 2);
+				this.increaseDefence("fort", 1);
+				this.increaseDefence("reflex", 1);
+				this.increaseDefence("will", 1);
 				this.bonusInitiative += 2;
 				if (this.npc) {
 					this.bonusSkill += 1;
@@ -1196,7 +1834,7 @@ var DnD = (function (window) {
 	        				break;
 	        			case 'defence':
 	        				for (var defence in hydrated[key]) {
-	        					toReturn.addDefence(defence, hydrated[key][defence].attribute1, hydrated[key][defence].attribute1, hydrated[key][defence].value);
+	        					toReturn.addDefence(defence, hydrated[key][defence].attribute1, hydrated[key][defence].attribute2, hydrated[key][defence].value);
 	        				}
 	        				break;
 	        			case 'immunity':

@@ -371,9 +371,15 @@
          * Other details
          */
         window.document.getElementById('txt_armour').innerHTML = creature.armour.name + "<br />(+" + creature.armour.enchantment + " " + creature.armour.type + ")";
+        window.document.getElementById('txt_weapon').innerHTML = creature.melee.name + "<br />(+" + creature.melee.enchantment + " " + creature.melee.type + ")";
+        window.document.getElementById('txt_offhand').innerHTML = creature.offhand.name + "<br />(+" + creature.offhand.enchantment + " " + creature.offhand.type + ")";
+        window.document.getElementById('txt_range').innerHTML = creature.range.name + "<br />(+" + creature.range.enchantment + " " + creature.range.type + ")";
         window.document.getElementById('skill_bonus').innerHTML = creature.bonusSkill;
         window.document.getElementById('feat_bonus').innerHTML = creature.getFeats();
         window.document.getElementById('power_armour').innerHTML = creature.getArmourPower();
+        window.document.getElementById('power_weapon').innerHTML = creature.getMeleePower();
+        window.document.getElementById('power_offhand').innerHTML = creature.getOffhandPower();
+        window.document.getElementById('power_ranged').innerHTML = creature.getRangePower();
         window.document.getElementById('power_atwill').innerHTML = creature.getAtWill();
         window.document.getElementById('power_encounter').innerHTML = creature.getEncounter();
         window.document.getElementById('power_daily').innerHTML = creature.getDaily();

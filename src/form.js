@@ -120,7 +120,6 @@ function Form() {
 	             // Superior melee - single handed
 	             "Bastard sword",
 	             "Katar",
-	             "Rapier",
 	             "Serrated pick",
 	             "War axe",
 	             "Whip",
@@ -150,10 +149,16 @@ function Form() {
 	             // Simple range - two handed
 	             "Crossbow",
 	             // Military range - two handed
-	             "Longbox",
+	             "Longbow",
 	             "Shortbow",
 	             // Superior ranged - one handed
-	             "Shuriken"];
+	             "Shuriken",
+	             // Melee which can be thrown
+	             'Javelin',
+	             'Dagger',
+	             'Short spear',
+	             'Handaxe',
+	             'Throwing hammer'];
 	var template = ["Standard",
 	                "Minion",
 	                "Elite",

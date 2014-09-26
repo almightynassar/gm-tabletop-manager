@@ -164,6 +164,12 @@
     	// Add armour and weapons
     	creature.applyArmour(window.document.getElementById('armour_name_input').value, window.document.getElementById('armour_input').value, window.document.getElementById('armour_bonus_input').value);
     	creature.armour.properties[window.document.getElementById('armour_enchantment_input').value] = window.document.getElementById('armour_effect_input').value;
+    	creature.applyMelee(window.document.getElementById('melee_name_input').value, window.document.getElementById('melee_input').value, window.document.getElementById('melee_bonus_input').value);
+    	creature.melee.properties[window.document.getElementById('melee_enchantment_input').value] = window.document.getElementById('melee_effect_input').value;
+    	creature.applyOffhand(window.document.getElementById('offhand_name_input').value, window.document.getElementById('offhand_input').value, window.document.getElementById('offhand_bonus_input').value);
+    	creature.offhand.properties[window.document.getElementById('offhand_enchantment_input').value] = window.document.getElementById('offhand_effect_input').value;
+    	creature.applyRange(window.document.getElementById('range_name_input').value, window.document.getElementById('range_input').value, window.document.getElementById('range_bonus_input').value);
+    	creature.range.properties[window.document.getElementById('range_enchantment_input').value] = window.document.getElementById('range_effect_input').value;
     	// Save the object and go to the other form
     	localStorage.setItem('DnD.form', DnD.serialise(creature));
     	window.location.href = "creature.html";
