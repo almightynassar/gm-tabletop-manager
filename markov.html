@@ -23,16 +23,20 @@
 		</ul>
 	</div>
 	<div id="Markov">
-		<p>
-			<button onclick='loadName("human", false);'>Load Male Human</button>
-			<button onclick='loadName("human", true);'>Load Female Human</button>
-			<button onclick='loadName("dwarf", false);'>Load Male Dwarf</button>
-			<button onclick='loadName("dwarf", true);'>Load Female Dwarf</button>
-			<button onclick='loadName("elf", false);'>Load Male Elf</button>
-			<button onclick='loadName("elf", true);'>Load Female Elf</button>
-			<button onclick='loadName("orc", false);'>Load Male Orc</button>
-			<button onclick='loadName("orc", true);'>Load Female Orc</button>
-		</p>
+		<table>
+			<tr>
+				<td><button onclick='loadName("human", false);'>Load Male Human</button></td>
+				<td><button onclick='loadName("dwarf", false);'>Load Male Dwarf</button></td>
+				<td><button onclick='loadName("elf", false);'>Load Male Elf</button></td>
+				<td><button onclick='loadName("orc", false);'>Load Male Orc</button></td>
+			</tr>
+			<tr>
+				<td><button onclick='loadName("human", true);'>Load Female Human</button></td>
+				<td><button onclick='loadName("dwarf", true);'>Load Female Dwarf</button></td>
+				<td><button onclick='loadName("elf", true);'>Load Female Elf</button></td>
+				<td><button onclick='loadName("orc", true);'>Load Female Orc</button></td>
+			</tr>
+		</table>
 		<p>
 			<b>Number:</b>
 		   	<select id="number" name="number">

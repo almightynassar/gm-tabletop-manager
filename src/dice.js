@@ -20,6 +20,9 @@ var Dice = new function () {
         return result[1] + result[2] + result[3];
     }
     return {
+    	dice: (function (type, number) {
+    		return roll(type, number);
+    	}),
         d2: (function (number) {
             return roll(2,number);
         }),    

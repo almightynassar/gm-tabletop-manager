@@ -995,6 +995,57 @@ var Names = new function () {
 				        'tilgud',
 				        'tilzorm'];
 			}
+		},
+		/**======================================
+		 * 		KOBOLD NAMES
+		 ======================================*/
+		kobold: function (isFemale) {
+			if (isFemale) {
+				return ['adriaak',
+				        'diarja',
+				        'dorla',
+				        'gwir',
+				        'harkail',
+				        'jonrhra',
+				        'malla',
+				        'milleen',
+				        'neeral',
+				        'obertia',
+				        'ozula',
+				        'poro',
+				        'saasraa',
+				        'tarka',
+				        'vivara',
+				        'widjan'];
+			} else {
+				return ['afzenatak',
+				        'adart',
+				        'arochar',
+				        'barkord',
+				        'dijaf',
+				        'doetna',
+				        'draahzin',
+				        'eadoo',
+				        'fekadar',
+				        'fekadik',
+				        'gohesh',
+				        'herftak',
+				        'ipmeerk',
+				        'jamada',
+				        'jonross',
+				        'keiter',
+				        'kelus',
+				        'kib',
+				        'makroo',
+				        'olp',
+				        'tenovi',
+				        'tiktik',
+				        'totrek',
+				        'yikyik',
+				        'yokyok',
+				        'yraalik',
+				        'zornesk'];
+			}
 		}
 	};
 };

@@ -1,18 +1,5 @@
 <!doctype html>
 <html>
-<head>
-	<style>
-[draggable] {
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  /* Required to make elements draggable in old WebKit */
-  -khtml-user-drag: element;
-  -webkit-user-drag: element;
-}
-	</style>
-</head>
 <body>
 	<div id="Menu">
 		<ul>
@@ -21,14 +8,84 @@
 			<li><a href="dice.html">Dice Roller</a>
 		</ul>
 	</div>
-	<p><button onclick='d6();'>d6</button><button onclick='d10();'>d10</button><button onclick='d20();'>d20</button></p>
+	<p>
+	    <select id="number">
+	    	<option value="1">1</option>
+	    	<option value="2">2</option>
+	    	<option value="3">3</option>
+	    	<option value="4">4</option>
+	    	<option value="5">5</option>
+	    	<option value="6">6</option>
+	    	<option value="7">7</option>
+	    	<option value="8">8</option>
+	    	<option value="9">9</option>
+	    	<option value="10">10</option>
+	    	<option value="11">11</option>
+	    	<option value="12">12</option>
+	    	<option value="13">13</option>
+	    	<option value="14">14</option>
+	    	<option value="15">15</option>
+	    	<option value="16">16</option>
+	    	<option value="17">17</option>
+	    	<option value="18">18</option>
+	    	<option value="19">19</option>
+	    	<option value="20">20</option>
+	    </select>
+	    d
+	    <select id="sides">
+	    	<option value="2">2</option>
+	    	<option value="3">3</option>
+	    	<option value="4">4</option>
+	    	<option value="6">6</option>
+	    	<option value="8">8</option>
+	    	<option value="10">10</option>
+	    	<option value="12">12</option>
+	    	<option value="20">20</option>
+	    	<option value="30">30</option>
+	    	<option value="100">100</option>
+	    </select>
+	    <button onclick='roll();'>Roll!</button>
+	</p>
 	<div id="Dice">
 	</div>
 	<script src="dice.min.js"></script>
 	<script>
-	function d6() { window.document.getElementById("Dice").innerHTML = Dice.d6(); }
-	function d10() { window.document.getElementById("Dice").innerHTML = Dice.d10(); }
-	function d20() { window.document.getElementById("Dice").innerHTML = Dice.d20(); }
+	function roll() {
+		var number = parseInt(window.document.getElementById("number").value, 10);
+		var sides = parseInt(window.document.getElementById("sides").value, 10);
+		switch (sides) {
+		case 2:
+			window.document.getElementById("Dice").innerHTML = Dice.d2(number);
+			break;
+		case 3:
+			window.document.getElementById("Dice").innerHTML = Dice.d3(number);
+			break;
+		case 4:
+			window.document.getElementById("Dice").innerHTML = Dice.d4(number);
+			break;
+		case 6:
+			window.document.getElementById("Dice").innerHTML = Dice.d6(number);
+			break;
+		case 8:
+			window.document.getElementById("Dice").innerHTML = Dice.d8(number);
+			break;
+		case 10:
+			window.document.getElementById("Dice").innerHTML = Dice.d10(number);
+			break;
+		case 12:
+			window.document.getElementById("Dice").innerHTML = Dice.d12(number);
+			break;
+		case 30:
+			window.document.getElementById("Dice").innerHTML = Dice.d30(number);
+			break;
+		case 100:
+			window.document.getElementById("Dice").innerHTML = Dice.d100(number);
+			break;
+		default:
+			window.document.getElementById("Dice").innerHTML = Dice.d20(number);
+			break;
+		}
+	}
 	</script>
 </body>
 </html>
