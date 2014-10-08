@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<body>
+	<div id="Menu">
+		<ul>
+			<li><a href="index.html">Character Creator</a></li>
+			<li><a href="markov.html">Name Generator</a></li>
+			<li><a href="dice.html">Dice Roller</a></li>
+			<li><a href="rumours.html">Rumour Generator</a></li>
+		</ul>
+	</div>
+	<div id="Forms">
+		<p><b>Level:</b> <span id="levels"></span></p>
+		<p><b>Type:</b> <select name="type_input" class="" id="type_input"><option value="armour">Armour</option><option value="weapon">Weapon</option><option value="divine">Divine Implements</option><option value="arcane">Arcane Implements</option><option value="mount">Mount Slot Item</option><option value="feet">Foot Slot Item</option><option value="hand">Hand Slot Item</option><option value="head">Head Slot Item</option><option value="neck">Neck Slot Item</option><option value="ring">Rings</option><option value="waist">Waist Slot Item</option></select>
+		<p><button onclick='generate();'>Generate Item</button></p>
+	</div>
+	<div id="Item">
+	</div>
+	<script src="dice.min.js"></script>
+	<script src="form.min.js"></script>
+	<script src="magicals.js"></script>
+	<script>
+	var form = new Form();
+	window.document.getElementById('levels').innerHTML = form.dropdown("level");
+	// Magical Item
+	function generate () {
+		var level = window.document.getElementById('level_input').value;
+		var type = window.document.getElementById('type_input').value;
+		var text = "<p>Level: "+level+"</p><p>Cost: "+Magicals.price(level)+"</p><p>Enchament Bonus: +"+Magicals.enchantment(level)+"</p>"+Magicals.bonus(level, type);
+		window.document.getElementById('Item').innerHTML = text;
+	}
+	</script>
+</body>
+</html>

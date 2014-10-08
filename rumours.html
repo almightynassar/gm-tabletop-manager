@@ -3,10 +3,15 @@
 <body>
 	<div id="Menu">
 		<ul>
-			<li><a href="index.html">Character Creator</a>
-			<li><a href="markov.html">Name Generator</a>
-			<li><a href="dice.html">Dice Roller</a>
+			<li><a href="index.html">Character Creator</a></li>
+			<li><a href="markov.html">Name Generator</a></li>
+			<li><a href="dice.html">Dice Roller</a></li>
+			<li><a href="rumours.html">Rumour Generator</a></li>
 		</ul>
+	</div>
+	<div id="Forms">
+		<p><b>Rumours:</b> <span id="levels"></span></p>
+		<p><button onclick='tavern();'>Tavern Rumours</button></p>
 	</div>
 	<div id="Rumour">
 	</div>
@@ -16,6 +21,17 @@
 	<script src="names.js"></script>
 	<script src="rumours.js"></script>
 	<script>
+	var form = new Form();
+	window.document.getElementById('levels').innerHTML = form.dropdown("level");
+	// Tavern rumours
+	function tavern () {
+		var number = window.document.getElementById('level_input').value;
+		var text = "<ol>";
+		for (var i = 0; i < number; i++) {
+			 text += "<li>" + Rumours.tavern() +"</li>";
+		}
+		window.document.getElementById('Rumour').innerHTML = text + "</ol>";
+	}
 	</script>
 </body>
 </html>
