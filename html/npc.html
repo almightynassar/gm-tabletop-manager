@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>NPC Creator</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/form.min.css" media="all">
+</head>
+<body>
+	<div id="DnD">
+		<h4>BASICS</h4>
+		<p><b>Name: </b><input id="name_input" name="name_input" /> <button onclick='markovName();'>Generate Short</button> <button onclick='markovName(8);'>Generate Long</button></p>
+		<p><em>GM Tabletop Manager generates names based on 'Race' and 'Gender'. Changing these attributes below will change the style of name generated</em></p>
+		<p><b>Level:</b> <span id="levels"></span> <input id="npc_input" type="checkbox" value="true" name="npc_input"> <b>NPC?</b></p>
+		<p><b>Race:</b> <span id="races"></span> <b>Class:</b> <span id="classes"></span> <b>Template:</b> <span id="templates"></span></p>
+		<p><b>Gender: </b><select id="gender_input"><option value="male">Male</option><option value="female">Female</option></select>
+		   <b>Height: </b><select id="height_input"><option value="0">Tiny</option><option value="1">Short</option><option value="2">Average</option><option value="3">Tall</option><option value="4">Big</option></select>
+		   <b>Weight: </b><select id="weight_input"><option value="0">Very Light</option><option value="1">Light</option><option value="2">Average</option><option value="3">Heavy</option><option value="4">Very Heavy</option></select></p>
+		<hr />
+		<h4>ATTRIBUTES</h4>
+		<p><em>Drag and drop the order of your preferences - This will be used to automatically allocate level-up attributes and for the generator buttons</em> <span id="prefs"></span></p>
+		<table>
+			<thead>
+				<tr>
+					<th>STR</th>
+					<th>CON</th>
+					<th>DEX</th>
+					<th>INT</th>
+					<th>WIS</th>
+					<th>CHA</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><span id="str"></span></td>
+					<td><span id="con"></span></td>
+					<td><span id="dex"></span></td>
+					<td><span id="int"></span></td>
+					<td><span id="wis"></span></td>
+					<td><span id="cha"></span></td>
+					<td><button id="randomRoll">Random Array</button></td>
+					<td><button id="standardRoll">Standard Array</button></td>
+				</tr>
+			</tbody>
+		</table>
+		<hr />
+		<h4>EQUIPMENT</h4>
+		<table>
+			<thead>
+				<tr>
+					<th>Type</th>
+					<th>Equipment</th>
+					<th>Name</th>
+					<th>Enchantment</th>
+					<th>Effect</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><b>Armour</b></td>
+					<td><span id="armour"></span></td>
+					<td><input id="armour_name_input" placeholder="Armour Name"></td>
+					<td><input id="armour_enchantment_input" placeholder="Enchantment" ></td>
+					<td><input id="armour_effect_input" placeholder="Effect"></td>
+				</tr>
+				<tr>
+					<td><b>Melee</b></td>
+					<td><span id="melee"></span></td>
+					<td><input id="melee_name_input" placeholder="Weapon Name"></td>
+					<td><input id="melee_enchantment_input" placeholder="Enchantment" ></td>
+					<td><input id="melee_effect_input" placeholder="Effect"></td>
+				</tr>
+				<tr>
+					<td><b>Offhand</b></td>
+					<td><span id="offhand"></span></td>
+					<td><input id="offhand_name_input" placeholder="Offhand Name"></td>
+					<td><input id="offhand_enchantment_input" placeholder="Enchantment" ></td>
+					<td><input id="offhand_effect_input" placeholder="Effect"></td>
+				</tr>
+				<tr>
+					<td><b>Range</b></td>
+					<td><span id="range"></span></td>
+					<td><input id="range_name_input" placeholder="Ranged Weapon Name"></td>
+					<td><input id="range_enchantment_input" placeholder="Enchantment" ></td>
+					<td><input id="range_effect_input" placeholder="Effect"></td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+		<p><button class="btn btn-success" onclick='create();'>Submit</button></p>
+	</div>
+</body>
+<script src="../jquery/jquery.min.js"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="../js/markov.min.js"></script>
+<script src="../js/dice.min.js"></script>
+<script src="../js/names.js"></script>
+<script src="../js/form.min.js"></script>
+<script src="../js/dnd.min.js"></script>
+<script>
+	var creature = DnD.blank;
+	/* ===========================================
+	 * Environment and Form set-up
+	 * ===========================================
+	 */
+	window.onload = (function ()
+	{
+		// Our form elements
+		var form = new Form();
+		// Form dropdowns
+		window.document.getElementById('armour').innerHTML = form.dropdown("armour");
+		window.document.getElementById('melee').innerHTML = form.dropdown("melee");
+		window.document.getElementById('offhand').innerHTML = form.dropdown("offhand");
+		window.document.getElementById('range').innerHTML = form.dropdown("range");
+	    window.document.getElementById('races').innerHTML = form.dropdown("race");
+	    window.document.getElementById('classes').innerHTML = form.dropdown("class");
+	    window.document.getElementById('levels').innerHTML = form.dropdown("level");
+	    window.document.getElementById('templates').innerHTML = form.dropdown("template");
+	    window.document.getElementById('str').innerHTML = form.dropdown('str');
+	    window.document.getElementById('con').innerHTML = form.dropdown('con');
+	    window.document.getElementById('dex').innerHTML = form.dropdown('dex');
+	    window.document.getElementById('int').innerHTML = form.dropdown('int');
+	    window.document.getElementById('wis').innerHTML = form.dropdown('wis');
+	    window.document.getElementById('cha').innerHTML = form.dropdown('cha');
+	    // Form draggables
+	    window.document.getElementById('prefs').innerHTML = form.draggable("attributes");
+	    form.draggableListeners("attributes");
+	    window.document.getElementById('randomRoll').onclick = function () { form.draggableAssign("attributes", Dice.randomArray()) };
+	    window.document.getElementById('standardRoll').onclick = function () { form.draggableAssign("attributes", Dice.standardArray()) };
+	});
+	/* ===========================================
+	 * Generate Markov Name
+	 * ===========================================
+	 */
+	var markovName = function (length) {
+		var gender = window.document.getElementById('gender_input').value === "female" ? true : false;
+		if (Markov.chain() !== window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value) {
+			switch (window.document.getElementById('race_input').value) {
+			case "Dwarf":
+				Markov.generate(Names.dwarf(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
+				break;
+			case "Eladrin":
+			case "Elf":
+			case "Half-Elf":
+				Markov.generate(Names.elf(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
+				break;
+			case "Half-Orc":
+			case "Orc":
+				Markov.generate(Names.orc(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
+				break;
+			default:
+				Markov.generate(Names.human(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
+				break;
+			}
+		}
+		var size = length ? parseInt(length, 10) : 5;
+		var name = Markov.make(1,size);
+		window.document.getElementById('name_input').value = name.charAt(0).toUpperCase() + name.slice(1);
+	};
+	/* ===========================================
+	 * Create creature
+	 * ===========================================
+	 */
+    var create = function () {
+    	/*
+    	 * Get basic information
+    	 */
+    	var name = window.document.getElementById('name_input').value;
+    	var level = window.document.getElementById('level_input').value;
+    	var race = window.document.getElementById('race_input').value;
+    	var career = window.document.getElementById('class_input').value;
+    	var template = window.document.getElementById('template_input').value;
+    	var npc = window.document.getElementById('npc_input').checked ? 1 : 0;
+    	var attributes = [window.document.getElementById('str_input').value,
+    	                  window.document.getElementById('con_input').value,
+    	                  window.document.getElementById('dex_input').value,
+    	                  window.document.getElementById('int_input').value,
+    	                  window.document.getElementById('wis_input').value,
+    	                  window.document.getElementById('cha_input').value];
+    	var prefs = window.document.getElementsByClassName('attributes_drag');
+    	var height = window.document.getElementById('height_input').value;
+    	var weight = window.document.getElementById('weight_input').value;
+    	// Creates the creature
+    	creature = new DnD.create4E(name, level, race, career, template, npc, attributes, [prefs[0].innerHTML.toLowerCase(), prefs[1].innerHTML.toLowerCase()], height, weight);
+    	creature.gender = window.document.getElementById('gender_input').value;
+    	// Add armour and weapons
+    	creature.applyArmour(window.document.getElementById('armour_name_input').value, window.document.getElementById('armour_input').value, window.document.getElementById('armour_bonus_input').value);
+    	creature.armour.properties[window.document.getElementById('armour_enchantment_input').value] = window.document.getElementById('armour_effect_input').value;
+    	creature.applyMelee(window.document.getElementById('melee_name_input').value, window.document.getElementById('melee_input').value, window.document.getElementById('melee_bonus_input').value);
+    	creature.melee.properties[window.document.getElementById('melee_enchantment_input').value] = window.document.getElementById('melee_effect_input').value;
+    	creature.applyOffhand(window.document.getElementById('offhand_name_input').value, window.document.getElementById('offhand_input').value, window.document.getElementById('offhand_bonus_input').value);
+    	creature.offhand.properties[window.document.getElementById('offhand_enchantment_input').value] = window.document.getElementById('offhand_effect_input').value;
+    	creature.applyRange(window.document.getElementById('range_name_input').value, window.document.getElementById('range_input').value, window.document.getElementById('range_bonus_input').value);
+    	creature.range.properties[window.document.getElementById('range_enchantment_input').value] = window.document.getElementById('range_effect_input').value;
+    	// Save the object and go to the other form
+    	localStorage.setItem('DnD.form', DnD.serialise(creature));
+    	window.location.href = "creature.html";
+    };
+</script>
+</html>

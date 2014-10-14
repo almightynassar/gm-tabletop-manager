@@ -182,18 +182,6 @@ function Form() {
 	                "Shadowborn",
 	                "Vampire Lord"];
 	/*
-	 * Our popup for printing
-	 */
-	var popup = function (data)	{
-	    var mywindow = window.open('', 'DnD Character', 'height=400,width=600');
-	    mywindow.document.write('<html><head><title>DnD Character</title></head><body >');
-	    mywindow.document.write(data);
-	    mywindow.document.write('</body></html>');
-	    mywindow.print();
-	    mywindow.close();
-	    return true;
-	};
-	/*
 	 * Drag and Drop functions
 	 */
 	var startDrag = function (e) {
@@ -232,70 +220,80 @@ function Form() {
 		classes: function () { return classes; },
 		dropdown: function (type, css) {
 			var cssType = css ? css : "";
-			var text = "<select id='" + type + "_input' class='" + cssType + "' name='" + type + "_input'>";
+			var text = "";
 			switch (type) {
 			case "armour":
-				armour.forEach(function(a) {
-					text += "<option value='" + a + "'>" + a + "</option>";
-				});
-				text += "</select> <select id ='" + type + "_bonus_input' name='" + type + "_bonus_input'>";
+				text += "<select id ='" + type + "_bonus_input' name='" + type + "_bonus_input'>";
 				for(var i = 0; i <= 10; ++i) {
 					text += "<option value='" + i + "'>+" + i + "</option>";
 				}
+				text += "</select> <select id='" + type + "_input' class='" + cssType + "' name='" + type + "_input'>";
+				armour.forEach(function(a) {
+					text += "<option value='" + a + "'>" + a + "</option>";
+				});
 				break;
 			case "class":
+				text += "<select id='" + type + "_input' class='" + cssType + "' name='" + type + "_input'>";
 				classes.forEach(function(c) {
 					text += "<option value='" + c + "'>" + c + "</option>";
 				});
 				break;
 			case "level":
+				text += "<select id='" + type + "_input' class='" + cssType + "' name='" + type + "_input'>";
 				for(var i = 1; i <= 40; ++i) {
 					text += "<option value='" + i + "'>" + i + "</option>";
 				}
 				break;
 			case "melee":
+				text += "<select id ='" + type + "_bonus_input' name='" + type + "_bonus_input'>";
+				for(var i = 0; i <= 10; ++i) {
+					text += "<option value='" + i + "'>+" + i + "</option>";
+				}
+				text += "</select> <select id='" + type + "_input' class='" + cssType + "' name='" + type + "_input'>";
 				melee.forEach(function(m) {
 					text += "<option value='" + m + "'>" + m + "</option>";
 				});
-				text += "</select> <select id ='" + type + "_bonus_input' name='" + type + "_bonus_input'>";
+				break;
+			case "offhand":
+				text += "<select id ='" + type + "_bonus_input' name='" + type + "_bonus_input'>";
 				for(var i = 0; i <= 10; ++i) {
 					text += "<option value='" + i + "'>+" + i + "</option>";
 				}
-				break;
-			case "offhand":
+				text += "</select> <select id='" + type + "_input' class='" + cssType + "' name='" + type + "_input'>";
 				offhand.forEach(function(o) {
 					text += "<option value='" + o + "'>" + o + "</option>";
 				});
-				text += "</select> <select id ='" + type + "_bonus_input' name='" + type + "_bonus_input'>";
-				for(var i = 0; i <= 10; ++i) {
-					text += "<option value='" + i + "'>+" + i + "</option>";
-				}
 				break;
 			case "preference":
+				text += "<select id='" + type + "_input' class='" + cssType + "' name='" + type + "_input'>";
 				attribs.forEach(function(a) {
 					text += "<li draggable='true' class='dnd_pref_input'>" + a + "</li>";
 				});
 				break;
 			case "race":
+				text += "<select id='" + type + "_input' class='" + cssType + "' name='" + type + "_input'>";
 				races.forEach(function(race) {
 					text += "<option value='" +race+"'>"+race+"</option>";
 				});
 				break;
 			case "range":
-				range.forEach(function(r) {
-					text += "<option value='" + r + "'>" + r + "</option>";
-				});
-				text += "</select> <select id ='" + type + "_bonus_input' name='" + type + "_bonus_input'>";
+				text += "<select id ='" + type + "_bonus_input' name='" + type + "_bonus_input'>";
 				for(var i = 0; i <= 10; ++i) {
 					text += "<option value='" + i + "'>+" + i + "</option>";
 				}
+				text += "</select> <select id='" + type + "_input' class='" + cssType + "' name='" + type + "_input'>";
+				range.forEach(function(r) {
+					text += "<option value='" + r + "'>" + r + "</option>";
+				});
 				break;
 			case "template":
+				text += "<select id='" + type + "_input' class='" + cssType + "' name='" + type + "_input'>";
 				template.forEach(function(a) {
 					text += "<option value='" + a + "'>" + a + "</option>";
 				});
 				break;
 			default:
+				text += "<select id='" + type + "_input' class='" + cssType + "' name='" + type + "_input'>";
 				for(var i = 5; i <= 20; ++i) {
 					text += "<option value='" + i + "'>" + i + "</option>";
 				}
@@ -340,7 +338,6 @@ function Form() {
 			window.document.getElementById(prefs[2].innerHTML.toLowerCase()+'_input').value = sortedArray[3];
 			window.document.getElementById(prefs[1].innerHTML.toLowerCase()+'_input').value = sortedArray[4];
 			window.document.getElementById(prefs[0].innerHTML.toLowerCase()+'_input').value = sortedArray[5];
-		},
-		print: function (id) { popup(window.document.getElementById(id).innerHTML); }
+		}
 	};
 }

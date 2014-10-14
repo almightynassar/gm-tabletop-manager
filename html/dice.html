@@ -1,14 +1,19 @@
 <!doctype html>
 <html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>NPC Creator</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
+</head>
 <body>
-	<div id="Menu">
-		<ul>
-			<li><a href="index.html">Character Creator</a></li>
-			<li><a href="markov.html">Name Generator</a></li>
-			<li><a href="dice.html">Dice Roller</a></li>
-			<li><a href="rumours.html">Rumour Generator</a></li>
-		</ul>
-	</div>
 	<p>
 	    <select id="number">
 	    	<option value="1">1</option>
@@ -49,7 +54,7 @@
 	</p>
 	<div id="Dice">
 	</div>
-	<script src="dice.min.js"></script>
+	<script src="../js/dice.min.js"></script>
 	<script>
 	function roll() {
 		var number = parseInt(window.document.getElementById("number").value, 10);

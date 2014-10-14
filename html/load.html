@@ -1,0 +1,36 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>NPC Creator</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
+</head>
+<body>
+	<div id="CreatureList">
+	</div>
+	<script src="../jquery/jquery.min.js"></script>
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+	<script>
+	/* ===========================================
+	 * Environment and Form set-up
+	 * ===========================================
+	 */
+	window.onload = (function ()
+	{
+		var text = "";
+		for (creature in localStorage) {
+			text += "<p><a href='creature.html?load=" + creature + "'>" + creature + "</a> <button onclick='localStorage.removeItem(\"" + creature + "\");'>Delete</button></p>";
+		}
+		// Form dropdowns
+		window.document.getElementById('CreatureList').innerHTML = text;
+	});
+	</script>
+</body>
+</html>

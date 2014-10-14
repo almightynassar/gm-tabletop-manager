@@ -2,27 +2,18 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<style>
-[draggable] {
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  /* Required to make elements draggable in old WebKit */
-  -khtml-user-drag: element;
-  -webkit-user-drag: element;
-}
-	</style>
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>NPC Creator</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
 </head>
 <body>
-	<div id="Menu">
-		<ul>
-			<li><a href="index.html">Character Creator</a></li>
-			<li><a href="markov.html">Name Generator</a></li>
-			<li><a href="dice.html">Dice Roller</a></li>
-			<li><a href="rumours.html">Rumour Generator</a></li>
-		</ul>
-	</div>
 	<div id="Markov">
 		<table>
 			<tr>
@@ -62,8 +53,8 @@
 	</div>
 	<div id="Result">
 	</div>
-	<script src="markov.min.js"></script>
-	<script src="names.js"></script>
+	<script src="../js/markov.min.js"></script>
+	<script src="../js/names.js"></script>
 	<script>
 		// Load the default list (Human males)
 		Markov.generate(Names.human(false), 'Human_male');

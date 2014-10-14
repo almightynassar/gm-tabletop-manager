@@ -1,8 +1,21 @@
 <html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>NPC Creator</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
+</head>
 <body>
-	<p><button id="printCard">Print</button><button id="saveCreature">Save</button></p>
+	<p><button id="saveCreature">Save</button></p>
 	<div id="character_card">
-		<h2 id="txt_character">Character Card</h2>
+		<h4 id="txt_character">Character Card</h4>
 		<table border=1 style="text-align: center;">
 			<tr style="background-color: lightgrey;">
 				<th>Level</th>
@@ -11,7 +24,7 @@
 				<th>Sub-class</th>
 				<th>Origin</th>
 				<th>Size</th>
-					<th>XP</th>
+				<th>XP</th>
 			</tr>
 			<tr>
 				<td id="txt_level"></td>
@@ -87,12 +100,12 @@
 			</tr>
 			<tr>
 				<th>Attack</th>
-				<td id="txt_str_attack"></td>
-				<td id="txt_con_attack"></td>
-				<td id="txt_dex_attack"></td>
-				<td id="txt_int_attack"></td>
-				<td id="txt_wis_attack"></td>
-				<td id="txt_cha_attack"></td>
+				<td class="str_attack"></td>
+				<td class="con_attack"></td>
+				<td class="dex_attack"></td>
+				<td class="int_attack"></td>
+				<td class="wis_attack"></td>
+				<td class="cha_attack"></td>
 			</tr>
 			<tr style="background-color: lightgrey;">
 				<th>ARMOUR</th>
@@ -113,153 +126,113 @@
 				<td id="txt_weight">55 kg</td>
 			</tr>
 		</table>
-		<br />
-		<hr />
-		<br />
 		<table>
 			<tr style="vertical-align: top;">
 				<td>
-					<h3>Skills</h3>
 					<table border=1 style="text-align: center;">
-						<tr style="background-color: lightgrey;">
-							<th colspan=2>STR</th>
-						</tr>
 						<tr>
-							<td>Athletics</td>
-							<td id="txt_athletics">0</td>
+							<th colspan=2>Skills</th>
 						</tr>
 						<tr style="background-color: lightgrey;">
-							<th colspan=2>CON</th>
+							<th colspan=2>STR (<span class="str_attack"></span>)</th>
 						</tr>
-						<tr>
-							<td>Endurance</td>
-							<td id="txt_endurance">0</td>
-						</tr>
-						<tr style="background-color: lightgrey;">
-							<th colspan=2>DEX</th>
-						</tr>
-						<tr>
-							<td>Acrobatics</td>
-							<td id="txt_acrobatics">0</td>
-						</tr>
-						<tr>
-							<td>Stealth</td>
-							<td id="txt_stealth">0</td>
-						</tr>
-						<tr>
-							<td>Thievery</td>
-							<td id="txt_thievery">0</td>
+						<tr id="ath">
+							<td>Athletics</td><td id="txt_athletics">0</td>
 						</tr>
 						<tr style="background-color: lightgrey;">
-							<th colspan=2>INT SKILL</th>
+							<th colspan=2>CON (<span class="con_attack"></span>)</th>
 						</tr>
-						<tr>
-							<td>Arcana</td>
-							<td id="txt_arcana">0</td>
-						</tr>
-						<tr>
-							<td>History</td>
-							<td id="txt_history">0</td>
-						</tr>
-						<tr>
-							<td>Religion</td>
-							<td id="txt_religion">0</td>
+						<tr  id="end">
+							<td>Endurance</td><td id="txt_endurance">0</td>
 						</tr>
 						<tr style="background-color: lightgrey;">
-							<th colspan=2>WIS</th>
+							<th colspan=2>DEX (<span class="dex_attack"></span>)</th>
 						</tr>
-						<tr>
-							<td>Dungeoneering</td>
-							<td id="txt_dungeon">0</td>
+						<tr id="acr">
+							<td>Acrobatics</td><td id="txt_acrobatics">0</td>
 						</tr>
-						<tr>
-							<td>Heal</td>
-							<td id="txt_heal">0</td>
+						<tr id="ste">
+							<td>Stealth</td><td id="txt_stealth">0</td>
 						</tr>
-						<tr>
-							<td>Insight</td>
-							<td id="txt_insight">0</td>
-						</tr>
-						<tr>
-							<td>Nature</td>
-							<td id="txt_nature">0</td>
-						</tr>
-						<tr>
-							<td>Perception</td>
-							<td id="txt_perception">0</td>
+						<tr id="thi">
+							<td>Thievery</td><td id="txt_thievery">0</td>
 						</tr>
 						<tr style="background-color: lightgrey;">
-							<th colspan=2>CHA</th>
+							<th colspan=2>INT (<span class="int_attack"></span>)</th>
 						</tr>
-						<tr>
-							<td>Bluff</td>
-							<td id="txt_bluff">0</td>
+						<tr id="arc">
+							<td>Arcana</td><td id="txt_arcana">0</td>
 						</tr>
-						<tr>
-							<td>Diplomacy</td>
-							<td id="txt_diplomacy">0</td>
+						<tr id="his">
+							<td>History</td><td id="txt_history">0</td>
 						</tr>
-						<tr>
-							<td>Intimidate</td>
-							<td id="txt_intimidate">0</td>
+						<tr id="rel">
+							<td>Religion</td><td id="txt_religion">0</td>
 						</tr>
-						<tr>
-							<td>Streetwise</td>
-							<td id="txt_streetwise">0</td>
+						<tr style="background-color: lightgrey;">
+							<th colspan=2>WIS (<span class="wis_attack"></span>)</th>
+						</tr>
+						<tr id="dun">
+							<td>Dungeoneering</td><td id="txt_dungeon">0</td>
+						</tr>
+						<tr id="hea">
+							<td>Heal</td><td id="txt_heal">0</td>
+						</tr>
+						<tr  id="ins">
+							<td>Insight</td><td id="txt_insight">0</td>
+						</tr>
+						<tr id="nat">
+							<td>Nature</td><td id="txt_nature">0</td>
+						</tr>
+						<tr id="per">
+							<td>Perception</td><td id="txt_perception">0</td>
+						</tr>
+						<tr style="background-color: lightgrey;">
+							<th colspan=2>CHA (<span class="cha_attack"></span>)</th>
+						</tr>
+						<tr id="blu">
+							<td>Bluff</td><td id="txt_bluff">0</td>
+						</tr>
+						<tr id="dip">
+							<td>Diplomacy</td><td id="txt_diplomacy">0</td>
+						</tr>
+						<tr id="int">
+							<td>Intimidate</td><td id="txt_intimidate">0</td>
+						</tr>
+						<tr id="str">
+							<td>Streetwise</td><td id="txt_streetwise">0</td>
 						</tr>
 					</table>
 				</td>
 				<td>&nbsp;&nbsp;&nbsp;</td>
 				<td>
-					<h3>Extra Skills</h3>
-					<p><em>Choose as many skills shown below to be trained in and add 5 to it</em></p>
-					<div id="skill_bonus"></div>
-					<hr />
-					<h3>Extra Feats</h3>
-					<p><em>Choose as many feats shown below</em></p>
-					<div id="feat_bonus"></div>
-					<hr />
-					<h3>Weapon Power/Attack</h3>
 					<div id="power_weapon"></div>
 					<hr />
-					<h3>Off-hand Power/Attack</h3>
 					<div id="power_offhand"></div>
 					<hr />
-					<h3>Ranged Power/Attack</h3>
 					<div id="power_ranged"></div>
 					<hr />
-					<h3>At-Will Power</h3>
-					<p><em>Choose as many At Will powers as shown below</em></p>
-					<div id="power_atwill"></div>
-					<hr />
-					<h3>Encounter Power</h3>
-					<p><em>Choose as many Encounter powers as shown below</em></p>
-					<div id="power_encounter"></div>
-					<hr />
-					<h3>Daily Power</h3>
-					<p><em>Choose as many Daily powers as shown below</em></p>
-					<div id="power_daily"></div>
-					<hr />
-					<h3>Utility Power</h3>
-					<p><em>Choose as many Utility powers as shown below</em></p>
-					<div id="power_utility"></div>
-					<hr />
-					<h3>Armour Power/Attack</h3>
 					<div id="power_armour"></div>
 					<hr />
-					<h3>Enchantment Power</h3>
-					<div id="power_enchantment"></div>
+					<!-- <div id="power_enchantment"></div>-->
+					<p><b>Extra Skills</b> <em>Choose <span id="skill_bonus"></span> skills to be trained in and add 5 to it</em></p>
+					<p><b>Extra Feats</b> <em>Choose <span id="feat_bonus"></span> feats</em></p>
+					<p><b>At-Will Power</b> <em>Choose <span id="power_atwill"></span> powers</em></p>
+					<p><b>Encounter Power</b> <em>Choose <span id="power_encounter"></span> powers</em></p>
+					<p><b>Daily Power</b> <em>Choose <span id="power_daily"></span> powers</em></p>
+					<p><b>Utility Power</b> <em>Choose <span id="power_utility"></span> powers</em></p>
 				</td>
 			</tr>
 		</table>
 	</div>
 	<br />
-	<div id="shapies">
+	<!--  <div id="shapies">
 	    <canvas id="Shapies" style="border: 5px solid black;" width="100" height="100"></canvas>
-	</div>
-	<script src="Shapies.min.js"></script>
-	<script src="src/form.js"></script>
-	<script src="src/dnd.js"></script>
+	</div> 
+	<script src="../js/Shapies.min.js"></script> -->
+	<script src="../jquery/jquery.min.js"></script>
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+	<script src="../js/dnd.min.js"></script>
 	<script>
 	// Grabs our information
 	function getURLParameter(name) {
@@ -279,15 +252,12 @@
 		localStorage.setItem('DnD.creature.' + creature.name + '-' + creature.race + '-' + creature.career, DnD.serialise(creature));
 	}
 	/* ===========================================
-	 * Environment and Form set-up
+	 * Environment set-up
 	 * ===========================================
 	 */
 	window.onload = (function ()
 	{
-		// Our form elements
-		var form = new Form();
-		// Form printers
-	    window.document.getElementById('printCard').onclick = function () { form.print("character_card"); };
+		// Save creature
 	    window.document.getElementById('saveCreature').onclick = saveCreature;
 		/*
     	 * Display basic info
@@ -322,12 +292,12 @@
         window.document.getElementById('txt_int_mod').innerHTML = creature.mod("int");
         window.document.getElementById('txt_wis_mod').innerHTML = creature.mod("wis");
         window.document.getElementById('txt_cha_mod').innerHTML = creature.mod("cha");
-        window.document.getElementById('txt_str_attack').innerHTML = creature.attack("str");
-        window.document.getElementById('txt_con_attack').innerHTML = creature.attack("con");
-        window.document.getElementById('txt_dex_attack').innerHTML = creature.attack("dex");
-        window.document.getElementById('txt_int_attack').innerHTML = creature.attack("int");
-        window.document.getElementById('txt_wis_attack').innerHTML = creature.attack("wis");
-        window.document.getElementById('txt_cha_attack').innerHTML = creature.attack("cha");
+        $('.str_attack').html(creature.attack("str"));
+        $('.con_attack').html(creature.attack("con"));
+        $('.dex_attack').html(creature.attack("dex"));
+        $('.int_attack').html(creature.attack("int"));
+        $('.wis_attack').html(creature.attack("wis"));
+        $('.cha_attack').html(creature.attack("cha"));
         /*
          * Health, Speed and initiative
          */
@@ -350,23 +320,91 @@
         /*
          * Skills
          */
-        window.document.getElementById('txt_athletics').innerHTML = creature.getSkill("athletics");
-        window.document.getElementById('txt_endurance').innerHTML = creature.getSkill("endurance");
-        window.document.getElementById('txt_acrobatics').innerHTML = creature.getSkill("acrobatics");
-        window.document.getElementById('txt_stealth').innerHTML = creature.getSkill("stealth");
-        window.document.getElementById('txt_thievery').innerHTML = creature.getSkill("thievery");
-        window.document.getElementById('txt_arcana').innerHTML = creature.getSkill("arcana");
-        window.document.getElementById('txt_history').innerHTML = creature.getSkill("history");
-        window.document.getElementById('txt_religion').innerHTML = creature.getSkill("religion");
-        window.document.getElementById('txt_dungeon').innerHTML = creature.getSkill("dungeon");
-        window.document.getElementById('txt_heal').innerHTML = creature.getSkill("heal");
-        window.document.getElementById('txt_insight').innerHTML = creature.getSkill("insight");
-        window.document.getElementById('txt_nature').innerHTML = creature.getSkill("nature");
-        window.document.getElementById('txt_perception').innerHTML = creature.getSkill("perception");
-        window.document.getElementById('txt_bluff').innerHTML = creature.getSkill("bluff");
-        window.document.getElementById('txt_diplomacy').innerHTML = creature.getSkill("diplomacy");
-        window.document.getElementById('txt_intimidate').innerHTML = creature.getSkill("intimidate");
-        window.document.getElementById('txt_streetwise').innerHTML = creature.getSkill("streetwise");
+        if (creature.attack("str") < creature.getSkill("athletics")) {
+        	$('#txt_athletics').html(creature.getSkill("athletics"));
+        } else {
+        	$('#ath').hide();
+        }
+        if (creature.attack("con") < creature.getSkill("endurance")) {
+        	$('#txt_endurance').html(creature.getSkill("endurance"));
+        } else {
+        	$('#end').hide();
+        }
+        if (creature.attack("dex") < creature.getSkill("acrobatics")) {
+        	$('#txt_acrobatics').html(creature.getSkill("acrobatics"));
+        } else {
+        	$('#acr').hide();
+        }
+        if (creature.attack("dex") < creature.getSkill("stealth")) {
+        	$('#txt_stealth').html(creature.getSkill("stealth"));
+        } else {
+        	$('#ste').hide();
+        }
+        if (creature.attack("dex") < creature.getSkill("thievery")) {
+        	$('#txt_thievery').html(creature.getSkill("thievery"));
+        } else {
+        	$('#thi').hide();
+        }
+        if (creature.attack("int") < creature.getSkill("arcana")) {
+        	$('#txt_arcana').html(creature.getSkill("arcana"));
+        } else {
+        	$('#arc').hide();
+        }
+        if (creature.attack("int") < creature.getSkill("history")) {
+        	$('#txt_history').html(creature.getSkill("history"));
+        } else {
+        	$('#his').hide();
+        }
+        if (creature.attack("int") < creature.getSkill("religion")) {
+        	$('#txt_religion').html(creature.getSkill("religion"));
+        } else {
+        	$('#rel').hide();
+        }
+        if (creature.attack("wis") < creature.getSkill("dungeon")) {
+        	$('#txt_dungeon').html(creature.getSkill("dungeon"));
+        } else {
+        	$('#dun').hide();
+        }
+        if (creature.attack("wis") < creature.getSkill("heal")) {
+        	$('#txt_heal').html(creature.getSkill("heal"));
+        } else {
+        	$('#hea').hide();
+        }
+        if (creature.attack("wis") < creature.getSkill("insight")) {
+        	$('#txt_insight').html(creature.getSkill("insight"));
+        } else {
+        	$('#ins').hide();
+        }
+        if (creature.attack("wis") < creature.getSkill("nature")) {
+        	$('#txt_nature').html(creature.getSkill("nature"));
+        } else {
+        	$('#nat').hide();
+        }
+        if (creature.attack("wis") < creature.getSkill("perception")) {
+        	$('#txt_perception').html(creature.getSkill("perception"));
+        } else {
+        	$('#per').hide();
+        }
+        if (creature.attack("cha") < creature.getSkill("bluff")) {
+        	$('#txt_bluff').html(creature.getSkill("bluff"));
+        } else {
+        	$('#blu').hide();
+        }
+        if (creature.attack("cha") < creature.getSkill("diplomacy")) {
+        	$('#txt_diplomacy').html(creature.getSkill("diplomacy"));
+        } else {
+        	$('#dip').hide();
+        }
+        if (creature.attack("cha") < creature.getSkill("intimidate")) {
+        	$('#txt_intimidate').html(creature.getSkill("intimidate"));
+        } else {
+        	$('#int').hide();
+        }
+        if (creature.attack("cha") < creature.getSkill("streetwise")) {
+        	$('#txt_streetwise').html(creature.getSkill("streetwise"));
+        } else {
+        	$('#str').hide();
+        }
         /**
          * Other details
          */
@@ -386,12 +424,13 @@
         window.document.getElementById('power_utility').innerHTML = creature.getUtility();
         /*
          * Crappy portrait
-         */
+         
         Shapies.canvas().start();
         var smilie1 = Shapies.actors.create('smilie');
         smilie1.radius = 50;
         smilie1.point = Shapies.canvas().midpoint();
         Shapies.canvas().addActor('smilie1', smilie1);
+        */
 	});
 	</script>
 </body>

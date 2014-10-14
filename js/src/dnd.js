@@ -276,7 +276,7 @@ var DnD = (function (window) {
             properties: {}
         };
         this.getArmourPower = function () {
-            var text = "<p><b>" + this.armour.type + (this.armour.light ? " (Light)" : "") + "</b><br / > AC Bonus = " + this.armour.ac + "</p>";
+            var text = "<p><b>Armour - " + this.armour.type + (this.armour.light ? " (Light)" : "") + "</b><br / > AC Bonus = " + this.armour.ac + "</p>";
             for (var power in this.armour.properties) {
                 text += "<p><b>" + power + "</b><br />" + this.armour.properties[power] + "</p>";
             }
@@ -409,7 +409,7 @@ var DnD = (function (window) {
             properties: {}
         };
         this.getMeleePower = function () {
-            var text = "<p><b>Basic Melee - " + this.melee.type + "</b>" + (this.melee.twohands ? "(Two-handed)" : "") + "<br />+" + (this.melee.prof + this.melee.enchantment + this.mod("str") + this.modLevel()) + " vs AC; Hit Damage = " + this.melee.dice + "d" + this.melee.side + " + " + (this.mod("str") + this.melee.enchantment) + "</p>";
+            var text = "<p><b>Melee - " + this.melee.type + "</b>" + (this.melee.twohands ? "(Two-handed)" : "") + "<br />+" + (this.melee.prof + this.melee.enchantment + this.mod("str") + this.modLevel()) + " vs AC; Hit Damage = " + this.melee.dice + "d" + this.melee.side + " + " + (this.mod("str") + this.melee.enchantment) + "</p>";
             for (var power in this.melee.properties) {
                 text += "<p><b>" + power + "</b><br />" + this.melee.properties[power] + "</p>";
             }
@@ -753,9 +753,9 @@ var DnD = (function (window) {
         this.getOffhandPower = function () {
             var text = "";
             if (this.offhand.shield) {
-                text = "<p><b>" + this.offhand.type + "</b><br /> AC Bonus = " + this.offhand.prof + "</p>";
+                text = "<p><b>Offhand - " + this.offhand.type + "</b><br /> AC Bonus = " + this.offhand.prof + "</p>";
             } else {
-                text = "<p><b>" + this.offhand.type + "</b><br />+" + (this.offhand.prof + this.mod("str") + this.modLevel()) + " vs AC; Hit Damage = " + this.offhand.dice + "d" + this.offhand.side + " + " + (this.offhand.enchantment + this.mod("str")) + "</p>";
+                text = "<p><b>Offhand - " + this.offhand.type + "</b><br />+" + (this.offhand.prof + this.mod("str") + this.modLevel()) + " vs AC; Hit Damage = " + this.offhand.dice + "d" + this.offhand.side + " + " + (this.offhand.enchantment + this.mod("str")) + "</p>";
             }
             for (var power in this.offhand.properties) {
                 text += "<p><b>" + power + "</b><br />" + this.offhand.properties[power] + "</p>";
@@ -900,7 +900,7 @@ var DnD = (function (window) {
             properties: {}
         };
         this.getRangePower = function () {
-            var text = "<p><b>" + this.range.type + (this.range.twohands ? " (Two-handed)" : "") + " (Range: " + this.range.short + "/" + this.range.long + ")</b><br />+" + (this.range.prof + this.mod(this.range.key)) + " vs AC; Hit Damage = " + this.range.dice + "d" + this.range.side + " + " + (this.mod(this.range.key) + this.range.enchantment) + "</p>";
+            var text = "<p><b>Ranged - " + this.range.type + (this.range.twohands ? " (Two-handed)" : "") + " (Range: " + this.range.short + "/" + this.range.long + ")</b><br />+" + (this.range.prof + this.mod(this.range.key)) + " vs AC; Hit Damage = " + this.range.dice + "d" + this.range.side + " + " + (this.mod(this.range.key) + this.range.enchantment) + "</p>";
             for (var power in this.range.properties) {
                 text += "<p><b>" + power + "</b><br />" + this.range.properties[power] + "</p>";
             }
