@@ -172,7 +172,7 @@ var Markov = new function() {
 	}
 	return {
 		chain: function () { return chain_name; },
-		generate: function (names, title) { construct(names); chain_name= title; },
+		load: function (names, title) { construct(names); chain_name= title; },
 		make: function (number, length) { return name(number, length); }
 		
 	};

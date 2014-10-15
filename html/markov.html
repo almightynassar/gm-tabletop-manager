@@ -14,89 +14,116 @@
 	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
 </head>
 <body>
-	<div id="Markov">
-		<select id="race_input">
-		</select>
-		<table>
-			<tr>
-				<td><button onclick='loadName("human", false);'>Load Male Human</button></td>
-				<td><button onclick='loadName("dwarf", false);'>Load Male Dwarf</button></td>
-				<td><button onclick='loadName("elf", false);'>Load Male Elf</button></td>
-				<td><button onclick='loadName("orc", false);'>Load Male Orc</button></td>
-			</tr>
-			<tr>
-				<td><button onclick='loadName("human", true);'>Load Female Human</button></td>
-				<td><button onclick='loadName("dwarf", true);'>Load Female Dwarf</button></td>
-				<td><button onclick='loadName("elf", true);'>Load Female Elf</button></td>
-				<td><button onclick='loadName("orc", true);'>Load Female Orc</button></td>
-			</tr>
-		</table>
-		<p>
-			<b>Number:</b>
-		   	<select id="number" name="number">
-				<option value="1">1</option>
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="25">25</option>
-				<option value="50">50</option>
-				<option value="100">100</option>
-			</select>
-			<b>Length:</b>
-		   	<select id="length" name="length">
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-			</select>
-		</p>
-		<p><button onclick='generate();'>Submit</button></p>
-	</div>
-	<div id="Result">
+	<div class="container">
+		<div class="row">
+			<div id="Markov" class="col-lg-12" >
+				<p>This generator uses the Markov Chain process. It processes a series of words, gathers information about how the letters in the words are related, and then stores those relationships. When you generate a name, the computer will travel down the chain and link up all the pieces <em>in the style of the processed words</em>. This generally makes up a word similar in nature to the processed names (but this does not necessarily mean it makes sense!)</p>
+				<p><strong>Version Notes:</strong></p>
+				<ul>
+					<li>Races listed that do not have a Markov name chain will default to the <strong>Human</strong> chain</li>
+					<li>Dwarves and Duegar use the <strong>Dwarf</strong> chain</li>
+					<li>Eladrin, Elves, Half-Elfs and Drow use the <strong>Elf</strong> chain</li>
+					<li>Half-Orcs and Orcs use the <strong>Orc</strong> chain</li>
+					<li>Kobolds use the <strong>Kobold</strong> chain (<em>note: this chain is not extensive yet so the names will not be unique</em>)</li>
+				</ul>
+				<table>
+					<thead>
+						<tr>
+							<th>Race</th>
+							<th>Gender</th>
+							<th>Number</th>
+							<th>Letter Length</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><select id="race_input" class="form-control" name="race_input" ></select></td>
+							<td><select id="gender_input" class="form-control" name="gender_input" ><option value="male" >Male</option><option value="female" >Female</option></select></td>
+							<td>
+								<select id="number_input" name="number_input" class="form-control" >
+									<option value="1">1</option>
+									<option value="5">5</option>
+									<option value="10">10</option>
+									<option value="25">25</option>
+									<option value="50">50</option>
+									<option value="100">100</option>
+								</select>
+							</td>
+							<td>
+								<select id="length_input" name="length_input" class="form-control" >
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+								</select>
+							</td>
+					</tbody>
+				</table>
+				<p><button class="btn btn-success" onclick='generate();'>Generate</button></p>
+			</div>
+		</div>
+		<div class="row">
+			<div id="Result" class="col-lg-12" >
+			</div>
+		</div>
 	</div>
 	<script src="../jquery/jquery.min.js"></script>
 	<script src="../js/markov.min.js"></script>
-	<script src="../js/names.js"></script>
 	<script>
+		var names = {};
+		
 		// When the document is ready, start loading in the races from our data file
 		$().ready(function() {
-			$.getJSON( "../data/races4E.json", function( json ) {
+			$.getJSON("./data/races4E.json", function( json ) {
 				for(var race in json) {
 					$('#race_input').append('<option value="'+race+'">'+race+'</option>');
-					alert('this');
 				}
+			});
+			$.getJSON("./data/names.json", function( json ) {
+				names = json;
+				// Load the default list (Human males)
+				Markov.load(names.human.male, 'Human');
 			});
 		});
 		
-		// Load the default list (Human males)
-		Markov.generate(Names.human(false), 'Human_male');
 		// Generates names
-		var generate = function () {
+		function generate() {
+			load();
 			var text = "";
-			var number = parseInt(window.document.getElementById('number').value, 10);
-			var length = parseInt(window.document.getElementById('length').value, 10);
+			var number = parseInt($('#number_input').val(), 10);
+			var length = parseInt($('#length_input').val(), 10);
 			for (var i = 0; i < number; i++) {
-				var name = Markov.make(1,length);
-				text += "<p>" + name.charAt(0).toUpperCase() + name.slice(1); + "</p>";
+				var new_name = Markov.make(1,length);{}
+				text += "<p>" + new_name.charAt(0).toUpperCase() + new_name.slice(1); + "</p>";
 			}
-			window.document.getElementById('Result').innerHTML = text;
+			$('#Result').html(text);
 		};
+		
 		// Load names
-		var loadName = function (name, isFemale) {
-			var gender = isFemale ? true : false;
-			switch (name) {
-			case 'dwarf':
-				Markov.generate(Names.dwarf(gender), 'Dwarf_male');
+		function load() {
+			var gender = $('#gender_input').val();
+			switch ($('#race_input').val()) {
+			case 'Dwarf':
+			case 'Duegar':
+				Markov.load(names.dwarf[gender], 'Dwarf');
 				break;
-			case 'elf':
-				Markov.generate(Names.elf(gender), 'Elf_male');
+			case 'Drow':
+			case 'Eladrin':
+			case 'Elf':
+			case 'Half-Elf':
+				Markov.load(names.elf[gender], 'Elf');
 				break;
-			case 'orc':
-				Markov.generate(Names.orc(gender), 'Orc_male');
+			case 'Half-Orc':
+			case 'Orc':
+				Markov.load(names.orc[gender], 'Orc');
+				break;
+			case 'Kobold':
+				Markov.load(names.kobold[gender], 'Kobold');
 				break;
 			default:
-				Markov.generate(Names.human(gender), 'Human_male');
+				Markov.load(names.human[gender], 'Human');
 				break;
 			}
 		}

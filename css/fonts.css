@@ -1,0 +1,78 @@
+@font-face {
+    font-family: 'klingon';
+    src:url('font/klingon.eot');
+    src:url('font/klingon.eot?#iefix') format('embedded-opentype'),
+        url('font/klingon.woff') format('woff'),
+        url('font/klingon.ttf') format('truetype'),
+        url('font/klingon.svg#klingon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.klingon {
+    font-family: 'klingon';
+}
+@font-face {
+    font-family: 'angerthas';
+    src:url('font/angerthas.eot');
+    src:url('font/angerthas.eot?#iefix') format('embedded-opentype'),
+        url('font/angerthas.woff') format('woff'),
+        url('font/angerthas.ttf') format('truetype'),
+        url('font/angerthas.svg#angerthas') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.angerthas {
+    font-family: 'angerthas';
+}
+@font-face {
+    font-family: 'quenya';
+    src:url('font/quenya.eot');
+    src:url('font/quenya.eot?#iefix') format('embedded-opentype'),
+        url('font/quenya.woff') format('woff'),
+        url('font/quenya.ttf') format('truetype'),
+        url('font/quenya.svg#quenya') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.quenya {
+    font-family: 'quenya';
+}
+@font-face {
+    font-family: 'elderfuthark';
+    src:url('font/elderfuthark.eot');
+    src:url('font/elderfuthark.eot?#iefix') format('embedded-opentype'),
+        url('font/elderfuthark.woff') format('woff'),
+        url('font/elderfuthark.ttf') format('truetype'),
+        url('font/elderfuthark.svg#elderfuthark') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.elderfuthark {
+    font-family: 'elderfuthark';
+}
+@font-face {
+    font-family: 'dovahzul';
+    src:url('font/dovahzul.eot');
+    src:url('font/dovahzul.eot?#iefix') format('embedded-opentype'),
+        url('font/dovahzul.woff') format('woff'),
+        url('font/dovahzul.ttf') format('truetype'),
+        url('font/dovahzul.svg#iokharic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.dovahzul {
+    font-family: 'dovahzul';
+}
+@font-face {
+    font-family: 'iokharic';
+    src:url('font/iokharic.eot');
+    src:url('font/iokharic.eot?#iefix') format('embedded-opentype'),
+        url('font/iokharic.woff') format('woff'),
+        url('font/iokharic.ttf') format('truetype'),
+        url('font/iokharic.svg#iokharic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.iokharic {
+    font-family: 'iokharic';
+}

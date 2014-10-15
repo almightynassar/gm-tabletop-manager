@@ -147,19 +147,19 @@
 		if (Markov.chain() !== window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value) {
 			switch (window.document.getElementById('race_input').value) {
 			case "Dwarf":
-				Markov.generate(Names.dwarf(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
+				Markov.load(Names.dwarf(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
 				break;
 			case "Eladrin":
 			case "Elf":
 			case "Half-Elf":
-				Markov.generate(Names.elf(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
+				Markov.load(Names.elf(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
 				break;
 			case "Half-Orc":
 			case "Orc":
-				Markov.generate(Names.orc(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
+				Markov.load(Names.orc(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
 				break;
 			default:
-				Markov.generate(Names.human(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
+				Markov.load(Names.human(gender), window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value);
 				break;
 			}
 		}
