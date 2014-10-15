@@ -15,6 +15,8 @@
 </head>
 <body>
 	<div id="Markov">
+		<select id="race_input">
+		</select>
 		<table>
 			<tr>
 				<td><button onclick='loadName("human", false);'>Load Male Human</button></td>
@@ -53,9 +55,20 @@
 	</div>
 	<div id="Result">
 	</div>
+	<script src="../jquery/jquery.min.js"></script>
 	<script src="../js/markov.min.js"></script>
 	<script src="../js/names.js"></script>
 	<script>
+		// When the document is ready, start loading in the races from our data file
+		$().ready(function() {
+			$.getJSON( "../data/races4E.json", function( json ) {
+				for(var race in json) {
+					$('#race_input').append('<option value="'+race+'">'+race+'</option>');
+					alert('this');
+				}
+			});
+		});
+		
 		// Load the default list (Human males)
 		Markov.generate(Names.human(false), 'Human_male');
 		// Generates names
