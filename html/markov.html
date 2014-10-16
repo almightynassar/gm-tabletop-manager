@@ -59,9 +59,9 @@
 									<option value="10">10</option>
 								</select>
 							</td>
+							<td><button class="btn btn-success" onclick='generate();'>Generate</button></td>
 					</tbody>
 				</table>
-				<p><button class="btn btn-success" onclick='generate();'>Generate</button></p>
 			</div>
 		</div>
 		<div class="row">
@@ -71,23 +71,15 @@
 	</div>
 	<script src="../jquery/jquery.min.js"></script>
 	<script src="../js/markov.min.js"></script>
+	<script src="../js/data/races4E.js"></script>
+	<script src="../js/data/names.js"></script>
 	<script>
-		var names = {};
-		
-		// When the document is ready, start loading in the races from our data file
-		$().ready(function() {
-			$.getJSON("./data/races4E.json", function( json ) {
-				for(var race in json) {
-					$('#race_input').append('<option value="'+race+'">'+race+'</option>');
-				}
-			});
-			$.getJSON("./data/names.json", function( json ) {
-				names = json;
-				// Load the default list (Human males)
-				Markov.load(names.human.male, 'Human');
-			});
-		});
-		
+		for(var race in Race) {
+			$('#race_input').append('<option value="'+race+'">'+race+'</option>');
+		}
+		// Load the default list (Human males)
+		Markov.load(Name.human.male, 'Human');
+			
 		// Generates names
 		function generate() {
 			load();
@@ -107,23 +99,23 @@
 			switch ($('#race_input').val()) {
 			case 'Dwarf':
 			case 'Duegar':
-				Markov.load(names.dwarf[gender], 'Dwarf');
+				Markov.load(Name.dwarf[gender], 'Dwarf');
 				break;
 			case 'Drow':
 			case 'Eladrin':
 			case 'Elf':
 			case 'Half-Elf':
-				Markov.load(names.elf[gender], 'Elf');
+				Markov.load(Name.elf[gender], 'Elf');
 				break;
 			case 'Half-Orc':
 			case 'Orc':
-				Markov.load(names.orc[gender], 'Orc');
+				Markov.load(Name.orc[gender], 'Orc');
 				break;
 			case 'Kobold':
-				Markov.load(names.kobold[gender], 'Kobold');
+				Markov.load(Name.kobold[gender], 'Kobold');
 				break;
 			default:
-				Markov.load(names.human[gender], 'Human');
+				Markov.load(Name.human[gender], 'Human');
 				break;
 			}
 		}

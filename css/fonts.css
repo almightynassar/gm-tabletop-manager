@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'klingon';
-    src:url('font/klingon.eot');
-    src:url('font/klingon.eot?#iefix') format('embedded-opentype'),
-        url('font/klingon.woff') format('woff'),
-        url('font/klingon.ttf') format('truetype'),
-        url('font/klingon.svg#klingon') format('svg');
+    src:url('font/klingon/klingon.eot');
+    src:url('font/klingon/klingon.eot?#iefix') format('embedded-opentype'),
+        url('font/klingon/klingon.woff') format('woff'),
+        url('font/klingon/klingon.ttf') format('truetype'),
+        url('font/klingon/klingon.svg#klingon') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -13,11 +13,11 @@
 }
 @font-face {
     font-family: 'angerthas';
-    src:url('font/angerthas.eot');
-    src:url('font/angerthas.eot?#iefix') format('embedded-opentype'),
-        url('font/angerthas.woff') format('woff'),
-        url('font/angerthas.ttf') format('truetype'),
-        url('font/angerthas.svg#angerthas') format('svg');
+    src:url('font/angerthas/angerthas.eot');
+    src:url('font/angerthas/angerthas.eot?#iefix') format('embedded-opentype'),
+        url('font/angerthas/angerthas.woff') format('woff'),
+        url('font/angerthas/angerthas.ttf') format('truetype'),
+        url('font/angerthas/angerthas.svg#angerthas') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -25,25 +25,12 @@
     font-family: 'angerthas';
 }
 @font-face {
-    font-family: 'quenya';
-    src:url('font/quenya.eot');
-    src:url('font/quenya.eot?#iefix') format('embedded-opentype'),
-        url('font/quenya.woff') format('woff'),
-        url('font/quenya.ttf') format('truetype'),
-        url('font/quenya.svg#quenya') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-.quenya {
-    font-family: 'quenya';
-}
-@font-face {
     font-family: 'elderfuthark';
-    src:url('font/elderfuthark.eot');
-    src:url('font/elderfuthark.eot?#iefix') format('embedded-opentype'),
-        url('font/elderfuthark.woff') format('woff'),
-        url('font/elderfuthark.ttf') format('truetype'),
-        url('font/elderfuthark.svg#elderfuthark') format('svg');
+    src:url('font/elderfuthark/elderfuthark.eot');
+    src:url('font/elderfuthark/elderfuthark.eot?#iefix') format('embedded-opentype'),
+        url('font/elderfuthark/elderfuthark.woff') format('woff'),
+        url('font/elderfuthark/elderfuthark.ttf') format('truetype'),
+        url('font/elderfuthark/elderfuthark.svg#elderfuthark') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -52,11 +39,11 @@
 }
 @font-face {
     font-family: 'dovahzul';
-    src:url('font/dovahzul.eot');
-    src:url('font/dovahzul.eot?#iefix') format('embedded-opentype'),
-        url('font/dovahzul.woff') format('woff'),
-        url('font/dovahzul.ttf') format('truetype'),
-        url('font/dovahzul.svg#iokharic') format('svg');
+    src:url('font/dovahzul/dovahzul.eot');
+    src:url('font/dovahzul/dovahzul.eot?#iefix') format('embedded-opentype'),
+        url('font/dovahzul/dovahzul.woff') format('woff'),
+        url('font/dovahzul/dovahzul.ttf') format('truetype'),
+        url('font/dovahzul/dovahzul.svg#dovahzul') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -65,14 +52,27 @@
 }
 @font-face {
     font-family: 'iokharic';
-    src:url('font/iokharic.eot');
-    src:url('font/iokharic.eot?#iefix') format('embedded-opentype'),
-        url('font/iokharic.woff') format('woff'),
-        url('font/iokharic.ttf') format('truetype'),
-        url('font/iokharic.svg#iokharic') format('svg');
+    src:url('font/iokharic/iokharic.eot');
+    src:url('font/iokharic/iokharic.eot?#iefix') format('embedded-opentype'),
+        url('font/iokharic/iokharic.woff') format('woff'),
+        url('font/iokharic/iokharic.ttf') format('truetype'),
+        url('font/iokharic/iokharic.svg#iokharic') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 .iokharic {
     font-family: 'iokharic';
+}
+@font-face {
+    font-family: 'hylian64';
+    src:url('font/hylian64/hylian64.eot');
+    src:url('font/hylian64/hylian64.eot?#iefix') format('embedded-opentype'),
+        url('font/hylian64/hylian64.woff') format('woff'),
+        url('font/hylian64/hylian64.ttf') format('truetype'),
+        url('font/hylian64/hylian64.svg#hylian64') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.hylian64 {
+    font-family: 'hylian64';
 }

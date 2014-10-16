@@ -9,21 +9,22 @@ var Markov = new function() {
 	// Stores our initial Markov values
 	var start_chain = {};
 	var start_weights = {};
-	// Stores our actual word and terminal chains
+	// Stores our word building chains
 	var word_chain = {};
-	var terminal_chain = {};
 	var word_weights = {};
+	// Stores our terminal Markov values
+	var terminal_chain = {};
 	var terminal_weights = {};
 	// Create our chain from a list of names
 	function construct (names) {
-		// Stores our initial Markov values
+		// Re-init our chains
 		start_chain = {};
 		start_weights = {};
-		// Stores our actual word and terminal chains
 		word_chain = {};
 		terminal_chain = {};
 		word_weights = {};
 		terminal_weights = {};
+		// Loop through out input array and build the chains
 		for (var i = 0; i < names.length; i++) {
 			var name = names[i];
 			start_chain = incr_single(start_chain,name.charAt(0),name.charAt(1));
@@ -32,9 +33,9 @@ var Markov = new function() {
 				word_chain = incr_double(word_chain,name.charAt(j-1),name.charAt(j),name.charAt(j+1));
 			};
 		};
-		start_weights = scale_single(start_chain, 'start');
-		terminal_weights = scale_double(terminal_chain, 'terminal');
-		word_weights = scale_double(word_chain), 'word';
+		start_weights = scale_single(start_chain);
+		terminal_weights = scale_double(terminal_chain);
+		word_weights = scale_double(word_chain);
 	}
 	// Increase the token value within our chain
 	function incr_single (chain, key, token) {
@@ -71,7 +72,7 @@ var Markov = new function() {
 		return chain;
 	}
 	// Scale our chain probabilities and saves to our weights
-	function scale_single (chain, type) {
+	function scale_single (chain) {
 		var weights = {};
 		for (var key in chain) {
 			weights[key] = 0;
@@ -85,7 +86,7 @@ var Markov = new function() {
 		return weights;
 	}
 	// Scale our chain probabilities and saves to our weights (with prior)
-	function scale_double (chain, type) {
+	function scale_double (chain) {
 		var weights = {};
 		for (var prior in chain) {
 			weights[prior] = {};
@@ -135,38 +136,56 @@ var Markov = new function() {
 	}
 	// Construct from Markov Chain
 	function name (number, length) {
+		// Initialise our name array
 	    var names = [];
+	    // Generate the requested number of names
 	    for (var i = 0; i < number; i++) {
+	    	// Get  an array of all the possible starting letters
 	    	var start_array = [];
 	    	for (var k in start_chain) {
 	    		if (start_chain.hasOwnProperty(k)) {
 	    			start_array.push(k);
 	    		}
 	    	}
+	    	// Select a starting letter at random
 	    	var start_index = Math.round(Math.random() * (start_array.length-1));
+	    	// Initialise 'p', our prior value
 	    	var p = start_array[start_index];
+	    	// Initialise 'c', our current character
 	    	var c = select_single(start_chain,start_weights,start_array[start_index]);
+	    	// Initialise our name value
 	    	var name = p + c;
+	    	// Store our last c value for searching purposes
 	    	var last_c = c;
+	    	// Loop until our name reaches the minimum length (unless we break the loop early)
 	    	while (name.length < length) {
+	    		// Select a letter from the word chain
 	    		c = select_double(word_chain, word_weights, p, last_c);
+	    		// Make sure we have a valid letter to continue traversing the chain
 	    		if (c !== '') {
 	    			name += c;
+	    			// Shift our values
 	    			p = last_c;
 	    			last_c = c;
 	    		} else {
 	    			break;
 	    		}
 	    	}
-	    	if ((c = select_double(terminal_chain, terminal_weights, p, last_c)) === '') {
+	    	// Search for our terminal letter
+	    	while ((c = select_double(terminal_chain, terminal_weights, p, last_c)) === '') {
+	    		// Select a letter from the word chain
 	    		c = select_double(word_chain, word_weights, p, last_c);
+	    		// Make sure we have a valid letter to continue traversing the chain
 	    		if (c !== '') {
 	    			name += c;
+	    			// Shift our values
+	    			p = last_c;
+	    			last_c = c;
+	    		} else {
+	    			break;
 	    		}
-	    	} else {
-	    		name += c;
 	    	}
-	      names.push(name);
+	    	names.push(name += c);
 	    }
 	    return names.join(' ');
 	}
@@ -174,6 +193,5 @@ var Markov = new function() {
 		chain: function () { return chain_name; },
 		load: function (names, title) { construct(names); chain_name= title; },
 		make: function (number, length) { return name(number, length); }
-		
 	};
 };

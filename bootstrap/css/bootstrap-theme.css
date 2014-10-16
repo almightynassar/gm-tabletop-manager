@@ -197,18 +197,18 @@
   background-repeat: repeat-x;
   border-color: #ff9900;
 }
-.btn-info:hover,
-.btn-info:focus {
+.btn-dnd:hover,
+.btn-dnd:focus {
   background-color: #ff9900;
   background-position: 0 -15px;
 }
-.btn-info:active,
-.btn-info.active {
+.btn-dnd:active,
+.btn-dnd.active {
   background-color: #ff9900;
   border-color: #ffb547;
 }
-.btn-info:disabled,
-.btn-info[disabled] {
+.btn-dnd:disabled,
+.btn-dnd[disabled] {
   background-color: #ff9900;
   background-image: none;
 }

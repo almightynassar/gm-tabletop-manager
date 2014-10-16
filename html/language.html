@@ -17,119 +17,135 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="row">
-				<div id="Form" class="col-lg-12" >
-					<p>This convertor uses a Font File to convert english text to it's fantasy script counter-part. The convertor is mapped <strong>exactly</strong> as it would be if you downloaded and installed the font onto your computer (in fact, I recommend you do that for best results). This convertor is pretty much only good for previewing the fantasy fonts.</p>
-					<textarea id="convert_text" class="form-control">please enter your text here to convert (this does not translate, and does not rewrite special characters). see the scripts notes below for script-specific translation details</textarea>
-					<table>
-						<tbody>
-							<tr>
-								<td>
-									<select id="script_input" class="form-control" >
-										<option value="klingon">Klingon</option>
-										<option value="angerthas">Angerthas</option>
-										<option value="quenya">Quenya</option>
-										<option value="elderfuthark">Elder Futhark</option>
-										<option value="dovahzul">Dovahzul</option>
-										<option value="iokharic">Iokharic</option>
-									</select>
-								</td>
-								<td>
-									<select id="size_input" class="form-control" >
-										<option value="14">14pt</option>
-										<option value="18">18pt</option>
-										<option value="22" selected="selected">22pt</option>
-										<option value="24">24pt</option>
-										<option value="28">28pt</option>
-										<option value="32">32pt</option>
-										<option value="36">36pt</option>
-										<option value="40">40pt</option>
-										<option value="44">44pt</option>
-										<option value="48">48pt</option>
-										<option value="52">52pt</option>
-										<option value="56">56pt</option>
-										<option value="60">60pt</option>
-										<option value="64">64pt</option>
-										<option value="68">68pt</option>
-										<option value="72">72pt</option>
-										<option value="76">76pt</option>
-									</select>
-								</td>
-								<td><button class="btn btn-success" onclick='convert();'>Convert</button></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+			<div id="Form" class="col-lg-12" >
+				<p>This convertor uses a Font File to convert english text to it's fantasy script counter-part. The convertor is mapped <strong>exactly</strong> as it would be if you downloaded and installed the font onto your computer (in fact, I recommend you do that for best results). This convertor is pretty much only good for previewing the fantasy fonts.</p>
+				<textarea id="convert_text" class="form-control">please enter your text here to convert (this does not translate, and does not rewrite special characters). see the scripts notes below for script-specific translation details</textarea>
+				<table>
+					<tbody>
+						<tr>
+							<td>
+								<select id="script_input" class="form-control" onChange="inform()"></select>
+							</td>
+							<td>
+								<select id="size_input" class="form-control" >
+									<option value="14">14pt</option>
+									<option value="18">18pt</option>
+									<option value="22" selected="selected">22pt</option>
+									<option value="24">24pt</option>
+									<option value="28">28pt</option>
+									<option value="32">32pt</option>
+									<option value="36">36pt</option>
+									<option value="40">40pt</option>
+									<option value="44">44pt</option>
+									<option value="48">48pt</option>
+									<option value="52">52pt</option>
+									<option value="56">56pt</option>
+									<option value="60">60pt</option>
+									<option value="64">64pt</option>
+									<option value="68">68pt</option>
+									<option value="72">72pt</option>
+									<option value="76">76pt</option>
+								</select>
+							</td>
+							<td><button class="btn btn-success" onclick='convert();'>Convert</button></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
-			<div class="row">
-				<div class="col-lg-12" >
-					<div id="Result" class="bg-info">The result will be translated here</div>
-				</div>
-			</div>
+		</div>
+		<div class="row">
+			<hr />
 			<div id="Language" class="col-lg-12" >
-				<p><strong>Scripts and notes:</strong></p>
-				<ul>
-					<li>
-						<p><strong>Klingon:</strong> A language created for the 'Star Trek' universe. This version of klingon has full [A-Z a-z 0-9] characters, with 'x' being an almalgamation of 'ks'. Capital letters are not differentiated in Klingon.</p>
-						<ul>
-							<li>This is an example piece of text in Klingon. 0123456789. aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ.</li>
-							<li class="klingon">This is an example piece of text in Klingon. 0123456789. aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ.</li>
-							<li><a href="../css/font/klingon.svg">SVG</a> | <a href="../css/font/klingon.eot">EOT</a> | <a href="../css/font/klingon.ttf">TTF</a> | <a href="../css/font/klingon.woff">WOFF</a></li>
-						</ul>
-					</li>
-					<li>
-						<p><strong>Angerthas:</strong> A language created by J.R.R Tolkien for the Dwarves in the 'Middle Earth' universe. This version (Angerthas Moria) has full [A-Z a-z 0-9] characters. There are capital letters in Angerthas.</p>
-						<ul>
-							<li>This is an example piece of text in Angerthas. 0123456789. aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ.</li>
-							<li class="angerthas">This is an example piece of text in Angerthas. 0123456789. aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ.</li>
-							<li><a href="../css/font/angerthas.svg">SVG</a> | <a href="../css/font/angerthas.eot">EOT</a> | <a href="../css/font/angerthas.ttf">TTF</a> | <a href="../css/font/angerthas.woff">WOFF</a></li>
-						</ul>
-					</li>
-					<li>
-						<p><strong>Quenya:</strong> A language created by J.R.R Tolkien for the Elves in the 'Middle Earth' universe. I have no idea how this version of (Tengwar Quenya) is mapped (Capitals and lowercase letters have different symbols) If you know Quenya then you should play around with different letter placements until stuff makes sense ;-).</p>
-						<ul>
-							<li>This is an example piece of text in Quenya. 0123456789. aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ.</li>
-							<li class="quenya">This is an example piece of text in Quenya. 0123456789. aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ.</li>
-							<li><a href="../css/font/quenya.svg">SVG</a> | <a href="../css/font/quenya.eot">EOT</a> | <a href="../css/font/quenya.ttf">TTF</a> | <a href="../css/font/quenya.woff">WOFF</a></li>
-						</ul>
-					</li>
-					<li>
-						<p><strong>Elder Futhark:</strong> An old runic script used by the Norse. Capital Letters are mirror version of Lowercase Letters. 'c' = 'k', 'v' = 'w',  'x' = 'th', 'z' represents the Common Germanic phenome *z or R, 'y' represents another funny Common Germanic *i, and 'q' is a NEW symbol (not present in original script)</p>
-						<ul>
-							<li>This is an example piece of text in Elder Futhark. 0123456789. aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ.</li>
-							<li class="elderfuthark">This is an example piece of text in Elder Futhark. 0123456789. aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ.</li>
-							<li><a href="../css/font/elderfuthark.svg">SVG</a> | <a href="../css/font/elderfuthark.eot">EOT</a> | <a href="../css/font/elderfuthark.ttf">TTF</a> | <a href="../css/font/elderfuthark.woff">WOFF</a></li>
-						</ul>
-					</li>
-					<li>
-						<p><strong>Dovahzul:</strong> A 34-rune Dragon Language alphabet for 'The Elder Scrolls' universe. THERE ARE NO CAPITAL LETTERS EXCEPT FOR SOME SPECIAL CHARACTERS! 'c' = 'k', 'A' = 'AA', 'H' = 'AH', 'E' = 'EI', 'W' = 'EY', 'I' = 'II', 'J' = 'IR',  'O' = 'OO', 'U' = 'UU', 'R' = 'UR'.</p>
-						<ul>
-							<li>This is an example piece of text in Dovahzul. 0123456789. aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ.</li>
-							<li class="dovahzul">This is an example piece of text in Dovahzul. 0123456789. aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ.</li>
-							<li><a href="../css/font/dovahzul.svg">SVG</a> | <a href="../css/font/dovahzul.eot">EOT</a> | <a href="../css/font/dovahzul.ttf">TTF</a> | <a href="../css/font/dovahzul.woff">WOFF</a></li>
-						</ul>
-					</li>
-					<li>
-						<p><strong>Iokharic:</strong> Draconic Script created for the 'D&amp;D' univers. No special sounds, all letters represented. Capital letters are not differentiated in Iokharic.</p>
-						<ul>
-							<li>This is an example piece of text in Iokharic. 0123456789. aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ.</li>
-							<li class="iokharic">This is an example piece of text in Iokharic. 0123456789. aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ.</li>
-							<li><a href="../css/font/iokharic.svg">SVG</a> | <a href="../css/font/iokharic.eot">EOT</a> | <a href="../css/font/iokharic.ttf">TTF</a> | <a href="../css/font/iokharic.woff">WOFF</a></li>
-						</ul>
-					</li>
-				</ul>
+			</div>
+		</div>
+		<div class="row">
+			<div id='ParentResult' class="col-lg-12" style="height:50em" >
+				<hr />
+				<canvas id="Result" class="bg-warning" width="100%" height="100%"></canvas>
 			</div>
 		</div>
 	</div>
 	<script src="../jquery/jquery.min.js"></script>
-	<script src="../jquery/jquery.printPage.min.js"></script>
+	<script src="../js/data/fonts.js"></script>
 	<script>
+	var index = 0;
+	var canvas = $('#Result')[0];
+	var ctx = canvas.getContext("2d");
+	for(var font in Font) {
+		$('#script_input').append('<option value="'+font+'">'+Font[font].name+'</option>');
+		ctx.font = "20px "+font;
+		ctx.fillText('Test',0,0);
+	}
+	resetCanvas(ctx, canvas);
+	function inform() {
+		var script = $('#script_input').val();
+		var returnHtml = "<p><strong>"+Font[script].name+"</strong> (<em>"+Font[script].from+"</em>)</p>";
+		returnHtml += '<p><a href="../css/font/'+script+'/'+script+'.ttf">TTF Font file</a></p>';		
+		returnHtml += "<p>"+Font[script].what+"</p><p>"+Font[script].notes+"</p>";
+		if (!$.isEmptyObject(Font[script].missing)) {
+			returnHtml += "<p>The following letters were missing from the alphabet and have been replaced:</p><ul>";
+			for (var key in Font[script].missing) {
+				returnHtml += "<li>"+key+" = "+Font[script].missing[key]+"</li>";
+			}
+			returnHtml += "</ul>";
+		}
+		if (!$.isEmptyObject(Font[script].mapping)) {
+			returnHtml += "<p>The following sounds are mapped to the following letters (note that case is important!):</p><ul>";
+			for (var key in Font[script].mapping) {
+				returnHtml += "<li>"+key+" = "+Font[script].mapping[key]+"</li>";
+			}
+			returnHtml += "</ul>";
+		}
+		$('#Language').html(returnHtml);
+	}
 	function convert() {
 		var text = $('#convert_text').val();
 		var script = $('#script_input').val();
 		var size = $('#size_input').val();
-		$('#Result').html('<p class="'+script+'" style="font-size: '+size+'px;">'+text+'</p>');
+		var canvas = $('#Result')[0];
+		var ctx = canvas.getContext("2d");
+		writeCanvas(ctx, canvas, text, script, size);
 	}
+	function resetCanvas(ctx, canvas) {
+		// Store the current transformation matrix
+		ctx.save();
+		// Use the identity matrix while clearing the canvas
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		// Restore the transform
+		ctx.restore();
+	};
+	function writeCanvas(ctx, canvas, text, script, size) {
+		resetCanvas(ctx, canvas);
+		ctx.font = size+"px "+script;
+		//ctx.fillText(text,10,size);
+		wrapText(ctx, text, 10, size, canvas.width, size);
+	}
+	function wrapText(context, text, x, y, maxWidth, lineHeight) {
+		x = parseInt(x, 10);
+		y = parseInt(y, 10);
+		maxWidth = parseInt(maxWidth, 10);
+		lineHeight = parseInt(lineHeight, 10);
+    	var words = text.split(' ');
+    	var line = '';
+        for(var n = 0; n < words.length; n++) {
+        	var testLine = line + words[n] + ' ';
+          	var metrics = context.measureText(testLine);
+          	var testWidth = metrics.width;
+          	if (testWidth > maxWidth && n > 0) {
+            	context.fillText(line, x, y);
+            	line = words[n] + ' ';
+            	y += lineHeight;
+          	}
+          	else {
+            	line = testLine;
+          	}
+     	}
+    	context.fillText(line, x, y);
+   	}
+	inform();
+	canvas.width = $('#ParentResult').width();
+	canvas.height = $("#ParentResult").height();
 	</script>
 </body>
 </html>
