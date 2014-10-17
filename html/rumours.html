@@ -20,14 +20,15 @@
 	</div>
 	<div id="Rumour">
 	</div>
+	<script src="../jquery/jquery.min.js"></script>
 	<script src="../js/dice.min.js"></script>
 	<script src="../js/markov.min.js"></script>
 	<script src="../js/form.min.js"></script>
-	<script src="../js/names.js"></script>
+	<script src="../js/data/names.js"></script>
 	<script src="../js/rumours.js"></script>
 	<script>
 	var form = new Form();
-	window.document.getElementById('levels').innerHTML = form.dropdown("level");
+	$('#levels').html(form.dropdown("level"));
 	// Tavern rumours
 	function tavern () {
 		var number = window.document.getElementById('level_input').value;

@@ -1,9 +1,9 @@
 /**
  * Arrays of useful names
  */
-if (Names && Form && Dice && Markov) {
+if (Name && Form && Dice && Markov) {
 	var Rumours = new function () {
-		Markov.load(Names.human(false));
+		Markov.load(Name.human.male);
 		var classes = Form().classes();
 		var races = Form().races();
 		var nations = ['Kelerak', 'Kale', 'Zeland', 'Orland', 'Farland', 'Dale', 'Wawmar', 'Kale Mountains', 'Northern Teeth', 'Grand Peaks', 'Black Wood', 'Wilder Wood', 'Green Copse', 'Eagle Woods', 'Green Plains (West)', 'Cold Lands (North)', 'Deadlands', 'Nameless City', 'Orc Lands (East)', 'Sea Lands (South)'];
