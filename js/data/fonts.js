@@ -8,6 +8,33 @@ var Font = {
 		"missing": {},
 		"mapping": {}
 	},
+	"barazhad": {
+		"name": "Barazhad",
+		"what": "The script used by Primordials and Demons",
+		"from": "D&D Universe by Wizards of the Coast",
+		"notes": "Matches one-to-one with alphabet, including captials.",
+		"capitals": 1,
+		"missing": {},
+		"mapping": {}
+	},
+	"daedra": {
+		"name": "Daedra",
+		"what": "The script used by the Demons and other things behind the portals",
+		"from": "The Elder Scrolls universe by Bethseda",
+		"notes": "Matches one-to-one with alphabet, including captials.",
+		"capitals": 1,
+		"missing": {},
+		"mapping": {}
+	},
+	"davek": {
+		"name": "Davek",
+		"what": "The script used by Dwarves and Giants",
+		"from": "D&D universe by Wizards of the Coast",
+		"notes": "Matches one-to-one with alphabet, including captials.",
+		"capitals": 1,
+		"missing": {},
+		"mapping": {}
+	},
 	"dovahzul": {
 		"name": "Dovahzul",
 		"what": "34-rune script for the Dragon Language in Skyrim",
@@ -45,15 +72,6 @@ var Font = {
 			"q": "ng"
 		}
 	},
-	"iokharic": {
-		"name": "Iokharic",
-		"what": "Dragon script for Dragons, Dragonborn and Kobolds.",
-		"from": "D&D universe by Wizard of the Coast",
-		"notes": "No special mappings.",
-		"capitals": 0,
-		"missing": {},
-		"mapping": {}
-	},
 	"hylian64": {
 		"name": "Hylian (N64)",
 		"what": "The script for the people of Hyrule.",
@@ -63,11 +81,47 @@ var Font = {
 		"missing": {},
 		"mapping": {}
 	},
+	"hylianTP": {
+		"name": "Hylian (Twilight Princess)",
+		"what": "The script for the people of Hyrule.",
+		"from": "Zelda universe by Nintendo",
+		"notes": "No special mappings",
+		"capitals": 0,
+		"missing": {},
+		"mapping": {}
+	},
+	"iokharic": {
+		"name": "Iokharic",
+		"what": "Dragon script for Dragons, Dragonborn and Kobolds.",
+		"from": "D&D universe by Wizard of the Coast",
+		"notes": "No special mappings.",
+		"capitals": 0,
+		"missing": {},
+		"mapping": {}
+	},
 	"klingon": {
 		"name": "Klingon",
 		"what": "Spoken by the galatic Klingon Empire.",
 		"from": "Star Trek universe",
 		"notes": "No capital letters. 'x' is just 'qs' letters crammed into one space. Pronounciations: 'c'='ch', 'f'='ng', 'g'='gh', 'z'='th'",
+		"capitals": 0,
+		"missing": {},
+		"mapping": {}
+	},
+	"qijomi": {
+		"name": "Qijomi",
+		"what": "Con-lang script for someone's RPG world.",
+		"from": "Free online scropt",
+		"notes": "Special capital letter characters.",
+		"capitals": 1,
+		"missing": {},
+		"mapping": {}
+	},
+	"rellanic": {
+		"name": "Rellanic",
+		"what": "Elvish script for Elves, Mind Flayers and Dryads.",
+		"from": "D&D universe by Wizard of the Coast",
+		"notes": "No special mappings.",
 		"capitals": 0,
 		"missing": {},
 		"mapping": {}

@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>NPC Creator</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div id="Title" class="col-lg-12" >
+				<p>This generator creates names for a whole variety of things!</p>
+				<table>
+					<thead>
+						<tr>
+							<th>Type</th>
+							<th>Number</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<select id="type_input" name="length_input" class="form-control" >
+									<option value="book">Book</option>
+									<option value="tavern">Tavern</option>
+								</select>
+							</td>
+							<td>
+								<select id="number_input" name="number_input" class="form-control" >
+									<option value="1">1</option>
+									<option value="5">5</option>
+									<option value="10">10</option>
+									<option value="25">25</option>
+									<option value="50">50</option>
+									<option value="100">100</option>
+								</select>
+							</td>
+							<td><button class="btn btn-success" onclick='generate();'>Generate</button></td>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div id="Result" class="col-lg-12" >
+			</div>
+		</div>
+	</div>
+	<script src="../jquery/jquery.min.js"></script>
+	<script src="../js/dice.min.js"></script>
+	<script src="../js/data/titles.js"></script>
+	<script>
+		function generate() {
+			var number = $('#number_input').val();
+			$('#Result').html('');
+			for (var i = 0; i < number; i++) {
+				var text = Title.patterns[(Dice.dice(Title.patterns.length,1))-1];
+				// Replace the matched words
+				while (text.match(':nouns') !== null && text.match(':nouns') !== undefined) {
+					text = text.replace(':nouns', Title.nouns[(Dice.dice(Title.nouns.length,1))-1]);
+				}
+				while (text.match(':adverbs') !== null && text.match(':adverbs') !== undefined) {
+					text = text.replace(':adverbs', Title.adverbs[(Dice.dice(Title.adverbs.length,1))-1]);
+				}
+				while (text.match(':adjectives') !== null && text.match(':adjectives') !== undefined) {
+					text = text.replace(':adjectives', Title.adjectives[(Dice.dice(Title.adjectives.length,1))-1]);
+				}
+				while (text.match(':activeverbs') !== null && text.match(':activeverbs') !== undefined) {
+					text = text.replace(':activeverbs', Title.activeverbs[(Dice.dice(Title.activeverbs.length,1))-1]);
+				}
+				while (text.match(':passiveverbs') !== null && text.match(':passiveverbs') !== undefined) {
+					text = text.replace(':passiveverbs', Title.passiveverbs[(Dice.dice(Title.passiveverbs.length,1))-1]);
+				}
+				// Return the text
+				$('#Result').append('<p>'+text+'</p>');
+			}
+		}
+	</script>
+</body>
+</html>
