@@ -1,24 +1,24 @@
 var Race = {
   "Aasimar": {
-    "description": "Ancient race blessed with Celestial blood",
+    "description": "Angelic offspring blessed with Celestial blood",
     "attributes": {
       "str": 0,
       "con": 0,
       "dex": 0,
-      "int": 2,
+      "int": 0,
       "wis": 2,
-      "cha": 0
+      "cha": 2
     },
     "skills": {
       "acrobatics": 0,
       "arcana": 0,
       "athletics": 0,
       "bluff": 0,
-      "diplomacy": 0,
+      "diplomacy": 2,
       "dungeon": 0,
       "endurance": 0,
       "heal": 0,
-      "history": 2,
+      "history": 0,
       "insight": 0,
       "intimidate": 0,
       "nature": 0,
@@ -106,32 +106,21 @@ var Race = {
       "majesty": "You gain a +1 bonus to all defenses against attacks made by bloodied creatures"
     },
     "powers": {
-      "memories": {
-        "name": "Memories of the Gods",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "",
-        "effect": "",
-        "action": "Immediate Interrupt",
-        "implement": "None",
+      "divineheritage": {
+      	"name": "Divine Heritage",
+        "usage": "Encounter - Free Action",
         "type": "Personal",
-        "requires": "",
+        "trigger": "",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "When you make and attack, saving, skill or ability roll and dislike the result, you add 1d6 to the triggering roll" 
+        "effect": "On your next roll, add a bonus equal to your WIS mod",
+        "special": ""
       }
     }
   },
@@ -242,32 +231,21 @@ var Race = {
       "oversized": "You can use weapons of your size or one size larger as if they were your size"
     },
     "powers": {
-      "predatory": {
-        "name": "Predatory Eye",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "",
-        "effect": "",
-        "action": "Minor Action",
-        "implement": "None",
-        "type": "Personal",
-        "requires": "",
+      "predatoryeye": {
+      	"name": "Predatory Eye",
+        "usage": "Encounter - Minor Action",
+        "type": "Melee Weapon",
+        "trigger": "",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "If you have combat advantage against a target, you deal +1d6 damage (+2d6 at 11th Level, +3d6 at 12th Level)" 
+        "effect": "If you have combat advantage against a target, you deal +1d6 damage (+2d6 at 11th, +3d6 at 21st)",
+        "special": ""
       }
     }
   },
@@ -378,32 +356,21 @@ var Race = {
       "charmer": "+5 racial bonus to saving throws against charm effects"
     },
     "powers": {
-      "change": {
-        "name": "Change Shape",
-        "usage": "At-Will",
-        "source": "Racial",
-        "damage": "",
-        "effect": "Polymorph",
-        "action": "Minor Action",
-        "implement": "None",
+      "changeshape": {
+      	"name": "Change Shape",
+        "usage": "At Will (Polymorph) - Minor Action",
         "type": "Personal",
-        "requires": "",
+        "trigger": "",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "You can alter your physical form to take on the appearance of any Medium humanoid, including a unique individual" 
+        "effect": "You can alter your physical form to take on the appearance of any Medium humanoid, including a unique individual",
+        "special": ""
       }
     }
   },
@@ -513,32 +480,21 @@ var Race = {
       "fury": "When you are bloodied, you gain a +1 racial bonus to attack rolls"
     },
     "powers": {
-      "breath": {
-        "name": "Dragon Breath",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "Acid, Cold, Fire, Lightning, or Poison (choose one)",
-        "effect": "",
-        "action": "Minor",
-        "implement": "None",
-        "type": "Close burst 3",
-        "requires": "",
+      "dragonbreath": {
+      	"name": "Dragon's Endurance",
+        "usage": "Encounter (Acid/Cold/Fire/Lightning/Poison)- Minor Action",
+        "type": "Close Burst 3",
+        "trigger": "",
         "target": "All creatures in area",
-        "attack": "STR/CON/DEX",
-        "hero_bonus": 2,
-        "paragon_bonus": 4,
-        "epic_bonus": 6,
-        "versus": "Reflex",
-        "hit_hero": "1d6 + con mod",
-        "hit_paragon": "2d6 + con mod",
-        "hit_epic": "3d6 + con mod",
+        "attack": "STR/CON/DEX vs Reflex",
+        "hit": "1d6 + CON mod (2d6 at 11th, 3d6 at 21st) of damage of the selected type",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "Choose a damage type and attack attribute when you create your character. These two choices remain through characters life" 
+        "effect": "",
+        "special": "Choose a damage type and attack attribute when you create your character. These two choices remain through the character's life"
       }
     }
   },
@@ -650,32 +606,21 @@ var Race = {
       "step": "You ignore difficult terrain when you shift"
     },
     "powers": {
-      "cunning": {
+      "drowlitheness": {
         "name": "Drow Litheness",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "None",
-        "effect": "Bonus",
-        "action": "Free",
-        "implement": "None",
+        "usage": "Encounter - Free Action",
         "type": "Personal",
-        "requires": "",
+        "trigger": "",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "On your next roll add a bonus equal to your DEX modifier" 
+        "effect": "On your next roll, add a bonus equal to your DEX mod",
+        "special": ""
       }
     }
   },
@@ -1011,32 +956,21 @@ var Race = {
       "trance": "Rather than sleep, you enter a meditative state known as a trance. You spend 4 hours in this state to gain the same benefits of a 6-hour extended rest. While in a trance, you are fully aware of your surroundings and notice events and enemies as normal"
     },
     "powers": {
-      "step": {
-        "name": "Fey Step",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "None",
-        "effect": "Teleportation",
-        "action": "Move",
-        "implement": "None",
+      "feystep": {
+      	"name": "Fey Step",
+        "usage": "Encounter (Teleportation)- Move Action",
         "type": "Personal",
-        "requires": "",
+        "trigger": "",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "Teleport up to 5 squares" 
+        "effect": "Teleport up to 5 squares",
+        "special": ""
       }
     }
   },
@@ -1149,32 +1083,21 @@ var Race = {
       "step": "You ignore difficult terrain when you shift"
     },
     "powers": {
-      "accuracy": {
+      "elvenaccuracy": {
         "name": "Elven Accuracy",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "None",
-        "effect": "Re-roll",
-        "action": "Free",
-        "implement": "None",
+        "usage": "Encounter - Free Action",
         "type": "Personal",
-        "requires": "",
+        "trigger": "",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "Re-roll an attack roll. Use the second roll, even if it is lower" 
+        "effect": "Re-roll an attack roll. Use the second roll, even if it is lower",
+        "special": ""
       }
     }
   },
@@ -1286,32 +1209,21 @@ var Race = {
       "pack": "When two or more of your allies are adjacent to an enemy, you deal an extra +2 damage on melee attacks"
     },
     "powers": {
-      "ferocious": {
+      "ferociouscharge": {
         "name": "Ferocious Charge",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "",
-        "effect": "",
-        "action": "Standard Action",
-        "implement": "None",
+        "usage": "Encounter - Standard Action",
         "type": "Personal",
-        "requires": "",
+        "trigger": "",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "You charge and deal an extra 2 damage on a successful attack. Increase to 4 at 11th Level, and 6 at 21st Level" 
+        "effect": "You charge and deal an extra 2 damage on a successful attack. Increase to 4 at 11th, 6 at 21st",
+        "special": ""
       }
     }
   },
@@ -1424,32 +1336,21 @@ var Race = {
       "cunning": "You gain a +5 saving throw against illusions"
     },
     "powers": {
-      "fade": {
-        "name": "Fade Away",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "",
-        "effect": "Illusion",
-        "action": "Immediate Reaction",
-        "implement": "None",
+      "fadeaway": {
+      	"name": "Fade Away",
+        "usage": "Encounter (Illusion) - Immediate Reaction",
         "type": "Personal",
-        "requires": "",
+        "trigger": "When you take damage",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "When you take damage, you are invisible until you attack or until the end of your next turn" 
+        "effect": "You become invisible until you attack or until the end of your next turn",
+        "special": ""
       }
     }
   },
@@ -1560,32 +1461,21 @@ var Race = {
       "resistant": "You have a +5 bonus on saving throws against poison and disease"
     },
     "powers": {
-      "tactics": {
-        "name": "Goblin Tactics",
-        "usage": "At-Will",
-        "source": "Racial",
-        "damage": "",
-        "effect": "",
-        "action": "Immediate Reaction",
-        "implement": "None",
+      "goblintactics": {
+      	"name": "Goblin Tactics",
+        "usage": "At Will - Immediate Reaction",
         "type": "Personal",
-        "requires": "",
+        "trigger": "Missed by a melee attack",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "When you are missed by a melee attack, you shift 1 square" 
+        "effect": "Shift one square",
+        "special": ""
       }
     }
   },
@@ -1696,33 +1586,22 @@ var Race = {
       "athlete": "When you make an Athletics check, roll twice and use either result"
     },
     "powers": {
-      "endurance": {
-        "name": "Stone's Endurance",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "",
-        "effect": "",
-        "action": "Minor",
-        "implement": "None",
+      "stonesendurance": {
+      	"name": "Stone's Endurance",
+        "usage": "Encounter - Minor Action",
         "type": "Personal",
-        "requires": "",
+        "trigger": "",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "You gain resist 5 to all damage till the end of your next turn (Resist 10 at Level 11, Resist 15 at Level 21)" 
-      }
+        "effect": "You gain resist 5 to all damage till the end of your next turn (Resist 10 at Level 11, Resist 15 at Level 21)",
+        "special": ""
+       }
     }
   },
   "Half-Elf": {
@@ -1732,7 +1611,7 @@ var Race = {
       "con": 2,
       "dex": 0,
       "int": 0,
-      "wis": 2,
+      "wis": 0,
       "cha": 2
     },
     "skills": {
@@ -1829,7 +1708,7 @@ var Race = {
       "limit": 100
     },
     "properties": {
-      "dilettante": "Choose an at-will power from a class different to yours. You can use that power as an encounter power",
+      "dilettante": "Choose a 1st level At-Will attack power from a class different to yours. You can use that power as an encounter power",
       "heritage": "You can take feats that have either elf or human as a pre-requisite",
       "diplomacy": "You grant allies within 10 squares of you a +1 racial bonus to Diplomacy checks"
     },
@@ -1944,32 +1823,21 @@ var Race = {
       "swift": "You gain a +2 bonus to speed when charging"
     },
     "powers": {
-      "assault": {
-        "name": "Furious Assault",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "",
-        "effect": "",
-        "action": "Free",
-        "implement": "None",
+      "furiousassault": {
+      	"name": "Furious Assault",
+        "usage": "Encounter - Free Action",
         "type": "Personal",
-        "requires": "",
+        "trigger": "When you hit an enemy",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "When you hit an enemy, deal 1[W] extra damage if it is a weapon attack or 1d8 extra damage if it isn't" 
+        "effect": "Deal an extra 1[W] damage if it is a weapon attack, or 1d8 extra damage if it isn't",
+        "special": ""
       }
     }
   },
@@ -2081,32 +1949,21 @@ var Race = {
       "reaction": "You gain a +2 racial bonus to AC against opportunity attacks"
     },
     "powers": {
-      "chance": {
-        "name": "Second Chance",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "",
-        "effect": "Re-roll",
-        "action": "Immediate Interrupt",
-        "implement": "None",
+      "secondchance": {
+      	"name": "Second Chance",
+        "usage": "Encounter - Immediate Interrupt",
         "type": "Personal",
-        "requires": "",
-        "target": "Personal",
+        "trigger": "When an attack hits you",
+        "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "When an attack hits you, force an enemy to roll the attack again. The enemy uses the second roll, even if it is higher" 
+        "effect": "Force an enemy to roll the attack again. The enemy uses the second roll",
+        "special": ""
       }
     }
   },
@@ -2217,32 +2074,21 @@ var Race = {
       "pack": "When two or more of your allies are adjacent to an enemy, you deal an extra +2 damage on melee attacks"
     },
     "powers": {
-      "resistance": {
-        "name": "Hobgoblin Resistance",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "",
-        "effect": "",
-        "action": "Immediate Reaction",
-        "implement": "None",
+      "hobgoblinresistance": {
+      	"name": "Hobgoblin Resistance",
+        "usage": "Encounter - Immediate Reaction",
         "type": "Personal",
-        "requires": "",
+        "trigger": "You suffer from an effect that a save can end",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "When you suffer from an effect that a save can end, you make a saving throw against the effect" 
+        "effect": "Make a saving throw against that effect",
+        "special": ""
       }
     }
   },
@@ -2462,31 +2308,20 @@ var Race = {
     },
     "powers": {
       "shifty": {
-        "name": "Shifty",
-        "usage": "At-Will",
-        "source": "Racial",
-        "damage": "",
-        "effect": "",
-        "action": "Minor Action",
-        "implement": "None",
+      	"name": "Shifty",
+        "usage": "At Will - Minor Action",
         "type": "Personal",
-        "requires": "",
+        "trigger": "",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "You shift 1 square" 
+        "effect": "You shift 1 square",
+        "special": ""
       }
     }
   },
@@ -2597,32 +2432,21 @@ var Race = {
       "pack": "When two or more of your allies are adjacent to an enemy, you deal an extra +2 damage on melee attacks"
     },
     "powers": {
-      "shifting": {
-        "name": "Longtooth Shifting",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "",
-        "effect": "Healing",
-        "action": "Minor",
-        "implement": "None",
+      "longtoothshifting": {
+      	"name": "Longtooth Shifting",
+        "usage": "Encounter (Healing) - Minor Action",
         "type": "Personal",
-        "requires": "",
+        "trigger": "You are bloodied",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "When you are bloodied, until the end of the encounter, you gain a +2 bonus to damage rolls. In addtion, while you are bloodied, you gain regeneration 2 (4 on Level 11, 6 on Level 21)" 
+        "effect": "Until the end of the encounter, your gain a +2 bonus to damage rolls. In addition, while you are bloodied you gain 2 regeneration (4 on 11th, 6 on 21st)",
+        "special": ""
       }
     }
   },
@@ -2734,32 +2558,21 @@ var Race = {
       "charge": "You have a +2 bonusto AC against opportunity attacks you provoke during a charge"
     },
     "powers": {
-      "goring": {
-        "name": "Goring Charge",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "Force",
-        "effect": "",
-        "action": "Standard",
-        "implement": "None",
+      "goringcharge": {
+      	"name": "Goring Charge",
+        "usage": "Encounter - Standard Action",
         "type": "Melee",
-        "requires": "",
+        "trigger": "",
         "target": "One Creature",
-        "attack": "STR/CON/DEX",
-        "hero_bonus": 4,
-        "paragon_bonus": 6,
-        "epic_bonus": 8,
-        "versus": "AC",
-        "hit_hero": "1d6 + STR/CON/DEX mod, and you knock the target prone",
-        "hit_paragon": "2d6 + STR/CON/DEX mod, and you knock the target prone",
-        "hit_epic": "3d6 + STR/CON/DEX mod, and you knock the target prone",
+        "attack": "STR/CON/DEX + (4, 6 at 11th, 8 at 21st) vs AC",
+        "hit": "1d6 + STR/CON/DEX mod, and you knock the target prone (2d6 at 11th, 3d6 at 21st)",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "You charge and gore the enemy with your horns" 
+        "effect": "",
+        "special": "You charge and gore the enemy with your horns"
       }
     }
   },
@@ -2870,32 +2683,21 @@ var Race = {
       "swift": "You gain a +2 bonus to speed when charging"
     },
     "powers": {
-      "assault": {
-        "name": "Warrior's Surge",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "Melee",
-        "effect": "Healing",
-        "action": "Standard",
-        "implement": "Weapon",
-        "type": "Personal",
-        "requires": "",
+      "warriorssurge": {
+      	"name": "Warrior's Surge",
+        "usage": "Encounter (Healing)- Standard Action",
+        "type": "Melee Weapon",
+        "trigger": "",
         "target": "One Creature",
         "attack": "STR vs AC",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "1[W] + STR mod, and you can spend a healing surge",
-        "hit_paragon": "1[W] + STR mod, and you can spend a healing surge",
-        "hit_epic": "2[W] + STR mod, and you can spend a healing surge",
+        "hit": "1[W] + STR mod, and you can spend a healing surge. At 21st level, 2[W]",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "" 
+        "effect": "",
+        "special": ""
       }
     }
   },
@@ -3006,32 +2808,21 @@ var Race = {
       "hunt": "You gain a +1 racial bonus to attack rolls against bloodied foes"
     },
     "powers": {
-      "shifting": {
+      "razorclawshifting": {
         "name": "Razorclaw Shifting",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "",
-        "effect": "Bonus",
-        "action": "Minor",
-        "implement": "None",
+        "usage": "Encounter - Minor Action",
         "type": "Personal",
-        "requires": "",
+        "trigger": "You are bloodied",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "When you are bloodied, until the end of the encounter, your speed increases by 2, and you gain a +1 bonus to AC and Reflex" 
+        "effect": "Until the end of the encounter, your speed increases by 2, and you gain a +1 bonus to AC and Reflex",
+        "special": ""
       }
     }
   },
@@ -3143,32 +2934,21 @@ var Race = {
       "vitality": "Whenever you drop to 0 hit points or fewer, you are dying but you can choose to remain conscious until you attempt your first death saving throw. If you remain concious, you can take only one standard action before you attempt your first death saving throw"
     },
     "powers": {
-      "reaping": {
-        "name": "Dark Reaping",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "Necrotic",
-        "effect": "",
-        "action": "Immediate Reaction",
-        "implement": "None",
+      "darkreaping": {
+      	"name": "Dark Reaping",
+        "usage": "Encounter (Necrotic)- Immediate Reaction",
         "type": "Personal",
-        "requires": "",
+        "trigger": "Creature withing 5 squares of you is reduced to 0 hit points",
         "target": "You",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "When a creature withing 5 squares of you is reduced to 0 hit points, one creature you hit with an attack before the end of your next turn takes an additional 1d8 + CON mod necrotic damage" 
+        "effect": "One creature you hit with an attack before the end of your next turn takes an additional 1d8 + CON mod necrotic damage",
+        "special": ""
       }
     }
   },
@@ -3279,32 +3059,21 @@ var Race = {
       "bloodhunt": "You gain a +1 racial bonus to attack rolls against bloodied foes"
     },
     "powers": {
-      "wrath": {
+      "infernalwrath": {
         "name": "Infernal Wrath",
-        "usage": "Encounter",
-        "source": "Racial",
-        "damage": "",
-        "effect": "Bonus",
-        "action": "Minor",
-        "implement": "None",
-        "type": "Personal",
-        "requires": "",
-        "target": "You",
+        "usage": "Encounter (Fire)- Free Action",
+        "type": "Close Burst 10",
+        "trigger": "An enemy hits you within 10 squares of you",
+        "target": "The triggering enemy in burst",
         "attack": "",
-        "hero_bonus": 0,
-        "paragon_bonus": 0,
-        "epic_bonus": 0,
-        "versus": "",
-        "hit_hero": "",
-        "hit_paragon": "",
-        "hit_epic": "",
+        "hit": "",
         "miss": "",
         "second_target": "",
         "second_attack": "",
-        "second_versus": "",
         "second_hit": "",
         "sustain": "",
-        "special": "Gain a +1 bonus to your next attack against an enemy that hit you since your last turn. If it hits and deals damage, add your CHA mod as extra damage" 
+        "effect": "The target takes 1d6+(INT or CHA) mod fire damage. At 11th 2d6, at 21st 3d6.",
+        "special": "At character creation choose either INT or CHA as the damage modifier. This choice stays for the character duration." 
       }
     }
   }
