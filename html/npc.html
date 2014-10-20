@@ -16,17 +16,58 @@
 </head>
 <body>
 	<div id="DnD">
-		<h4>BASICS</h4>
-		<p><b>Name: </b><input id="name_input" name="name_input" /> <button onclick='markovName();'>Generate Short</button> <button onclick='markovName(8);'>Generate Long</button></p>
+		<h4>D&D 4E NPC Generator</h4>
 		<p><em>GM Tabletop Manager generates names based on 'Race' and 'Gender'. Changing these attributes below will change the style of name generated</em></p>
-		<p><b>Level:</b> <span id="levels"></span> <input id="npc_input" type="checkbox" value="true" name="npc_input"> <b>NPC?</b></p>
-		<p><b>Race:</b> <span id="races"></span> <b>Class:</b> <span id="classes"></span> <b>Template:</b> <span id="templates"></span></p>
-		<p><b>Gender: </b><select id="gender_input"><option value="male">Male</option><option value="female">Female</option></select>
-		   <b>Height: </b><select id="height_input"><option value="0">Tiny</option><option value="1">Short</option><option value="2">Average</option><option value="3">Tall</option><option value="4">Big</option></select>
-		   <b>Weight: </b><select id="weight_input"><option value="0">Very Light</option><option value="1">Light</option><option value="2">Average</option><option value="3">Heavy</option><option value="4">Very Heavy</option></select></p>
+		<table>
+			<thead></thead>
+			<tbody>
+				<tr>
+					<th>Race</th>
+					<th>Gender</th>
+					<th>Name</th>
+					<th></th>
+					<th></th>
+				</tr>
+				<tr>
+					<td><select id="race_input" class="form-control" name="race_input" ></select></td>
+					<td><select id="gender_input" class="form-control" name="gender_input"><option value="male">Male</option><option value="female">Female</option></select></td>
+					<td><input id="name_input" class="form-control" name="name_input" /></td>
+					<td><button class="btn btn-info" onclick='markovName();'>Generate Short Name</button></td>
+					<td><button class="btn btn-info" onclick='markovName(8);'>Generate Long Name</button></td>
+				</tr>
+				<tr>
+					<th>Height</th>
+					<th>Weight</th>
+					<th>Age</th>
+					<th>Level</th>
+					<th>NPC?</th>
+				</tr>
+				<tr>
+					<td><select id="height_input" class="form-control" name="height_input"><option value="0">Tiny</option><option value="1">Short</option><option value="2">Average</option><option value="3">Tall</option><option value="4">Big</option></select></td>
+					<td><select id="weight_input" class="form-control" name="weight_input"><option value="0">Very Light</option><option value="1">Light</option><option value="2">Average</option><option value="3">Heavy</option><option value="4">Very Heavy</option></select></td>
+					<td><select id="age_input" class="form-control" name="age_input"><option value="0">Child</option><option value="1">Young Adult</option><option value="2">Middle Age</option><option value="3">Old</option><option value="4">Venerable</option></select></td>
+					<td><select id="level_input" class="form-control" name="level_input" ></select></td>
+					<td><input id="npc_input" type="checkbox" value="true" name="npc_input"></td>
+				</tr>
+				<tr>
+					<th>Class</th>
+					<th>Template</th>
+					<th>Background</th>
+					<th>Home Town</th>
+					<th>Personality</th>
+				</tr>
+				<tr>
+					<td><span id="classes"></span></td>
+					<td><span id="templates"></span></td>
+					<td><select id="background_input" class="form-control" name="background_input" ></select></td>
+					<td><select id="location_input" class="form-control" name="location_input" ></select></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
 		<hr />
 		<h4>ATTRIBUTES</h4>
-		<p><em>Drag and drop the order of your preferences - This will be used to automatically allocate level-up attributes and for the generator buttons</em> <span id="prefs"></span></p>
+		<p><em>Drag and drop the order of your preferences - This will be used to automatically allocate level-up attributes and for the generator</em> <span id="prefs"></span></p>
 		<table>
 			<thead>
 				<tr>
@@ -42,14 +83,17 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td><span id="str"></span></td>
-					<td><span id="con"></span></td>
-					<td><span id="dex"></span></td>
-					<td><span id="int"></span></td>
-					<td><span id="wis"></span></td>
-					<td><span id="cha"></span></td>
-					<td><button id="randomRoll">Random Array</button></td>
-					<td><button id="standardRoll">Standard Array</button></td>
+					<td><select id="str_input" class="form-control" name="str_input" ></select></td>
+					<td><select id="con_input" class="form-control" name="con_input" ></select></td>
+					<td><select id="dex_input" class="form-control" name="dex_input" ></select></td>
+					<td><select id="int_input" class="form-control" name="int_input" ></select></td>
+					<td><select id="wis_input" class="form-control" name="wis_input" ></select></td>
+					<td><select id="cha_input" class="form-control" name="cha_input" ></select></td>
+					<td><button class="btn btn-default" id="randomRoll">Random Array</button></td>
+					<td><button class="btn btn-default" id="standardRoll">Standard Array</button></td>
+				</tr>
+				<tr>
+					<td id="attribute_calculator" colspan="8">0 points</td>
 				</tr>
 			</tbody>
 		</table>
@@ -105,9 +149,24 @@
 <script src="../js/markov.min.js"></script>
 <script src="../js/dice.min.js"></script>
 <script src="../js/data/names.js"></script>
+<script src="../js/data/races4E.js"></script>
+<script src="../js/data/locations.js"></script>
+<script src="../js/data/backgrounds4E.js"></script>
 <script src="../js/form.min.js"></script>
 <script src="../js/dnd.min.js"></script>
 <script>
+	function scoreCalc(value) {
+		var intersect = parseInt(value,10) - 10;
+		var part1 = (intersect-3) >= 0 ? (intersect-3) : 0;
+		var part2 = (intersect-6) >= 0 ? (intersect-6) : 0;
+		var part3 = (intersect-7) >= 0 ? (intersect-7) : 0;
+		var part4 = (intersect-8) >= 0 ? (intersect-8) : 0;
+		return (intersect+part1+part2+part3+part4);
+	}
+	function calculateScore() {
+		var score = 20 - (scoreCalc($('#str_input').val()) + scoreCalc($('#con_input').val()) + scoreCalc($('#dex_input').val()) + scoreCalc($('#int_input').val()) + scoreCalc($('#wis_input').val()) + scoreCalc($('#cha_input').val()));
+		$('#attribute_calculator').html(score+" points");
+	}
 	var creature = DnD.blank;
 	/* ===========================================
 	 * Environment and Form set-up
@@ -118,25 +177,49 @@
 		// Our form elements
 		var form = new Form();
 		// Form dropdowns
-		window.document.getElementById('armour').innerHTML = form.dropdown("armour");
-		window.document.getElementById('melee').innerHTML = form.dropdown("melee");
-		window.document.getElementById('offhand').innerHTML = form.dropdown("offhand");
-		window.document.getElementById('range').innerHTML = form.dropdown("range");
-	    window.document.getElementById('races').innerHTML = form.dropdown("race");
-	    window.document.getElementById('classes').innerHTML = form.dropdown("class");
-	    window.document.getElementById('levels').innerHTML = form.dropdown("level");
-	    window.document.getElementById('templates').innerHTML = form.dropdown("template");
-	    window.document.getElementById('str').innerHTML = form.dropdown('str');
-	    window.document.getElementById('con').innerHTML = form.dropdown('con');
-	    window.document.getElementById('dex').innerHTML = form.dropdown('dex');
-	    window.document.getElementById('int').innerHTML = form.dropdown('int');
-	    window.document.getElementById('wis').innerHTML = form.dropdown('wis');
-	    window.document.getElementById('cha').innerHTML = form.dropdown('cha');
+		$('#armour').html(form.dropdown("armour"));
+		$('#melee').html(form.dropdown("melee"));
+		$('#offhand').html(form.dropdown("offhand"));
+		$('#range').html(form.dropdown("range"));
+		// Levels
+	    for(var i = 1; i <= 40; i++) {
+			$('#level_input').append('<option value="'+i+'">'+i+'</option>');
+		}
+		// Races
+	    for(var race in Race) {
+			$('#race_input').append('<option value="'+race+'">'+race+'</option>');
+		}
+	    // Backgrounds
+	    for(var background in Background) {
+			$('#background_input').append('<option value="'+background+'">'+Background[background].name+'</option>');
+		}
+	 	// Locations
+	    for(var location in Location) {
+			$('#location_input').append('<option value="'+Location[location]+'">'+Location[location]+'</option>');
+		}
+	 	// Attributes
+	    for(var i = 7; i <= 20; i++) {
+			$('#str_input').append('<option value="'+i+'">'+i+'</option>');
+			$('#con_input').append('<option value="'+i+'">'+i+'</option>');
+			$('#dex_input').append('<option value="'+i+'">'+i+'</option>');
+			$('#int_input').append('<option value="'+i+'">'+i+'</option>');
+			$('#wis_input').append('<option value="'+i+'">'+i+'</option>');
+			$('#cha_input').append('<option value="'+i+'">'+i+'</option>');
+		}
+	    $('#str_input').click(calculateScore);
+	    $('#con_input').click(calculateScore);
+	    $('#dex_input').click(calculateScore);
+	    $('#int_input').click(calculateScore);
+	    $('#wis_input').click(calculateScore);
+	    $('#cha_input').click(calculateScore);
+	 	// Classes
+	    $('#classes').html(form.dropdown("class"));
+	    $('#templates').html(form.dropdown("template"));
 	    // Form draggables
 	    window.document.getElementById('prefs').innerHTML = form.draggable("attributes");
 	    form.draggableListeners("attributes");
-	    window.document.getElementById('randomRoll').onclick = function () { form.draggableAssign("attributes", Dice.randomArray()) };
-	    window.document.getElementById('standardRoll').onclick = function () { form.draggableAssign("attributes", Dice.standardArray()) };
+	    $('#randomRoll').click(function () { form.draggableAssign("attributes", Dice.randomArray()); calculateScore(); });
+	    $('#standardRoll').click(function () { form.draggableAssign("attributes", Dice.standardArray()); calculateScore(); });
 	});
 	/* ===========================================
 	 * Generate Markov Name

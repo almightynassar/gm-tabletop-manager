@@ -1,0 +1,38 @@
+var Location = [
+    "Ackton",
+    "Beacon Hill",
+    "Castle Bourgh",
+    "Castle Hancey",
+    "Castle Yorkel",
+    "Deaton",
+	"Dessingrove",
+	"Dragonspur",
+	"East-of-Sky",
+	"Kale City",
+	"Newtown",
+	"Waleron",
+	"West-of-Sky",
+	"Wyvernia"
+];
+var Nation = [
+	'Black Wood',
+	'Cold Lands',
+	'Dale',
+	'Deadlands',
+	'Eagle Woods',
+	'Farland',
+	'Grand Peaks',
+	'Green Copse',
+	'Green Plains',
+	'Kale',
+	'Kale Mountains',
+	'Kelerak',
+	'Nameless City',
+	'Northern Teeth',
+	'Orc Lands',
+	'Orland',
+	'Sea Lands',
+	'Wawmar',
+	'Wilder Wood',
+	'Zeland'
+];
