@@ -1,6 +1,6 @@
 var Race = {
   "Aasimar": {
-    "description": "Angelic offspring blessed with Celestial blood",
+    "description": "Race of humanoids who have Angelic blood. They bear physical features of their Celestial origins that differ from individual to individual",
     "attributes": {
       "str": 0,
       "con": 0,
@@ -19,11 +19,11 @@ var Race = {
       "endurance": 0,
       "heal": 0,
       "history": 0,
-      "insight": 0,
+      "insight": 2,
       "intimidate": 0,
       "nature": 0,
       "perception": 0,
-      "religion": 2,
+      "religion": 0,
       "stealth": 0,
       "streetwise": 0,
       "thievery": 0
@@ -82,6 +82,19 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 270,
+    	"conception": 0.2,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Goliath": "Aasimar",
+    		"Half-Elf": "Aasimar",
+    		"Half-Orc": "Aasimar",
+    		"Human": "Aasimar",
+    		"Orc": "Aasimar"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -98,9 +111,9 @@ var Race = {
       "min": 90
     },
     "age": {
-      "adult": 100,
-      "average": 300,
-      "limit": 350
+      "adult": 60,
+      "average": 200,
+      "limit": 250
     },
     "properties": {
       "majesty": "You gain a +1 bonus to all defenses against attacks made by bloodied creatures"
@@ -207,6 +220,16 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 210,
+    	"conception": 0.8,
+    	"heat": 1,
+    	"control": 0,
+    	"crossbreed": {
+    		"Hobgoblin": "Bugbear",
+    		"Goblin": "Hobgoblin"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -332,6 +355,19 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 270,
+    	"conception": 0.2,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Goliath": "Doppelganger",
+    		"Half-Elf": "Doppelganger",
+    		"Half-Orc": "Doppelganger",
+    		"Human": "Doppelganger",
+    		"Orc": "Doppelganger"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -348,9 +384,9 @@ var Race = {
       "min": 60
     },
     "age": {
-      "adult": 30,
-      "average": 100,
-      "limit": 110
+      "adult": 20,
+      "average": 70,
+      "limit": 100
     },
     "properties": {
       "charmer": "+5 racial bonus to saving throws against charm effects"
@@ -456,6 +492,13 @@ var Race = {
     "speed": 6,
     "no_armour_penalty": 0,
     "surge_value_bonus": 1,
+    "conception": {
+    	"gestation": 300,
+    	"conception": 0.1,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -472,8 +515,8 @@ var Race = {
       "min": 100
     },
     "age": {
-      "adult": 15,
-      "average": 75,
+      "adult": 20,
+      "average": 70,
       "limit": 100
     },
     "properties": {
@@ -581,6 +624,19 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 720,
+    	"conception": 0.05,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Eladrin": "Eladrin",
+    		"Elf": "Elf",
+    		"Half-Elf": "Half-Elf",
+    		"Half-Orc": "Half-Elf",
+    		"Human": "Half-Elf"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -707,6 +763,15 @@ var Race = {
     "no_armour_penalty": 1,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 360,
+    	"conception": 0.1,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Duegar": "Dwarf"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -820,6 +885,15 @@ var Race = {
     "no_armour_penalty": 1,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 360,
+    	"conception": 0.1,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Dwarf": "Duegar"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -930,6 +1004,19 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 900,
+    	"conception": 0.05,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Drow": "Drow",
+    		"Elf": "Elf",
+    		"Half-Elf": "Half-Elf",
+    		"Half-Orc": "Half-Elf",
+    		"Human": "Half-Elf"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 1,
@@ -1057,6 +1144,19 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 720,
+    	"conception": 0.05,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Drow": "Drow",
+    		"Eladrin": "Eladrin",
+    		"Half-Elf": "Half-Elf",
+    		"Half-Orc": "Half-Elf",
+    		"Human": "Half-Elf"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -1184,6 +1284,13 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 180,
+    	"conception": 0.3,
+    	"heat": 1,
+    	"control": 0,
+    	"crossbreed": {}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -1310,6 +1417,13 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 390,
+    	"conception": 0.15,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -1326,9 +1440,9 @@ var Race = {
       "min": 20
     },
     "age": {
-      "adult": 60,
-      "average": 250,
-      "limit": 300
+      "adult": 30,
+      "average": 150,
+      "limit": 200
     },
     "properties": {
       "trickster": "Once per round, you can use the cantrip Ghost Sound as a minor action",
@@ -1437,6 +1551,16 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 120,
+    	"conception": 0.5,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Bugbear": "Hobgoblin",
+    		"Hobgoblin": "Goblin"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -1455,7 +1579,7 @@ var Race = {
     "age": {
       "adult": 5,
       "average": 35,
-      "limit": 50
+      "limit": 40
     },
     "properties": {
       "resistant": "You have a +5 bonus on saving throws against poison and disease"
@@ -1562,6 +1686,21 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 210,
+    	"conception": 0.3,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Aasimar": "Aasimar",
+    		"Doppelganger": "Doppelganger",
+    		"Half-Elf": "Half-Elf",
+    		"Half-Orc": "Half-Orc",
+    		"Human": "Human",
+    		"Orc": "Orc",
+    		"Tiefling": "Tiefling"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -1579,8 +1718,8 @@ var Race = {
     },
     "age": {
       "adult": 15,
-      "average": 70,
-      "limit": 80
+      "average": 60,
+      "limit": 70
     },
     "properties": {
       "athlete": "When you make an Athletics check, roll twice and use either result"
@@ -1687,6 +1826,24 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 540,
+    	"conception": 0.15,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Aasimar": "Aasimar",
+    		"Doppelganger": "Doppelganger",
+    		"Drow": "Half-Elf",
+    		"Eladrin": "Half-Elf",
+    		"Elf": "Half-Elf",
+    		"Goliath": "Goliath",
+    		"Half-Orc": "Half-Orc",
+    		"Human": "Half-Elf",
+    		"Orc": "Half-Orc",
+    		"Tiefling": "Tiefling"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -1703,9 +1860,9 @@ var Race = {
       "min": 60
     },
     "age": {
-      "adult": 20,
-      "average": 75,
-      "limit": 100
+      "adult": 25,
+      "average": 90,
+      "limit": 120
     },
     "properties": {
       "dilettante": "Choose a 1st level At-Will attack power from a class different to yours. You can use that power as an encounter power",
@@ -1798,6 +1955,24 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 240,
+    	"conception": 0.25,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Aasimar": "Aasimar",
+    		"Doppelganger": "Doppelganger",
+    		"Drow": "Half-Elf",
+    		"Eladrin": "Half-Elf",
+    		"Elf": "Half-Elf",
+    		"Goliath": "Goliath",
+    		"Half-Elf": "Half-Elf",
+    		"Human": "Half-Orc",
+    		"Orc": "Half-Orc",
+    		"Tiefling": "Tiefling"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -1924,6 +2099,13 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 270,
+    	"conception": 0.20,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -2050,6 +2232,16 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 210,
+    	"conception": 0.4,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Bugbear": "Bugbear",
+    		"Goblin": "Goblin"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -2066,9 +2258,9 @@ var Race = {
       "min": 85
     },
     "age": {
-      "adult": 15,
-      "average": 50,
-      "limit": 60
+      "adult": 10,
+      "average": 40,
+      "limit": 50
     },
     "properties": {
       "pack": "When two or more of your allies are adjacent to an enemy, you deal an extra +2 damage on melee attacks"
@@ -2114,8 +2306,8 @@ var Race = {
       "history": 0,
       "insight": 0,
       "intimidate": 0,
-      "nature": 2,
-      "perception": 2,
+      "nature": 0,
+      "perception": 0,
       "religion": 0,
       "stealth": 0,
       "streetwise": 0,
@@ -2175,11 +2367,29 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 270,
+    	"conception": 0.2,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Aasimar": "Aasimar",
+    		"Doppelganger": "Doppelganger",
+    		"Drow": "Half-Elf",
+    		"Eladrin": "Half-Elf",
+    		"Elf": "Half-Elf",
+    		"Goliath": "Goliath",
+    		"Half-Elf": "Half-Elf",
+    		"Half-Orc": "Half-Orc",
+    		"Orc": "Half-Orc",
+    		"Tiefling": "Tiefling"
+    	}
+    },
     "bonus": {
       "attributes": 2,
       "skills": 1,
       "feat": 1,
-      "atwills": 0,
+      "atwills": 1,
       "initiative": 0
     },
     "height": {
@@ -2283,6 +2493,13 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 120,
+    	"conception": 0.5,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -2299,9 +2516,9 @@ var Race = {
       "min": 30
     },
     "age": {
-      "adult": 10,
-      "average": 40,
-      "limit": 50
+      "adult": 12,
+      "average": 35,
+      "limit": 45
     },
     "properties": {
       "trapsense": "You gain a +2 bonus to defenses against traps"
@@ -2408,6 +2625,15 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 210,
+    	"conception": 0.3,
+    	"heat": 1,
+    	"control": 0,
+    	"crossbreed": {
+    		"Razorclaw Shifter": "Razorclaw Shifter"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -2533,6 +2759,13 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 1,
+    "conception": {
+    	"gestation": 360,
+    	"conception": 0.3,
+    	"heat": 1,
+    	"control": 0,
+    	"crossbreed": {}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -2550,8 +2783,8 @@ var Race = {
     },
     "age": {
       "adult": 15,
-      "average": 70,
-      "limit": 80
+      "average": 50,
+      "limit": 60
     },
     "properties": {
       "ferocity": "When you reach 0 hit points or fewer, you can make a melee basic attack as an immediate interrupt",
@@ -2659,6 +2892,21 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 180,
+    	"conception": 0.4,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Aasimar": "Aasimar",
+    		"Doppelganger": "Doppelganger",
+    		"Goliath": "Goliath",
+    		"Half-Elf": "Half-Orc",
+    		"Half-Orc": "Half-Orc",
+    		"Human": "Half-Orc",
+    		"Tiefling": "Tiefling"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -2784,6 +3032,15 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 210,
+    	"conception": 0.3,
+    	"heat": 1,
+    	"control": 0,
+    	"crossbreed": {
+    		"Longtooth Shifter": "Longtooth Shifter"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,
@@ -3035,6 +3292,19 @@ var Race = {
     "no_armour_penalty": 0,
     "surge_value_bonus": 0,
     "surge_bonus": 0,
+    "conception": {
+    	"gestation": 270,
+    	"conception": 0.2,
+    	"heat": 0,
+    	"control": 0,
+    	"crossbreed": {
+    		"Goliath": "Tiefling",
+    		"Half-Elf": "Tiefling",
+    		"Half-Orc": "Tiefling",
+    		"Human": "Tiefling",
+    		"Orc": "Tiefling"
+    	}
+    },
     "bonus": {
       "attributes": 0,
       "skills": 0,

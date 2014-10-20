@@ -17,14 +17,14 @@
     <div id="main-wrapper">
     	<div id="sidebar-wrapper">
     		<ul class="sidebar-nav">
-    			<li class="brand"><em>Generic Tabletop</em></li>
-    			<li><a id="generate-name" href="#Generate-name">Generate Name</a></li>
-    			<li><a id="generate-rumour" href="#Generate-Rumour">Generate Rumour</a></li>
-    			<li><a id="dice-roller" href="#Roll-Dice">Dice Roller</a></li>
-    			<li><a id="fantasy-script" href="#Fantasy-Script">Fantasy Text Font</a></li>
-    			<li><a id="generate-tavern" href="#Generate-Tavern">Book/Tavern Generator</a></li>
+    			<li class="brand"><em>D&amp;D 4th Edition</em></li>
+    			<li><a href="index.html">Main Page</a></li>
     			<li><hr></li>
-    			<li><a href="index4E.html">D&amp;D 4th Edition</a></li>
+    			<li><a id="generate-npc" href="#Generate-NPC">Generate NPC</a></li>
+    			<li><a id="load-npc" href="#Load-NPC">Load NPC</a>
+    			<li><a id="generate-item" href="#Generate-Magicals">Generate Item</a></li>
+    			<li><hr /></li>
+    			<li><a id="races-database" href="#Races-Database">4E Races database</a></li>
     		</ul>
     	</div>
     	<div id="content-wrapper">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <iframe id="frame" width="100%" height="100%" src="html/markov.html" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+            <iframe id="frame" width="100%" height="100%" src="html/npc.html" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
     	</div>
     </div>
 
@@ -50,20 +50,17 @@
         e.preventDefault();
         $("#main-wrapper").toggleClass("toggled");
     });
-    $("#generate-name").click(function () { 
-        $("#frame").attr("src", "html/markov.html");
+    $("#generate-npc").click(function () { 
+        $("#frame").attr("src", "html/npc.html");
   	});
-    $("#generate-rumour").click(function () { 
-        $("#frame").attr("src", "html/rumours.html");
+    $("#load-npc").click(function () { 
+        $("#frame").attr("src", "html/load.html");
   	});
-    $("#dice-roller").click(function () { 
-        $("#frame").attr("src", "html/dice.html");
+    $("#generate-item").click(function () { 
+        $("#frame").attr("src", "html/magicals.html");
   	});
-    $("#fantasy-script").click(function () { 
-        $("#frame").attr("src", "html/language.html");
-  	});
-    $("#generate-tavern").click(function () { 
-        $("#frame").attr("src", "html/titles.html");
+    $("#races-database").click(function () { 
+        $("#frame").attr("src", "html/races4E.html");
   	});
     </script>
 </body>

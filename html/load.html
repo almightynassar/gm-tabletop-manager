@@ -11,26 +11,68 @@
 	<!-- CSS SCRIPTS -->
 	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
 	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
+	<style>
+	.header::after {
+    	content: " - ^v";
+	}
+	.headerSortUp::after {
+    	content: " - ^";
+	} 
+	.headerSortDown::after {
+    	content: " - v";
+	} 
+	</style>
 </head>
 <body>
-	<div id="CreatureList">
-	</div>
+	<table id="tablesorter" class="table table-bordered table-condensed table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Level</th>
+				<th>Race</th>
+				<th>Class</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody  id="CreatureList">
+		</tbody>
+	</table>
 	<script src="../jquery/jquery.min.js"></script>
 	<script src="../bootstrap/js/bootstrap.min.js"></script>
+	<script src="../jquery/jquery.tablesorter.min.js"></script>
+	<script src="../js/dnd.min.js"></script>
 	<script>
 	/* ===========================================
 	 * Environment and Form set-up
 	 * ===========================================
 	 */
-	window.onload = (function ()
-	{
+	function loadList()	{
+		$('#CreatureList').html('');
 		var text = "";
-		for (creature in localStorage) {
-			text += "<p><a href='creature.html?load=" + creature + "'>" + creature + "</a> <button onclick='localStorage.removeItem(\"" + creature + "\");'>Delete</button></p>";
+		var npcs = [];
+		for (var key in localStorage) {
+			if (key.match(/^DnD.creature.*/g)) {
+				var creature = DnD.deserialise(localStorage.getItem(key));
+				npcs[key] = creature;
+			}
 		}
-		// Form dropdowns
-		window.document.getElementById('CreatureList').innerHTML = text;
-	});
+		for (var key in npcs) {
+			var creature = npcs[key];
+			$('#CreatureList').append("<tr><td>" + creature.name + "</td><td>"+creature.level+"</td><td>"+creature.race+"</td><td>"+creature.career+"</td><td><a class='btn btn-info' href='creature.html?load=" + key + "'>Load</a> <button class='btn btn-danger' onclick='deleteItem(\"" + key + "\");'>Delete</button></td></tr>");
+		}
+		$("table").tablesorter({
+			headers: {
+				4: {
+					sorter: false
+				}
+			}
+		});
+	};
+	function deleteItem(key) {
+		localStorage.removeItem(key);
+		loadList();
+	}
+	window.onload = loadList;
 	</script>
 </body>
 </html>
