@@ -152,7 +152,7 @@ var Background = {
 			"name": "Harvester",
 			"description": "You were a lumberjack, miner, trapper or hunter. You bring back the bounties of nature to civilisation. This is hard work, which has shaped you.",
 			"skills": ["Athletics","Nature"],
-			"trait": "Blend in - You can fit among commoners with ease. You can find a place to hide, rest or recuperate among commoners, unless you have shown yourself to be danger to them. They will shield you from the law or anyone else searching for you, but will not risk their lives.",
+			"trait": "Labourer's Bond - You can easily make contacts with all harvesters (people who work on the fringes of nature). They will gladly give you lodging and food in return for work, and they will freely tell you of their worries or rumours of their places of work.",
 			"equipment": {
 				"tools": "The tools of your trade",
 				"rope": "50 ft (15m) of hempen rope",
@@ -203,6 +203,19 @@ var Background = {
 				"clothes": "Travellers clothes",
 				"ring": "A signet ring",
 				"gold": "32 GP and 5 SP"
+			}
+		},
+		"merchant": {
+			"name": "Merchant",
+			"description": "You have sold goods for profit all your life. You know the value of things, and how to get the most out of your money.",
+			"skills": ["Bluff", "Insight"],
+			"trait": "Appraisal - You know the approximate value of mundane items and gems. You also know one trade contact in each large town or city.",
+			"equipment": {
+				"scribing": "Ink, ink pen and paper (ten sheets)",
+				"clothes": "Two sets of clothes; travelling clothes and fine clothes",
+				"beltpouch": "For holding valuables",
+				"gems": "Three gems worth 10 GP each",
+				"gold": "30 GP"
 			}
 		},
 		"minstrel": {
@@ -310,5 +323,5 @@ var Background = {
 				"clothes": "Common clothes",
 				"gold": "28 GP and 4 SP"
 			}
-		},
+		}
 };

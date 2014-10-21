@@ -53,7 +53,7 @@
 					<th>Class</th>
 					<th>Template</th>
 					<th>Background</th>
-					<th>Home Town</th>
+					<th>Nationality</th>
 					<th>Personality</th>
 				</tr>
 				<tr>
@@ -150,11 +150,12 @@
 <script src="../js/dice.min.js"></script>
 <script src="../js/data/names.js"></script>
 <script src="../js/data/races4E.js"></script>
-<script src="../js/data/locations.js"></script>
+<script src="../js/data/nations.js"></script>
 <script src="../js/data/backgrounds4E.js"></script>
 <script src="../js/form.min.js"></script>
 <script src="../js/dnd.min.js"></script>
 <script>
+	// Calculates attribute scores
 	function scoreCalc(value) {
 		var intersect = parseInt(value,10) - 10;
 		var part1 = (intersect-3) >= 0 ? (intersect-3) : 0;
@@ -167,6 +168,7 @@
 		var score = 20 - (scoreCalc($('#str_input').val()) + scoreCalc($('#con_input').val()) + scoreCalc($('#dex_input').val()) + scoreCalc($('#int_input').val()) + scoreCalc($('#wis_input').val()) + scoreCalc($('#cha_input').val()));
 		$('#attribute_calculator').html(score+" points");
 	}
+	// Loads up a blank creature
 	var creature = DnD.blank;
 	/* ===========================================
 	 * Environment and Form set-up
@@ -194,8 +196,8 @@
 			$('#background_input').append('<option value="'+background+'">'+Background[background].name+'</option>');
 		}
 	 	// Locations
-	    for(var location in Location) {
-			$('#location_input').append('<option value="'+Location[location]+'">'+Location[location]+'</option>');
+	    for(var location in Nation) {
+			$('#location_input').append('<option value="'+location+'">'+location+'</option>');
 		}
 	 	// Attributes
 	    for(var i = 7; i <= 20; i++) {
@@ -220,35 +222,43 @@
 	    form.draggableListeners("attributes");
 	    $('#randomRoll').click(function () { form.draggableAssign("attributes", Dice.randomArray()); calculateScore(); });
 	    $('#standardRoll').click(function () { form.draggableAssign("attributes", Dice.standardArray()); calculateScore(); });
+	    // Calculate our score
+	    calculateScore();
 	});
 	/* ===========================================
 	 * Generate Markov Name
 	 * ===========================================
 	 */
 	var markovName = function (length) {
-		var gender = window.document.getElementById('gender_input').value;
-		if (Markov.chain() !== window.document.getElementById('race_input').value + "_" + window.document.getElementById('gender_input').value) {
-			switch (window.document.getElementById('race_input').value) {
+		var gender = $('#gender_input').val();
+		var race = $('#race_input').val();
+		if (Markov.chain() !== race + "_" + gender) {
+			switch (race) {
 			case "Dwarf":
-				Markov.load(Name.dwarf[gender], window.document.getElementById('race_input').value + "_" + gender);
+			case "Duegar":
+				Markov.load(Name.dwarf[gender], race + "_" + gender);
 				break;
+			case "Drow":
 			case "Eladrin":
 			case "Elf":
 			case "Half-Elf":
-				Markov.load(Name.elf[gender], window.document.getElementById('race_input').value + "_" + gender);
+				Markov.load(Name.elf[gender], race + "_" + gender);
 				break;
 			case "Half-Orc":
 			case "Orc":
-				Markov.load(Name.orc[gender], window.document.getElementById('race_input').value + "_" + gender);
+				Markov.load(Name.orc[gender], race + "_" + gender);
+				break;
+			case "Kobold":
+				Markov.load(Name.kobold[gender], race + "_" + gender);
 				break;
 			default:
-				Markov.load(Name.human[gender], window.document.getElementById('race_input').value + "_" + gender);
+				Markov.load(Name.human[gender], race + "_" + gender);
 				break;
 			}
 		}
 		var size = length ? parseInt(length, 10) : 5;
 		var name = Markov.make(1,size);
-		window.document.getElementById('name_input').value = name.charAt(0).toUpperCase() + name.slice(1);
+		$('#name_input').val(name.charAt(0).toUpperCase() + name.slice(1));
 	};
 	/* ===========================================
 	 * Create creature
