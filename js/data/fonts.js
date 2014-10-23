@@ -108,10 +108,19 @@ var Font = {
 		"missing": {},
 		"mapping": {}
 	},
+	"pulsian": {
+		"name": "Pulsian",
+		"what": "Con-lang script for someone's RPG world.",
+		"from": "Final Fantasy XIII universe by Square Enix",
+		"notes": "No capital letters.",
+		"capitals": 0,
+		"missing": {},
+		"mapping": {}
+	},
 	"qijomi": {
 		"name": "Qijomi",
 		"what": "Con-lang script for someone's RPG world.",
-		"from": "Free online scropt",
+		"from": "Free online script",
 		"notes": "Special capital letter characters.",
 		"capitals": 1,
 		"missing": {},
