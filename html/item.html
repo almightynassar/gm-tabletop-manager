@@ -1,0 +1,59 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>NPC Creator</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
+	<style>
+	.header::after {
+    	content: " - ^v";
+	}
+	.headerSortUp::after {
+    	content: " - ^";
+	} 
+	.headerSortDown::after {
+    	content: " - v";
+	} 
+	</style>
+</head>
+<body>
+	<p>Select Item: <select id="item_input" class="form-control" name="item_input" ></select></p>
+	<p><button class="btn btn-success" onclick='generate();'>Show</button></p>
+	<table id="tablesorter" class="table table-bordered table-condensed table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Weight</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody  id="ItemList">
+		</tbody>
+	</table>
+	<script src="../jquery/jquery.min.js"></script>
+	<script src="../bootstrap/js/bootstrap.min.js"></script>
+	<script src="../jquery/jquery.tablesorter.min.js"></script>
+	<script src="../js/data/items.js"></script>
+	<script>
+	// Backgrounds
+    for(var category in Item) {
+		$('#item_input').append('<option value="'+category+'">'+category.charAt(0).toUpperCase() + category.slice(1)+'</option>');
+	}
+    function generate() {
+    	var category = $('#item_input').val();
+    	$('#ItemList').html('');
+    	for (var item in Item[category]) {
+    		$('#ItemList').append('<tr><td>'+Item[category][item].name+'</td><td>'+Item[category][item].cost+' GP</td><td>'+Item[category][item].weight+' kg</td><td>'+Item[category][item].description+'</td></tr>');
+    	}
+    }
+	</script>
+</body>
+</html>
