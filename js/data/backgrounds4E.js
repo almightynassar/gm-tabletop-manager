@@ -310,5 +310,5 @@ var Background = {
 				"clothes": "Common clothes",
 				"gold": "28 GP and 4 SP"
 			}
-		},
+		}
 };
