@@ -154,3 +154,16 @@
 .qijomi {
     font-family: 'qijomi';
 }
+@font-face {
+    font-family: 'pulsian';
+    src:url('font/pulsian/pulsian.eot');
+    src:url('font/pulsian/pulsian.eot?#iefix') format('embedded-opentype'),
+        url('font/pulsian/pulsian.woff') format('woff'),
+        url('font/pulsian/pulsian.ttf') format('truetype'),
+        url('font/pulsian/pulsian.svg#qijomi') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.pulsian {
+    font-family: 'pulsian';
+}

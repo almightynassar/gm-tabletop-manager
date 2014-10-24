@@ -6,7 +6,7 @@ var Background = {
 			"trait": "Faint memories - Occassionally your amnesia clears and you remember some specific knowledge, lore or something else related your past. Choose a knowledge field and write it down. Once per day, if you fail a knowledge/intelligence check related to that field you can re-roll that check with a +2 bonus",
 			"equipment" : {
 				"trinket": "A trinket from your past",
-				"clothes": "A set of commoner clothes",
+				"clothes": "Travelling outfit",
 				"gold": "5 GP"
 			}
 		},
@@ -19,7 +19,7 @@ var Background = {
 				"tools": "The tools of your trade",
 				"mirror": "A small steel mirror",
 				"masterwork": "Autographed masterwork of well-known artisan (approriate to your craft)",
-				"clothes": "Common clothes",
+				"clothes": "Artisan Outfit",
 				"gold": "39 GP and 5 SP"
 			}
 		},
@@ -32,7 +32,7 @@ var Background = {
 				"posters": "A collection of Wanted broadsheets",
 				"manacles": "Two sets of iron manacles",
 				"rope": "50 feet (15m) of rope",
-				"clothes": "Commoner clothing",
+				"clothes": "Travelling outfit",
 				"hair": "A lock of hair from previous or current bounty",
 				"gold": "35 GP and 5 SP"
 			}
@@ -47,7 +47,7 @@ var Background = {
 				"vials": "Ten stoppered vials of colored water",
 				"dice": "A set of weighted dice",
 				"cards": "Playing cards",
-				"clothes": "Two sets of clothing; one commoner, one noble",
+				"clothes": "Two sets of clothing; one common, one noble (minor)",
 				"ring": "A signet ring for an imaginary duke",
 				"gold": "29 GP and 5 SP"
 			}
@@ -73,7 +73,7 @@ var Background = {
 			"equipment": {
 				"disguise": "A kit of equipment for changing your identity (i.e. make-up)",
 				"necklace": "Necklace worth 50 GP",
-				"clothes": "Three sets of clothing; one fine, one travelling and one nightclothes (sexy)",
+				"clothes": "Three sets of clothing; one courtier, one travelling and one nightclothes",
 				"gems": "3 small gems worth 10 GP each",
 				"gold": "200 GP"
 			}
@@ -87,7 +87,7 @@ var Background = {
 				"scribing": "A kit of equipment for writing letters (i.e. quills and paper)",
 				"letters": "A collection of important letters, missives and communiques",
 				"book": "A book of law",
-				"clothes": "Two sets of clothing; one fine, one travelling",
+				"clothes": "Two sets of clothing; one courtier, one travelling",
 				"gold": "65 GP"
 			}
 		},
@@ -113,8 +113,8 @@ var Background = {
 			"equipment": {
 				"diploma": "A diploma scroll in a case",
 				"book": "A textbook with notes scribbled in the margins",
-				"clothes": "Two sets of clothing; one fine, one scholarly robes",
-				"ring": "A ring with your academy's crest on it",
+				"clothes": "Two sets of clothing; one courtier, one scholar",
+				"ring": "A common ring with your academy's crest on it",
 				"gold": "30 GP"
 			}
 		},
@@ -144,7 +144,7 @@ var Background = {
 				"oil": "A can of lamp oil",
 				"mirror": "A small steel mirror",
 				"beltpouch": "For holding coins and other small items",
-				"clothes": "Breeches with a secret pocket",
+				"clothes": "Common with a secret pocket",
 				"gold": "28 GP and 4 SP"
 			}
 		},
@@ -158,7 +158,7 @@ var Background = {
 				"rope": "50 ft (15m) of hempen rope",
 				"knife": "A work knife",
 				"spade": "An iron spade",
-				"clothes": "Common clothes",
+				"clothes": "Travelling clothes",
 				"gold": "10 GP and 4 SP"
 			}
 		},
@@ -170,7 +170,7 @@ var Background = {
 			"equipment": {
 				"herbalism": "A kit full of herbalism equipment",
 				"surgeon": "A surgeons or doctors kit",
-				"clothes": "Travellers clothes",
+				"clothes": "Travelling clothes",
 				"anamoly": "A preserved medical anomaly (such as a deformed skull)",
 				"gold": "15 GP"
 			}
@@ -181,11 +181,11 @@ var Background = {
 			"skills": ["Acrobatics","Diplomacy"],
 			"trait": "Licensed Fool - You enjoy the rare privilege of speaking your mind with little concern for repurcussions. As a jester, it is your duty to use comedy to point out the absurdities of the world. You can criticise through humour without offense. In addition, you can gain access to nobles in order to perform in return for a meal, place to stay or payment.",
 			"equipment": {
-				"motley": "A kit of equipment for a jester (dress, juggling balls etc)",
+				"motley": "A kit of equipment for a jester (juggling balls etc)",
 				"scepter": "A tin scepter",
 				"instrument": "A musical instrument of your choice",
 				"book": "Book of bawdy poems and jokes",
-				"clothes": "Travellers clothes",
+				"clothes": "Two outfits; Travelling clothes and Entertainers clothes",
 				"gold": "38 GP"
 			}
 		},
@@ -226,7 +226,7 @@ var Background = {
 			"equipment": {
 				"instrument": "A musical instrument of your choice",
 				"paper": "5 sheets",
-				"clothes": "Two sets of clothing; Fine and Travellers clothes",
+				"clothes": "Two sets of clothing; Entertainers and Travellers clothes",
 				"ink": "For writing",
 				"gold": "27 GP"
 			}
@@ -241,7 +241,7 @@ var Background = {
 				"horse": "Riding horse with saddle and bridle",
 				"scroll": "A scroll of pedigree",
 				"wax": "Sealing wax",
-				"clothes": "Fine clothes",
+				"clothes": "Noble (minor) clothes",
 				"ring": "A signet ring",
 				"feed": "Feed for seven days",
 				"gold": "29 GP and 5 SP"
@@ -256,7 +256,7 @@ var Background = {
 				"symbol": "A holy symbol",
 				"flask": "A flask of holy water",
 				"scribing": "Ink, ink pen and paper (ten sheets)",
-				"clothes": "Religious vestments suitable for performing rites",
+				"clothes": "Priest vestments suitable for performing rites",
 				"gold": "3 GP and 9 SP"
 			}
 		},
@@ -282,7 +282,7 @@ var Background = {
 			"equipment": {
 				"quaterstaff": "A quarterstaff",
 				"backpack": "Backpack",
-				"clothes": "Traveller's clothes"
+				"clothes": "Peasants clothes"
 			}
 		},
 		"soldier": {
@@ -295,7 +295,7 @@ var Background = {
 				"souvenir": "A souvenir from a former military campaign",
 				"insignia": "A symbol of your rank",
 				"dice": "Bone dice",
-				"clothes": "Travellers clothes",
+				"clothes": "Two sets; Traveller's clothes and Uniform",
 				"gold": "40 GP"
 			}
 		},
