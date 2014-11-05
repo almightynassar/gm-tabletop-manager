@@ -19,7 +19,6 @@
 		<h4>D&D 4E NPC Generator</h4>
 		<p><em>GM Tabletop Manager generates names based on 'Race' and 'Gender'. Changing these attributes below will change the style of name generated</em></p>
 		<table>
-			<thead></thead>
 			<tbody>
 				<tr>
 					<th>Race</th>
@@ -149,11 +148,11 @@
 <script src="../js/markov.min.js"></script>
 <script src="../js/dice.min.js"></script>
 <script src="../js/data/names.js"></script>
-<script src="../js/data/races4E.js"></script>
+<script src="../js/data/dnd4E/races.js"></script>
 <script src="../js/data/nations.js"></script>
-<script src="../js/data/backgrounds4E.js"></script>
+<script src="../js/data/dnd4E/backgrounds.js"></script>
 <script src="../js/form.min.js"></script>
-<script src="../js/dnd.min.js"></script>
+<script src="../js/src/dnd.js"></script>
 <script>
 	// Calculates attribute scores
 	function scoreCalc(value) {
@@ -268,33 +267,33 @@
     	/*
     	 * Get basic information
     	 */
-    	var name = window.document.getElementById('name_input').value;
-    	var level = window.document.getElementById('level_input').value;
-    	var race = window.document.getElementById('race_input').value;
-    	var career = window.document.getElementById('class_input').value;
-    	var template = window.document.getElementById('template_input').value;
-    	var npc = window.document.getElementById('npc_input').checked ? 1 : 0;
-    	var attributes = [window.document.getElementById('str_input').value,
-    	                  window.document.getElementById('con_input').value,
-    	                  window.document.getElementById('dex_input').value,
-    	                  window.document.getElementById('int_input').value,
-    	                  window.document.getElementById('wis_input').value,
-    	                  window.document.getElementById('cha_input').value];
+    	var name = $('#name_input').val();
+    	var level = $('#level_input').val();
+    	var race = $('#race_input').val();
+    	var career = $('#class_input').val();
+    	var template = $('#template_input').val();
+    	var npc = $('#npc_input').is(':checked') ? 1 : 0;
+    	var attributes = [$('#str_input').val(),
+    	                  $('#con_input').val(),
+    	                  $('#dex_input').val(),
+    	                  $('#int_input').val(),
+    	                  $('#wis_input').val(),
+    	                  $('#cha_input').val()];
     	var prefs = window.document.getElementsByClassName('attributes_drag');
-    	var height = window.document.getElementById('height_input').value;
-    	var weight = window.document.getElementById('weight_input').value;
+    	var height = $('#height_input').val();
+    	var weight = $('#weight_input').val();
     	// Creates the creature
     	creature = new DnD.create4E(name, level, race, career, template, npc, attributes, [prefs[0].innerHTML.toLowerCase(), prefs[1].innerHTML.toLowerCase()], height, weight);
     	creature.gender = window.document.getElementById('gender_input').value;
     	// Add armour and weapons
-    	creature.applyArmour(window.document.getElementById('armour_name_input').value, window.document.getElementById('armour_input').value, window.document.getElementById('armour_bonus_input').value);
-    	creature.armour.properties[window.document.getElementById('armour_enchantment_input').value] = window.document.getElementById('armour_effect_input').value;
-    	creature.applyMelee(window.document.getElementById('melee_name_input').value, window.document.getElementById('melee_input').value, window.document.getElementById('melee_bonus_input').value);
-    	creature.melee.properties[window.document.getElementById('melee_enchantment_input').value] = window.document.getElementById('melee_effect_input').value;
-    	creature.applyOffhand(window.document.getElementById('offhand_name_input').value, window.document.getElementById('offhand_input').value, window.document.getElementById('offhand_bonus_input').value);
-    	creature.offhand.properties[window.document.getElementById('offhand_enchantment_input').value] = window.document.getElementById('offhand_effect_input').value;
-    	creature.applyRange(window.document.getElementById('range_name_input').value, window.document.getElementById('range_input').value, window.document.getElementById('range_bonus_input').value);
-    	creature.range.properties[window.document.getElementById('range_enchantment_input').value] = window.document.getElementById('range_effect_input').value;
+    	creature.applyArmour($('#armour_name_input').val(), $('#armour_input').val(), $('#armour_bonus_input').val());
+    	creature.armour.properties[$('#armour_enchantment_input').val()] = $('#armour_effect_input').val();
+    	creature.applyMelee($('#melee_name_input').val(), $('#melee_input').val(), $('#melee_bonus_input').val());
+    	creature.melee.properties[$('#melee_enchantment_input').val()] = $('#melee_effect_input').val();
+    	creature.applyOffhand($('#offhand_name_input').val(), $('#offhand_input').val(), $('#offhand_bonus_input').val());
+    	creature.offhand.properties[$('#offhand_enchantment_input').val()] = $('#offhand_effect_input').val();
+    	creature.applyRange($('#range_name_input').val(), $('#range_input').val(), $('#range_bonus_input').val());
+    	creature.range.properties[$('#range_enchantment_input').val()] = $('#range_effect_input').val();
     	// Save the object and go to the other form
     	localStorage.setItem('DnD.form', DnD.serialise(creature));
     	window.location.href = "creature.html";

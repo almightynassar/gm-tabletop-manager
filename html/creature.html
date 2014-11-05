@@ -108,18 +108,18 @@
 				<td class="cha_attack"></td>
 			</tr>
 			<tr style="background-color: lightgrey;">
-				<th>ARMOUR</th>
-				<th>MELEE</th>
-				<th>OFF-HAND</th>
+				<th>Extra Skills</th>
+				<th>Extra Feats</th>
+				<th>Powers (A/E/D/U)</th>
 				<th>RANGED</th>
 				<th>SEX</th>
 				<th>HEIGHT</th>
 				<th>WEIGHT</th>
 			</tr>
 			<tr>
-				<td id="txt_armour">+0 Cloth</td>
-				<td id="txt_weapon">Empty</td>
-				<td id="txt_offhand">Empty</td>
+				<td id="txt_skills">0</td>
+				<td id="txt_feats">0</td>
+				<td id="txt_powers">0/0/0/0</td>
 				<td id="txt_range">Empty</td>
 				<td id="txt_gender">Male</td>
 				<td id="txt_height">155 cm</td>
@@ -207,20 +207,10 @@
 				<td>&nbsp;&nbsp;&nbsp;</td>
 				<td>
 					<div id="power_weapon"></div>
-					<hr />
 					<div id="power_offhand"></div>
-					<hr />
 					<div id="power_ranged"></div>
-					<hr />
 					<div id="power_armour"></div>
-					<hr />
 					<!-- <div id="power_enchantment"></div>-->
-					<p><b>Extra Skills</b> <em>Choose <span id="skill_bonus"></span> skills to be trained in and add 5 to it</em></p>
-					<p><b>Extra Feats</b> <em>Choose <span id="feat_bonus"></span> feats</em></p>
-					<p><b>At-Will Power</b> <em>Choose <span id="power_atwill"></span> powers</em></p>
-					<p><b>Encounter Power</b> <em>Choose <span id="power_encounter"></span> powers</em></p>
-					<p><b>Daily Power</b> <em>Choose <span id="power_daily"></span> powers</em></p>
-					<p><b>Utility Power</b> <em>Choose <span id="power_utility"></span> powers</em></p>
 				</td>
 			</tr>
 		</table>
@@ -232,7 +222,7 @@
 	<script src="../js/Shapies.min.js"></script> -->
 	<script src="../jquery/jquery.min.js"></script>
 	<script src="../bootstrap/js/bootstrap.min.js"></script>
-	<script src="../js/dnd.min.js"></script>
+	<script src="../js/src/dnd.js"></script>
 	<script>
 	// Grabs our information
 	function getURLParameter(name) {
@@ -408,20 +398,13 @@
         /**
          * Other details
          */
-        window.document.getElementById('txt_armour').innerHTML = creature.armour.name + "<br />(+" + creature.armour.enchantment + " " + creature.armour.type + ")";
-        window.document.getElementById('txt_weapon').innerHTML = creature.melee.name + "<br />(+" + creature.melee.enchantment + " " + creature.melee.type + ")";
-        window.document.getElementById('txt_offhand').innerHTML = creature.offhand.name + "<br />(+" + creature.offhand.enchantment + " " + creature.offhand.type + ")";
-        window.document.getElementById('txt_range').innerHTML = creature.range.name + "<br />(+" + creature.range.enchantment + " " + creature.range.type + ")";
-        window.document.getElementById('skill_bonus').innerHTML = creature.bonusSkill;
-        window.document.getElementById('feat_bonus').innerHTML = creature.getFeats();
+        $('#txt_skills').html(creature.bonusSkill);
+        $('#txt_feats').html(creature.getFeats());
+        $('#txt_powers').html(creature.getAtWill() + "/" + creature.getEncounter() + "/" + creature.getDaily() + "/" + creature.getUtility());
         window.document.getElementById('power_armour').innerHTML = creature.getArmourPower();
         window.document.getElementById('power_weapon').innerHTML = creature.getMeleePower();
         window.document.getElementById('power_offhand').innerHTML = creature.getOffhandPower();
         window.document.getElementById('power_ranged').innerHTML = creature.getRangePower();
-        window.document.getElementById('power_atwill').innerHTML = creature.getAtWill();
-        window.document.getElementById('power_encounter').innerHTML = creature.getEncounter();
-        window.document.getElementById('power_daily').innerHTML = creature.getDaily();
-        window.document.getElementById('power_utility').innerHTML = creature.getUtility();
         /*
          * Crappy portrait
          

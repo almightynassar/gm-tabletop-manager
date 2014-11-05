@@ -77,6 +77,10 @@ var DnD = (function (window) {
         this.bonusSkill = 0;
         this.bonusAtWill = 0;
         this.bonusInitiative = 0;
+        this.bonusFeat = 0;
+        this.bonusSurgeValue = 0;
+        this.bonusNoArmour = 0;
+        this.bonusSurge = 0;
         this.ap = 0;
         this.regenerate = 0;
         this.preferred = ["str", "con"];
@@ -94,7 +98,7 @@ var DnD = (function (window) {
         };
         this.speed = 6;
         this.getSpeed = function () {
-            return this.speed + (this.race === "Dwarf" ? 0 : this.armour.speed);
+            return this.speed + ((this.bonusNoArmour > 0) ? 0 : this.armour.speed);
         };
         this.getSpeedInFeet = function (minutes) {
             return Math.round((this.getSpeed() * 5) * (minutes / 6));
@@ -143,7 +147,7 @@ var DnD = (function (window) {
             return Math.floor(this.hp() / 2);
         };
         this.surge = (function () {
-            return Math.floor(this.hp() * 0.25 + ((this.race === "Dragonborn") ? this.mod("con") : 0));
+            return Math.floor(this.hp() * 0.25 + ((this.bonusSurgeValue > 0) ? this.mod("con") : 0));
         });
         this.surgePerDay = (function () {
             if (this.npc) {
@@ -409,7 +413,7 @@ var DnD = (function (window) {
             properties: {}
         };
         this.getMeleePower = function () {
-            var text = "<p><b>Melee - " + this.melee.type + "</b>" + (this.melee.twohands ? "(Two-handed)" : "") + "<br />+" + (this.melee.prof + this.melee.enchantment + this.mod("str") + this.modLevel()) + " vs AC; Hit Damage = " + this.melee.dice + "d" + this.melee.side + " + " + (this.mod("str") + this.melee.enchantment) + "</p>";
+            var text = "<p><b>Melee - " + this.melee.type + ":</b> " + (this.melee.twohands ? "(Two-handed)" : "") + "+" + (this.melee.prof + this.melee.enchantment + this.mod("str") + this.modLevel()) + " vs AC; Hit Damage = " + this.melee.dice + "d" + this.melee.side + " + " + (this.mod("str") + this.melee.enchantment) + "</p>";
             for (var power in this.melee.properties) {
                 text += "<p><b>" + power + "</b><br />" + this.melee.properties[power] + "</p>";
             }
@@ -753,9 +757,9 @@ var DnD = (function (window) {
         this.getOffhandPower = function () {
             var text = "";
             if (this.offhand.shield) {
-                text = "<p><b>Offhand - " + this.offhand.type + "</b><br /> AC Bonus = " + this.offhand.prof + "</p>";
-            } else {
-                text = "<p><b>Offhand - " + this.offhand.type + "</b><br />+" + (this.offhand.prof + this.mod("str") + this.modLevel()) + " vs AC; Hit Damage = " + this.offhand.dice + "d" + this.offhand.side + " + " + (this.offhand.enchantment + this.mod("str")) + "</p>";
+                text = "<p><b>Offhand - " + this.offhand.type + ":</b> AC Bonus = " + this.offhand.prof + "</p>";
+            } else { 
+                text = "<p><b>Offhand - " + this.offhand.type + ":</b> +" + (this.offhand.prof + this.mod("str") + this.modLevel()) + " vs AC; Hit Damage = " + this.offhand.dice + "d" + this.offhand.side + " + " + (this.offhand.enchantment + this.mod("str")) + "</p>";
             }
             for (var power in this.offhand.properties) {
                 text += "<p><b>" + power + "</b><br />" + this.offhand.properties[power] + "</p>";
@@ -1038,7 +1042,7 @@ var DnD = (function (window) {
             return 2 + this.bonusAtWill;
         });
         this.getFeats = (function () {
-            return (this.npc) ? 0 : 1 + Math.floor(this.level / 2) + Math.floor((this.level - 1) / 10) + ((this.race === "Human") ? 1 : 0);
+            return (this.npc) ? 0 : 1 + Math.floor(this.level / 2) + Math.floor((this.level - 1) / 10) + this.bonusFeat;
         });
         this.getEncounter = (function () {
             if (this.npc) {
@@ -1093,198 +1097,61 @@ var DnD = (function (window) {
             }
             return 0;
         });
-        // Racial stats (race, height (0-3), weight (0-3), random factor (1d4))
+        // Racial stats (race, height (0-3), weight (0-3)
         this.applyRacial = function (race, h, w) {
             this.race = race;
-            switch (race) {
-            case 'Bugbear':
-                // Add onto our modifiers
-                this.increase("str", 2);
-                this.increase("dex", 2);
-                this.increaseSkill("stealth", 2);
-                this.increaseSkill("intimidate", 2);
-                this.hasLowVision = true;
-                this.height = calcWH(200, 220, h);
-                this.weight = calcWH(110, 135, w);
-                break;
-            case 'Dragonborn':
-                this.increase("str", 2);
-                this.increase("cha", 2);
-                this.increaseSkill("history", 2);
-                this.increaseSkill("intimidate", 2);
-                this.height = calcWH(190, 205, h);
-                this.weight = calcWH(100, 150, w);
-                break;
-            case 'Drow':
-                this.origin = "Fey";
-                this.hasDarkVision = true;
-                this.increase("dex", 2);
-                this.increase("cha", 2);
-                this.increaseSkill("stealth", 2);
-                this.increaseSkill("intimidate", 2);
-                this.height = calcWH(160, 180, h);
-                this.weight = calcWH(60, 80, w);
-                break;
-            case "Dwarf":
-                this.speed = 5;
-                this.increase("con", 2);
-                this.increase("wis", 2);
-                this.increaseSkill("dungeon", 2);
-                this.increaseSkill("endurance", 2);
-                this.height = calcWH(130, 145, h);
-                this.weight = calcWH(70, 100, w);
-                this.hasLowVision = true;
-                this.resistance.set("poison", 5);
-                break;
-            case "Eladrin":
-                this.origin = "Fey";
-                this.increase("dex", 2);
-                this.increase("int", 2);
-                this.increaseSkill("arcana", 2);
-                this.increaseSkill("history", 2);
-                this.hasLowVision = true;
-                this.bonusSkill += 1;
-                this.resistance.set("charm", 5);
-                this.height = calcWH(165, 185, h);
-                this.weight = calcWH(60, 80, w);
-                this.increaseDefence("will", 1);
-                break;
-            case "Elf":
-                this.origin = "Fey";
-                this.speed = 7;
-                this.hasLowVision = true;
-                this.increase("dex", 2);
-                this.increase("wis", 2);
-                this.increaseSkill("nature", 2);
-                this.increaseSkill("perception", 2);
-                this.height = calcWH(145, 185, h);
-                this.weight = calcWH(55, 75, w);
-                break;
-            case "Gnoll":
-                this.speed = 7;
-                this.hasLowVision = true;
-                this.increase("con", 2);
-                this.increase("dex", 2);
-                this.increaseSkill("intimidate", 2);
-                this.height = calcWH(210, 230, h);
-                this.weight = calcWH(125, 145, w);
-                break;
-            case "Gnome":
-                this.origin = "Fey";
-                this.speed = 5;
-                this.hasLowVision = true;
-                this.size = "Small";
-                this.increase("int", 2);
-                this.increase("cha", 2);
-                this.increaseSkill("arcana", 2);
-                this.increaseSkill("stealth", 2);
-                this.resistance.set("illusion", 5);
-                this.height = calcWH(100, 115, h);
-                this.weight = calcWH(20, 35, w);
-                break;
-            case "Goblin":
-                this.hasLowVision = true;
-                this.size = "Small";
-                this.increase("dex", 2);
-                this.increase("cha", 2);
-                this.increaseSkill("thievery", 2);
-                this.increaseSkill("stealth", 2);
-                this.increaseDefence("reflex", 1);
-                this.height = calcWH(100, 115, h);
-                this.weight = calcWH(20, 30, w);
-                break;
-            case "Goliath":
-                this.increase("str", 2);
-                this.increase("con", 2);
-                this.increaseSkill("athletics", 2);
-                this.increaseSkill("nature", 2);
-                this.increaseDefence("will", 1);
-                this.height = calcWH(200, 230, h);
-                this.weight = calcWH(125, 155, w);
-                break;
-            case "Half-Elf":
-                this.hasLowVision = true;
-                this.increase("cha", 2);
-                this.increase("con", 2);
-                this.increaseSkill("diplomacy", 2);
-                this.increaseSkill("insight", 2);
-                this.height = calcWH(165, 190, h);
-                this.weight = calcWH(60, 85, w);
-                break;
-            case "Half-Orc":
-                this.hasLowVision = true;
-                this.increase("str", 2);
-                this.increase("dex", 2);
-                this.increaseSkill("endurance", 2);
-                this.increaseSkill("intimidate", 2);
-                this.height = calcWH(175, 195, h);
-                this.weight = calcWH(70, 105, w);
-                break;
-            case "Halfling":
-                this.size = "Small";
-                this.increase("cha", 2);
-                this.increase("dex", 2);
-                this.increaseSkill("acrobatics", 2);
-                this.increaseSkill("thievery", 2);
-                this.height = calcWH(115, 130, h);
-                this.weight = calcWH(35, 40, w);
-                this.resistance.set("fear", 5);
-                break;
-            case "Hobgoblin":
-                this.increase("con", 2);
-                this.increase("cha", 2);
-                this.increaseSkill("athletics", 2);
-                this.increaseSkill("history", 2);
-                this.bonusInitiative += 2;
-                this.hasLowVision = true;
-                this.height = calcWH(180, 195, h);
-                this.weight = calcWH(85, 110, w);
-                break;
-            case 'Human':
-                this.bonusSkill += 1;
-                this.bonusAtWill += 1;
-                this.increase(this.preferred[0], 2);
-                this.increaseDefence("fort", 1);
-                this.increaseDefence("reflex", 1);
-                this.increaseDefence("will", 1);
-                this.height = calcWH(165, 190, h);
-                this.weight = calcWH(60, 100, w);
-                break;
-            case "Kobold":
-                this.size = "Small";
-                this.increase("dex", 2);
-                this.increase("con", 2);
-                this.increaseSkill("stealth", 2);
-                this.increaseSkill("thievery", 2);
-                this.increaseDefence("will", 1);
-                this.height = calcWH(105, 120, h);
-                this.weight = calcWH(30, 35, w);
-                break;
-            case "Minotaur":
-                this.increase("str", 2);
-                this.increase("con", 2);
-                this.increaseSkill("nature", 2);
-                this.increaseSkill("perception", 2);
-                this.height = calcWH(210, 230, h);
-                this.weight = calcWH(145, 160, w);
-                break;
-            case "Orc":
-                this.hasLowVision = true;
-                this.increase("str", 2);
-                this.increase("con", 2);
-                this.height = calcWH(180, 195, h);
-                this.weight = calcWH(90, 105, w);
-                break;
-            case "Tiefling":
-                this.hasLowVision = true;
-                this.increase("int", 2);
-                this.increase("cha", 2);
-                this.increaseSkill("stealth", 2);
-                this.increaseSkill("bluff", 2);
-                this.resistance.set("fire", 5);
-                this.height = calcWH(170, 195, h);
-                this.weight = calcWH(65, 110, w);
-                break;
+            if (Race) {
+            	if (Race[race]) {
+            		this.height = calcWH(Race[race].height.min, Race[race].height.max, h);
+            		this.weight = calcWH(Race[race].weight.min, Race[race].weight.max, w);
+            		this.size = (this.height >= 120) ? "Small" : "Medium";
+            		this.origin = Race[race].origin;
+            		this.speed = Race[race].speed;
+            		this.hasLowVision = (Race[race].bonus.lowvision > 0 ) ? true : false;
+            		this.hasDarkVision = (Race[race].bonus.darkvision > 0 ) ? true : false;
+            		this.bonusInitiative = (Race[race].bonus.initiative > 0) ? Race[race].bonus.initiative : 0;
+            		this.bonusAtWill = (Race[race].bonus.atwills > 0) ? Race[race].bonus.atwills : 0;
+            		this.bonusFeat = (Race[race].bonus.feat > 0) ? Race[race].bonus.feat : 0;
+            		this.bonusSurgeValue = (Race[race].bonus.surge_value_bonus > 0) ? Race[race].bonus.surge_value_bonus : 0;;
+        			this.bonusNoArmour = (Race[race].bonus.no_armour_penalty > 0) ? Race[race].bonus.no_armour_penalty : 0;;
+        			this.bonusSurge = (Race[race].bonus.surge_bonus > 0) ? Race[race].bonus.surge_bonus : 0;;
+            		for (attribute in Race[race].attributes) {
+						if (Race[race].attributes[attribute] > 0) {
+							this.increase(attribute, Race[race].attributes[attribute]);
+						}
+					}
+					if (Race[race].bonus.attributes > 0) {
+						this.increase(this.preferred[0], Race[race].bonus.attributes);
+					}
+					for (skill in Race[race].skills) {
+						if (Race[race].skills[skill] > 0) {
+							this.increaseSkill(skill, Race[race].skills[skill]);
+						}
+					}
+					if (Race[race].bonus.skills > 0) {
+						this.bonusSkill += Race[race].bonus.skills;
+					}
+					for (defence in Race[race].defences) {
+						if (Race[race].defences[defence] > 0) {
+							this.increaseDefence(defence, Race[race].defences[defence]);
+						}
+					}
+					for (resistance in Race[race].resistances) {
+						if (Race[race].resistances[resistance] > 0) {
+							this.resistance.set(resistance, Race[race].resistances[resistance]);
+						}
+					}
+					for (vulnerability in Race[race].vulnerabilities) {
+						if (Race[race].vulnerabilities[vulnerability] > 0) {
+							this.vulnerable.set(vulnerability, Race[race].vulnerabilities[vulnerability]);
+						}
+					}
+					for (immune in Race[race].immunities) {
+						if (Race[race].immunities[immune] > 0) {
+							this.immunity.set(immune, Race[race].immunities[immune]);
+						}
+					}
+            	}
             }
         };
         // Apply class stats
