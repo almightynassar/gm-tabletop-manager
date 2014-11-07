@@ -8,87 +8,124 @@
 	<meta content="Shapies Tabletop RPG Manager" name="description">
 	<meta content="Almighty Nassar" name="author">
 	<link rel="icon" href="favicon.ico">
-	<title>NPC Creator</title>
+	<title>Dice Roller</title>
 	<!-- CSS SCRIPTS -->
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
 </head>
 <body>
-	<p>
-	    <select id="number">
-	    	<option value="1">1</option>
-	    	<option value="2">2</option>
-	    	<option value="3">3</option>
-	    	<option value="4">4</option>
-	    	<option value="5">5</option>
-	    	<option value="6">6</option>
-	    	<option value="7">7</option>
-	    	<option value="8">8</option>
-	    	<option value="9">9</option>
-	    	<option value="10">10</option>
-	    	<option value="11">11</option>
-	    	<option value="12">12</option>
-	    	<option value="13">13</option>
-	    	<option value="14">14</option>
-	    	<option value="15">15</option>
-	    	<option value="16">16</option>
-	    	<option value="17">17</option>
-	    	<option value="18">18</option>
-	    	<option value="19">19</option>
-	    	<option value="20">20</option>
-	    </select>
-	    d
-	    <select id="sides">
-	    	<option value="2">2</option>
-	    	<option value="3">3</option>
-	    	<option value="4">4</option>
-	    	<option value="6">6</option>
-	    	<option value="8">8</option>
-	    	<option value="10">10</option>
-	    	<option value="12">12</option>
-	    	<option value="20">20</option>
-	    	<option value="30">30</option>
-	    	<option value="100">100</option>
-	    </select>
-	    <button onclick='roll();'>Roll!</button>
-	</p>
-	<div id="Dice">
+	<div class="container">
+		<div class="row">
+			<p>The first field selects the number of dice, the second field the number of sides on the dice, and the last field selects how many results you wish to display.</p>
+			<p class="form-inline">
+			    <select id="number" class="form-control">
+			    	<option value="1">1</option>
+			    	<option value="2">2</option>
+			    	<option value="3">3</option>
+			    	<option value="4">4</option>
+			    	<option value="5">5</option>
+			    	<option value="6">6</option>
+			    	<option value="7">7</option>
+			    	<option value="8">8</option>
+			    	<option value="9">9</option>
+			    	<option value="10">10</option>
+			    	<option value="11">11</option>
+			    	<option value="12">12</option>
+			    	<option value="13">13</option>
+			    	<option value="14">14</option>
+			    	<option value="15">15</option>
+			    	<option value="16">16</option>
+			    	<option value="17">17</option>
+			    	<option value="18">18</option>
+			    	<option value="19">19</option>
+			    	<option value="20">20</option>
+			    </select>
+			    <b>d</b>
+			    <select id="sides" class="form-control">
+			    	<option value="2">2</option>
+			    	<option value="3">3</option>
+			    	<option value="4">4</option>
+			    	<option value="6">6</option>
+			    	<option value="8">8</option>
+			    	<option value="10">10</option>
+			    	<option value="12">12</option>
+			    	<option value="20">20</option>
+			    	<option value="30">30</option>
+			    	<option value="100">100</option>
+			    </select>
+			    <b> x </b>
+			    <select id="results" class="form-control">
+			    	<option value="1">1</option>
+			    	<option value="5">5</option>
+			    	<option value="10">10</option>
+			    	<option value="25">25</option>
+			    	<option value="50">50</option>
+			    	<option value="100">100</option>
+			    </select>
+			    <button onclick='roll();' class="btn btn-primary">Roll!</button>
+			</p>
+			<div id="Dice">
+			</div>
+		</div>
 	</div>
-	<script src="../js/dice.min.js"></script>
+	<script src="../js/jquery.js"></script>
+	<script src="../js/dice.js"></script>
 	<script>
 	function roll() {
-		var number = parseInt(window.document.getElementById("number").value, 10);
-		var sides = parseInt(window.document.getElementById("sides").value, 10);
+		var number = parseInt($("#number").val(), 10);
+		var sides = parseInt($("#sides").val(), 10);
+		var results = parseInt($("#results").val(), 10);
+		$("#Dice").html("");
 		switch (sides) {
 		case 2:
-			window.document.getElementById("Dice").innerHTML = Dice.d2(number);
+			for (var i = 0; i < results; i++) {
+				$("#Dice").append("<p>"+Dice.d2(number)+"</p>");
+			}
 			break;
 		case 3:
-			window.document.getElementById("Dice").innerHTML = Dice.d3(number);
+			for (var i = 0; i < results; i++) {
+				$("#Dice").append("<p>"+Dice.d3(number)+"</p>");
+			}
 			break;
 		case 4:
-			window.document.getElementById("Dice").innerHTML = Dice.d4(number);
+			for (var i = 0; i < results; i++) {
+				$("#Dice").append("<p>"+Dice.d4(number)+"</p>");
+			}
 			break;
 		case 6:
-			window.document.getElementById("Dice").innerHTML = Dice.d6(number);
+			for (var i = 0; i < results; i++) {
+				$("#Dice").append("<p>"+Dice.d6(number)+"</p>");
+			}
 			break;
 		case 8:
-			window.document.getElementById("Dice").innerHTML = Dice.d8(number);
+			for (var i = 0; i < results; i++) {
+				$("#Dice").append("<p>"+Dice.d8(number)+"</p>");
+			}
 			break;
 		case 10:
-			window.document.getElementById("Dice").innerHTML = Dice.d10(number);
+			for (var i = 0; i < results; i++) {
+				$("#Dice").append("<p>"+Dice.d10(number)+"</p>");
+			}
 			break;
 		case 12:
-			window.document.getElementById("Dice").innerHTML = Dice.d12(number);
+			for (var i = 0; i < results; i++) {
+				$("#Dice").append("<p>"+Dice.d12(number)+"</p>");
+			}
 			break;
 		case 30:
-			window.document.getElementById("Dice").innerHTML = Dice.d30(number);
+			for (var i = 0; i < results; i++) {
+				$("#Dice").append("<p>"+Dice.d30(number)+"</p>");
+			}
 			break;
 		case 100:
-			window.document.getElementById("Dice").innerHTML = Dice.d100(number);
+			for (var i = 0; i < results; i++) {
+				$("#Dice").append("<p>"+Dice.d100(number)+"</p>");
+			}
 			break;
 		default:
-			window.document.getElementById("Dice").innerHTML = Dice.d20(number);
+			for (var i = 0; i < results; i++) {
+				$("#Dice").append("<p>"+Dice.d20(number)+"</p>");
+			}
 			break;
 		}
 	}

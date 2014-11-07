@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>Database - Race</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<p>Choose the system:</p>
+			<p class="form-inline">
+			    <select id="edition" class="form-control">
+			    	<option value="dnd4E">D&amp;D 4th Edition</option>
+			    	<option value="dnd5E">D&amp;D 5th Edition</option>
+			    </select>
+			    <button onclick='select();' class="btn btn-primary">Go!</button>
+			</p>
+			<div id="Dice">
+			</div>
+		</div>
+	</div>
+	<script src="../js/jquery.js"></script>
+	<script>
+		function select() {
+			var edition = $('#edition').val();
+			window.location.href="./"+edition+"/races.html";
+		}
+	</script>
+</body>
+</html>

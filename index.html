@@ -9,23 +9,25 @@
 	<link rel="icon" href="favicon.ico">
 	<title>Tabletop Manager</title>
 	<!-- CSS SCRIPTS -->
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" media="all">
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.min.css" media="all">
-	<link rel="stylesheet" type="text/css" href="css/sidebar.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/sidebar.css" media="all">
 </head>
-<body role="document">
+<body>
     <div id="main-wrapper">
     	<div id="sidebar-wrapper">
     		<ul class="sidebar-nav">
-    			<li class="brand"><em>Generic Tabletop</em></li>
+    			<li><a id="dice-roller" href="#Dice-Roller">Dice Roller</a></li>
+    			<li><a id="fictional-script" href="#Fictional-Script">Fictional Script</a></li>
+    			<li><a id="grid-converter" href="#Grid-Converter">Grid Converter</a></li>
+    			<li><hr /></li>
+    			<li><a id="database-races" href="#Database-Races">Database - Races</a></li>
+    			<li><hr /></li>
+    			<li><a href="index4E.html">D&amp;D 4th Edition</a></li>
     			<li><a id="generate-name" href="#Generate-name">Generate Name</a></li>
     			<li><a id="generate-rumour" href="#Generate-Rumour">Generate Rumour</a></li>
-    			<li><a id="dice-roller" href="#Roll-Dice">Dice Roller</a></li>
-    			<li><a id="fantasy-script" href="#Fantasy-Script">Fantasy Text Font</a></li>
     			<li><a id="generate-tavern" href="#Generate-Tavern">Book/Tavern Generator</a></li>
     			<li><a id="item-database" href="#Item-Database">Item Database</a></li>
-    			<li><hr></li>
-    			<li><a href="index4E.html">D&amp;D 4th Edition</a></li>
     		</ul>
     	</div>
     	<div id="content-wrapper">
@@ -44,25 +46,25 @@
     </div>
 
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="jquery/jquery.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
     <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#main-wrapper").toggleClass("toggled");
-    });
+    // Edition-agnostic stuff
+    $("#menu-toggle").click(function(e) { e.preventDefault(); $("#main-wrapper").toggleClass("toggled"); });
+    $("#dice-roller").click(function () { $("#frame").attr("src", "html/dice.html"); });
+    $("#fictional-script").click(function () { $("#frame").attr("src", "html/fictional.html"); });
+    $("#grid-converter").click(function () { $("#frame").attr("src", "html/grid.html"); });
+    // The edition specific stuff
+    $("#database-races").click(function () { $("#frame").attr("src", "html/races.html"); });
+    
+    // Other
     $("#generate-name").click(function () { 
         $("#frame").attr("src", "html/markov.html");
   	});
     $("#generate-rumour").click(function () { 
         $("#frame").attr("src", "html/rumours.html");
   	});
-    $("#dice-roller").click(function () { 
-        $("#frame").attr("src", "html/dice.html");
-  	});
-    $("#fantasy-script").click(function () { 
-        $("#frame").attr("src", "html/language.html");
-  	});
+    
     $("#generate-tavern").click(function () { 
         $("#frame").attr("src", "html/titles.html");
   	});

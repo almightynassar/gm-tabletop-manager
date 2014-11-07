@@ -8,10 +8,10 @@
 	<meta content="Shapies Tabletop RPG Manager" name="description">
 	<meta content="Almighty Nassar" name="author">
 	<link rel="icon" href="favicon.ico">
-	<title>NPC Creator</title>
+	<title>Races Database</title>
 	<!-- CSS SCRIPTS -->
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.css" media="all">
 </head>
 <body>
 	<div class="container">
@@ -101,9 +101,8 @@
 			</div>
 		</div>
 	</div>
-	<script src="../jquery/jquery.min.js"></script>
-	<script src="../js/dice.min.js"></script>
-	<script src="../js/data/dnd4E/races.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/dnd4E/races.js"></script>
 	<script>
 	for(var race in Race) {
 		$('#race_input').append('<option value="'+race+'">'+race+'</option>');
