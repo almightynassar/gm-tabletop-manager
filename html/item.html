@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -7,53 +8,30 @@
 	<meta content="Shapies Tabletop RPG Manager" name="description">
 	<meta content="Almighty Nassar" name="author">
 	<link rel="icon" href="favicon.ico">
-	<title>NPC Creator</title>
+	<title>Database - Item</title>
 	<!-- CSS SCRIPTS -->
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
-	<style>
-	.header::after {
-    	content: " - ^v";
-	}
-	.headerSortUp::after {
-    	content: " - ^";
-	} 
-	.headerSortDown::after {
-    	content: " - v";
-	} 
-	</style>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
 </head>
 <body>
-	<p>Select Item: <select id="item_input" class="form-control" name="item_input" ></select></p>
-	<p><button class="btn btn-success" onclick='generate();'>Show</button></p>
-	<table id="tablesorter" class="table table-bordered table-condensed table-striped">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Price</th>
-				<th>Weight</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody  id="ItemList">
-		</tbody>
-	</table>
-	<script src="../jquery/jquery.min.js"></script>
-	<script src="../bootstrap/js/bootstrap.min.js"></script>
-	<script src="../jquery/jquery.tablesorter.min.js"></script>
-	<script src="../js/data/items.js"></script>
+	<div class="container">
+		<div class="row">
+			<p>Choose the system:</p>
+			<p class="form-inline">
+			    <select id="edition" class="form-control">
+			    	<option value="dnd4E">D&amp;D 4th Edition</option>
+			    	<option value="dnd5E">D&amp;D 5th Edition</option>
+			    </select>
+			    <button onclick='select();' class="btn btn-primary">Go!</button>
+			</p>
+		</div>
+	</div>
+	<script src="../js/jquery.js"></script>
 	<script>
-	// Backgrounds
-    for(var category in Item) {
-		$('#item_input').append('<option value="'+category+'">'+category.charAt(0).toUpperCase() + category.slice(1)+'</option>');
-	}
-    function generate() {
-    	var category = $('#item_input').val();
-    	$('#ItemList').html('');
-    	for (var item in Item[category]) {
-    		$('#ItemList').append('<tr><td>'+Item[category][item].name+'</td><td>'+Item[category][item].cost+' GP</td><td>'+Item[category][item].weight+' kg</td><td>'+Item[category][item].description+'</td></tr>');
-    	}
-    }
+		function select() {
+			var edition = $('#edition').val();
+			window.location.href="./"+edition+"/item.html";
+		}
 	</script>
 </body>
 </html>

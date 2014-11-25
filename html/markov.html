@@ -8,78 +8,48 @@
 	<meta content="Shapies Tabletop RPG Manager" name="description">
 	<meta content="Almighty Nassar" name="author">
 	<link rel="icon" href="favicon.ico">
-	<title>NPC Creator</title>
+	<title>Markov Name Generator</title>
 	<!-- CSS SCRIPTS -->
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
 </head>
 <body>
 	<div class="container">
 		<div class="row">
-			<div id="Markov" class="col-lg-12" >
+			<div class="col-md-6 well">
+				<p>Chain: <select id="race_input" class="form-control" name="race_input" ></select></p>
+				<p>Gender:
+					<select id="gender_input" class="form-control" name="gender_input" >
+						<option value="male" >Male</option>
+						<option value="female" >Female</option>
+					</select>
+				</p>
+				<p>Number to generate: <input type="number" id="number_input" name="number_input" class="form-control" value='5' /></p>
+				<p>Name Length: <input type="number" id="length_input" name="length_input" class="form-control" value='7'/></p>
+				<p><button class="btn btn-success" onclick='generate();'>Generate</button></p>
+			</div>
+			<div class="col-md-6" >
 				<p>This generator uses the Markov Chain process. It processes a series of words, gathers information about how the letters in the words are related, and then stores those relationships. When you generate a name, the computer will travel down the chain and link up all the pieces <em>in the style of the processed words</em>. This generally makes up a word similar in nature to the processed names (but this does not necessarily mean it makes sense!)</p>
-				<p><strong>Version Notes:</strong></p>
-				<ul>
-					<li>Races listed that do not have a Markov name chain will default to the <strong>Human</strong> chain (generated from <span id="human_male">0</span> male, <span id="human_female">0</span> female names)</li>
-					<li>Dwarves and Duegar use the <strong>Dwarf</strong> chain (generated from <span id="dwarf_male">0</span> male, <span id="dwarf_female">0</span> female names)</li>
-					<li>Eladrin, Elves, Half-Elfs and Drow use the <strong>Elf</strong> chain ( generated from <span id="elf_male">0</span> male, <span id="elf_female">0</span> female names)</li>
-					<li>Half-Orcs and Orcs use the <strong>Orc</strong> chain (generated from <span id="orc_male">0</span> male, <span id="orc_female">0</span> female names)</li>
-					<li>Kobolds use the <strong>Kobold</strong> chain (generated from <span id="kobold_male">0</span> male, <span id="kobold_female">0</span> female names)</li>
+				<p><strong>Input names for chains:</strong></p>
+				<ul id="MarkovNotes">
 				</ul>
-				<table>
-					<thead>
-						<tr>
-							<th>Race</th>
-							<th>Gender</th>
-							<th>Number</th>
-							<th>Letter Length</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><select id="race_input" class="form-control" name="race_input" ></select></td>
-							<td><select id="gender_input" class="form-control" name="gender_input" ><option value="male" >Male</option><option value="female" >Female</option></select></td>
-							<td>
-								<select id="number_input" name="number_input" class="form-control" >
-									<option value="1">1</option>
-									<option value="5">5</option>
-									<option value="10">10</option>
-									<option value="25">25</option>
-									<option value="50">50</option>
-									<option value="100">100</option>
-								</select>
-							</td>
-							<td>
-								<select id="length_input" name="length_input" class="form-control" >
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-									<option value="9">9</option>
-									<option value="10">10</option>
-								</select>
-							</td>
-							<td><button class="btn btn-success" onclick='generate();'>Generate</button></td>
-					</tbody>
-				</table>
 			</div>
 		</div>
 		<div class="row">
-			<div id="Result" class="col-lg-12" >
+			<div id="Result" class="col-md-12" >
 			</div>
 		</div>
 	</div>
-	<script src="../jquery/jquery.min.js"></script>
-	<script src="../js/markov.min.js"></script>
-	<script src="../js/data/dnd4E/races.js"></script>
-	<script src="../js/data/names.js"></script>
+	<script src="../js/jquery.js"></script>
+	<script src="../js/markov.js"></script>
+	<script src="../js/names.js"></script>
 	<script>
-		for(var race in Race) {
-			$('#race_input').append('<option value="'+race+'">'+race+'</option>');
-			if (!$.isEmptyObject(Name[race.toLowerCase()])) {
-				$('#'+race.toLowerCase()+'_male').html(Name[race.toLowerCase()].male.length);
-				$('#'+race.toLowerCase()+'_female').html(Name[race.toLowerCase()].female.length);
-			}
+		for(var race in Name) {
+			var title = race.replace(/\b[a-z]/g, function(letter) {
+			    return letter.toUpperCase();
+			});
+			$('#race_input').append('<option value="'+race+'">'+title+'</option>');
+			$('#MarkovNotes').append("<li>"+title+" names: "+Name[race].male.length+" male, "+Name[race].female.length+" female</li>");
 		}
 		// Load the default list (Human males)
 		Markov.load(Name.human.male, 'Human');
@@ -99,28 +69,8 @@
 		// Load names
 		function load() {
 			var gender = $('#gender_input').val();
-			switch ($('#race_input').val()) {
-			case 'Dwarf':
-			case 'Duegar':
-				Markov.load(Name.dwarf[gender], 'Dwarf');
-				break;
-			case 'Drow':
-			case 'Eladrin':
-			case 'Elf':
-			case 'Half-Elf':
-				Markov.load(Name.elf[gender], 'Elf');
-				break;
-			case 'Half-Orc':
-			case 'Orc':
-				Markov.load(Name.orc[gender], 'Orc');
-				break;
-			case 'Kobold':
-				Markov.load(Name.kobold[gender], 'Kobold');
-				break;
-			default:
-				Markov.load(Name.human[gender], 'Human');
-				break;
-			}
+			var race = $('#race_input').val();
+			Markov.load(Name[race][gender], race);
 		}
 	</script>
 </body>
