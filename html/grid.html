@@ -17,8 +17,9 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div id="Form" class="col-lg-12" >
-				<p>For a square, enter the length of a side (standard is 5 ft). For a Hexagon, enter the edge length (standard is 3.5 miles for a radius of 3.5 and opposite-edge width of 6).</p>
+			<div id="Form" class="col-md-12" >
+				<p>For a square, enter the length of a side. The system will calculate the diagonal length (Standard is a side length of 5 ft per square).</p>
+				<p>For a Hexagon, enter the length of one edge, which is the same as the radius. The system will calculate the length between opposite edges (Standard is 3.5 miles radius/edge-length for an Edge-to-Edge width of 6 miles).</p>
 				<p class="form-inline">
 					1
 				    <select id="type" class="form-control">
@@ -26,12 +27,12 @@
 				    	<option value="hex">hex</option>
 				    </select>
 				    <b> = </b>
-				    <input id="measure" class="form-control" value="5" />
+				    <input type="number" id="measure" class="form-control" value="5" />
 				    <select id="unit" class="form-control">
 				    	<option value="feet">feet</option>
-				    	<option value="mile">miles</option>
-				    	<option value="meter">meters</option>
-				    	<option value="kilometer">kilometers</option>
+				    	<option value="miles">miles</option>
+				    	<option value="meters">meters</option>
+				    	<option value="kilometers">kilometers</option>
 				    </select>
 				    <button onclick='calculate();' class="btn btn-primary">Calculate!</button>
 				</p>
@@ -40,60 +41,15 @@
 						<thead>
 							<tr>
 								<th>Squares</th>
-								<th>Metric</th>
-								<th>Imperial</th>
+								<th>Metric <span id='metric'></span></th>
+								<th>Imperial <span id='imperial'></span></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
 								<td>1</td>
-								<td id="1_metric_square"></td>
-								<td id="1_imperial_square"></td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td id="2_metric_square"></td>
-								<td id="2_imperial_square"></td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td id="3_metric_square"></td>
-								<td id="3_imperial_square"></td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td id="4_metric_square"></td>
-								<td id="4_imperial_square"></td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td id="5_metric_square"></td>
-								<td id="5_imperial_square"></td>
-							</tr>
-							<tr>
-								<td>6</td>
-								<td id="6_metric_square"></td>
-								<td id="6_imperial_square"></td>
-							</tr>
-							<tr>
-								<td>7</td>
-								<td id="7_metric_square"></td>
-								<td id="7_imperial_square"></td>
-							</tr>
-							<tr>
-								<td>8</td>
-								<td id="8_metric_square"></td>
-								<td id="8_imperial_square"></td>
-							</tr>
-							<tr>
-								<td>9</td>
-								<td id="9_metric_square"></td>
-								<td id="9_imperial_square"></td>
-							</tr>
-							<tr>
-								<td>10</td>
-								<td id="10_metric_square"></td>
-								<td id="10_imperial_square"></td>
+								<td id="metric_square"></td>
+								<td id="imperial_square"></td>
 							</tr>
 						</tbody>
 					</table>
@@ -104,81 +60,29 @@
 	<script src="../js/jquery.js"></script>
 	<script>
 	function calculate() {
+		// Gets whether we are calculating squares or hexes, the units we are using, and the value we are using
 		var square = $('#type').val();
-		var measure = parseFloat($('#measure').val());
 		var unit = $('#unit').val();
-		switch (square) {
-		case "hex":
-			switch(unit) {
-			case "kilometer":
-				var converted = m2k(measure, false);
-				for (var i = 1; i <= 10; i++) {
-					$('#'+i+'_metric_square').html(measure*i + " km (Edge-Edge = "+edge(measure*i)+")");
-					$('#'+i+'_imperial_square').html(converted*i  + " miles (Edge-Edge = "+edge(converted*i)+")");
-				}
-				break;
-			case "mile":
-				var converted = m2k(measure, true);
-				for (var i = 1; i <= 10; i++) {
-					$('#'+i+'_imperial_square').html(measure*i + " miles (Edge-Edge = "+edge(measure*i)+")");
-					$('#'+i+'_metric_square').html(converted*i  + " km (Edge-Edge = "+edge(converted*i)+")");
-				}
-				break;
-			case "meter":
-				var converted = f2m(measure, false);
-				for (var i = 1; i <= 10; i++) {
-					$('#'+i+'_metric_square').html(measure*i + " m (Edge-Edge = "+edge(measure*i)+")");
-					$('#'+i+'_imperial_square').html(converted*i  + " feet (Edge-Edge = "+edge(converted*i)+")");
-				}
-				break;
-			default:
-				var converted = f2m(measure, true);
-				for (var i = 1; i <= 10; i++) {
-					$('#'+i+'_imperial_square').html(measure*i + " feet  (Edge-Edge = "+edge(measure*i)+")");
-					$('#'+i+'_metric_square').html(converted*i + " m (Edge-Edge = "+edge(converted*i)+")");
-				}
-				break;
-			}
-			break;
-		default:
-			switch(unit) {
-			case "kilometer":
-				var converted = m2k(measure, false);
-				for (var i = 1; i <= 10; i++) {
-					$('#'+i+'_metric_square').html(measure*i + " km (Diagonal = "+isoc(measure*i)+")");
-					$('#'+i+'_imperial_square').html(converted*i  + " miles (Diagonal = "+isoc(converted*i)+")");
-				}
-				break;
-			case "mile":
-				var converted = m2k(measure, true);
-				for (var i = 1; i <= 10; i++) {
-					$('#'+i+'_imperial_square').html(measure*i + " miles (Diagonal = "+isoc(measure*i)+")");
-					$('#'+i+'_metric_square').html(converted*i  + " km (Diagonal = "+isoc(converted*i)+")");
-				}
-				break;
-			case "meter":
-				var converted = f2m(measure, false);
-				for (var i = 1; i <= 10; i++) {
-					$('#'+i+'_metric_square').html(measure*i + " m (Diagonal = "+isoc(measure*i)+")");
-					$('#'+i+'_imperial_square').html(converted*i  + " feet (Diagonal = "+isoc(converted*i)+")");
-				}
-				break;
-			default:
-				var converted = f2m(measure, true);
-				for (var i = 1; i <= 10; i++) {
-					$('#'+i+'_imperial_square').html(measure*i + " feet (Diagonal = "+isoc(measure*i)+")");
-					$('#'+i+'_metric_square').html(converted*i + " m (Diagonal = "+isoc(converted*i)+")");
-				}
-				break;
-			}
-		}
+		var measure = parseFloat($('#measure').val());
+		// Store our metric and imperial values
+		var metricVal = (unit === 'meters' || unit === 'kilometers') ? measure : ((unit === 'feet') ? f2m(measure, true) : m2k(measure, true));
+		var imperialVal = (unit === 'feet' || unit === 'miles') ? measure : ((unit === 'meters') ? f2m(measure, false) : m2k(measure, false));
+		// Calculate our diagonals or edge-to-edge
+		var diag = (square === 'hex') ? 'Edge-to-Edge' : 'Diagonal';
+		var metricDiag = (square === 'hex') ? edge(metricVal) : isoc(metricVal);
+		var imperialDiag = (square === 'hex') ? edge(imperialVal) : isoc(imperialVal);
+		// Write everything into our form
+		$('#metric_square').html(metricVal + ' (' + diag + ' ' + metricDiag + ')');
+		$('#imperial_square').html(imperialVal + ' (' + diag + ' ' + imperialDiag + ')');
+		$('#metric').html('('+((unit === 'meters' || unit === 'kilometers') ? unit : ((unit === 'feet') ? 'meters' : 'kilometers'))+')');
+		$('#imperial').html('('+((unit === 'miles' || unit === 'feet') ? unit : ((unit === 'meters') ? 'feet' : 'miles'))+')');
 	}
 	function f2m(measure,imperial) {
+		var a = measure*10;
 		if (imperial) {
-			var a = measure*10;
 			return (Math.round(a*0.3))/10;
 		}
-		return Math.ceil(3.3*measure);
+		return (Math.round(3.3*a))/10;
 	}
 	function m2k(measure,imperial) {
 		if (imperial) {

@@ -17,50 +17,26 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div id="Form" class="col-lg-12" >
+			<div id="Form" class="col-md-6" >
 				<p>This convertor uses a Font File to convert english text to it's fantasy script counter-part. The convertor is mapped <strong>exactly</strong> as it would be if you downloaded and installed the font onto your computer (in fact, I recommend you do that for best results). This convertor is pretty much only good for previewing the fantasy fonts.</p>
-				<textarea id="convert_text" class="form-control">please enter your text here to convert (this does not translate, and does not rewrite special characters). see the scripts notes below for script-specific translation details</textarea>
-				<table>
-					<tbody>
-						<tr>
-							<td>
-								<select id="script_input" class="form-control" onChange="inform()"></select>
-							</td>
-							<td>
-								<select id="size_input" class="form-control" >
-									<option value="14">14pt</option>
-									<option value="18">18pt</option>
-									<option value="22" selected="selected">22pt</option>
-									<option value="24">24pt</option>
-									<option value="28">28pt</option>
-									<option value="32">32pt</option>
-									<option value="36">36pt</option>
-									<option value="40">40pt</option>
-									<option value="44">44pt</option>
-									<option value="48">48pt</option>
-									<option value="52">52pt</option>
-									<option value="56">56pt</option>
-									<option value="60">60pt</option>
-									<option value="64">64pt</option>
-									<option value="68">68pt</option>
-									<option value="72">72pt</option>
-									<option value="76">76pt</option>
-								</select>
-							</td>
-							<td><button class="btn btn-success" onclick='convert();'>Convert</button></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="row">
-			<hr />
-			<div id="Language" class="col-lg-12" >
-			</div>
-		</div>
-		<div class="row">
-			<div id='ParentResult' class="col-lg-12" style="height:50em" >
+				<p>Font: <select id="script_input" class="form-control" onChange="inform()"></select></p>
+				<p>Font Size (pt): <input type="number" id="size_input" class="form-control"  value="22"/></p>
+				<p>Canvas size (em): <input type="number" id="canvas_input" class="form-control"  value="20"/></p>
 				<hr />
+			</div>
+			<div id="Language" class="col-md-6 well">
+				<div id="Language" ></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<textarea id="convert_text" class="form-control">please enter your text here that you wish to convert (note that this script does not translate, and depending on the font file it does not rewrite special characters like !;:= or capitals). see the scripts notes for script-specific translation details</textarea>
+				<button class="btn btn-success" onclick='convert();'>Convert</button>
+				<hr />
+			</div>
+		</div>
+		<div class="row">
+			<div id='ParentResult' class="col-lg-12" style="height:20em" >
 				<canvas id="Result" class="bg-warning" width="100%" height="100%"></canvas>
 			</div>
 		</div>
@@ -104,6 +80,9 @@
 		var size = $('#size_input').val();
 		var canvas = $('#Result')[0];
 		var ctx = canvas.getContext("2d");
+		$('#ParentResult').height($('#canvas_input').val() + 'em');
+		canvas.width = $('#ParentResult').width();
+		canvas.height = $("#ParentResult").height();
 		writeCanvas(ctx, canvas, text, script, size);
 	}
 	function resetCanvas(ctx, canvas) {

@@ -51,25 +51,25 @@
 				      </h4>
 				    </div>
 				    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-				      <div class="panel-body">
-s				      </div>
+				      <div id="saves" class="panel-body">
+				      </div>
 				    </div>
 				  </div>
 				</div>
 			</div>
 			<div class="col-md-7">
-				<p>
-				    <b>Number of dice:</b>
-				    <input type="number" id="number" class="form-control" value='1' />
-				    <b>Sides on dice</b>
-				    <input type="number" id="sides" class="form-control" value='20' />
-				    <b>Modifier</b>
-				    <select id="mod" class="form-control">
-				    	<option value="+">+</option>
-				    	<option value="-">-</option>
-				    </select>
-				    <input type="number" id="modval" class="form-control"  value='0' />
-				    <button onclick='roll();' class="btn btn-primary">Roll!</button>
+				<p class="form-inline"><b>Number of dice:</b> <input type="number" id="number" class="form-control" value='1' /></p>
+				<p class="form-inline"><b>Sides on dice</b> <input type="number" id="sides" class="form-control" value='20' /></p>
+				<p class="form-inline"><b>Modifier</b>
+					<select id="mod" class="form-control">
+						<option value="+">+</option>
+						<option value="-">-</option>
+					</select>
+					<input type="number" id="modval" class="form-control"  value='0' />
+				</p>
+				<p class="form-inline">
+					<button onclick='roll();' class="btn btn-primary">Roll!</button> or <button onclick='save();' class="btn btn-success">Save!</button>
+				 	<input id="name" class="form-control"  value='Dice Name' />
 				</p>
 			</div>
 		</div>
@@ -109,7 +109,35 @@ s				      </div>
 		}
 		$("#Dice").prepend("<p><b>Rolling "+number+"d"+sides+":</b> "+die+" "+$('#mod').val()+" "+modval+" ("+$('#type').val()+")</p><h class='btn "+(result >= dc ? "btn-info" : "btn-danger")+"'>"+result+"</h1>");
 	}
+	function save() {
+		var dice = {
+			'number': parseInt($("#number").val(), 10),
+			'sides': parseInt($("#sides").val(), 10),
+			'mod': $('#mod').val() === '+',
+			'modval': parseInt($("#modval").val(), 10),
+			'name': $("#name").val()
+		}
+		var dices = (typeof localStorage['dice'] === "undefined") ? {} : JSON.parse(localStorage['dice']);
+		dices[$("#name").val()] = dice;
+		localStorage.setItem('dice', JSON.stringify(dices));
+		$('#saves').html('');
+		list();
+	}
+	function list() {
+		var die = JSON.parse(localStorage['dice']);
+		for (dice in die) {
+			$('#saves').append('<p><button onclick="$(\'#number\').val('+die[dice].number+');$(\'#sides\').val('+die[dice].sides+');$(\'#mod\').val('+((die[dice].mod === true) ? "'+'" : "'-'")+');$(\'#modval\').val('+die[dice].modval+');" class="btn btn-info">Load</button> <button onclick="delDice(\''+dice+'\')" class="btn btn-danger">Delete</button>'+dice+' ('+die[dice].number+'d'+die[dice].sides+(die[dice].mod ? '+' : '-')+die[dice].modval+')</p>');
+		}
+	}
+	function delDice(diceName) {
+		var die = JSON.parse(localStorage['dice']);
+		delete die[diceName];
+		localStorage.setItem('dice', JSON.stringify(die));
+		$('#saves').html('');
+		list();
+	}
 	$('.collapse').collapse();
+	list();
 	</script>
 </body>
 </html>
