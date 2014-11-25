@@ -16,119 +16,100 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<p>The first field selects the number of dice, the second field the number of sides on the dice, and the last field selects how many results you wish to display.</p>
-			<p class="form-inline">
-			    <select id="number" class="form-control">
-			    	<option value="1">1</option>
-			    	<option value="2">2</option>
-			    	<option value="3">3</option>
-			    	<option value="4">4</option>
-			    	<option value="5">5</option>
-			    	<option value="6">6</option>
-			    	<option value="7">7</option>
-			    	<option value="8">8</option>
-			    	<option value="9">9</option>
-			    	<option value="10">10</option>
-			    	<option value="11">11</option>
-			    	<option value="12">12</option>
-			    	<option value="13">13</option>
-			    	<option value="14">14</option>
-			    	<option value="15">15</option>
-			    	<option value="16">16</option>
-			    	<option value="17">17</option>
-			    	<option value="18">18</option>
-			    	<option value="19">19</option>
-			    	<option value="20">20</option>
-			    </select>
-			    <b>d</b>
-			    <select id="sides" class="form-control">
-			    	<option value="2">2</option>
-			    	<option value="3">3</option>
-			    	<option value="4">4</option>
-			    	<option value="6">6</option>
-			    	<option value="8">8</option>
-			    	<option value="10">10</option>
-			    	<option value="12">12</option>
-			    	<option value="20">20</option>
-			    	<option value="30">30</option>
-			    	<option value="100">100</option>
-			    </select>
-			    <b> x </b>
-			    <select id="results" class="form-control">
-			    	<option value="1">1</option>
-			    	<option value="5">5</option>
-			    	<option value="10">10</option>
-			    	<option value="25">25</option>
-			    	<option value="50">50</option>
-			    	<option value="100">100</option>
-			    </select>
-			    <button onclick='roll();' class="btn btn-primary">Roll!</button>
-			</p>
-			<div id="Dice">
+			<div class="col-md-5 well">
+				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+				  <div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id="headingOne">
+				      <h4 class="panel-title">
+				        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+				           Options
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+				      <div class="panel-body">
+				      	<p>Type of Roll:
+					      	<select id="type" class="form-control">
+						    	<option value="normal">Standard</option>
+						    	<option value="adv">Advantage</option>
+						    	<option value="dis">Disadvantage</option>
+						    </select>
+				      	</p>
+				      	<p>
+				      		Difficulty Challenge:
+				      		<input type="number" id="dc" class="form-control" value="10" />
+				      	</p>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id="headingTwo">
+				      <h4 class="panel-title">
+				        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+				          Saved dice
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+				      <div class="panel-body">
+s				      </div>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			<div class="col-md-7">
+				<p>
+				    <b>Number of dice:</b>
+				    <input type="number" id="number" class="form-control" value='1' />
+				    <b>Sides on dice</b>
+				    <input type="number" id="sides" class="form-control" value='20' />
+				    <b>Modifier</b>
+				    <select id="mod" class="form-control">
+				    	<option value="+">+</option>
+				    	<option value="-">-</option>
+				    </select>
+				    <input type="number" id="modval" class="form-control"  value='0' />
+				    <button onclick='roll();' class="btn btn-primary">Roll!</button>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 well">
+				<div id="Dice">
+				</div>
 			</div>
 		</div>
 	</div>
 	<script src="../js/jquery.js"></script>
+	<script src="../js/bootstrap.js"></script>
 	<script src="../js/dice.js"></script>
 	<script>
 	function roll() {
 		var number = parseInt($("#number").val(), 10);
 		var sides = parseInt($("#sides").val(), 10);
-		var results = parseInt($("#results").val(), 10);
-		$("#Dice").html("");
-		switch (sides) {
-		case 2:
-			for (var i = 0; i < results; i++) {
-				$("#Dice").append("<p>"+Dice.d2(number)+"</p>");
-			}
-			break;
-		case 3:
-			for (var i = 0; i < results; i++) {
-				$("#Dice").append("<p>"+Dice.d3(number)+"</p>");
-			}
-			break;
-		case 4:
-			for (var i = 0; i < results; i++) {
-				$("#Dice").append("<p>"+Dice.d4(number)+"</p>");
-			}
-			break;
-		case 6:
-			for (var i = 0; i < results; i++) {
-				$("#Dice").append("<p>"+Dice.d6(number)+"</p>");
-			}
-			break;
-		case 8:
-			for (var i = 0; i < results; i++) {
-				$("#Dice").append("<p>"+Dice.d8(number)+"</p>");
-			}
-			break;
-		case 10:
-			for (var i = 0; i < results; i++) {
-				$("#Dice").append("<p>"+Dice.d10(number)+"</p>");
-			}
-			break;
-		case 12:
-			for (var i = 0; i < results; i++) {
-				$("#Dice").append("<p>"+Dice.d12(number)+"</p>");
-			}
-			break;
-		case 30:
-			for (var i = 0; i < results; i++) {
-				$("#Dice").append("<p>"+Dice.d30(number)+"</p>");
-			}
-			break;
-		case 100:
-			for (var i = 0; i < results; i++) {
-				$("#Dice").append("<p>"+Dice.d100(number)+"</p>");
-			}
-			break;
-		default:
-			for (var i = 0; i < results; i++) {
-				$("#Dice").append("<p>"+Dice.d20(number)+"</p>");
-			}
-			break;
+		var mod = $('#mod').val() === '+';
+		var modval = parseInt($("#modval").val(), 10);
+		var dc = parseInt($('#dc').val(), 10);
+		var die = Dice.dice(sides, number);
+		switch ($('#type').val()) {
+			case 'adv':
+				var temp = Dice.dice(sides, number);
+				die = (temp > die) ? temp : die;
+				break;
+			case 'dis':
+				var temp = Dice.dice(sides, number);
+				die = (temp < die) ? temp : die;
+				break;
 		}
+		var result = 0;
+		if (mod) {
+			result = die + modval;
+		} else {
+			result = die - modval;
+		}
+		$("#Dice").prepend("<p><b>Rolling "+number+"d"+sides+":</b> "+die+" "+$('#mod').val()+" "+modval+" ("+$('#type').val()+")</p><h class='btn "+(result >= dc ? "btn-info" : "btn-danger")+"'>"+result+"</h1>");
 	}
+	$('.collapse').collapse();
 	</script>
 </body>
 </html>
