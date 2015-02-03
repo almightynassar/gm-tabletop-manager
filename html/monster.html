@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>Monster Creator</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/form.css" media="all">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 well">
+				<h4>D&amp;D 5E Monster Creator</h4>
+			</div>
+			<div class="col-md-12">
+				<div id="form" class="form form-inline">
+					<div class="form-group">
+						<p class="control-label">Name</p>
+						<input type="text" name="name" id="name" value="Bandit" class="form-control col-sm-2">
+					</div>
+					<div class="form-group">
+						<p class="control-label">Size</p>
+						<select id="size" class="form-control" name="size">
+							<option value="Tiny">Tiny</option>
+							<option value="Small">Small</option>
+							<option value="Medium" selected>Medium</option>
+							<option value="Large">Large</option>
+							<option value="Huge">Huge</option>
+							<option value="Gargantuan">Gargantuan</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<p class="control-label">Type</p>
+						<select id="type" class="form-control" name="type">
+							<option value="Aberration">Aberration</option>
+							<option value="Beast">Beast</option>
+							<option value="Celestial">Celestial</option>
+							<option value="Construct">Construct</option>
+							<option value="Dragon">Dragon</option>
+							<option value="Elemental">Elemental</option>
+							<option value="Fey">Fey</option>
+							<option value="Fiend">Fiend</option>
+							<option value="Giant">Giant</option>
+							<option value="Humanoid" selected>Humanoid</option>
+							<option value="Monstrosity">Monstrosity</option>
+							<option value="Ooze">Ooze</option>
+							<option value="Plant">Plant</option>
+							<option value="Undead">Undead</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<p class="control-label">Alignment</p>
+						<select id="alignment" class="form-control" name="alignment">
+							<option value="Lawful-Good">Lawful-Good</option>
+							<option value="Good">Good</option>
+							<option value="Chaotic-Good">Chaotic-Good</option>
+							<option value="Lawful">Lawful</option>
+							<option value="Neutral" selected>Neutral</option>
+							<option value="Chaotic">Chaotic</option>
+							<option value="Lawful-Evil">Lawful-Evil</option>
+							<option value="Evil">Evil</option>
+							<option value="Chaotic-Evil">Chaotic-Evil</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<p class="control-label">Hit Die</p>
+						<input type="number" name="hit_die" id="hit_die" value="5" class="form-control">
+					</div>
+					<div class="form-group">
+						<p class="control-label">Armour</p>
+						<select id="armour" class="form-control" name="armour">
+							<option value="Natural" selected>Natural (Con/Dex)</option>
+							<option value="Combo">Combo Natural (Dex+Con)</option>
+							<option value="Natural1">Toughened Natural (Dex/Con+1)</option>
+							<option value="Natural2">Hardened Natural (Dex/Con+2)</option>
+							<option value="Natural3">Carapace (Dex/Con+3)</option>
+							<option value="Lawful-Evil">Lawful-Evil</option>
+							<option value="Evil">Evil</option>
+							<option value="Chaotic-Evil">Chaotic-Evil</option>
+						</select>
+					</div>
+				</div>
+				<hr />
+				<p>The following is the standard attribute array: <span id="stat_array">8,10,12,13,14,15</span></p>
+				<div id="form" class="form form-inline">
+					<div class="form-group">
+						<p class="control-label">STR (<span id="str_mod">0</span>)</p>
+						<input type="number" name="str" id="str" value="10" class="form-control" style="width:8em;">
+					</div>
+					<div class="form-group">
+						<p class="control-label">CON (<span id="con_mod">0</span>)</p>
+						<input type="number" name="con" id="con" value="10" class="form-control" style="width:8em;">
+					</div>
+					<div class="form-group">
+						<p class="control-label">DEX (<span id="dex_mod">0</span>)</p>
+						<input type="number" name="dex" id="dex" value="10" class="form-control" style="width:8em;">
+					</div>
+					<div class="form-group">
+						<p class="control-label">INT (<span id="int_mod">0</span>)</p>	
+						<input type="number" name="int" id="int" value="10" class="form-control" style="width:8em;">
+					</div>
+					<div class="form-group">
+						<p class="control-label">WIS (<span id="wis_mod">0</span>)</p>
+						<input type="number" name="wis" id="wis" value="10" class="form-control" style="width:8em;">
+					</div>
+					<div class="form-group">
+						<p class="control-label">CHA (<span id="cha_mod">0</span>)</p>
+						<input type="number" name="cha" id="cha" value="10" class="form-control" style="width:8em;">
+					</div>
+				</div>
+				<hr />
+				<div class="form form-inline">
+					<div class="form-group">
+						<p class="control-label">Hit Points</p>
+						<input type="number" name="hit_points" id="hit_points" value="22" class="form-control">
+					</div>
+				</div>
+				<hr />
+				<div class="form form-inline">
+					<div class="form-group">
+						<p class="control-label">Senses</p>
+						<label><input type="radio" name="sense" id="sense" value="Normal" class="form-control" checked>Normal</label>
+						<label><input type="radio" name="sense" id="sense" value="Darkvision" class="form-control">Darkvision</label>
+						<label><input type="radio" name="sense" id="sense" value="Truesight" class="form-control">Truesight</label>
+						<label><input type="radio" name="sense" id="sense" value="Blindsight" class="form-control">Blindsight</label>
+						<label><input type="radio" name="sense" id="sense" value="Tremorsense" class="form-control" >Tremorsense</label>
+					</div>
+				</div>
+				<hr />
+				<div class="form form-inline">
+					<div class="form-group checkbox">
+						<p class="control-label">Languages</p>
+						<label><input type="checkbox" name="language" id="language" value="Common" class="form-control" checked>Common</label>
+						<label><input type="checkbox" name="language" id="language" value="Abyssal" class="form-control">Abyssal</label>
+						<label><input type="checkbox" name="language" id="language" value="Aquan" class="form-control">Aquan</label>
+						<label><input type="checkbox" name="language" id="language" value="Auran" class="form-control">Auran</label>
+						<label><input type="checkbox" name="language" id="language" value="Celestial" class="form-control">Celestial</label>
+						<label><input type="checkbox" name="language" id="language" value="Deepspeech" class="form-control">Deepspeech</label>
+						<label><input type="checkbox" name="language" id="language" value="Draconic" class="form-control">Draconic</label>
+						<label><input type="checkbox" name="language" id="language" value="Dwarven" class="form-control">Dwarven</label>
+						<label><input type="checkbox" name="language" id="language" value="Elvish" class="form-control">Elvish</label>
+						<label><input type="checkbox" name="language" id="language" value="Giant" class="form-control">Giant</label>
+						<label><input type="checkbox" name="language" id="language" value="Dwarven" class="form-control">Gnoll</label>
+						<label><input type="checkbox" name="language" id="language" value="Goblin" class="form-control">Goblin</label>
+						<label><input type="checkbox" name="language" id="language" value="Ignan" class="form-control">Ignan</label>
+						<label><input type="checkbox" name="language" id="language" value="Infernal" class="form-control">Infernal</label>
+						<label><input type="checkbox" name="language" id="language" value="Orc" class="form-control">Orc</label>
+						<label><input type="checkbox" name="language" id="language" value="Sylvan" class="form-control">Sylvan</label>
+						<label><input type="checkbox" name="language" id="language" value="Telepathy" class="form-control">Telepathy</label>
+						<label><input type="checkbox" name="language" id="language" value="Terran" class="form-control">Terran</label>
+						<label><input type="checkbox" name="language" id="language" value="Undercommon" class="form-control">Undercommon</label>
+					</div>
+				</div>
+				<hr/>
+				<p><button class="btn btn-success" onclick='create();'>Submit</button></p>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.js"></script>
+<script src="../js/dice.js"></script>
+<script>
+	// Calculate HP
+	function calcHP() {
+		var size = $('#size').val();
+		var avg = 4.5;
+		if (size === "Tiny") {
+			avg = 2.5;
+		} else if (size === "Small") {
+			avg = 3.5;
+		} else if (size === "Large") {
+			avg = 5.5;
+		} else if (size === "Huge") {
+			avg = 6.5;
+		} else if (size === "Gargantuan") {
+			avg = 10.5;
+		}
+		$('#hit_points').val(Math.floor(($('#hit_die').val() * avg) + ($('#hit_die').val() * parseInt($('#con_mod').html()))));
+	}
+	// Attribute changes
+	$("#str").change(function () { $('#str_mod').html(Math.floor(($("#str").val()-10)/2)); });
+	$("#con").change(function () { $('#con_mod').html(Math.floor(($("#con").val()-10)/2)); calcHP(); });
+	$("#dex").change(function () { $('#dex_mod').html(Math.floor(($("#dex").val()-10)/2)); });
+	$("#int").change(function () { $('#int_mod').html(Math.floor(($("#int").val()-10)/2)); });
+	$("#wis").change(function () { $('#wis_mod').html(Math.floor(($("#wis").val()-10)/2)); });
+	$("#cha").change(function () { $('#cha_mod').html(Math.floor(($("#cha").val()-10)/2)); });
+	// Size-changes
+	$('#size').change(function () { calcHP(); });
+	// Hit Die changes
+	$("#hit_die").change(function () { calcHP(); });
+</script>
+</html>

@@ -19,7 +19,6 @@
     		<ul class="sidebar-nav">
     			<li><a id="dice-roller" href="#Dice-Roller">Dice Roller</a></li>
     			<li><a id="fictional-script" href="#Fictional-Script">Fictional Script</a></li>
-    			<li><a id="grid-converter" href="#Grid-Converter">Grid Distance Converter</a></li>
     			<li><a id="generate-name" href="#Generate-name">Generate Markov name</a></li>
     			<li><a id="generate-rumour" href="#Generate-Rumour">Rumours</a></li>
     			<li><a id="generate-tavern" href="#Generate-Tavern">Book/Tavern Generator</a></li>
@@ -27,6 +26,7 @@
     			<li><a id="database-races" href="#Database-Races">Database - Races</a></li>
     			<li><a id="item-database" href="#Item-Database">Database - Items</a></li>
     			<li><hr /></li>
+    			<li><a id="monster-creator" href="#Monster-Creator">Monster Creator</a></li>
     		</ul>
     	</div>
     	<div id="content-wrapper">
@@ -51,12 +51,12 @@
     $("#menu-toggle").click(function(e) { e.preventDefault(); $("#main-wrapper").toggleClass("toggled"); });
     $("#dice-roller").click(function () { $("#frame").attr("src", "html/dice.html"); });
     $("#fictional-script").click(function () { $("#frame").attr("src", "html/fictional.html"); });
-    $("#grid-converter").click(function () { $("#frame").attr("src", "html/grid.html"); });
     $("#generate-name").click(function () { $("#frame").attr("src", "html/markov.html"); });
-    // D&D 5E edition stuff
-    $("#database-races").click(function () { $("#frame").attr("src", "html/races.html"); });
     $("#generate-rumour").click(function () { $("#frame").attr("src", "html/rumours.html"); });
     $("#generate-tavern").click(function () { $("#frame").attr("src", "html/titles.html"); });
+    // D&D 5E edition stuff
+    $("#monster-creator").click(function () { $("#frame").attr("src", "html/monster.html"); });
+    $("#database-races").click(function () { $("#frame").attr("src", "html/races.html"); });
     $("#item-database").click(function () { $("#frame").attr("src", "html/item.html"); });
     </script>
 </body>
