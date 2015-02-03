@@ -1,10 +1,12 @@
 /**
- *  Dice Object
+ *  Handles a variety of Dice functions
  */
 var Dice = new function () {
+	// Private function for sorting out numbers (for arrays)
 	function sortNumber(a,b) {
 	    return a - b;
 	};
+	// Perform a basic pseudorandom roll
     function roll (type, number) {
         type = (type && (typeof type === "number")) ? parseInt(type,10) : 20;
         number = (number && (typeof number === "number")) ? parseInt(number,10) : 1;
@@ -14,15 +16,49 @@ var Dice = new function () {
         }
         return result;
     };
-    function rollAbilityScore () {
-        var result = new Array(roll(6),roll(6,1),roll(6,1),roll(6,1));
-        result.sort(sortNumber); 
-        return result[1] + result[2] + result[3];
+    // Perform a simple advantage/disadvantage roll (1=advantage,0=normal,-1=disadvantage) 
+    function advantage (type, number, adv) {
+    	adv = (adv && (typeof adv === "number")) ? parseInt(adv,10) : 0;
+    	if (adv !== 0) {
+	    	var t1 = roll(type, number), t2 = roll(type, number);
+	    	if (adv > 0) {
+	    		return (t1 > t2) ? t1 : t2;
+	    	} else if (adv < 0) {
+	    		return (t1 < t2) ? t1 : t2;
+	    	}
+    	}
+    	return roll(type, number);
+    }
+    // Roll a series of dice, drop a certain amount (from lowest or highest), and return the sum
+    function score (type, number, drop, highest) {
+    	type = (type && (typeof type === "number")) ? parseInt(type,10) : 6;
+        number = (number && (typeof number === "number")) ? parseInt(number,10) : 4;
+        drop = (drop && (typeof drop === "number")) ? parseInt(drop,10) : 1;
+        highest = (highest) ? true : false;
+        var result = new Array();
+        var sum = 0;
+        var i;
+        for (i = 0; i < number; i++) {
+        	result.push(roll(type));
+        }
+        result.sort(sortNumber);
+        if (highest) {
+        	for (i = 0; i < (number-drop); i++ ) {
+        		sum += result[i];
+        	}
+        } else {
+        	for (i = drop; i < number; i++ ) {
+        		sum += result[i];
+        	}
+        }
+        return sum;
     }
     return {
-    	dice: (function (type, number) {
-    		return roll(type, number);
+    	// Customisable dice roll, with die type, number of die, and advantage (1=adv,0=normal,-1=dis) 
+    	dice: (function (type, number, adv) {
+    		return advantage(type, number, adv);
     	}),
+    	// Wrapper functions for roll
         d2: (function (number) {
             return roll(2,number);
         }),    
@@ -53,20 +89,18 @@ var Dice = new function () {
         d100: (function (number) {
             return roll(100,number);
         }),
-        characterAttribute: (function () {
-        	return rollAbilityScore();
+        // Wrapper function for a single customisable attribute
+        score: (function (type, number, drop, highest) {
+        	return score(type, number, drop, highest);
         }),
+        // Returns a random D&D array (for 6 attributes)
         randomArray: (function () {
-    		var attributes = [rollAbilityScore(),
-    		                  rollAbilityScore(),
-    		                  rollAbilityScore(),
-    		                  rollAbilityScore(),
-    		                  rollAbilityScore(),
-    		                  rollAbilityScore()];
+    		var attributes = new Array(score(),score(),score(),score(),score(),score());
     		return attributes.sort(sortNumber);
         }),
+        // Returns the Standard D&D Array (for 6 attributes)
         standardArray: (function () {
-        	return [10,11,12,13,14,16];
+        	return [8,10,12,13,14,15];
         })
     };
 };

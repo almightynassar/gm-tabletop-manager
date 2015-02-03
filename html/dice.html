@@ -108,7 +108,7 @@
 			result = die - modval;
 		}
 		$("#Dice").prepend("<p><b>Rolling "+number+"d"+sides+":</b> "+die+" "+$('#mod').val()+" "+modval+" ("+$('#type').val()+")</p><h class='btn "+(result >= dc ? "btn-info" : "btn-danger")+"'>"+result+"</h1>");
-	}
+	};
 	function save() {
 		var dice = {
 			'number': parseInt($("#number").val(), 10),
@@ -122,20 +122,20 @@
 		localStorage.setItem('dice', JSON.stringify(dices));
 		$('#saves').html('');
 		list();
-	}
+	};
 	function list() {
-		var die = JSON.parse(localStorage['dice']);
-		for (dice in die) {
-			$('#saves').append('<p><button onclick="$(\'#number\').val('+die[dice].number+');$(\'#sides\').val('+die[dice].sides+');$(\'#mod\').val('+((die[dice].mod === true) ? "'+'" : "'-'")+');$(\'#modval\').val('+die[dice].modval+');" class="btn btn-info">Load</button> <button onclick="delDice(\''+dice+'\')" class="btn btn-danger">Delete</button>'+dice+' ('+die[dice].number+'d'+die[dice].sides+(die[dice].mod ? '+' : '-')+die[dice].modval+')</p>');
+		var dies = JSON.parse(localStorage['dice']);
+		for (dice in dies) {
+			$('#saves').append('<p><button onclick="$(\'#number\').val('+dies[dice].number+');$(\'#sides\').val('+dies[dice].sides+');$(\'#mod\').val('+((dies[dice].mod === true) ? "'+'" : "'-'")+');$(\'#modval\').val('+dies[dice].modval+');" class="btn btn-info">Load</button> <button onclick="delDice(\''+dice+'\')" class="btn btn-danger">Delete</button>'+dice+' ('+dies[dice].number+'d'+dies[dice].sides+(dies[dice].mod ? '+' : '-')+dies[dice].modval+')</p>');
 		}
-	}
+	};
 	function delDice(diceName) {
-		var die = JSON.parse(localStorage['dice']);
-		delete die[diceName];
-		localStorage.setItem('dice', JSON.stringify(die));
+		var dies = JSON.parse(localStorage['dice']);
+		delete dies[diceName];
+		localStorage.setItem('dice', JSON.stringify(dies));
 		$('#saves').html('');
 		list();
-	}
+	};
 	$('.collapse').collapse();
 	list();
 	</script>

@@ -21,13 +21,12 @@
     			<li><a id="fictional-script" href="#Fictional-Script">Fictional Script</a></li>
     			<li><a id="grid-converter" href="#Grid-Converter">Grid Distance Converter</a></li>
     			<li><a id="generate-name" href="#Generate-name">Generate Markov name</a></li>
+    			<li><a id="generate-rumour" href="#Generate-Rumour">Rumours</a></li>
+    			<li><a id="generate-tavern" href="#Generate-Tavern">Book/Tavern Generator</a></li>
     			<li><hr /></li>
     			<li><a id="database-races" href="#Database-Races">Database - Races</a></li>
     			<li><a id="item-database" href="#Item-Database">Database - Items</a></li>
     			<li><hr /></li>
-    			<li><a href="index4E.html">D&amp;D 4th Edition</a></li>
-    			<li><a id="generate-rumour" href="#Generate-Rumour">Generate Rumour</a></li>
-    			<li><a id="generate-tavern" href="#Generate-Tavern">Book/Tavern Generator</a></li>
     		</ul>
     	</div>
     	<div id="content-wrapper">
@@ -44,7 +43,6 @@
             <iframe id="frame" width="100%" height="100%" src="html/dice.html" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
     	</div>
     </div>
-
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
@@ -54,23 +52,12 @@
     $("#dice-roller").click(function () { $("#frame").attr("src", "html/dice.html"); });
     $("#fictional-script").click(function () { $("#frame").attr("src", "html/fictional.html"); });
     $("#grid-converter").click(function () { $("#frame").attr("src", "html/grid.html"); });
-    // The edition specific stuff
+    $("#generate-name").click(function () { $("#frame").attr("src", "html/markov.html"); });
+    // D&D 5E edition stuff
     $("#database-races").click(function () { $("#frame").attr("src", "html/races.html"); });
-    
-    // Other
-    $("#generate-name").click(function () { 
-        $("#frame").attr("src", "html/markov.html");
-  	});
-    $("#generate-rumour").click(function () { 
-        $("#frame").attr("src", "html/rumours.html");
-  	});
-    
-    $("#generate-tavern").click(function () { 
-        $("#frame").attr("src", "html/titles.html");
-  	});
-    $("#item-database").click(function () { 
-        $("#frame").attr("src", "html/item.html");
-  	});
+    $("#generate-rumour").click(function () { $("#frame").attr("src", "html/rumours.html"); });
+    $("#generate-tavern").click(function () { $("#frame").attr("src", "html/titles.html"); });
+    $("#item-database").click(function () { $("#frame").attr("src", "html/item.html"); });
     </script>
 </body>
 </html>

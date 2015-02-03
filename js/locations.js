@@ -34,7 +34,7 @@ var Location = {
     "Castle Yorkel": {
     	"nation": "Kelerak",
     	"description": "Castle along Fulk Stream near the Black Wood",
-    	"type": "Castle"",
+    	"type": "Castle",
     	"population": 150,
     	"shops": {},
     	"npcs": {}

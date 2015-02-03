@@ -8,35 +8,53 @@
 	<meta content="Shapies Tabletop RPG Manager" name="description">
 	<meta content="Almighty Nassar" name="author">
 	<link rel="icon" href="favicon.ico">
-	<title>NPC Creator</title>
+	<title>Rumours</title>
 	<!-- CSS SCRIPTS -->
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
 </head>
 <body>
-	<div id="Forms">
-		<p><b>Rumours:</b> <span id="levels"></span></p>
-		<p><button onclick='tavern();'>Tavern Rumours</button></p>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div id="Forms">
+					<p><b>Rumours:</b> <input type="number" id="number" value="1"/></p>
+					<div class="form-group">
+						<input type="radio" name="type" value="all" checked />All<br>
+						<input type="radio" name="type" value="beast" />Monster<br>
+						<input type="radio" name="type" value="idle" />Idle<br>
+						<input type="radio" name="type" value="political" />Political<br>
+						<input type="radio" name="type" value="detective" />Detective<br>
+						<input type="radio" name="type" value="supernatural" />Supernatural<br>
+						<input type="radio" name="type" value="adventure" />Adventure<br>
+					</div>
+					<p><button onclick='rumour();'>Generate</button></p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 well">
+				<div id="Rumour">
+				</div>
+			</div>
+		</div>
 	</div>
-	<div id="Rumour">
-	</div>
-	<script src="../jquery/jquery.min.js"></script>
-	<script src="../js/dice.min.js"></script>
-	<script src="../js/markov.min.js"></script>
-	<script src="../js/form.min.js"></script>
-	<script src="../js/data/names.js"></script>
+	<script src="../js/jquery.js"></script>
+	<script src="../js/dice.js"></script>
+	<script src="../js/markov.js"></script>
+	<script src="../js/form.js"></script>
+	<script src="../js/names.js"></script>
 	<script src="../js/rumours.js"></script>
 	<script>
 	var form = new Form();
-	$('#levels').html(form.dropdown("level"));
 	// Tavern rumours
-	function tavern () {
-		var number = window.document.getElementById('level_input').value;
+	function rumour () {
+		var number = $('#number').val();
 		var text = "<ol>";
 		for (var i = 0; i < number; i++) {
-			 text += "<li>" + Rumours.tavern() +"</li>";
+			 text += "<li>" + Rumours.rumour($('input:radio[name=type]:checked').val()) +"</li>";
 		}
-		window.document.getElementById('Rumour').innerHTML = text + "</ol>";
+		$('#Rumour').html(text + "</ol>");
 	}
 	</script>
 </body>

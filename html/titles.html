@@ -8,60 +8,41 @@
 	<meta content="Shapies Tabletop RPG Manager" name="description">
 	<meta content="Almighty Nassar" name="author">
 	<link rel="icon" href="favicon.ico">
-	<title>NPC Creator</title>
+	<title>Book/Tavern</title>
 	<!-- CSS SCRIPTS -->
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css" media="all">
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap-theme.min.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
 </head>
 <body>
 	<div class="container">
 		<div class="row">
-			<div id="Title" class="col-lg-12" >
-				<p>This generator creates names for a whole variety of things!</p>
-				<table>
-					<thead>
-						<tr>
-							<th>Type</th>
-							<th>Number</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>
-								<select id="type_input" name="length_input" class="form-control" >
-									<option value="book">Book</option>
-									<option value="tavern">Tavern</option>
-								</select>
-							</td>
-							<td>
-								<select id="number_input" name="number_input" class="form-control" >
-									<option value="1">1</option>
-									<option value="5">5</option>
-									<option value="10">10</option>
-									<option value="25">25</option>
-									<option value="50">50</option>
-									<option value="100">100</option>
-								</select>
-							</td>
-							<td><button class="btn btn-success" onclick='generate();'>Generate</button></td>
-					</tbody>
-				</table>
+			<div class="col-lg-12" >
+				<div id="Title" class="form-inline">
+					<select id="type_input" name="length_input" class="form-control" >
+						<option value="book">Book</option>
+						<option value="tavern">Tavern</option>
+					</select>
+					<input type="number" id="number_input" name="number_input" class="form-control" value="1" />
+					<button class="btn btn-success" onclick='generate();'>Generate</button>
+				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div id="Result" class="col-lg-12" >
+			<div class="col-lg-12 well" >
+				<div id="Result" >
+				</div>
 			</div>
 		</div>
 	</div>
-	<script src="../jquery/jquery.min.js"></script>
-	<script src="../js/dice.min.js"></script>
-	<script src="../js/data/titles.js"></script>
+	<script src="../js/jquery.js"></script>
+	<script src="../js/dice.js"></script>
+	<script src="../js/titles.js"></script>
 	<script>
 		function generate() {
 			var number = $('#number_input').val();
 			$('#Result').html('');
 			for (var i = 0; i < number; i++) {
-				var text = Title.patterns[(Dice.dice(Title.patterns.length,1))-1];
+				var text = ($('#type_input').val() === 'book') ? Title.patterns[(Dice.dice(Title.patterns.length,1))-1] : Title.taverns[(Dice.dice(Title.taverns.length,1))-1];
 				// Replace the matched words
 				while (text.match(':nouns') !== null && text.match(':nouns') !== undefined) {
 					text = text.replace(':nouns', Title.nouns[(Dice.dice(Title.nouns.length,1))-1]);
@@ -77,6 +58,12 @@
 				}
 				while (text.match(':passiveverbs') !== null && text.match(':passiveverbs') !== undefined) {
 					text = text.replace(':passiveverbs', Title.passiveverbs[(Dice.dice(Title.passiveverbs.length,1))-1]);
+				}
+				while (text.match(':objects') !== null && text.match(':objects') !== undefined) {
+					text = text.replace(':objects', Title.objects[(Dice.dice(Title.objects.length,1))-1]);
+				}
+				while (text.match(':participles') !== null && text.match(':participles') !== undefined) {
+					text = text.replace(':participles', Title.participles[(Dice.dice(Title.participles.length,1))-1]);
 				}
 				// Return the text
 				$('#Result').append('<p>'+text+'</p>');
