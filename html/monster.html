@@ -74,19 +74,6 @@
 						<p class="control-label">Hit Die</p>
 						<input type="number" name="hit_die" id="hit_die" value="5" class="form-control">
 					</div>
-					<div class="form-group">
-						<p class="control-label">Armour</p>
-						<select id="armour" class="form-control" name="armour">
-							<option value="Natural" selected>Natural (Con/Dex)</option>
-							<option value="Combo">Combo Natural (Dex+Con)</option>
-							<option value="Natural1">Toughened Natural (Dex/Con+1)</option>
-							<option value="Natural2">Hardened Natural (Dex/Con+2)</option>
-							<option value="Natural3">Carapace (Dex/Con+3)</option>
-							<option value="Lawful-Evil">Lawful-Evil</option>
-							<option value="Evil">Evil</option>
-							<option value="Chaotic-Evil">Chaotic-Evil</option>
-						</select>
-					</div>
 				</div>
 				<hr />
 				<p>The following is the standard attribute array: <span id="stat_array">8,10,12,13,14,15</span></p>
@@ -119,14 +106,136 @@
 				<hr />
 				<div class="form form-inline">
 					<div class="form-group">
-						<p class="control-label">Hit Points</p>
-						<input type="number" name="hit_points" id="hit_points" value="22" class="form-control">
+						<p class="control-label">HP Bonus</p>
+						<input type="number" name="hit_bonus" id="hit_bonus" value="0" class="form-control">
+					</div>
+					<div class="form-group">
+						<p class="control-label">Armour</p>
+						<select id="armour" class="form-control" name="armour">
+							<option value="None" selected>None</option>
+							<option value="Natural">Natural</option>
+							<option value="Hide">Tough Hide</option>
+							<option value="Carapace">Carapace</option>
+							<option value="Stoneskin">Stoneskin</option>
+							<option value="Leather">Leather armour</option>
+							<option value="Hide">Hide armour</option>
+							<option value="Chainmail">Chainmail</option>
+							<option value="Plate">Plate</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<p class="control-label">AC Bonus</p>
+						<input type="number" name="armour_bonus" id="armour_bonus" value="0" class="form-control">
+					</div>
+					<div class="form-group">
+						<label><input type="checkbox" name="shielded" id="shielded" value="Yes" class="form-control">Shielded?</label>
 					</div>
 				</div>
 				<hr />
 				<div class="form form-inline">
 					<div class="form-group">
-						<p class="control-label">Senses</p>
+						<label class="control-label">Attack</label>
+						<div class="form-group">
+						<select id="attack_type_1" class="form-control attack_type" name="attack_type_1">
+							<option value="attack" selected>Attack</option>
+							<option value="save">Save DC</option>
+						</select>
+						<select id="attack_range_1" class="form-control attack_range" name="attack_range_1">
+							<option value="Melee" selected>Melee</option>
+							<option value="Ranged">Ranged</option>
+							<option value="AoE">AoE</option>
+						</select>
+						<select id="attack_mod_1" class="form-control attack_mod" name="attack_mod_1">
+							<option value="str" selected>Strength</option>
+							<option value="dex">Dexterity</option>
+							<option value="con">Constitution</option>
+							<option value="int">Intelligence</option>
+							<option value="wis">Wisdom</option>
+							<option value="cha">Charisma</option>
+						</select>
+						<input type="number" id="attack_die_1" name="attack_die_1" class="form-control attack_die" value="1" />
+						d
+						<input type="number" id="attack_dice_1" name="attack_dice_1" class="form-control attack_dice" value="6" />
+						<input type="checkbox" name="attack_miss_1" id="shielded" value="Yes" class="form-control attack_miss">Half on miss?
+						<input type="checkbox" name="attack_recharge_1" id="shielded" value="Yes" class="form-control attack_recharge">Recharge
+						<br />
+						<input type="text" id="attack_name_1" name="attack_name_1" class="form-control attack_name" value="Name" />
+						<input type="text" id="attack_detail_1" name="attack_detail_1" class="form-control attack_detail" value="Details" />
+					</div>
+				</div>
+				<hr />
+				<div class="form form-inline">
+					<div class="form-group well">
+						<p class="control-label"><strong>Damage Vulnerabilities</strong></p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Acid">Acid</p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Bludgeoning (non-magical)" >Bludgeoning (non-magical)</p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Cold" >Cold</p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Fire" >Fire</p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Force" >Force</p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Lightning" >Lightning</p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Necrotic" >Necrotic</p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Piercing (non-magical)" >Piercing (non-magical)</p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Poison" >Poison</p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Psychic" >Psychic</p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Radiant" >Radiant</p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Slashing (non-magical)" >Slashing (non-magical)</p>
+						<p><input type="checkbox" name="vuln" id="vuln" value="Thunder" >Thunder</p>
+					</div>
+					<div class="form-group well">
+						<p class="control-label"><strong>Damage Resistances</strong></p>
+						<p><input type="checkbox" name="resist" id="resist" value="Acid">Acid</p>
+						<p><input type="checkbox" name="resist" id="resist" value="Bludgeoning (non-magical)" >Bludgeoning (non-magical)</p>
+						<p><input type="checkbox" name="resist" id="resist" value="Cold" >Cold</p>
+						<p><input type="checkbox" name="resist" id="resist" value="Fire" >Fire</p>
+						<p><input type="checkbox" name="resist" id="resist" value="Force" >Force</p>
+						<p><input type="checkbox" name="resist" id="resist" value="Lightning" >Lightning</p>
+						<p><input type="checkbox" name="resist" id="resist" value="Necrotic" >Necrotic</p>
+						<p><input type="checkbox" name="resist" id="resist" value="Piercing (non-magical)" >Piercing (non-magical)</p>
+						<p><input type="checkbox" name="resist" id="resist" value="Poison" >Poison</p>
+						<p><input type="checkbox" name="resist" id="resist" value="Psychic" >Psychic</p>
+						<p><input type="checkbox" name="resist" id="resist" value="Radiant" >Radiant</p>
+						<p><input type="checkbox" name="resist" id="resist" value="Slashing (non-magical)" >Slashing (non-magical)</p>
+						<p><input type="checkbox" name="resist" id="resist" value="Thunder" >Thunder</p>
+					</div>
+					<div class="form-group well">
+						<p class="control-label"><strong>Damage Immunities</strong></p>
+						<p><input type="checkbox" name="immune" id="immune" value="Acid">Acid</p>
+						<p><input type="checkbox" name="immune" id="immune" value="Bludgeoning (non-magical)" >Bludgeoning (non-magical)</p>
+						<p><input type="checkbox" name="immune" id="immune" value="Cold" >Cold</p>
+						<p><input type="checkbox" name="immune" id="immune" value="Fire" >Fire</p>
+						<p><input type="checkbox" name="immune" id="immune" value="Force" >Force</p>
+						<p><input type="checkbox" name="immune" id="immune" value="Lightning" >Lightning</p>
+						<p><input type="checkbox" name="immune" id="immune" value="Necrotic" >Necrotic</p>
+						<p><input type="checkbox" name="immune" id="immune" value="Piercing (non-magical)" >Piercing (non-magical)</p>
+						<p><input type="checkbox" name="immune" id="immune" value="Poison" >Poison</p>
+						<p><input type="checkbox" name="immune" id="immune" value="Psychic" >Psychic</p>
+						<p><input type="checkbox" name="immune" id="immune" value="Radiant" >Radiant</p>
+						<p><input type="checkbox" name="immune" id="immune" value="Slashing (non-magical)" >Slashing (non-magical)</p>
+						<p><input type="checkbox" name="immune" id="immune" value="Thunder" >Thunder</p>
+					</div>
+					<div class="form-group well">
+						<p class="control-label"><strong>Condition Immunities</strong></p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Blinded">Blinded</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Charmed">Charmed</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Deafened" >Deafened</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Exhausted" >Exhausted</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Frightened" >Frightened</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Grappled" >Grappled</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Incapacitated" >Incapacitated</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Invisible" >Invisible</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Paralyzed" >Paralyzed</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Petrified" >Petrified</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Poisoned" >Psychic</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Prone" >Prone</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Restrained" >Restrained</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Stunned" >Stunned</p>
+						<p><input type="checkbox" name="cimmune" id="cimmune" value="Unconcious" >Unconcious</p>
+					</div>
+				</div>
+				<hr />
+				<div class="form form-inline">
+					<div class="form-group checkbox">
+						<p class="control-label"><strong>Senses</strong></p>
 						<label><input type="radio" name="sense" id="sense" value="Normal" class="form-control" checked>Normal</label>
 						<label><input type="radio" name="sense" id="sense" value="Darkvision" class="form-control">Darkvision</label>
 						<label><input type="radio" name="sense" id="sense" value="Truesight" class="form-control">Truesight</label>
@@ -137,7 +246,7 @@
 				<hr />
 				<div class="form form-inline">
 					<div class="form-group checkbox">
-						<p class="control-label">Languages</p>
+						<p class="control-label"><strong>Languages</strong></p>
 						<label><input type="checkbox" name="language" id="language" value="Common" class="form-control" checked>Common</label>
 						<label><input type="checkbox" name="language" id="language" value="Abyssal" class="form-control">Abyssal</label>
 						<label><input type="checkbox" name="language" id="language" value="Aquan" class="form-control">Aquan</label>
@@ -160,6 +269,21 @@
 					</div>
 				</div>
 				<hr/>
+				<div class="form form-inline">
+					<div class="form-group well">
+						<label class="control-label">Hit Points</label>
+						<p><span id="hit_points">22</span> (<span id="hp_dice">5d8+0</span>)</p>
+					</div>
+					<div class="form-group well">
+						<label class="control-label">Armour Class</label>
+						<p id="armour_class">10</p>
+					</div>
+					<div class="form-group well">
+						<label class="control-label">Defensive CR</label>
+						<p id="defence_cr">1/8</p>
+					</div>
+				</div>
+				<hr />
 				<p><button class="btn btn-success" onclick='create();'>Submit</button></p>
 			</div>
 		</div>
@@ -184,18 +308,180 @@
 		} else if (size === "Gargantuan") {
 			avg = 10.5;
 		}
-		$('#hit_points').val(Math.floor(($('#hit_die').val() * avg) + ($('#hit_die').val() * parseInt($('#con_mod').html()))));
+		// Raw values
+		var mod = parseInt($('#con_mod').html());
+		var dice = parseInt($('#hit_die').val());
+		var bonus = parseInt($('#hit_bonus').val());
+		var hp = Math.floor((dice * avg) + (dice * mod) + bonus);
+		// Display the values
+		$('#hit_points').html(hp+'');
+		$('#hp_dice').html(dice+'d'+((avg-0.5)*2)+'+'+((dice*mod)+bonus));
+		calcDCR();
+	}
+	// Calculate AC
+	function calcAC() {
+		var type = $('#armour').val();
+		var armour = 0;
+		var mod = parseInt($('#dex_mod').html());
+		switch (type) {
+		case "Stoneskin":
+			armour += 1;
+		case "Carapace":
+			armour += 1;
+		case "Tough":
+			armour += 1;
+		case "Natural":
+			armour += 1;
+			break;
+		case "Leather":
+			armour += 1;
+			break;
+		case "Hide":
+			armour += 2;
+			mod = (mod > 2) ? 2 : mod;
+			break;
+		case "Chainmail":
+			armour += 6;
+			mod = 0;
+			break;
+		case "Plate":
+			armour += 8;
+			mod = 0;
+			break;
+		}
+		// Raw values
+		var bonus = parseInt($('#armour_bonus').val());
+		var shield = ($("#shielded:checked" ).length > 0) ? 2 : 0;
+		var ac = Math.floor(10 + armour + mod + shield + bonus);
+		// Display the values
+		$('#armour_class').html(ac+'');
+		calcDCR();
+	}
+	// Calculate Defensive CR from given values
+	function rawDCR(hp,ac) {
+		ac = parseInt(ac,10);
+		hp = parseInt(hp,10);
+		var cr = 0;
+		// Calculate CR
+		if (hp > 805) {
+			cr = 30 - (((19-ac)/2)|0);
+		} else if (hp > 760) {
+			cr = 29 - (((19-ac)/2)|0);
+		} else if (hp > 715) {
+			cr = 28 - (((19-ac)/2)|0);
+		} else if (hp > 670) {
+			cr = 27 - (((19-ac)/2)|0);
+		} else if (hp > 625) {
+			cr = 26 - (((19-ac)/2)|0);
+		} else if (hp > 580) {
+			cr = 25 - (((19-ac)/2)|0);
+		} else if (hp > 535) {
+			cr = 24 - (((19-ac)/2)|0);
+		} else if (hp > 490) {
+			cr = 23 - (((19-ac)/2)|0);
+		} else if (hp > 445) {
+			cr = 22 - (((19-ac)/2)|0);
+		} else if (hp > 400) {
+			cr = 21 - (((19-ac)/2)|0);
+		} else if (hp > 355) {
+			cr = 20 - (((19-ac)/2)|0);
+		} else if (hp > 340) {
+			cr = 19 - (((19-ac)/2)|0);
+		} else if (hp > 325) {
+			cr = 18 - (((19-ac)/2)|0);
+		} else if (hp > 310) {
+			cr = 17 - (((19-ac)/2)|0);
+		} else if (hp > 295) {
+			cr = 16 - (((18-ac)/2)|0);
+		} else if (hp > 280) {
+			cr = 15 - (((18-ac)/2)|0);
+		} else if (hp > 265) {
+			cr = 14 - (((18-ac)/2)|0);
+		} else if (hp > 250) {
+			cr = 13 - (((18-ac)/2)|0);
+		} else if (hp > 235) {
+			cr = 12 - (((17-ac)/2)|0);
+		} else if (hp > 220) {
+			cr = 11 - (((17-ac)/2)|0);
+		} else if (hp > 205) {
+			cr = 10 - (((17-ac)/2)|0);
+		} else if (hp > 190) {
+			cr = 9 - (((16-ac)/2)|0);
+		} else if (hp > 175) {
+			cr = 8 - (((16-ac)/2)|0);
+		} else if (hp > 160) {
+			cr = 7 - (((15-ac)/2)|0);
+		} else if (hp > 145) {
+			cr = 6 - (((15-ac)/2)|0);
+		} else if (hp > 130) {
+			cr = 5 - (((15-ac)/2)|0);
+		} else if (hp > 115) {
+			cr = 4 - (((14-ac)/2)|0);
+		} else if (hp > 100) {
+			cr = 3 - (((13-ac)/2)|0);
+		} else if (hp > 85) {
+			cr = 2 - (((13-ac)/2)|0);
+		} else if (hp > 70) {
+			cr = 1 - (((13-ac)/2)|0);
+		} else {
+			cr = 0 - (((13-ac)/2)|0);
+		}
+		if (cr <= 0) {
+			if (hp > 49) {
+				cr = '1/2';
+			} else if (hp > 35) {
+				cr = '1/4';
+			} else if (hp > 6) {
+				cr = '1/8';
+			} else {
+				cr = 0
+			}
+		}
+		return cr;
+	}
+	// Calculate Defensive CR
+	function calcDCR() {
+		// Calculate a raw DCR
+		var ac = parseInt($('#armour_class').html(),10);
+		var hp = parseInt($('#hit_points').html(),10);
+		var cr = rawDCR(hp,ac);
+		// Refine DCR based on immunities and resistances
+		if (cr > 7 && $('input[name="immune"]:checked').length > 2) {
+			cr = rawDCR((hp*1.25),ac);
+		} else if (cr > 5) {
+			if ($('input[name="immune"]:checked').length > 2) {
+				cr = rawDCR((hp*1.5),ac);
+			} else if ($('input[name="resist"]:checked').length > 4) {
+				cr = rawDCR((hp*1.25),ac);
+			}
+		} else if (cr > 2) {
+			if ($('input[name="immune"]:checked').length > 2) {
+				cr = rawDCR((hp*2),ac);
+			} else if ($('input[name="resist"]:checked').length > 4) {
+				cr = rawDCR((hp*1.5),ac);
+			}
+		} else if ($('input[name="immune"]:checked').length > 2 || $('input[name="resist"]:checked').length > 4) {
+			cr = rawDCR((hp*2),ac);
+		}
+		$('#defence_cr').html(cr+'');
 	}
 	// Attribute changes
 	$("#str").change(function () { $('#str_mod').html(Math.floor(($("#str").val()-10)/2)); });
 	$("#con").change(function () { $('#con_mod').html(Math.floor(($("#con").val()-10)/2)); calcHP(); });
-	$("#dex").change(function () { $('#dex_mod').html(Math.floor(($("#dex").val()-10)/2)); });
+	$("#dex").change(function () { $('#dex_mod').html(Math.floor(($("#dex").val()-10)/2)); calcAC(); });
 	$("#int").change(function () { $('#int_mod').html(Math.floor(($("#int").val()-10)/2)); });
 	$("#wis").change(function () { $('#wis_mod').html(Math.floor(($("#wis").val()-10)/2)); });
 	$("#cha").change(function () { $('#cha_mod').html(Math.floor(($("#cha").val()-10)/2)); });
 	// Size-changes
 	$('#size').change(function () { calcHP(); });
-	// Hit Die changes
+	// HP changes
 	$("#hit_die").change(function () { calcHP(); });
+	$("#hit_bonus").change(function () { calcHP(); });
+	$("input[name='resist']").on("click",function () { calcDCR(); });
+	$("input[name='immune']").on("click",function () { calcDCR(); });
+	// AC changes
+	$('#armour').change(function () { calcAC(); });
+	$('#shielded').on("click", function () { calcAC(); });
+	$("#armour_bonus").change(function () { calcAC(); });
 </script>
 </html>
