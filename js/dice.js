@@ -101,6 +101,65 @@ var Dice = new function () {
         // Returns the Standard D&D Array (for 6 attributes)
         standardArray: (function () {
         	return [8,10,12,13,14,15];
-        })
+        }),
+        // Saves a dice to the local storage object
+        // Sides/number/modval are integers, mod is a boolean value, and name is a string
+        save: (function (sides, number, mod, modval, name) {
+    		// Creates a new dice object
+        	var dice = {
+    			'number': parseInt(number, 10),
+    			'sides': parseInt(sides, 10),
+    			'mod': (mod == true),
+    			'modval': parseInt(modval, 10),
+    			'name': name
+    		};
+        	// Grabs the stored values (or creates a new one) and appends our new value
+    		var dices = (typeof localStorage['dice'] === "undefined") ? {} : JSON.parse(localStorage['dice']);
+    		dices[$("#name").val()] = dice;
+    		// Save the new object
+    		localStorage.setItem('dice', JSON.stringify(dices));
+    	}),
+    	// Return the JSON array for all the dice in the system
+    	all: (function() {
+    		return JSON.parse(localStorage['dice']);
+    	}),
+    	// Return a specific stored dice
+    	get: (function (name) {
+    		var dies = JSON.parse(localStorage['dice']);
+    		if (dies[name] != null) {
+    			return dies[name];
+    		}
+    		return null;
+    	}),
+    	// Remove a specific dice instance
+    	remove: (function (name) {
+    		var dies = JSON.parse(localStorage['dice']);
+    		delete dies[name];
+    		localStorage.setItem('dice', JSON.stringify(dies));
+    	}),
+    	// Exports our localStorage JSON data if it exists
+    	Export: (function() {
+    		if (localStorage['dice'] != null) {
+    			return localStorage['dice'];
+    		}
+    		return;
+    	}),
+    	// Import string text into our localStorage
+    	Import: (function(text) {
+    		if (text){
+    		    try{
+    		        var dies = JSON.parse(text);
+    		        for (var dice in dies) {
+    		        	if (dice.name || dice.number || dice.sides || dice.mod || dice.modval) {
+    		        		return;
+    		        	}
+    		        }
+    		        // Save the new object
+    	    		localStorage.setItem('dice', text);
+    		    }catch(e){
+    		        alert(e); //error in the above string(in this case,yes)!
+    		    }
+    		}
+    	})
     };
 };

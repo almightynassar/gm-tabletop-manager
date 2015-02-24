@@ -40,19 +40,19 @@
 			</div>
 		</div>
 	</div>
-	<script src="../js/jquery.js"></script>
+	<script src="../js/lib/jquery.js"></script>
 	<script src="../js/markov.js"></script>
-	<script src="../js/names.js"></script>
 	<script>
-		for(var race in Name) {
+		// Load the lists and chains
+		Markov.load();
+		Markov.loadList(Markov.races()[0],'male');
+		for(var race in Markov.all()) {
 			var title = race.replace(/\b[a-z]/g, function(letter) {
 			    return letter.toUpperCase();
 			});
 			$('#race_input').append('<option value="'+race+'">'+title+'</option>');
-			$('#MarkovNotes').append("<li>"+title+" names: "+Name[race].male.length+" male, "+Name[race].female.length+" female</li>");
+			$('#MarkovNotes').append("<li>"+title+" names: "+Markov.getLength(race,'male')+" male, "+Markov.getLength(race,'female')+" female</li>");
 		}
-		// Load the default list (Human males)
-		Markov.load(Name.human.male, 'Human');
 		// Generates names
 		function generate() {
 			load();
@@ -60,17 +60,16 @@
 			var number = parseInt($('#number_input').val(), 10);
 			var length = parseInt($('#length_input').val(), 10);
 			for (var i = 0; i < number; i++) {
-				var new_name = Markov.make(1,length);{}
+				var new_name = Markov.make(1,length);
 				text += "<p>" + new_name.charAt(0).toUpperCase() + new_name.slice(1); + "</p>";
 			}
 			$('#Result').html(text);
 		};
-		
 		// Load names
 		function load() {
 			var gender = $('#gender_input').val();
 			var race = $('#race_input').val();
-			Markov.load(Name[race][gender], race);
+			Markov.loadList(race,gender);
 		}
 	</script>
 </body>

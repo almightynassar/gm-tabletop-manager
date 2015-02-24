@@ -17,16 +17,16 @@
     <div id="main-wrapper">
     	<div id="sidebar-wrapper">
     		<ul class="sidebar-nav">
-    			<li><a id="dice-roller" href="#Dice-Roller">Dice Roller</a></li>
-    			<li><a id="fictional-script" href="#Fictional-Script">Fictional Script</a></li>
-    			<li><a id="generate-name" href="#Generate-name">Generate Markov name</a></li>
-    			<li><a id="generate-rumour" href="#Generate-Rumour">Rumours</a></li>
-    			<li><a id="generate-tavern" href="#Generate-Tavern">Book/Tavern Generator</a></li>
+    			<li><a id="dice" href="#Dice">Dice Roller</a></li>
+    			<li><a id="fictional" href="#Fictional">Fictional Text Generator</a></li>
+    			<li><a id="name" href="#Name">Generate names</a></li>
+    			<li><a id="rumour" href="#Rumour">Generate Rumours</a></li>
+    			<li><a id="title" href="#Title">Book/Tavern Title Generator</a></li>
     			<li><hr /></li>
-    			<li><a id="database-races" href="#Database-Races">Database - Races</a></li>
-    			<li><a id="item-database" href="#Item-Database">Database - Items</a></li>
+    			<li><a id="races" href="#Races">Races Database</a></li>
+    			<li><a id="items" href="#Itemse">Items Database</a></li>
     			<li><hr /></li>
-    			<li><a id="monster-creator" href="#Monster-Creator">Monster Creator</a></li>
+    			<li><a id="monsters" href="#Monsters">Monster Creator</a></li>
     		</ul>
     	</div>
     	<div id="content-wrapper">
@@ -36,7 +36,7 @@
                 		<a href="#menu-toggle" class="btn btn-dnd" id="menu-toggle">Toggle menu</a>
                 	</div>
                     <div class="col-lg-11">
-                        <p><strong>GM Tabletop Manager v0.0.1</strong> <em>by almightynassar. <a href="https://github.com/almightynassar/shapies/">Click here to access the GitHub Repository</a></em></p>
+                        <p><strong>GM Tabletop Manager v0.0.2</strong> <em>by almightynassar. <a href="https://github.com/almightynassar/shapies/">Click here to access the GitHub Repository</a></em></p>
                     </div>
                 </div>
             </div>
@@ -44,20 +44,18 @@
     	</div>
     </div>
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="js/lib/jquery.js"></script>
+    <script src="js/lib/bootstrap.js"></script>
     <script>
-    // Edition-agnostic stuff
     $("#menu-toggle").click(function(e) { e.preventDefault(); $("#main-wrapper").toggleClass("toggled"); });
-    $("#dice-roller").click(function () { $("#frame").attr("src", "html/dice.html"); });
-    $("#fictional-script").click(function () { $("#frame").attr("src", "html/fictional.html"); });
-    $("#generate-name").click(function () { $("#frame").attr("src", "html/markov.html"); });
-    $("#generate-rumour").click(function () { $("#frame").attr("src", "html/rumours.html"); });
-    $("#generate-tavern").click(function () { $("#frame").attr("src", "html/titles.html"); });
-    // D&D 5E edition stuff
-    $("#monster-creator").click(function () { $("#frame").attr("src", "html/monster.html"); });
-    $("#database-races").click(function () { $("#frame").attr("src", "html/races.html"); });
-    $("#item-database").click(function () { $("#frame").attr("src", "html/item.html"); });
+    $("#dice").click(function () { $("#frame").attr("src", "html/dice.html"); });
+    $("#fictional").click(function () { $("#frame").attr("src", "html/fictional.html"); });
+    $("#name").click(function () { $("#frame").attr("src", "html/markov.html"); });
+    $("#rumour").click(function () { $("#frame").attr("src", "html/rumours.html"); });
+    $("#title").click(function () { $("#frame").attr("src", "html/titles.html"); });
+    $("#monsters").click(function () { $("#frame").attr("src", "html/monster.html"); });
+    $("#races").click(function () { $("#frame").attr("src", "html/races.html"); });
+    $("#items").click(function () { $("#frame").attr("src", "html/item.html"); });
     </script>
 </body>
 </html>

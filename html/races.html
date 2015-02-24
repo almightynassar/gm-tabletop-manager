@@ -8,30 +8,238 @@
 	<meta content="Shapies Tabletop RPG Manager" name="description">
 	<meta content="Almighty Nassar" name="author">
 	<link rel="icon" href="favicon.ico">
-	<title>Database - Race</title>
+	<title>Races Database</title>
 	<!-- CSS SCRIPTS -->
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all">
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.css" media="all">
 </head>
 <body>
 	<div class="container">
 		<div class="row">
-			<p>Choose the system:</p>
-			<p class="form-inline">
-			    <select id="edition" class="form-control">
-			    	<option value="dnd4E">D&amp;D 4th Edition</option>
-			    	<option value="dnd5E">D&amp;D 5th Edition</option>
-			    </select>
-			    <button onclick='select();' class="btn btn-primary">Go!</button>
-			</p>
+			<div id="Race" class="col-lg-12">
+				<p>Select a race to view it's "model", as determined by our internal database:</p>
+				<p><select id="race_input" class="form-control" name="race_input" onchange='generate();'></select></p>
+			</div>
+		</div>
+		<div class="row">
+			<div id="Result" class="col-lg-12" >
+				<table class="table">
+					<tr>
+						<th>Race Points</th>
+						<td id="race_points"></td>
+					</tr>
+					<tr>
+						<th>Name</th>
+						<td id="race_name"></td>
+					</tr>
+					<tr>
+						<th>Description</th>
+						<td id="race_description"></td>
+					</tr>
+					<tr>
+						<th>Origin</th>
+						<td id="race_origin"></td>
+					</tr>
+					<tr>
+						<th>Vision</th>
+						<td id="race_vision"></td>
+					</tr>
+					<tr>
+						<th>Speed</th>
+						<td id="race_speed"></td>
+					</tr>
+					<tr>
+						<th>Height</th>
+						<td id="race_height"></td>
+					</tr>
+					<tr>
+						<th>Weight</th>
+						<td id="race_weight"></td>
+					</tr>
+					<tr>
+						<th>Lifespan</th>
+						<td id="race_lifespan"></td>
+					</tr>
+					<tr>
+						<th>Attributes</th>
+						<td id="race_attributes"></td>
+					</tr>
+					<tr>
+						<th>Defences</th>
+						<td id="race_defences"></td>
+					</tr>
+					<tr>
+						<th>Skills</th>
+						<td id="race_skills"></td>
+					</tr>
+					<tr>
+						<th>Resistances</th>
+						<td id="race_resistances"></td>
+					</tr>
+					<tr>
+						<th>Vulnerabilities</th>
+						<td id="race_vulnerabilities"></td>
+					</tr>
+					<tr>
+						<th>Immunities</th>
+						<td id="race_immunities"></td>
+					</tr>
+					<tr>
+						<th>Properties</th>
+						<td id="race_properties"></td>
+					</tr>
+					<tr>
+						<th>Powers</th>
+						<td id="race_powers"></td>
+					</tr>
+					<tr>
+						<th>Breeding &amp; Pregnancy</th>
+						<td id="race_conception"></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
-	<script src="../js/jquery.js"></script>
+	<script src="../../js/jquery.js"></script>
+	<script src="../../js/dnd4E/races.js"></script>
 	<script>
-		function select() {
-			var edition = $('#edition').val();
-			window.location.href="./"+edition+"/races.html";
+	for(var race in Race) {
+		$('#race_input').append('<option value="'+race+'">'+race+'</option>');
+	}
+	function generate() {
+		var race = $('#race_input').val();
+		var vision = (Race[race].bonus.darkvision) ? 'Darkvision' : ((Race[race].bonus.lowvision) ? "Low vision (can see in Dim Light)" : "Normal Vision (creatures in Dim Light have concealment)");
+		var squares = Race[race].speed;
+		var metres = squares * 1.5;
+		var per_minute = metres * 10;
+		var per_hour = per_minute * 60;
+		var points = Race[race].speed - 6;
+		if (Race[race].bonus.darkvision > 0) {
+			points += Race[race].bonus.darkvision * 2;
 		}
+		if (Race[race].bonus.lowvision > 0) {
+			points += Race[race].bonus.lowvision;
+		}
+		$('#race_name').html(race);
+		$('#race_vision').html(vision);
+		$('#race_speed').html(squares+" squares, "+metres+" m per turn, "+per_minute+" m per minute, "+per_hour+" m per hour");
+		$('#race_description').html(Race[race].description);
+		$('#race_origin').html(Race[race].origin);
+		$('#race_height').html(Race[race].height.min+" cm - "+Race[race].height.max+" cm");
+		$('#race_weight').html(Race[race].weight.min+" kg - "+Race[race].weight.max+" kg");
+		$('#race_lifespan').html("Maturity: "+Race[race].age.adult+" years; Average: "+Race[race].age.average+" years; Maximum: "+Race[race].age.limit+" years");
+		$('#race_attributes').html('');
+		for (attribute in Race[race].attributes) {
+			if (Race[race].attributes[attribute] > 0) {
+				$('#race_attributes').append('+'+Race[race].attributes[attribute]+' '+attribute.toUpperCase()+'; ');
+				points += Race[race].attributes[attribute];
+			}
+		}
+		if (Race[race].bonus.attributes > 0) {
+			$('#race_attributes').append(' (Bonus '+Race[race].bonus.attributes+' attributes)');
+			points += Race[race].bonus.attributes * 2;
+		}
+		$('#race_skills').html('');
+		for (skill in Race[race].skills) {
+			if (Race[race].skills[skill] > 0) {
+				$('#race_skills').append('+'+Race[race].skills[skill]+' '+skill.toUpperCase()+'; ');
+				points += Race[race].skills[skill];
+			}
+		}
+		if (Race[race].bonus.skills > 0) {
+			$('#race_skills').append(' (Bonus '+Race[race].bonus.skills+' trained skills)');
+			points += Race[race].bonus.skills;
+		}
+		$('#race_defences').html('');
+		for (defence in Race[race].defences) {
+			if (Race[race].defences[defence] > 0) {
+				$('#race_defences').append('+'+Race[race].defences[defence]+' '+defence.toUpperCase()+'; ');
+				points += Race[race].defences[defence];
+			}
+		}
+		$('#race_resistances').html('');
+		for (resist in Race[race].resistances) {
+			if (Race[race].resistances[resist] > 0) {
+				$('#race_resistances').append('+'+Race[race].resistances[resist]+' '+resist.toUpperCase()+'; ');
+				points += 1;
+			}
+		}
+		$('#race_vulnerabilities').html('');
+		for (vuln in Race[race].vulnerabilities) {
+			if (Race[race].vulnerabilities[vuln] > 0) {
+				$('#race_vulnerabilities').append('+'+Race[race].vulnerabilities[vuln]+' '+vuln.toUpperCase()+'; ');
+				points -= 1;
+			}
+		}
+		$('#race_immunities').html('');
+		for (immune in Race[race].immunities) {
+			if (Race[race].immunities[immune] > 0) {
+				$('#race_immunities').append('+'+Race[race].immunities[immune]+' '+immune.toUpperCase()+'; ');
+				points += 5;
+			}
+		}
+		$('#race_properties').html('');
+		for (prop in Race[race].properties) {
+			$('#race_properties').append('<p><b>'+prop.charAt(0).toUpperCase()+prop.slice(1)+':</b> '+Race[race].properties[prop]+'</p>');
+			points += 1;
+		}
+		if (Race[race].bonus.no_armour_penalty > 0) {
+			$('#race_properties').append('<p><b>Armour:</b> Heavy armour does not affect your base speed. Difficult terrain or magical affects still affect your speed</p>');
+			points += 1;
+		}
+		if (Race[race].bonus.surge_value_bonus > 0) {
+			$('#race_properties').append('<p><b>Alternate Surge Value:</b> Your healing surge value is equal to one-quarter your max HP + constitution modifier</p>');
+			points += 1;
+		}
+		if (Race[race].bonus.surge_bonus > 0) {
+			$('#race_properties').append('<p><b>Surge Bonus:</b> You gain one additional healing surge</p>');
+			points += 1;
+		}
+		if (Race[race].bonus.feat > 0) {
+			$('#race_properties').append('<p><b>Bonus Feats:</b> You gain '+Race[race].bonus.feat+' additional feats</p>');
+			points += Race[race].bonus.feat;
+		}
+		if (Race[race].bonus.atwills > 0) {
+			$('#race_properties').append('<p><b>Bonus Feats:</b> You gain '+Race[race].bonus.atwills+' additional at-will powers</p>');
+			points += Race[race].bonus.atwills;
+		}
+		if (Race[race].bonus.initiative > 0) {
+			$('#race_properties').append('<p><b>Bonus Initiative:</b> You gain '+Race[race].bonus.initiative+' additional initiative</p>');
+			points += Race[race].bonus.initiative;
+		}
+		$('#race_powers').html('');
+		for (power in Race[race].powers) {
+			$('#race_powers').append('<p><b>'+Race[race].powers[power].name+', '+Race[race].powers[power].usage+'</b></p>');
+			if (Race[race].powers[power].target !== '') {
+				$('#race_powers').append('<p><b>Target:</b> '+Race[race].powers[power].target+'</p>');
+			}
+			if (Race[race].powers[power].effect !== '') {
+				$('#race_powers').append('<p><b>Effect:</b> '+Race[race].powers[power].effect+'</p>');
+			}
+			if (Race[race].powers[power].special !== '') {
+				$('#race_powers').append('<p><b>Special:</b> '+Race[race].powers[power].special+'</p>');
+			}
+			points += 1;
+		}
+		$('#race_conception').html('');
+		if (!$.isEmptyObject(Race[race].conception)) {
+			$('#race_conception').append('<p><b>Conception:</b> '+(Race[race].conception.conception*100)+'% chance per sexual encounter');
+			if (Race[race].conception.heat > 0) {
+				$('#race_conception').append('<p><b>This race requires their females to be in heat to reproduce. If not in heat, then 0% chance for reproduction</b></p>');
+			}
+			if (Race[race].conception.control > 0) {
+				$('#race_conception').append('<p><b>This race has mastery over their bodies, and can control whether they can concieve or not during the encounter</b></p>');
+			}
+			$('#race_conception').append('<p><b>Gestation:</b> '+Race[race].conception.gestation+' days</p>');
+			for (cross in Race[race].conception.crossbreed) {
+				$('#race_conception').append('<p>If a male mated with a female <b>'+cross+'</b>, the offspring will be <b>'+Race[race].conception.crossbreed[cross]+'</b></p>');
+			}
+		} else {
+			$('#race_conception').append('This race cannot breed sexually');
+		}
+		$('#race_points').html(points+' points');
+	}
+	generate();
 	</script>
 </body>
 </html>

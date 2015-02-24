@@ -55,6 +55,23 @@
 				      </div>
 				    </div>
 				  </div>
+					<div class="panel panel-default">
+					    <div class="panel-heading" role="tab" id="headingThree">
+					      <h4 class="panel-title">
+					        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+					          Import/Export
+					        </a>
+					      </h4>
+					    </div>
+					    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+					      <div>
+					      	<button id="Export">Export</button>
+					      	<button id="Import">Import</button>
+					      </div>
+					      <p>To Export, click on the Export button and save the text. To Import, paste text into the box and click Import.</p>
+					      <textarea id="importarea"></textarea>
+					    </div>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-7">
@@ -80,8 +97,8 @@
 			</div>
 		</div>
 	</div>
-	<script src="../js/jquery.js"></script>
-	<script src="../js/bootstrap.js"></script>
+	<script src="../js/lib/jquery.js"></script>
+	<script src="../js/lib/bootstrap.js"></script>
 	<script src="../js/dice.js"></script>
 	<script>
 	function roll() {
@@ -89,18 +106,9 @@
 		var sides = parseInt($("#sides").val(), 10);
 		var mod = $('#mod').val() === '+';
 		var modval = parseInt($("#modval").val(), 10);
+		var adv = ($('#type').val() === "adv") ? 1 : (($('#type').val() === "dis") ? -1 : 0); 
 		var dc = parseInt($('#dc').val(), 10);
-		var die = Dice.dice(sides, number);
-		switch ($('#type').val()) {
-			case 'adv':
-				var temp = Dice.dice(sides, number);
-				die = (temp > die) ? temp : die;
-				break;
-			case 'dis':
-				var temp = Dice.dice(sides, number);
-				die = (temp < die) ? temp : die;
-				break;
-		}
+		var die = Dice.dice(sides, number, adv);
 		var result = 0;
 		if (mod) {
 			result = die + modval;
@@ -110,33 +118,33 @@
 		$("#Dice").prepend("<p><b>Rolling "+number+"d"+sides+":</b> "+die+" "+$('#mod').val()+" "+modval+" ("+$('#type').val()+")</p><h class='btn "+(result >= dc ? "btn-info" : "btn-danger")+"'>"+result+"</h1>");
 	};
 	function save() {
-		var dice = {
-			'number': parseInt($("#number").val(), 10),
-			'sides': parseInt($("#sides").val(), 10),
-			'mod': $('#mod').val() === '+',
-			'modval': parseInt($("#modval").val(), 10),
-			'name': $("#name").val()
-		}
-		var dices = (typeof localStorage['dice'] === "undefined") ? {} : JSON.parse(localStorage['dice']);
-		dices[$("#name").val()] = dice;
-		localStorage.setItem('dice', JSON.stringify(dices));
-		$('#saves').html('');
+		Dice.save($("#sides").val(), $("#number").val(), ($('#mod').val() === '+'), $("#modval").val(), $("#name").val());
 		list();
 	};
 	function list() {
-		var dies = JSON.parse(localStorage['dice']);
-		for (dice in dies) {
-			$('#saves').append('<p><button onclick="$(\'#number\').val('+dies[dice].number+');$(\'#sides\').val('+dies[dice].sides+');$(\'#mod\').val('+((dies[dice].mod === true) ? "'+'" : "'-'")+');$(\'#modval\').val('+dies[dice].modval+');" class="btn btn-info">Load</button> <button onclick="delDice(\''+dice+'\')" class="btn btn-danger">Delete</button>'+dice+' ('+dies[dice].number+'d'+dies[dice].sides+(dies[dice].mod ? '+' : '-')+dies[dice].modval+')</p>');
+		$('#saves').html('');
+		var dies = Dice.all();
+		for (var dice in dies) {
+			$('#saves').append('<p>'+dice+' ('+dies[dice].number+'d'+dies[dice].sides+(dies[dice].mod ? '+' : '-')+dies[dice].modval+') <button onclick="load(\''+dies[dice].name+'\');" class="btn btn-xs btn-info">Load</button> <button onclick="remove(\''+dice+'\')" class="btn btn-xs btn-danger">Delete</button></p>');
 		}
 	};
-	function delDice(diceName) {
-		var dies = JSON.parse(localStorage['dice']);
-		delete dies[diceName];
-		localStorage.setItem('dice', JSON.stringify(dies));
-		$('#saves').html('');
+	function load(diceName) {
+		var dice = Dice.get(diceName);
+		if (dice) {
+			$('#number').val(dice.number);
+			$('#sides').val(dice.sides);
+			$('#mod').val((dice.mod === true) ? "+" : "-");
+			$('#modval').val(dice.modval);
+			$('#name').val(dice.name);
+		}
+	}
+	function remove(diceName) {
+		Dice.remove(diceName);
 		list();
 	};
 	$('.collapse').collapse();
+	$('#Export').click(function(){$('#importarea').html(Dice.Export());});
+	$('#Import').click(function(){Dice.Import($('#importarea').val()); list();})
 	list();
 	</script>
 </body>
