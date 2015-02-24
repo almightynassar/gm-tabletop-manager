@@ -25,4 +25,4 @@ USAGE
 
 While you could use the GitHub page, this project is designed to operate without using a server or a connection to the internet (it does require JavaScript to be enabled in a HTML5 compatible browser). Download the zipped version onto your computer, extract it to a directory, and then open 'index.html' in your browser and you will have your very own version!
 
-NOTE: Since this project uses HTML5 local storage, your data is locked to the physical location and browser you accessed it with. You will need to export your data and import it to the new computer/browser.
+NOTE: Since this project uses HTML5 local storage, your data is locked to the physical location, URL and browser you accessed it with. You will need to export your data and import it to the new computer/browser.

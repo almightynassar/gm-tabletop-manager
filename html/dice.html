@@ -50,8 +50,12 @@
 				        </a>
 				      </h4>
 				    </div>
-				    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-				      <div id="saves" class="panel-body">
+				    <div id="collapseTwo" class="panel-collapse collapse in panel-body" role="tabpanel" aria-labelledby="headingTwo">
+				      <p class="form-inline">
+				 		<input id="name" class="form-control"  value='Dice Name' />
+				 		<button onclick='save();' class="btn btn-success">Save!</button>
+					  </p>
+				      <div id="saves">
 				      </div>
 				    </div>
 				  </div>
@@ -63,31 +67,37 @@
 					        </a>
 					      </h4>
 					    </div>
-					    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+					    <div id="collapseThree" class="panel-collapse collapse in panel-body" role="tabpanel" aria-labelledby="headingThree">
 					      <div>
 					      	<button id="Export">Export</button>
 					      	<button id="Import">Import</button>
 					      </div>
 					      <p>To Export, click on the Export button and save the text. To Import, paste text into the box and click Import.</p>
-					      <textarea id="importarea"></textarea>
+					      <textarea id="importarea" class="form-control"></textarea>
 					    </div>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-7">
-				<p class="form-inline"><b>Number of dice:</b> <input type="number" id="number" class="form-control" value='1' /></p>
-				<p class="form-inline"><b>Sides on dice</b> <input type="number" id="sides" class="form-control" value='20' /></p>
-				<p class="form-inline"><b>Modifier</b>
-					<select id="mod" class="form-control">
-						<option value="+">+</option>
-						<option value="-">-</option>
-					</select>
-					<input type="number" id="modval" class="form-control"  value='0' />
+				<p class="form"><b>Number of dice:</b> <input type="number" id="number" class="form-control" value='1' /></p>
+				<p class="form"><b>Sides on dice</b> <input type="number" id="sides" class="form-control" value='20' /></p>
+				<p><b>Modifier</b></p>
+				<p>
+					<span class="form-inline">
+						<select id="mod" class="form-control">
+							<option value="+">+</option>
+							<option value="-">-</option>
+						</select>
+						<input type="number" id="modval" class="form-control"  value='0' />
+					</span>
 				</p>
-				<p class="form-inline">
-					<button onclick='roll();' class="btn btn-primary">Roll!</button> or <button onclick='save();' class="btn btn-success">Save!</button>
-				 	<input id="name" class="form-control"  value='Dice Name' />
-				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<button onclick='roll();' class="btn btn-block btn-lg btn-primary">Roll!</button>
+				<br />
+				<br />
 			</div>
 		</div>
 		<div class="row">

@@ -45,7 +45,6 @@ html, body, #main-wrapper, #content-wrapper { height: 100% }
     line-height: 40px;
 }
 .sidebar-nav > .brand {
-    height: 65px;
     font-size: 18px;
     line-height: 60px;
 }

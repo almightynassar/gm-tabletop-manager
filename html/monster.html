@@ -363,9 +363,9 @@
 		<div id="CanvasResult"></div>
 	</div>
 </body>
-<script src="../js/jquery.js"></script>
-<script src="../js/bootstrap.js"></script>
-<script src="../js/html2canvas.js"></script>
+<script src="../js/lib/jquery.js"></script>
+<script src="../js/lib/bootstrap.js"></script>
+<script src="../js/lib/html2canvas.js"></script>
 <script src="../js/monsterStatBlock.js"></script>
 <script src="../js/d20.js"></script>
 <script src="../js/dice.js"></script>
@@ -950,11 +950,11 @@
 		$('#cr').html(result);
 		$('#final_prof').html(prof);
 		$('#saves').html(text);
-	    html2canvas(attackDiv, {
-	        onrendered: function(canvas) {
-	        	$('#CanvasResult').html(canvas);
-	        }
-	    });
+	    //html2canvas(attackDiv, {
+	    //    onrendered: function(canvas) {
+	    //    	$('#CanvasResult').html(canvas);
+	    //    }
+	    //});
 	}
 	// Attribute changes
 	$("#str").change(function () { $('#str_mod').html(Math.floor(($("#str").val()-10)/2)); calcAC(); });

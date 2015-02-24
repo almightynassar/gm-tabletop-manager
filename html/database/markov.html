@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>Markov Name Database</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.css" media="all">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 well form">
+				<div>
+					<p>Chain: <select id="race_input" class="form-control" name="race_input" ></select></p>
+					<p>Gender:
+						<select id="gender_input" class="form-control" name="gender_input" >
+							<option value="male" >Male</option>
+							<option value="female" >Female</option>
+						</select>
+					</p>
+					<button id="Export">Export</button>
+				</div>
+				<p>To Export, click on the Export button and save the text. To Import, paste text into the box and click Import.</p>
+				<textarea id="importarea" class="form-control" rows=20></textarea>
+				<div class="form-inline">
+					<input id="name" class="form-control"  value='Race' />
+					<select id="gender_input2" class="form-control" name="gender_input" >
+						<option value="male" >Male</option>
+						<option value="female" >Female</option>
+					</select>
+					<button id="Import">Import</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/lib/jquery.js"></script>
+	<script src="../../js/markov.js"></script>
+	<script>
+		// Load the lists and chains
+		Markov.load();
+		Markov.loadList(Markov.races()[0],'male');
+		for(var race in Markov.all()) {
+			var title = race.replace(/\b[a-z]/g, function(letter) {
+			    return letter.toUpperCase();
+			});
+			$('#race_input').append('<option value="'+race+'">'+title+'</option>');
+			$('#MarkovNotes').append("<li>"+title+" names: "+Markov.getLength(race,'male')+" male, "+Markov.getLength(race,'female')+" female</li>");
+		}
+		$('#Export').click(function(){
+			var gender = $('#gender_input').val();
+			var race = $('#race_input').val();
+			$('#importarea').html(JSON.stringify(Markov.getList(race,gender)));
+		});
+		$('#Import').click(function(){
+			var gender = $('#gender_input2').val();
+			var race = $('#name').val();
+			Markov.addList(race,gender,JSON.parse($('#importarea').val()));
+			Markov.save();
+		});
+	</script>
+</body>
+</html>

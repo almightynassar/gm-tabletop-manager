@@ -17,16 +17,18 @@
     <div id="main-wrapper">
     	<div id="sidebar-wrapper">
     		<ul class="sidebar-nav">
+    			<li class="brand"><strong>Generators</strong></li>
     			<li><a id="dice" href="#Dice">Dice Roller</a></li>
-    			<li><a id="fictional" href="#Fictional">Fictional Text Generator</a></li>
-    			<li><a id="name" href="#Name">Generate names</a></li>
-    			<li><a id="rumour" href="#Rumour">Generate Rumours</a></li>
-    			<li><a id="title" href="#Title">Book/Tavern Title Generator</a></li>
-    			<li><hr /></li>
-    			<li><a id="races" href="#Races">Races Database</a></li>
-    			<li><a id="items" href="#Itemse">Items Database</a></li>
-    			<li><hr /></li>
+    			<li><a id="fictional" href="#Fictional">Fictional Text</a></li>
+    			<li><a id="name" href="#Name">Markov Names</a></li>
     			<li><a id="monsters" href="#Monsters">Monster Creator</a></li>
+    			<li><a id="rumour" href="#Rumour">Rumours</a></li>
+    			<li><a id="title" href="#Title">Title for a Book/Tavern</a></li>
+    			<li><hr /></li>
+    			<li class="brand"><strong>Databases</strong></li>
+    			<li><a id="itemsDB" href="#ItemsDB">Items</a></li>
+    			<li><a id="namesDB" href="#NamesDB">Names</a></li>
+    			<li><a id="racesDB" href="#RacesDB">Races</a></li>
     		</ul>
     	</div>
     	<div id="content-wrapper">
@@ -48,14 +50,17 @@
     <script src="js/lib/bootstrap.js"></script>
     <script>
     $("#menu-toggle").click(function(e) { e.preventDefault(); $("#main-wrapper").toggleClass("toggled"); });
+    // Generators
     $("#dice").click(function () { $("#frame").attr("src", "html/dice.html"); });
     $("#fictional").click(function () { $("#frame").attr("src", "html/fictional.html"); });
     $("#name").click(function () { $("#frame").attr("src", "html/markov.html"); });
     $("#rumour").click(function () { $("#frame").attr("src", "html/rumours.html"); });
     $("#title").click(function () { $("#frame").attr("src", "html/titles.html"); });
     $("#monsters").click(function () { $("#frame").attr("src", "html/monster.html"); });
-    $("#races").click(function () { $("#frame").attr("src", "html/races.html"); });
-    $("#items").click(function () { $("#frame").attr("src", "html/item.html"); });
+    // Databases
+    $("#racesDB").click(function () { $("#frame").attr("src", "html/races.html"); });
+    $("#namesDB").click(function () { $("#frame").attr("src", "html/database/markov.html"); });
+    $("#itemsDB").click(function () { $("#frame").attr("src", "html/item.html"); });
     </script>
 </body>
 </html>
