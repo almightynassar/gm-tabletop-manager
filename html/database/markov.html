@@ -17,25 +17,28 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 well form">
-				<div>
-					<p>Chain: <select id="race_input" class="form-control" name="race_input" ></select></p>
-					<p>Gender:
-						<select id="gender_input" class="form-control" name="gender_input" >
-							<option value="male" >Male</option>
-							<option value="female" >Female</option>
-						</select>
-					</p>
-					<button id="Export">Export</button>
+				<p>To Export, click on the Export button and save the text that appears in the text box below. Each name will be seperated by a comma.</p>
+				<div class="form-group">
+					<label>Chain</label>
+					<select id="race_input" class="form-control" name="race_input" ></select>
 				</div>
-				<p>To Export, click on the Export button and save the text. To Import, paste text into the box and click Import.</p>
+				<div class="btn-group">
+					<button class="btn btn-info" id="Export">Export</button>
+					<button class="btn btn-danger" id="Delete">Delete</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form">
 				<textarea id="importarea" class="form-control" rows=20></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form">
+				<p>To Import, paste edit or write into the box above. In the box below give the data-set a name and then click Import. Note that each name should be seperated by a comma.</p>
 				<div class="form-inline">
 					<input id="name" class="form-control"  value='Race' />
-					<select id="gender_input2" class="form-control" name="gender_input" >
-						<option value="male" >Male</option>
-						<option value="female" >Female</option>
-					</select>
-					<button id="Import">Import</button>
+					<button class="btn btn-primary" id="Import">Import</button>
 				</div>
 			</div>
 		</div>
@@ -43,26 +46,35 @@
 	<script src="../../js/lib/jquery.js"></script>
 	<script src="../../js/markov.js"></script>
 	<script>
-		// Load the lists and chains
-		Markov.load();
-		Markov.loadList(Markov.races()[0],'male');
-		for(var race in Markov.all()) {
-			var title = race.replace(/\b[a-z]/g, function(letter) {
-			    return letter.toUpperCase();
-			});
-			$('#race_input').append('<option value="'+race+'">'+title+'</option>');
-			$('#MarkovNotes').append("<li>"+title+" names: "+Markov.getLength(race,'male')+" male, "+Markov.getLength(race,'female')+" female</li>");
+		// Load the stored lists and chains
+		function load() {
+			$('#race_input').html('');
+			Markov.load();
+			Markov.loadList(Markov.races()[0]);
+			for(var race in Markov.all()) {
+				var title = race.replace(/\b[a-z]/g, function(letter) {
+				    return letter.toUpperCase();
+				});
+				$('#race_input').append('<option value="'+race+'">'+title+'</option>');
+				$('#MarkovNotes').append("<li>"+title+" names: "+Markov.getLength(race,'male')+" male, "+Markov.getLength(race,'female')+" female</li>");
+			}
 		}
+		load();
 		$('#Export').click(function(){
-			var gender = $('#gender_input').val();
 			var race = $('#race_input').val();
-			$('#importarea').html(JSON.stringify(Markov.getList(race,gender)));
+			$('#importarea').html(Markov.getCSV(race));
 		});
 		$('#Import').click(function(){
-			var gender = $('#gender_input2').val();
 			var race = $('#name').val();
-			Markov.addList(race,gender,JSON.parse($('#importarea').val()));
+			Markov.setCSV(race,$('#importarea').val());
 			Markov.save();
+			load();
+		});
+		$('#Delete').click(function(){
+			var race = $('#race_input').val();
+			Markov.deleteList(race);
+			Markov.save();
+			load();
 		});
 	</script>
 </body>

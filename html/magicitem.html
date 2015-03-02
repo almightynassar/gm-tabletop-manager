@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>Magic Item Creator</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 well">
+				<div id="Forms">
+					<div class="form-group">
+						<p><b>Level:</b></p>
+						<input type="number" id="level_input" class="form-control" name="level_input" value="1" />
+					</div>
+					<div class="form-group">
+						<p><b>Type:</b></p>
+						<select name="type_input" class="form-control" id="type_input">
+							<option value="armour">Armour</option>
+							<option value="weapon">Weapon</option>
+							<option value="divine">Divine Implements</option>
+							<option value="arcane">Arcane Implements</option>
+							<option value="mount">Mount Slot Item</option>
+							<option value="feet">Foot Slot Item</option>
+							<option value="hand">Hand Slot Item</option>
+							<option value="head">Head Slot Item</option>
+							<option value="neck">Neck Slot Item</option>
+							<option value="ring">Rings</option>
+							<option value="waist">Waist Slot Item</option>
+						</select>
+					</div>
+					<p><button class="btn btn-lg btn-block btn-primary" onclick='generate();'>Generate Item</button></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">	
+				<div id="Item">
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/lib/jquery.js"></script>
+    <script src="js/lib/bootstrap.js"></script>
+	<script src="../js/dice.js"></script>
+	<script src="../js/magicitem.js"></script>
+	<script>
+	// Magical Item
+	function generate () {
+		var level = window.document.getElementById('level_input').value;
+		var type = window.document.getElementById('type_input').value;
+		var text = "<p>Level: "+level+"</p><p>Cost: "+Magicals.price(level)+"</p><p>Enchament Bonus: +"+Magicals.enchantment(level)+"</p>"+Magicals.bonus(level, type);
+		window.document.getElementById('Item').innerHTML = text;
+	}
+	</script>
+</body>
+</html>
