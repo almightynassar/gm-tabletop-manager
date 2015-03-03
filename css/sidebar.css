@@ -19,13 +19,11 @@ html, body, #main-wrapper, #content-wrapper { height: 100% }
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background: #000;
+    background: #eee;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
-    /* Side bar text styles (default) */
-    color: #FF9900;
 }
 #main-wrapper.toggled #sidebar-wrapper {
     width: 250px;
@@ -40,10 +38,6 @@ html, body, #main-wrapper, #content-wrapper { height: 100% }
     margin-right: -250px;
 }
 /* Sidebar Styles */
-#sidebar-wrapper * {
-    text-indent: 20px;
-    line-height: 40px;
-}
 .sidebar-nav > .brand {
     font-size: 18px;
     line-height: 60px;

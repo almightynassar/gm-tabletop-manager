@@ -15,11 +15,13 @@
 </head>
 <body>
     <div id="main-wrapper">
-    	<div id="sidebar-wrapper">
+    	<div id="sidebar-wrapper" class="pull-right">
     		<ul class="sidebar-nav">
+    			<li><button class="btn btn-dnd btn-xs" id="menu-close">Close sidebar</button></li>
     			<li class="brand"><strong>Generators</strong></li>
     			<li><a id="dice" href="#Dice">Dice Roller</a></li>
     			<li><a id="fictional" href="#Fictional">Fictional Text</a></li>
+    			<li><a id="item" href="#Item">Item List</a></li>
     			<li><a id="magicitem" href="#MagicItem">Magic Item Creator</a></li>
     			<li><a id="name" href="#Name">Markov Names</a></li>
     			<li><a id="monsters" href="#Monsters">Monster Creator</a></li>
@@ -29,17 +31,16 @@
     			<li class="brand"><strong>Databases</strong></li>
     			<li><a id="itemsDB" href="#ItemsDB">Items</a></li>
     			<li><a id="namesDB" href="#NamesDB">Names</a></li>
-    			<li><a id="racesDB" href="#RacesDB">Races</a></li>
     		</ul>
     	</div>
     	<div id="content-wrapper">
     		<div class="container-fluid">
                 <div class="row">
                 	<div class="col-lg-1">
-                		<a href="#menu-toggle" class="btn btn-dnd" id="menu-toggle">Toggle menu</a>
+                		<button class="btn btn-dnd btn-xs" id="menu-open">Open sidebar</button>
                 	</div>
                     <div class="col-lg-11">
-                        <p><strong>GM Tabletop Manager v0.0.2</strong> <em>by almightynassar. <a href="https://github.com/almightynassar/shapies/">Click here to access the GitHub Repository</a></em></p>
+                        <p><strong>GM Tabletop Manager v0.0.3</strong> <em>by almightynassar. <a href="https://github.com/almightynassar/shapies/">Click here to access the GitHub Repository</a></em></p>
                     </div>
                 </div>
             </div>
@@ -50,19 +51,20 @@
     <script src="js/lib/jquery.js"></script>
     <script src="js/lib/bootstrap.js"></script>
     <script>
-    $("#menu-toggle").click(function(e) { e.preventDefault(); $("#main-wrapper").toggleClass("toggled"); });
+    $("#menu-close").click(function(e) { e.preventDefault(); $("#main-wrapper").addClass("toggled"); });
+    $("#menu-open").click(function(e) { e.preventDefault(); $("#main-wrapper").removeClass("toggled"); });
     // Generators
     $("#dice").click(function () { $("#frame").attr("src", "html/dice.html"); });
     $("#fictional").click(function () { $("#frame").attr("src", "html/fictional.html"); });
+    $("#item").click(function () { $("#frame").attr("src", "html/item.html"); });
+    $("#magicitem").click(function () { $("#frame").attr("src", "html/magicitem.html"); });
     $("#name").click(function () { $("#frame").attr("src", "html/markov.html"); });
+    $("#monsters").click(function () { $("#frame").attr("src", "html/monster.html"); });
     $("#rumour").click(function () { $("#frame").attr("src", "html/rumours.html"); });
     $("#title").click(function () { $("#frame").attr("src", "html/titles.html"); });
-    $("#monsters").click(function () { $("#frame").attr("src", "html/monster.html"); });
-    $("#magicitem").click(function () { $("#frame").attr("src", "html/magicitem.html"); });
     // Databases
-    $("#racesDB").click(function () { $("#frame").attr("src", "html/races.html"); });
+    $("#itemsDB").click(function () { $("#frame").attr("src", "html/database/item.html"); });
     $("#namesDB").click(function () { $("#frame").attr("src", "html/database/markov.html"); });
-    $("#itemsDB").click(function () { $("#frame").attr("src", "html/item.html"); });
     </script>
 </body>
 </html>

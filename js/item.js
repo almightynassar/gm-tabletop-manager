@@ -13,7 +13,7 @@ var Item = new function() {
 		    ["Camel", 5000, 500, "Animal suitable for riding. Can carry up to 50 kg and pull twice it's weight", "rare"],
 			["Chicken", 15, 1, "Produces 1 egg roughly every day and is suitable for eating", "common"],
 			["Cow", 900, 720, "Produces 30 liters of milk roughly every day and is suitable for eating", "common"],
-			["Dog", 1000, 40, "Trained dog for hunting / guarding / other purpose", "common"],
+			["Dog", 2500, 40, "Trained dog for hunting / guarding / other purpose", "common"],
 			["Donkey", 1200, 480, "Pack animal that can carry up to 50 kg and pull up to twice it's bodyweight", "common"],
 			["Draft Horse", 5000, 900, "Used for manual labour. Carries up to 180 kgs and pull up to twice it's bodyweight ", "uncommon"],
 			["Elephant", 20000, 4000, "Can carry up to 1000 kgs and pull twice it's bodyweight", "very rare"],
