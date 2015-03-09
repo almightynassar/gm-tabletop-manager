@@ -18,17 +18,9 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div id="Forms">
-					<p><b>Rumours:</b> <input type="number" id="number" value="1"/></p>
-					<div class="form-group">
-						<input type="radio" name="type" value="all" checked />All<br>
-						<input type="radio" name="type" value="beast" />Monster<br>
-						<input type="radio" name="type" value="idle" />Idle<br>
-						<input type="radio" name="type" value="political" />Political<br>
-						<input type="radio" name="type" value="detective" />Detective<br>
-						<input type="radio" name="type" value="supernatural" />Supernatural<br>
-						<input type="radio" name="type" value="adventure" />Adventure<br>
-					</div>
-					<p><button onclick='rumour();'>Generate</button></p>
+					<p><b>Rumours:</b> <input type="number" id="number" class="form-control" value="1"/></p>
+					<select id="type_input" class="form-control" name="type_input" ></select>
+					<p><button class="btn btn-primary" onclick='rumour();'>Generate</button></p>
 				</div>
 			</div>
 		</div>
@@ -40,18 +32,23 @@
 		</div>
 	</div>
 	<script src="../js/lib/jquery.js"></script>
-	<script src="../js/dice.js"></script>
-	<script src="../js/markov.js"></script>
-	<script src="../js/form.js"></script>
 	<script src="../js/rumours.js"></script>
 	<script>
-	var form = new Form();
-	// Tavern rumours
+	Rumours.loadValues();
+	Rumours.loadRumours();
+	var types = Rumours.getTypes();
+	for(var type in types) {
+		var title = types[type].replace(/\b[a-z]/g, function(letter) {
+		    return letter.toUpperCase();
+		});
+		$('#type_input').append('<option value="'+types[type]+'">'+title+'</option>');
+	}
 	function rumour () {
 		var number = $('#number').val();
+		var type = $('#type_input').val();
 		var text = "<ol>";
 		for (var i = 0; i < number; i++) {
-			 text += "<li>" + Rumours.rumour($('input:radio[name=type]:checked').val()) +"</li>";
+			 text += "<li>" + Rumours.getRumour(type) +"</li>";
 		}
 		$('#Rumour').html(text + "</ol>");
 	}

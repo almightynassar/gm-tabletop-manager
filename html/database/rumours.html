@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>Rumours Database</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.css" media="all">
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12 well form form-inline">
+				<h2>Values Editor</h2>
+				<p>To Export, click on the Export button and save the text that appears in the text box below. Each value will be seperated by a comma.</p>
+				<div class="form-group">
+					<select id="values_input" class="form-control" name="values_input" ></select>
+					<div class="btn-group">
+						<button class="btn btn-info" id="ExportValues">Export</button>
+						<button class="btn btn-danger" id="DeleteValues">Delete</button>
+					</div>
+				</div>
+				<p>To Import, paste edit or write into the box below. In the box below give the data-set a name and then click Import. Note that each value should be seperated by a comma.</p>
+				<div class="form-inline">
+					<input id="values" class="form-control"  value='direction' />
+					<button class="btn btn-primary" id="ImportValues">Import</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form">
+				<textarea id="importarea" class="form-control" rows=5></textarea>
+				<br />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 well form form-inline">
+				<h2>Rumours Editor</h2>
+				<p>To Export, click on the Export button and save the text that appears in the text box above. Each rumour will be seperated by a newline.</p>
+				<div class="form-group">
+					<select id="rumours_input" class="form-control" name="rumours_input" ></select>
+					<div class="btn-group">
+						<button class="btn btn-info" id="ExportRumours">Export</button>
+						<button class="btn btn-danger" id="DeleteRumours">Delete</button>
+					</div>
+				</div>
+				<p>To Import, paste edit or write into the box below. In the box below give the data-set a name and then click Import. Note that each value should be seperated by a newline.</p>
+				<div class="form-inline">
+					<input id="rumours" class="form-control"  value='tavern' />
+					<button class="btn btn-primary" id="ImportRumours">Import</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/lib/jquery.js"></script>
+	<script src="../../js/rumours.js"></script>
+	<script>
+		// Load the stored lists and chains
+		function load() {
+			$('#values_input').html('');
+			$('#rumours_input').html('');
+			Rumours.loadValues();
+			Rumours.loadRumours();
+			var types = Rumours.getValues();
+			for(var type in types) {
+				var title = types[type];
+				$('#values_input').append('<option value="'+title+'">'+title+'</option>');
+			}
+			var types = Rumours.getTypes();
+			for(var type in types) {
+				var title = types[type];
+				$('#rumours_input').append('<option value="'+title+'">'+title+'</option>');
+			}
+		}
+		load();
+		$('#ExportValues').click(function(){
+			var value = $('#values_input').val();
+			$('#importarea').html(Rumours.getValueCSV(value));
+		});
+		$('#ExportRumours').click(function(){
+			var value = $('#rumours_input').val();
+			$('#importarea').html(Rumours.getRumourCSV(value));
+		});
+		$('#ImportValues').click(function(){
+			var value = $('#values').val();
+			Rumours.setValueCSV(value,$('#importarea').val());
+			Rumours.saveValues();
+			load();
+		});
+		$('#ImportRumours').click(function(){
+			var value = $('#rumours').val();
+			Rumours.setRumourCSV(value,$('#importarea').val());
+			Rumours.saveRumours();
+			load();
+		});
+		$('#DeleteValues').click(function(){
+			var race = $('#values_input').val();
+			Rumours.deleteValues(race);
+			Rumours.saveValues();
+			load();
+		});
+		$('#DeleteRumours').click(function(){
+			var race = $('#rumours_input').val();
+			Rumours.deleteRumours(race);
+			Rumours.saveRumours();
+			load();
+		});
+	</script>
+</body>
+</html>

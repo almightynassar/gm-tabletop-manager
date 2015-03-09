@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>Monster Stat Block</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/stat.css" media="all">
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3">
+				<div id="editable" contenteditable="true"  style="width:100%; font-family:Arial,Helvetica,sans-serif;font-size:11px;">
+					<div class="name">Ogre</div>
+					<div class="description">Large giant, chaotic evil</div>
+					<hr class="gradient" />
+					<div class="red">
+					    <div ><span class="bold red">Armor Class</span><span> 11 (hide armor)</span></div>
+					    <div><span class="bold red">Hit Points</span><span> 59 (7d10+21)</span></div>
+					    <div><span class="bold red">Speed</span><span> 40 ft.</span></div>
+					</div>
+					<hr class="gradient" />
+					<table class="stattable">
+					    <tr><th>STR    </th><th>DEX   </th><th>CON    </th><th>INT   </th><th>WIS   </th><th>CHA   </th></tr>
+					    <tr><td>19 (+4)</td><td>8 (-1)</td><td>16 (+3)</td><td>5 (-3)</td><td>7 (-2)</td><td>7 (-2)</td></tr>
+					</table>
+					<hr class="gradient" />
+					<div><span class="bold">Senses</span><span> darkvision 60ft., passive Perception 8</span></div>
+					<div><span class="bold">Languages</span><span> Common, Giant</span></div>
+					<div><span class="bold">Challenge</span><span> 2 (450 XP)</span></div> 
+					<hr class="gradient" />
+					<div class="actions red">Actions</div>
+					<hr class="hr" />
+					<div class="attack"><span class="attackname">Greatclub.</span><span class="description"> Melee Weapon Attack:</span><span>+6 to hit, reach 5 ft., one target.</span><span class="description">Hit:</span><span>13 (2d8+4) bludgeoning damage.</span></div>    
+					<div class="attack"><span class="attackname">Javelin.</span><span class="description"> Melee or Ranged Weapon Attack:</span><span>+6 to hit, reach 5 ft. or 30ft./120, one target.</span><span class="description">Hit:</span><span>11 (2d6+4) piercing damage.</span></div>    
+				</div>
+			</div>
+			<div class="col-md-3 well">
+				<button id="convert" class="btn btn-block btn-primary" onclick="convert();">Convert to image -></button>
+			</div>
+			<div class="col-md-3" id="Result">
+			</div>
+		</div>
+	</div>
+	<script src="../js/lib/jquery.js"></script>
+	<script src="../js/lib/bootstrap.js"></script>
+	<script src="../js/lib/html2canvas.js"></script>
+	<script>
+	var editableDiv = $('#editable');
+	function convert () {
+		var copiedDiv = editableDiv;
+		html2canvas(copiedDiv, {
+		    onrendered: function(canvas) {
+		   		$('#Result').html(canvas);
+		    }
+		});
+	}
+	</script>
+</body>
+</html>
