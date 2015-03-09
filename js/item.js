@@ -114,6 +114,13 @@ var Item = new function() {
 		  	["Poor", 5, 0, "Allowed to sleep on floor near fire. No privacy / bedding / food", "basic"],
 		  	["Rich", 200, 0, "Locked private room with room service", "uncommon"],
 		],
+		"Poisons": [
+		    ["Arsenic", 12000, 0.1, "On a failed Constitution DC 13 save the victim takes 7 (1d12+1) poison damage and is considered poisoned. A success only means half damage. The effect occurs every minute for 4 minutes. Multiple doses increases DC, damage and duration by 2","uncommon"],
+		    ["Death dust", 150000, 0.1, "On a failed Constitution DC 17 save the victim takes 32 (9d6+1) poison damage and is considered poisoned. A success only means half damage. The effect occurs every minute for 6 minutes. Multiple doses increases DC, damage and duration by 2","uncommon"]
+	    ],
+		"Potions": [
+		    ["Healing", 5000, 0.5, "Heals 1d8+2 damage","common"]
+		],
 		"Wages (per day)": [
 		    ["Apprentice", 25, 0, "Studying under a Master / Scholar / Blacksmith", "common"],
 			["Blacksmith", 700, 0, "Works the forges", "uncommon"],
