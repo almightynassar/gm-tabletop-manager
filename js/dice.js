@@ -53,6 +53,84 @@ var Dice = new function () {
         }
         return sum;
     }
+ // ref: http://stackoverflow.com/a/1293163/2343
+    // This will parse a delimited string into an array of
+    // arrays. The default delimiter is the comma, but this
+    // can be overriden in the second argument.
+    function CSVToArray( strData, strDelimiter ){
+        // Check to see if the delimiter is defined. If not,
+        // then default to comma.
+        strDelimiter = (strDelimiter || ",");
+
+        // Create a regular expression to parse the CSV values.
+        var objPattern = new RegExp(
+            (
+                // Delimiters.
+                "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+
+                // Quoted fields.
+                "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+
+                // Standard fields.
+                "([^\"\\" + strDelimiter + "\\r\\n]*))"
+            ),
+            "gi"
+            );
+        
+        // Create an array to hold our data. Give the array
+        // a default empty first row.
+        var arrData = [[]];
+
+        // Create an array to hold our individual pattern
+        // matching groups.
+        var arrMatches = null;
+
+        // Keep looping over the regular expression matches
+        // until we can no longer find a match.
+        while (arrMatches = objPattern.exec( strData )){
+
+            // Get the delimiter that was found.
+            var strMatchedDelimiter = arrMatches[ 1 ];
+
+            // Check to see if the given delimiter has a length
+            // (is not the start of string) and if it matches
+            // field delimiter. If id does not, then we know
+            // that this delimiter is a row delimiter.
+            if ( strMatchedDelimiter.length && strMatchedDelimiter !== strDelimiter ){
+                // Since we have reached a new row of data,
+                // add an empty row to our data array.
+                arrData.push( [] );
+            }
+
+            var strMatchedValue;
+
+            // Now that we have our delimiter out of the way,
+            // let's check to see which kind of value we
+            // captured (quoted or unquoted).
+            if (arrMatches[ 2 ]){
+
+                // We found a quoted value. When we capture
+                // this value, unescape any double quotes.
+                strMatchedValue = arrMatches[ 2 ].replace(
+                    new RegExp( "\"\"", "g" ),
+                    "\""
+                    );
+
+            } else {
+
+                // We found a non-quoted value.
+                strMatchedValue = arrMatches[ 3 ];
+
+            }
+
+            // Now that we have our value string, let's add
+            // it to the data array.
+            arrData[ arrData.length - 1 ].push( strMatchedValue.replace(/(^\s*)|(\s*$)/g,''));
+        }
+
+        // Return the parsed data.
+        return( arrData );
+    }
     return {
     	// Customisable dice roll, with die type, number of die, and advantage (1=adv,0=normal,-1=dis) 
     	dice: (function (type, number, adv) {
@@ -115,8 +193,9 @@ var Dice = new function () {
     		};
         	// Grabs the stored values (or creates a new one) and appends our new value
     		var dices = (typeof localStorage['dice'] === "undefined") ? {} : JSON.parse(localStorage['dice']);
-    		dices[$("#name").val()] = dice;
+    		dices[name] = dice;
     		// Save the new object
+    		localStorage.removeItem('dice');
     		localStorage.setItem('dice', JSON.stringify(dices));
     	}),
     	// Return the JSON array for all the dice in the system
@@ -132,10 +211,12 @@ var Dice = new function () {
     		return null;
     	}),
     	// Remove a specific dice instance
-    	remove: (function (name) {
+    	removeDice: (function (name) {
     		var dies = JSON.parse(localStorage['dice']);
-    		delete dies[name];
-    		localStorage.setItem('dice', JSON.stringify(dies));
+    		localStorage.removeItem('dice');
+    		if (delete dies[name]) {
+    			localStorage.setItem('dice', JSON.stringify(dies));
+    		}
     	}),
     	// Exports our localStorage JSON data if it exists
     	Export: (function() {
@@ -144,22 +225,51 @@ var Dice = new function () {
     		}
     		return;
     	}),
+    	// Exports as a CSV
+    	ExportCSV: (function() {
+    		var csv = '';
+    		if (localStorage['dice'] != null) {
+    			var dies = JSON.parse(localStorage['dice']);
+    			for (var dice in dies) {
+					if (csv !== "") {
+						csv += "\n";
+					}
+					csv += dies[dice].name + ', ' + dies[dice].number + ', ' + dies[dice].sides + ', ' + dies[dice].mod  + ', ' + dies[dice].modval;
+				}
+    		}
+    		return csv;
+    	}),
     	// Import string text into our localStorage
     	Import: (function(text) {
     		if (text){
     		    try{
     		        var dies = JSON.parse(text);
     		        for (var dice in dies) {
-    		        	if (dice.name || dice.number || dice.sides || dice.mod || dice.modval) {
+    		        	if ((typeof dies[dice].name == 'undefined') || (typeof dies[dice].number == 'undefined') || (typeof dies[dice].sides == 'undefined') || (typeof dies[dice].mod == 'undefined') || (typeof dies[dice].modval == 'undefined')) {
     		        		return;
     		        	}
     		        }
     		        // Save the new object
+    		        localStorage.removeItem('dice');
     	    		localStorage.setItem('dice', text);
     		    }catch(e){
     		        alert(e); //error in the above string(in this case,yes)!
     		    }
     		}
-    	})
+    	}),
+    	// Set the list of names for a race given in CSV format
+		ImportCSV: (function (inputString) {
+			var csv = [];
+			if (inputString) {
+				localStorage.removeItem('dice');
+				csv = CSVToArray( inputString );
+				for (var i in csv) {
+					if ((typeof csv[i][0] != 'undefined') || (typeof csv[i][1] != 'undefined') || (typeof csv[i][2] != 'undefined') || (typeof csv[i][3] != 'undefined') || (typeof csv[i][4] != 'undefined')) {
+						this.save(parseInt(csv[i][2], 10), parseInt(csv[i][1],10), (csv[i][3] === "true" ? true: false), parseInt(csv[i][4],10), csv[i][0]);
+					}
+				}
+			}
+			return csv;
+		})
     };
 };

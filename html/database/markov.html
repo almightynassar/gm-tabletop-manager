@@ -14,7 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.css" media="all">
 </head>
 <body>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12 well form">
 				<p>To Export, click on the Export button and save the text that appears in the text box below. Each name will be seperated by a comma.</p>
@@ -56,7 +56,6 @@
 				    return letter.toUpperCase();
 				});
 				$('#race_input').append('<option value="'+race+'">'+title+'</option>');
-				$('#MarkovNotes').append("<li>"+title+" names: "+Markov.getLength(race,'male')+" male, "+Markov.getLength(race,'female')+" female</li>");
 			}
 		}
 		load();

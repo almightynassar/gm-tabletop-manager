@@ -7,9 +7,6 @@ html, body, #main-wrapper, #content-wrapper { height: 100% }
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
 }
-#main-wrapper.toggled {
-    padding-left: 250px;
-}
 /* This holds the side-bar (for each toggled case) */
 #sidebar-wrapper {
     z-index: 1000;
@@ -24,6 +21,9 @@ html, body, #main-wrapper, #content-wrapper { height: 100% }
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    border-right-style: solid;
+    border-width: 1px;
+    overflow: hidden;
 }
 #main-wrapper.toggled #sidebar-wrapper {
     width: 250px;

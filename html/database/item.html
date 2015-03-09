@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -9,51 +10,70 @@
 	<link rel="icon" href="favicon.ico">
 	<title>Item Database</title>
 	<!-- CSS SCRIPTS -->
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all">
-	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
-	<style>
-	.header::after {
-    	content: " - ^v";
-	}
-	.headerSortUp::after {
-    	content: " - ^";
-	} 
-	.headerSortDown::after {
-    	content: " - v";
-	} 
-	</style>
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.css" media="all">
 </head>
 <body>
-	<p>Select Item: <select id="item_input" class="form-control" name="item_input" onchange='generate();'></select></p>
-	<table id="tablesorter" class="table table-bordered table-condensed table-striped">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Price</th>
-				<th>Weight</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody  id="ItemList">
-		</tbody>
-	</table>
-	<script src="../js/lib/jquery.js"></script>
-	<script src="../js/lib/bootstrap.js"></script>
-	<script src="../js/lib/jquery.tablesorter.js"></script>
-	<script src="../js/items.js"></script>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12 well form">
+				<p>To Export, click on the Export button and save the text that appears in the text box below.</p>
+				<p>The format is: <strong>[name],[price],[weight],[description],[rarity]</strong></p>
+				<div class="form-group">
+					<label>Category</label>
+					<select id="cat_input" class="form-control" name="cat_input" ></select>
+				</div>
+				<div class="btn-group">
+					<button class="btn btn-info" id="Export">Export</button>
+					<button class="btn btn-danger" id="Delete">Delete</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form">
+				<textarea id="importarea" class="form-control" rows=20></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form">
+				<p>To Import, paste edit or write into the box above. In the box below give the data-set a name and then click Import. Note that each set should be seperated by a new-line.</p>
+				<div class="form-inline">
+					<input id="cat" class="form-control"  value='Misc' />
+					<button class="btn btn-primary" id="Import">Import</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/lib/jquery.js"></script>
+	<script src="../../js/item.js"></script>
 	<script>
-	// Backgrounds
-    for(var category in Item) {
-		$('#item_input').append('<option value="'+category+'">'+category.charAt(0).toUpperCase() + category.slice(1)+'</option>');
-	}
-    function generate() {
-    	var category = $('#item_input').val();
-    	$('#ItemList').html('');
-    	for (var item in Item[category]) {
-    		$('#ItemList').append('<tr><td>'+Item[category][item].name+'</td><td>'+Item[category][item].cost+' GP</td><td>'+Item[category][item].weight+' kg</td><td>'+Item[category][item].description+'</td></tr>');
-    	}
-    }
-    generate();
+		// Load the stored lists and chains
+		function load() {
+			$('#cat_input').html('');
+			Item.load();
+			var list = Item.categories();
+			for(var cat in list) {
+				var title = list[cat];
+				$('#cat_input').append('<option value="'+title+'">'+title+'</option>');
+			}
+		}
+		load();
+		$('#Export').click(function(){
+			var cat = $('#cat_input').val();
+			$('#importarea').html(Item.getCSV(cat));
+		});
+		$('#Import').click(function(){
+			var cat = $('#cat').val();
+			Item.setCSV(cat,$('#importarea').val());
+			Item.save();
+			load();
+		});
+		$('#Delete').click(function(){
+			var cat = $('#cat_input').val();
+			Item.deleteList(cat);
+			Item.save();
+			load();
+		});
 	</script>
 </body>
 </html>

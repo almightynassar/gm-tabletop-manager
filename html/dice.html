@@ -14,7 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
 </head>
 <body>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-5 well">
 				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -59,23 +59,6 @@
 				      </div>
 				    </div>
 				  </div>
-					<div class="panel panel-default">
-					    <div class="panel-heading" role="tab" id="headingThree">
-					      <h4 class="panel-title">
-					        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-					          Import/Export
-					        </a>
-					      </h4>
-					    </div>
-					    <div id="collapseThree" class="panel-collapse collapse in panel-body" role="tabpanel" aria-labelledby="headingThree">
-					      <div>
-					      	<button id="Export">Export</button>
-					      	<button id="Import">Import</button>
-					      </div>
-					      <p>To Export, click on the Export button and save the text. To Import, paste text into the box and click Import.</p>
-					      <textarea id="importarea" class="form-control"></textarea>
-					    </div>
-					</div>
 				</div>
 			</div>
 			<div class="col-md-7">
@@ -135,7 +118,7 @@
 		$('#saves').html('');
 		var dies = Dice.all();
 		for (var dice in dies) {
-			$('#saves').append('<p>'+dice+' ('+dies[dice].number+'d'+dies[dice].sides+(dies[dice].mod ? '+' : '-')+dies[dice].modval+') <button onclick="load(\''+dies[dice].name+'\');" class="btn btn-xs btn-info">Load</button> <button onclick="remove(\''+dice+'\')" class="btn btn-xs btn-danger">Delete</button></p>');
+			$('#saves').append('<p>'+dice+' ('+dies[dice].number+'d'+dies[dice].sides+(dies[dice].mod ? '+' : '-')+dies[dice].modval+') <button onclick="load(\''+dies[dice].name+'\');" class="btn btn-xs btn-info">Load</button> <button onclick="removeDice(\''+dies[dice].name+'\');" class="btn btn-xs btn-danger">Delete</button></p>');
 		}
 	};
 	function load(diceName) {
@@ -148,13 +131,11 @@
 			$('#name').val(dice.name);
 		}
 	}
-	function remove(diceName) {
-		Dice.remove(diceName);
+	function removeDice(diceName) {
+		Dice.removeDice(''+diceName);
 		list();
 	};
 	$('.collapse').collapse();
-	$('#Export').click(function(){$('#importarea').html(Dice.Export());});
-	$('#Import').click(function(){Dice.Import($('#importarea').val()); list();})
 	list();
 	</script>
 </body>

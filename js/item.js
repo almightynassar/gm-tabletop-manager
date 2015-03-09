@@ -9,7 +9,7 @@ var Item = new function() {
 	// 1 CP = 10 SP = 100 GP
 	var stock = {
 		"Animals": [
-		    ["Bird of Prey", 30000, 1, "Trained bird (falcon, hawk, eagle). Eagles are up to 5 times larger than other species", "rare"],
+		    ["Bird of Prey", 30000, 1, "Trained bird (falcon/hawk/eagle). Eagles are up to 5 times larger than other species", "rare"],
 		    ["Camel", 5000, 500, "Animal suitable for riding. Can carry up to 50 kg and pull twice it's weight", "rare"],
 			["Chicken", 15, 1, "Produces 1 egg roughly every day and is suitable for eating", "common"],
 			["Cow", 900, 720, "Produces 30 liters of milk roughly every day and is suitable for eating", "common"],
@@ -160,8 +160,7 @@ var Item = new function() {
             ),
             "gi"
             );
-
-
+        
         // Create an array to hold our data. Give the array
         // a default empty first row.
         var arrData = [[]];
@@ -212,6 +211,9 @@ var Item = new function() {
             // it to the data array.
             arrData[ arrData.length - 1 ].push( strMatchedValue.replace(/(^\s*)|(\s*$)/g,''));
         }
+
+        // Return the parsed data.
+        return( arrData );
     }
 	return {
 		// Return our stock object
@@ -232,6 +234,15 @@ var Item = new function() {
     			stock = JSON.parse(localStorage['stock']);
     		}
     	}),
+    	deleteList: function (cat) { if (cat) { delete stock[cat]; }; },
+    	// Get a list of available race names
+		categories: (function () {
+			var cat = new Array();
+			for (var k in stock) {
+				cat.push(k);
+			}
+			return cat;
+		}),
 		// Get the list of names for a race in CSV format
 		getCSV: (function (cat) {
 			var csv = "";
@@ -241,9 +252,11 @@ var Item = new function() {
 						if (csv !== "") {
 							csv += "\n";
 						}
-						csv += cat;
 						for (var entry in stock[cat][item]) {
-							csv += ", " + stock[cat][item][entry];
+							if (entry > 0) {
+								csv += ", ";
+							}
+							csv += stock[cat][item][entry];
 						}
 					}
 				}
@@ -259,6 +272,15 @@ var Item = new function() {
 						}
 					}
 				}
+			}
+			return csv;
+		}),
+		// Set the list of names for a category given in CSV format
+		setCSV: (function (cat, inputString) {
+			var csv = [];
+			if (cat && inputString) {
+				csv = CSVToArray( inputString );
+				stock[cat] = csv;
 			}
 			return csv;
 		})

@@ -15,13 +15,14 @@
 	<link rel="stylesheet" type="text/css" href="../css/fonts.css" media="all">
 </head>
 <body>
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div id="Form" class="col-md-6" >
 				<p>This convertor uses a Font File to convert english text to it's fantasy script counter-part. The convertor is mapped <strong>exactly</strong> as it would be if you downloaded and installed the font onto your computer (in fact, I recommend you do that for best results). This convertor is pretty much only good for previewing the fantasy fonts.</p>
 				<p>Font: <select id="script_input" class="form-control" onChange="inform()"></select></p>
 				<p>Font Size (pt): <input type="number" id="size_input" class="form-control"  value="22"/></p>
-				<p>Canvas size (em): <input type="number" id="canvas_input" class="form-control"  value="20"/></p>
+				<p>Canvas length (em): <input type="number" id="canvas_input" class="form-control"  value="20"/></p>
+				<p>Canvas width (em): <input type="number" id="width_input" class="form-control"  value="20"/></p>
 				<hr />
 			</div>
 			<div id="Language" class="col-md-6 well">
@@ -37,8 +38,8 @@
 			</div>
 		</div>
 		<div class="row">
-			<div id='ParentResult' class="col-lg-12" style="height:20em" >
-				<canvas id="Result" class="bg-warning" width="100%" height="100%"></canvas>
+			<div id='ParentResult' class="col-lg-12" style="height:20em;width:20em;border-style:solid;border-width:1px;" >
+				<canvas id="Result" width="100%" height="100%"></canvas>
 			</div>
 		</div>
 	</div>
@@ -82,6 +83,7 @@
 		var canvas = $('#Result')[0];
 		var ctx = canvas.getContext("2d");
 		$('#ParentResult').height($('#canvas_input').val() + 'em');
+		$('#ParentResult').width($('#width_input').val() + 'em');
 		canvas.width = $('#ParentResult').width();
 		canvas.height = $("#ParentResult").height();
 		writeCanvas(ctx, canvas, text, script, size);

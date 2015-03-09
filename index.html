@@ -29,6 +29,7 @@
     			<li><a id="title" href="#Title">Title for a Book/Tavern</a></li>
     			<li><hr /></li>
     			<li class="brand"><strong>Databases</strong></li>
+    			<li><a id="diceDB" href="#DiceDB">Dice</a></li>
     			<li><a id="itemsDB" href="#ItemsDB">Items</a></li>
     			<li><a id="namesDB" href="#NamesDB">Names</a></li>
     		</ul>
@@ -44,13 +45,19 @@
                     </div>
                 </div>
             </div>
-            <iframe id="frame" width="100%" height="100%" src="html/dice.html" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+            <iframe id="frame" width="99%" height="97%" src="html/dice.html" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
     	</div>
     </div>
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/lib/jquery.js"></script>
     <script src="js/lib/bootstrap.js"></script>
     <script>
+    // For large screens, start the sidebar toggled
+    if ($(window).width() > 768) {
+    	$("#main-wrapper").removeClass("toggled");
+    	$("#main-wrapper").addClass("toggled");
+    }
+    // Controls for the sidebar
     $("#menu-close").click(function(e) { e.preventDefault(); $("#main-wrapper").removeClass("toggled"); });
     $("#menu-open").click(function(e) { e.preventDefault(); $("#main-wrapper").addClass("toggled"); });
     // Generators
@@ -63,6 +70,7 @@
     $("#rumour").click(function () { $("#frame").attr("src", "html/rumours.html"); });
     $("#title").click(function () { $("#frame").attr("src", "html/titles.html"); });
     // Databases
+    $("#diceDB").click(function () { $("#frame").attr("src", "html/database/dice.html"); });
     $("#itemsDB").click(function () { $("#frame").attr("src", "html/database/item.html"); });
     $("#namesDB").click(function () { $("#frame").attr("src", "html/database/markov.html"); });
     </script>

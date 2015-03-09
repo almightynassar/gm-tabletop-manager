@@ -1411,8 +1411,7 @@ var Markov = new function() {
             ),
             "gi"
             );
-
-
+        
         // Create an array to hold our data. Give the array
         // a default empty first row.
         var arrData = [[]];
@@ -1502,7 +1501,6 @@ var Markov = new function() {
 			if (race && inputString) {
 				csv = CSVToArray( inputString );
 				Name[race] = csv[0];
-				
 			}
 			return csv[0];
 		}),
