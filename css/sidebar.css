@@ -67,26 +67,3 @@ html, body, #main-wrapper, #content-wrapper { height: 100% }
 #menu-toggle {
 	font-size: x-small;
 }
-/* Targets large screens */
-@media(min-width:768px) {
-    #main-wrapper {
-        padding-left: 250px;
-    }
-    #main-wrapper.toggled {
-        padding-left: 0;
-    }
-    #sidebar-wrapper {
-        width: 250px;
-    }
-    #main-wrapper.toggled #sidebar-wrapper {
-        width: 0;
-    }
-    #content-wrapper {
-        padding: 20px;
-    }
-
-    #main-wrapper.toggled #content-wrapper {
-        position: relative;
-        margin-right: 0;
-    }
-}
