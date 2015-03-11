@@ -77,7 +77,7 @@ var Rumours = new function () {
 		              "The :relation of the ruler of :urban is trying to take over",
 		              "A high-ranking noble has an issue with the law and is willing to pay good money to solve it"
 		]
-	}
+	};
 	// Return a random tavern rumour (unparsed)
 	function randRumour (type) {
     	type = (type && (typeof type === "string")) ? type : "tavern";

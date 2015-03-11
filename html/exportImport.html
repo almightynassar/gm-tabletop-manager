@@ -48,6 +48,8 @@
 			localStorage.removeItem('stock');
 			localStorage.removeItem('rumour.values');
 			localStorage.removeItem('rumour.rumours');
+			localStorage.removeItem('title.values');
+			localStorage.removeItem('title.titles');
 		}
 		$('#Export').click(function(){
 			$('#importarea').val('');
@@ -66,6 +68,12 @@
 			}
 			if (localStorage['rumour.rumours']) {
 				exportItem['rumour.rumours'] = localStorage['rumour.rumours'];
+			}
+			if (localStorage['title.values']) {
+				exportItem['title.values'] = localStorage['title.values'];
+			}
+			if (localStorage['title.titles']) {
+				exportItem['title.titles'] = localStorage['title.titles'];
 			}
 			$('#importarea').val(JSON.stringify(exportItem));
 		});
@@ -86,6 +94,12 @@
 			}
 			if (importItem['rumour.rumours']) {
 				localStorage.setItem('rumour.rumours', importItem['rumour.rumours']);
+			}
+			if (importItem['title.values']) {
+				localStorage.setItem('title.values', importItem['title.values']);
+			}
+			if (importItem['title.titles']) {
+				localStorage.setItem('title.titles', importItem['title.titles']);
 			}
 		});
 		$('#Reset').click(function(){ reset(); });
