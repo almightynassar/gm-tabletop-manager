@@ -1,4 +1,4 @@
-GM Tabletop Manager v0.0.3 (Project Shapies)
+GM Tabletop Manager v0.0.4 (Project Shapies)
 =======
 
 What started out as a testing ground for trying out new features (such as canvas shapes) has evolved into a suite of simple tools for the Game Master of Tabletop RPGs. Hopefully this project turns out to be useful!
@@ -18,8 +18,8 @@ FEATURES
  - Generate Rumours: This generator creates a series of rumours based on a few rules
  - Generate Book/Tavern Title: This generator creates a series of titles based on a few rules
  - Monster Creator: Create a terrifying monster for your next campaign
- - Item store: Browse and customise a local store, complete with virtual checkout
- - Database editor: Don't like the content? Edit your HTML5 local storage database to suit your world
+ - Item store: Browse and customise a local store
+ - Database editor: Don't like the provided content? Edit your HTML5 local storage database to suit your setting
 
 USAGE
 =======

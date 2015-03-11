@@ -27,12 +27,13 @@
     			<li><a id="rumour" href="#Rumour">Rumours</a></li>
     			<li><a id="stat" href="#Stat">Stat Blocks</a></li>
     			<li><a id="title" href="#Title">Title for a Book/Tavern</a></li>
-    			<li><hr /></li>
     			<li class="brand"><strong>Databases</strong></li>
     			<li><a id="diceDB" href="#DiceDB">Dice</a></li>
     			<li><a id="itemsDB" href="#ItemsDB">Items</a></li>
     			<li><a id="namesDB" href="#NamesDB">Names</a></li>
     			<li><a id="rumoursDB" href="#RumoursDB">Rumours</a></li>
+    			<li class="brand"><strong>Tools</strong></li>
+    			<li><a id="exportImport" href="#ExportImport">Export/Import</a></li>
     		</ul>
     	</div>
     	<div id="content-wrapper">
@@ -42,7 +43,7 @@
                 		<button class="btn btn-dnd btn-xs" id="menu-open">Open sidebar</button>
                 	</div>
                     <div class="col-lg-11">
-                        <p><strong>GM Tabletop Manager v0.0.3</strong> <em>by almightynassar. <a href="https://github.com/almightynassar/shapies/">Click here to access the GitHub Repository</a></em></p>
+                        <p><strong>GM Tabletop Manager v0.0.4</strong> <em>by almightynassar. <a href="https://github.com/almightynassar/shapies/">Click here to access the GitHub Repository</a></em></p>
                     </div>
                 </div>
             </div>
@@ -75,6 +76,8 @@
     $("#itemsDB").click(function () { $("#frame").attr("src", "html/database/item.html"); });
     $("#namesDB").click(function () { $("#frame").attr("src", "html/database/markov.html"); });
     $("#rumoursDB").click(function () { $("#frame").attr("src", "html/database/rumours.html"); });
+    // Settings
+    $("#exportImport").click(function () { $("#frame").attr("src", "html/exportImport.html"); });
     </script>
 </body>
 </html>

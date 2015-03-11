@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Shapies Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>Export / Import Database</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.css" media="all">
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12 well form">
+				<p>To Export, click on the Export button and save the text that appears in the text box below.</p>
+				<p>To Import, paste edit or write into the box below.</p>
+				<p>Download will output a text file you can save on your computer.</p>
+				<p>Reset will clear EVERYTHING in the database, and is irreversible</p>
+				<p>
+					<span class="btn-group">
+						<button class="btn btn-info" id="Export">Export</button>
+						<button class="btn btn-primary" id="Import">Import</button>
+						<button class="btn btn-default" id="Download">Download</button>
+						<button class="btn btn-danger" id="Reset">Reset</button>
+					</span>
+				</p>
+				<p>To upload a text file that you have containing the database, just input a valid file below. It will NOT automatically import; you will need to manually click that yourself.</p>
+				<input type="file" id="file" name="file" enctype="multipart/form-data" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form">
+				<textarea id="importarea" class="form-control" rows=20></textarea>
+			</div>
+		</div>
+	</div>
+	<script src="../js/lib/jquery.js"></script>
+	<script>
+		// Local variables
+		function reset() {
+			localStorage.removeItem('name');
+			localStorage.removeItem('dice');
+			localStorage.removeItem('stock');
+			localStorage.removeItem('rumour.values');
+			localStorage.removeItem('rumour.rumours');
+		}
+		$('#Export').click(function(){
+			$('#importarea').val('');
+			var exportItem = {};
+			if (localStorage['name']) {
+				exportItem['name'] = localStorage['name'];
+			}
+			if (localStorage['dice']) {
+				exportItem['dice'] = localStorage['dice'];
+			}
+			if (localStorage['stock']) {
+				exportItem['stock'] = localStorage['stock'];
+			}
+			if (localStorage['rumour.values']) {
+				exportItem['rumour.values'] = localStorage['rumour.values'];
+			}
+			if (localStorage['rumour.rumours']) {
+				exportItem['rumour.rumours'] = localStorage['rumour.rumours'];
+			}
+			$('#importarea').val(JSON.stringify(exportItem));
+		});
+		$('#Import').click(function(){
+			reset();
+			var importItem = JSON.parse($('#importarea').val());
+			if (importItem['name']) {
+				localStorage.setItem('name', importItem['name']);
+			}
+			if (importItem['dice']) {
+				localStorage.setItem('dice', importItem['dice']);
+			}
+			if (importItem['stock']) {
+				localStorage.setItem('stock', importItem['stock']);
+			}
+			if (importItem['rumour.values']) {
+				localStorage.setItem('rumour.values', importItem['rumour.values']);
+			}
+			if (importItem['rumour.rumours']) {
+				localStorage.setItem('rumour.rumours', importItem['rumour.rumours']);
+			}
+		});
+		$('#Reset').click(function(){ reset(); });
+		$('#Download').click( function() { 
+			$('#Export').click();
+			// ref: http://jsfiddle.net/nkm2b/222/
+			// ref: http://stackoverflow.com/questions/17836273/export-javascript-data-to-csv-file-without-server-interaction
+			var a = document.createElement('a');
+			var text = $('#importarea').val();	
+			a.href = 'data:attachment/txt;charset=utf-8,' + encodeURIComponent(text);
+			a.target = '_blank';
+			a.download = 'backup.txt';
+			document.body.appendChild(a);
+			a.click();
+			document.body.removeChild(a);
+		});
+		$('#file').change( function() { 
+			$('#importarea').val('');
+			var $input = $(this);
+	        var inputFiles = this.files;
+	        if(inputFiles != undefined || inputFiles.length > 0) {
+	        	var inputFile = inputFiles[0];
+		        var reader = new FileReader();
+		        reader.onerror = function(event) {
+		            alert("I AM ERROR: " + event.target.error.code);
+		        };
+		        reader.onloadstart = function(event) {
+		        	alert('We are going to attempt to read '+event.total+' bytes.\n\n This may take a while and your browser may complain that the script is faulty. Please be patient and let the script complete');
+		        };
+	        	reader.readAsText(inputFile);
+	        	do {
+	        		if (reader.readyState <= 0) { return; }
+		        }
+		        while (reader.readyState < 2);
+		        $('#importarea').val('' + reader.result);
+	        }
+		});
+	</script>
+</body>
+</html>
