@@ -18,7 +18,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12 well">
-				<p><strong>Disclaimer:</strong> <em>This Monster Creator is inspired by D&amp;D 5th Edition, but should not be considered compatible with that edition. The terms used in the creator have come from the OGL content. The mechanics and assumptions used by this Creator do not follow the specifications provided in any published materials. Use this Creator at your own discretion, and please double check the final figures are compatible with your edition.</em></p>
+				<p><strong>Disclaimer:</strong> <em>This Monster Creator is inspired by D&amp;D 5th Edition, but should not be considered compatible with that edition. The terms used in the creator have come from the OGL content. The mechanics and assumptions used by this Creator do not follow the specifications provided in any published materials. Use this Creator at your own discretion, and please double check the final figures are compatible with your edition. Also, this is not meant for Player Character creation</em></p>
 				<h4>Notes</h4>
 				<ul>
 					<li>Averages of a dice roll: 1d4 = 2.5; 1d6 = 3.5; 1d8 = 4.5; 1d10 = 5.5; 1d12 = 6.5; 1d20 = 10.5</li>
@@ -363,11 +363,11 @@
 <script src="../js/lib/jquery.js"></script>
 <script src="../js/lib/bootstrap.js"></script>
 <script src="../js/lib/html2canvas.js"></script>
-<script src="../js/monsterStatBlock.js"></script>
-<script src="../js/d20.js"></script>
 <script src="../js/dice.js"></script>
+<script src="../js/monster.js"></script>
 <script>
 	// Load up our d20 object and populate our form
+	/*
 	d20.load();
 	$('#language').html(d20.makeCheckbox(d20.getLanguage(),'language'));
 	$('#condition').html(d20.makeCheckbox(d20.getCondition(),'condition'));
@@ -458,33 +458,6 @@
 	    });
 	    return false;
 	});
-	// Calculate HP
-	function calcHP() {
-		var size = $('#size')[0].selectedIndex;
-		var avg = (size < 5) ? 2.5+size : 5.5+size;
-		// Raw values
-		var mod = parseInt($('#con_mod').html());
-		var dice = parseInt($('#hit_die').val());
-		var bonus = parseInt($('#hit_bonus').val());
-		var hp = Math.floor((dice * avg) + (dice * mod) + bonus);
-		// Display the values
-		$('#hit_points').html(hp+'');
-		$('#hp_dice').html(dice+'d'+((avg-0.5)*2)+'+'+((dice*mod)+bonus));
-		calcDCR();
-	}
-	// Calculate AC
-	function calcAC() {
-		// Raw values
-		var armour = parseInt($('#armour_bonus').val());
-		var bonus = parseInt($('#ac_bonus').val());
-		var dexMod = ($("#addDex:checked" ).length > 0) ? parseInt($('#dex_mod').html()) : 0;
-		var conMod = ($("#addCon:checked" ).length > 0) ? parseInt($('#con_mod').html()) : 0;
-		var shield = ($("#shielded:checked" ).length > 0) ? 2 : 0;
-		var ac = Math.floor(10 + armour + dexMod + conMod + shield + bonus);
-		// Display the values
-		$('#armour_class').html(ac+'');
-		calcDCR();
-	}
 	// Calculate Defensive CR from given values
 	function rawDCR(hp,ac) {
 		ac = parseInt(ac,10);
@@ -985,6 +958,6 @@
 	$('#offense_bonus').change( function () { calcAC(); });
 	$('#rnd_1_dmg').change( function () { calcAC(); });
 	$('#rnd_2_dmg').change( function () { calcAC(); });
-	$('#rnd_3_dmg').change( function () { calcAC(); });
+	$('#rnd_3_dmg').change( function () { calcAC(); });*/
 </script>
 </html>
