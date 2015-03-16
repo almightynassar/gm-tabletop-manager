@@ -28,168 +28,98 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<div id="form" class="form form-inline">
+				<div id="form" class="form">
 					<div class="form-group">
-						<p class="control-label">Name</p>
-						<input type="text" name="name" id="name" value="Bandit" class="form-control col-sm-2">
+						<label class="control-label">Name</label>
+						<input type="text" name="name" id="formName" class="form-control">
 					</div>
 					<div class="form-group">
-						<p class="control-label">Type</p>
-						<div id="formType"></div>
+						<label class="control-label">Level</label>
+						<input type="number" name="level" id="formLevel" value="0" class="form-control">
 					</div>
 					<div class="form-group">
-						<p class="control-label">Alignment</p>
-						<select id="alignment" class="form-control" name="alignment">
-							<option value="Lawful-Good">Lawful-Good</option>
-							<option value="Good">Good</option>
-							<option value="Chaotic-Good">Chaotic-Good</option>
-							<option value="Lawful">Lawful</option>
-							<option value="Neutral" selected>Neutral</option>
-							<option value="Chaotic">Chaotic</option>
-							<option value="Lawful-Evil">Lawful-Evil</option>
-							<option value="Evil">Evil</option>
-							<option value="Chaotic-Evil">Chaotic-Evil</option>
-						</select>
+						<label class="control-label">Type</label>
+						<select id="formType" class="form-control"></select>
 					</div>
 					<div class="form-group">
-						<p class="control-label">Speed (ft)</p>
-						<input type="number" name="speed" id="speed" value="30" class="form-control">
+						<label class="control-label">Size</label>
+						<select id="formSize" class="form-control"></select>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Morals</label>
+						<select id="formMoral" class="form-control"></select>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Ethics</label>
+						<select id="formEthic" class="form-control"></select>
+					</div>
+					<div class="form-group">
+						<label class="control-label">Armour Type</label>
+						<select id="formArmour" class="form-control"></select>
 					</div>
 					<hr />
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
-				<div id="form" class="form form-inline">
-					<div class="form-group">
-						<p class="control-label">Size</p>
-						<div id="formSize"></div>
-					</div>
-					<div class="form-group">
-						<p class="control-label">Number of Hit Die</p>
-						<input type="number" name="hit_die" id="hit_die" value="5" class="form-control">
-					</div>
-					<div class="form-group">
-						<p class="control-label">HP Bonus</p>
-						<input type="number" name="hit_bonus" id="hit_bonus" value="0" class="form-control">
-					</div>
-				</div>
-				<p><em>The Hit Die is determined by the size of the monster; "HP Bonus" is the extra amount of HP you want to add</em></p>
-				<hr />
+			<div class="col-md-4 well">
+				<p><label class="control-label">Speed</label></p>
+				<div id="formSpeed"></div>
+			</div>
+			<div class="col-md-4">
+				<p><label class="control-label">Senses</label></p>
+				<div id="formSense"></div>
+			</div>
+			<div class="col-md-4 well">
+				<p><label class="control-label">Bonus</label></p>
+				<div id="formBonus"></div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">				
-				<div id="form" class="form form-inline">
-					<div class="form-group">
-						<p class="control-label">STR (<span id="str_mod">0</span>)</p>
-						<input type="number" name="str" id="str" value="10" class="form-control" style="width:8em;">
-					</div>
-					<div class="form-group">
-						<p class="control-label">DEX (<span id="dex_mod">0</span>)</p>
-						<input type="number" name="dex" id="dex" value="10" class="form-control" style="width:8em;">
-					</div>
-					<div class="form-group">
-						<p class="control-label">CON (<span id="con_mod">0</span>)</p>
-						<input type="number" name="con" id="con" value="10" class="form-control" style="width:8em;">
-					</div>
-					<div class="form-group">
-						<p class="control-label">INT (<span id="int_mod">0</span>)</p>	
-						<input type="number" name="int" id="int" value="10" class="form-control" style="width:8em;">
-					</div>
-					<div class="form-group">
-						<p class="control-label">WIS (<span id="wis_mod">0</span>)</p>
-						<input type="number" name="wis" id="wis" value="10" class="form-control" style="width:8em;">
-					</div>
-					<div class="form-group">
-						<p class="control-label">CHA (<span id="cha_mod">0</span>)</p>
-						<input type="number" name="cha" id="cha" value="10" class="form-control" style="width:8em;">
-					</div>
-				</div>
-				<p><em>The following is the standard attribute array: 8,10,12,13,14,15</em></p>
-				<hr />
+			<div class="col-md-4">		
+				<p><label class="control-label">Languages</label></p>
+				<div id="formLang"></div>
 			</div>
-		</div>
+			<div class="col-md-4 well">	
+				<p><label class="control-label">Skills</label></p>
+				<div id="formSkill" class="form-group checkbox"></div>
+			</div>
+			<div class="col-md-4">	
+				<p><label class="control-label">Tools</label></p>
+				<div id="formTool"></div>
+			</div>
+		</div>		
 		<div class="row">
 			<div class="col-md-12">
-				<h4>Saving Throws</h4>
-				<div class="form form-inline">
-					<div class="form-group">
-						<label><input type="checkbox" name="saveStr" id="saveStr" value="Yes" class="form-control"> STR save?</label>
-					</div>
-					<div class="form-group">
-						<label><input type="checkbox" name="saveDex" id="saveDex" value="Yes" class="form-control"> DEX save?</label>
-					</div>
-					<div class="form-group">
-						<label><input type="checkbox" name="saveCon" id="saveCon" value="Yes" class="form-control"> CON save?</label>
-					</div>
-					<div class="form-group">
-						<label><input type="checkbox" name="saveInt" id="saveInt" value="Yes" class="form-control"> WIS save?</label>
-					</div>
-					<div class="form-group">
-						<label><input type="checkbox" name="saveWis" id="saveWis" value="Yes" class="form-control"> INT save?</label>
-					</div>
-					<div class="form-group">
-						<label><input type="checkbox" name="saveCha" id="saveCha" value="Yes" class="form-control"> CHA save?</label>
-					</div>
+				<label class="control-label">Attributes</label>
+				<p><em>The following is the standard attribute array: 8,10,12,13,14,15</em></p>				
+				<div id="form" class="form form-inline">
+					<table class="table table-condensed">
+						<thead>
+							<tr>
+								<th>Attribute</th>
+								<th>Value</th>
+								<th>Modifier</th>
+								<th>Proficiency Roll (Attack/Skill)</th>
+								<th>Magic Save DC</th>
+							</tr>
+						</thead>
+						<tbody id="attributeTable">
+						</tbody>
+					</table>
 				</div>
-				<hr />
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">	
-				<div class="form form-inline">
-					<div class="form-group">
-						<p class="control-label">Armour Type</p>
-						<div id="formArmour"></div>
-					</div>
-					<div class="form-group">
-						<p class="control-label">Armour Bonus</p>
-						<input type="number" name="armour_bonus" id="armour_bonus" value="0" class="form-control">
-					</div>
-					<div class="form-group">
-						<p class="control-label">AC Bonus</p>
-						<input type="number" name="ac_bonus" id="ac_bonus" value="0" class="form-control">
-					</div>
-					<div class="form-group">
-						<label><input type="checkbox" name="shielded" id="shielded" value="Yes" class="form-control"> Shielded?</label>
-					</div>
-					<div class="form-group">
-						<label><input type="checkbox" name="addDex" id="addDex" value="Yes" class="form-control"> Add Dex Mod?</label>
-					</div>
-					<div class="form-group">
-						<label><input type="checkbox" name="addCon" id="addCon" value="Yes" class="form-control"> Add Con Mod?</label>
-					</div>
-				</div>
-				<p><em>"Armour Type" just sets a useful descriptor. Every other option affects the final AC</em></p>
-				<hr />
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">	
-				<div id="TraitForm" class="form form-inline">
-					<h4>Traits</h4>
-					<p><a href='#' class='btn btn-primary hidden' id="addTrait">Add</a></p>
-					<div class="form-group">
-						<input type="text" id="trait_name_1" name="trait_name_1" class="form-control trait_name" placeholder="Name" />
-						<textarea rows="2" id="trait_detail_1" name="trait_detail_1" class="form-control trait_detail" placeholder="Details"></textarea>
-						<a href="#" class="btn btn-danger removeInput hidden"> Remove</a>
-					</div>
-				</div>
-				<hr />
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">	
 				<div id="AttackForm" class="form form-inline">
-					<h4>Attacks</h4>
-					<p><em>The following Proficiency, Attack Bonus and Save DC are all based off the Defensive CR. Feel free to adjust these when writing up your attacks.</em></p>
-					<p>Proficiency: <span id='prof' class="label label-info">2</span></p>
-					<p>STR Attack: <span id='str_atk' class="label label-info">2</span>; DEX Attack: <span id='dex_atk' class="label label-info">2</span>; CON Attack: <span id='con_atk' class="label label-info">2</span>; INT Attack: <span id='int_atk' class="label label-info">2</span>; WIS Attack: <span id='wis_atk' class="label label-info">2</span>; CHA Attack: <span id='cha_atk' class="label label-info">2</span></p>
-					<p>STR save: <span id='str_save' class="label label-info">10</span>; DEX save: <span id='dex_save' class="label label-info">10</span>; CON save: <span id='con_save' class="label label-info">10</span>; INT save: <span id='int_save' class="label label-info">10</span>; WIS save: <span id='wis_save' class="label label-info">10</span>; CHA save: <span id='cha_save' class="label label-info">10</span></p>
+					<h3>Actions</h3>
+					<p><em>Use the Proficiency Attack Roll and the Magic Save DC in the attributes table as a guide to building your monster's particular action. This section is free-form to give you maximum control over your creature.</em></p>
+					<p><strong>Type</strong> refers to the way this action is to be used. For instance, it can be "Attack", "Reaction", or "Trait"</p>
+					<p>You will need to specifically click on the 'Add' button for the action to be added to the final monster</p>
 					<p><a href='#' class='btn btn-primary hidden' id="addAttack">Add</a></p>
 					<div class="form-group">
+						<input type="text" id="trait_name_1" name="trait_name_1" class="form-control trait_name" placeholder="Type" />
 						<input type="text" id="attack_name_1" name="attack_name_1" class="form-control attack_name" placeholder="Name" />
 						<textarea rows="2" id="attack_detail_1" name="attack_detail_1" class="form-control attack_detail" placeholder="Details"></textarea>
 						<a href="#" class="btn btn-danger removeInput hidden"> Remove</a>
@@ -200,92 +130,13 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">	
-				<div id="ReactionForm" class="form form-inline">
-					<h4>Reactions</h4>
-					<p><a href='#' class='btn btn-primary hidden' id="addReaction">Add</a></p>
-					<div class="form-group">
-						<input type="text" id="reaction_name_1" name="reaction_name_1" class="form-control reaction_name" placeholder="Name" />
-						<textarea rows="2" id="reaction_detail_1" name="reaction_detail_1" class="form-control reaction_detail" placeholder="Details"></textarea>
-						<a href="#" class="btn btn-danger removeInput hidden"> Remove</a>
-					</div>
-				</div>
-				<hr />
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">	
-				<p class="control-label"><strong>Damage Resistances</strong></p>
-				<div id="resist" class="form form-inline">
-				</div>
-				<hr />
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">	
-				<p class="control-label"><strong>Damage Immunities</strong></p>
-				<div id="immune" class="form form-inline">
-				</div>
-				<hr />
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">	
-				<p class="control-label"><strong>Condition Immunities</strong></p>
-				<div id="condition" class="form form-inline">
-				</div>
-				<hr />
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">	
-				<div class="form form-inline">
-					<div class="form-group checkbox">
-						<p class="control-label"><strong>Senses</strong></p>
-						<label><input type="radio" name="sense" id="sense" value="Normal" class="form-control" checked>Normal</label>
-						<label><input type="radio" name="sense" id="sense" value="Darkvision" class="form-control">Darkvision</label>
-						<label><input type="radio" name="sense" id="sense" value="Truesight" class="form-control">Truesight</label>
-						<label><input type="radio" name="sense" id="sense" value="Blindsight" class="form-control">Blindsight</label>
-						<label><input type="radio" name="sense" id="sense" value="Tremorsense" class="form-control" >Tremorsense</label>
-					</div>
-				</div>
-				<hr />
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">	
-				<p class="control-label"><strong>Languages</strong></p>
-				<div id="language" class="form form-inline">
-				</div>
-				<hr/>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">	
 				<h4>Adjustments</h4>
-				<p><em>Your Offensive CR needs to be manually calculated since it is nearly impossible to create a system that will accept all forms of attack. Enter in the average Damage output for the first three rounds, the Attack Bonus or Save DC, and any effective adjustments to HP and AC as called for by special traits or abilities. Note that effective bonuses to damage and attack should be directly entered here.</em></p>
-				<div id="form" class="form form-inline">
-					<div class="form-group">
-						<p class="control-label">Effective HP Bonus</p>
-						<input type="number" name="effective_hp_bonus" id="effective_hp_bonus" value="0" class="form-control" >
-					</div>
-					<div class="form-group">
-						<p class="control-label">Effective AC Bonus</p>
-						<input type="number" name="effective_ac_bonus" id="effective_ac_bonus" value="0" class="form-control">
-					</div>
-					<div class="form-group">
-						<p class="control-label">Attack Bonus / Save DC</p>
-						<input type="number" name="offense_bonus" id="offense_bonus" value="0" class="form-control">
-					</div>
+				<p><em>Your Offensive CR needs to be manually calculated since it is nearly impossible to create a system that will accept all forms of attack. Enter in the average Damage output for the first three rounds and the main attribute you used for the Attack Roll or Save DC.</em></p>
+				<div id="form" class="form">
 					<div class="form-group">
 						<p class="control-label">Attack Type</p>
-						<select id="attack_type" class="form-control" name="attack_type">
-							<option value="attack">Attack Bonus</option>
-							<option value="save">Save DC</option>
-						</select>
+						<select id="attack_type" class="form-control" name="attack_type"></select>
 					</div>
-				</div>
-				<br />
-				<div id="form" class="form form-inline">
 					<div class="form-group">
 						<p class="control-label">Round 1 Damage</p>
 						<input type="number" name="rnd_1_dmg" id="rnd_1_dmg" value="0" class="form-control">
@@ -303,49 +154,31 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">	
-				<div class="form form-inline">
-					<div class="form-group well">
+			<div class="col-md-12 well">	
+				<div class="form">
+					<div class="form-group">
 						<label class="control-label">Hit Points</label>
-						<p><span id="hit_points">22</span> (<span id="hp_dice">5d8+0</span>)</p>
+						<p id="hit_points"></p>
 					</div>
-					<div class="form-group well">
-						<label class="control-label">Effective Hit Points</label>
-						<p><span id="effective_hit_points">22</span></p>
-					</div>
-					<div class="form-group well">
+					<div class="form-group">
 						<label class="control-label">Armour Class</label>
-						<p id="armour_class">10</p>
+						<p id="armour_class"></p>
 					</div>
-					<div class="form-group well">
-						<label class="control-label">Effective Armour Class</label>
-						<p id="effective_armour_class">10</p>
-					</div>
-					<div class="form-group well">
+					<div class="form-group">
 						<label class="control-label">Defensive CR</label>
 						<p id="defence_cr">1/8</p>
 					</div>
-					<div class="form-group well">
+					<div class="form-group">
 						<label class="control-label">Offensive CR</label>
-						<p id="offensive_cr">0</p>
+						<p id="offence_cr"></p>
 					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">	
-				<div class="form form-inline">	
-					<div class="form-group well">
+					<div class="form-group ">
 						<label class="control-label">CR</label>
-						<p id="cr">0</p>
+						<p id="cr"></p>
 					</div>
-					<div class="form-group well">
+					<div class="form-group">
 						<label class="control-label">Proficiency</label>
-						<p id="final_prof">0</p>
-					</div>
-					<div class="form-group well">
-						<label class="control-label">Saving Throws</label>
-						<p id="saves"></p>
+						<p id="final_prof"></p>
 					</div>
 				</div>
 				<hr />
@@ -363,23 +196,142 @@
 <script src="../js/lib/jquery.js"></script>
 <script src="../js/lib/bootstrap.js"></script>
 <script src="../js/lib/html2canvas.js"></script>
-<script src="../js/dice.js"></script>
 <script src="../js/monster.js"></script>
 <script>
-	// Load up our d20 object and populate our form
+	// The attack table
+	// Prepare the attributes table
+	var listAttribute = Monster.getAttributes();
+	$('#attack_type').html('');
+	for (var type in listAttribute) {
+		$('#attack_type').append('<option value="'+type+'">'+type.toUpperCase()+'</option>');
+		$('#attack_type').change(function() {
+			generate();
+		});
+	}
+	// Don't use random rolls
+	Monster.setAverageRoll(true);
+	// Function to generate the form
+	function generate() {
+		// Prepare the name and level
+		$('#formName').val(Monster.getName());
+		$('#formLevel').val(Monster.getLevel());
+		// Prepare the Type dropdown
+		var listType = Monster.listType();
+		$('#formType').html('');
+		for (var type in listType) {
+			$('#formType').append('<option value="'+listType[type][0]+'" '+(listType[type][0] === Monster.getType()?"selected":"")+'>'+(listType[type][0]).toUpperCase()+'</option>');
+		}
+		// Prepare the Size dropdown
+		var listSize = Monster.listSize();
+		$('#formSize').html('');
+		for (var type in listSize) {
+			$('#formSize').append('<option value="'+listSize[type][0]+'" '+(listSize[type][0] === Monster.getSize()?"selected":"")+'>'+(listSize[type][0]).toUpperCase()+'</option>');
+		}
+		// Prepare the Moral dropdown
+		var listMoral = Monster.listMoral();
+		$('#formMoral').html('');
+		for (var type in listMoral) {
+			$('#formMoral').append('<option value="'+listMoral[type][0]+'" '+(listMoral[type][0] === Monster.getMoral()?"selected":"")+'>'+listMoral[type][1]+'</option>');
+		}
+		// Prepare the Moral dropdown
+		var listEthic = Monster.listEthic();
+		$('#formEthic').html('');
+		for (var type in listEthic) {
+			$('#formEthic').append('<option value="'+listEthic[type][0]+'" '+(listEthic[type][0] === Monster.getEthic()?"selected":"")+'>'+listEthic[type][1]+'</option>');
+		}
+		// Prepare the attributes table
+		var listAttribute = Monster.getAttributes();
+		$('#attributeTable').html('');
+		for (var type in listAttribute) {
+			$('#attributeTable').append('<tr><th>'+type+'</th><td><input type="number" name="'+type+'" id="attr_'+type+'" value="'+listAttribute[type]+'" class="form-control" /></td><td id="mod_'+type+'">'+Monster.getMod(type)+'</td><td id="attack_'+type+'">'+Monster.getAttack(type)+'</td><td id="save_'+type+'">'+Monster.getSave(type)+'</td></tr>');
+			$('#attr_'+type).change(function() {
+				Monster.setAttribute(this.name, $(this).val());
+				generate();
+			});
+		}
+		// Prepare the armour table
+		var listArmour = Monster.listArmour();
+		$('#formArmour').html('');
+		for (var type in listArmour) {
+			$('#formArmour').append('<option value="'+listArmour[type].name+'" '+(listArmour[type].name === Monster.getArmour()?"selected":"")+'>'+(listArmour[type].name.toUpperCase())+' - '+listArmour[type].description+'</option>');
+		}
+		// Prepare the speeds
+		var listSpeed = Monster.getSpeed();
+		$('#formSpeed').html('');
+		for (var type in listSpeed) {
+			$('#formSpeed').append('<div class="form-group"><p>'+type.toUpperCase()+'</p><input type="number" name="'+type+'" id="speed_'+type+'" value="'+listSpeed[type]+'" class="form-control"></div>');
+			$('#speed_'+type).change(function() {
+				Monster.setSpeed(this.name, $(this).val());
+			});
+		}
+		// Prepare the senses
+		var listSense = Monster.getSense();
+		$('#formSense').html('');
+		for (var type in listSense) {
+			$('#formSense').append('<div class="form-group"><p>'+type.toUpperCase()+'</p><input type="number" name="'+type+'" id="sense_'+type+'" value="'+listSense[type]+'" class="form-control"></div>');
+			$('#sense_'+type).change(function() {
+				Monster.setSense(this.name, $(this).val());
+			});
+		}
+		// Prepare the bonuses
+		var listBonus = Monster.getBonus();
+		$('#formBonus').html('');
+		for (var type in listBonus) {
+			$('#formBonus').append('<div class="form-group"><p>'+type.toUpperCase()+'</p><input type="number" name="'+type+'" id="bonus_'+type+'" value="'+listBonus[type]+'" class="form-control"></div>');
+			$('#bonus_'+type).change(function() {
+				Monster.setBonus(this.name, $(this).val());
+				generate();
+			});
+		}
+		// Prepare the skills
+		var listSkill = Monster.getSkills();
+		$('#formSkill').html('');
+		for (var type in listSkill) {
+			$('#formSkill').append('<div class="checkbox"><label><input type="checkbox" name="'+type+'" id="skill_'+type+'" '+(Monster.getSkillProf(type)?"checked":"")+'>'+type.toUpperCase()+'</label></div>');
+			$('#skill_'+type).change(function() {
+				Monster.setSkillProf(this.name, $(this).val());
+			});
+		}
+		// Prepare the tools
+		var listTool = Monster.getTools();
+		$('#formTool').html('');
+		for (var type in listTool) {
+			$('#formTool').append('<div class="checkbox"><label><input type="checkbox" name="'+type+'" id="tool_'+type+'" '+(Monster.getToolProf(type)?"checked":"")+'>'+type.toUpperCase()+'</label></div>');
+			$('#tool_'+type).change(function() {
+				Monster.setToolProf(this.name, $(this).val());
+			});
+		}
+		// Prepare the languages
+		var listLang = Monster.getLang();
+		$('#formLang').html('');
+		for (var type in listLang) {
+			$('#formLang').append('<div class="checkbox"><label><input type="checkbox" name="'+type+'" id="lang_'+type+'" '+(listLang[type]?"checked":"")+'>'+type.toUpperCase()+'</label></div>');
+			$('#lang_'+type).change(function() {
+				Monster.setLang(this.name, $(this).val());
+			});
+		}
+		var attack_attrib = $('#attack_type').val();
+		var average_damage = (parseInt($('#rnd_1_dmg').val(),0) + parseInt($('#rnd_2_dmg').val(),0) + parseInt($('#rnd_3_dmg').val(),0))/3;
+		$('#hit_points').html(Monster.getHP());
+		$('#armour_class').html(Monster.getAC());
+		$('#defence_cr').html(Monster.getDCR());
+		$('#offence_cr').html(Monster.getOCR(average_damage, attack_attrib));
+		$('#cr').html(Monster.getCR(average_damage, attack_attrib));
+		$('#final_prof').html(Monster.getProficiency());
+	}
+	generate();
+	// Form variables
+	$('#formName').change(function () { Monster.setName($(this).val()); });
+	$('#formLevel').change(function () { Monster.setLevel($(this).val()); generate(); });
+	$('#formMoral').change(function () { Monster.setMoral($(this).val()); });
+	$('#formEthic').change(function () { Monster.setEthic($(this).val()); });
+	$('#formSize').change(function () { Monster.setSize($(this).val()); generate(); });
+	$('#formType').change(function () { Monster.setType($(this).val()); generate(); });
+	$('#formArmour').change(function () { Monster.setArmour($(this).val()); generate(); });
+	$('#rnd_1_dmg').change(function () { generate(); });
+	$('#rnd_2_dmg').change(function () { generate(); });
+	$('#rnd_3_dmg').change(function () { generate(); });
 	/*
-	d20.load();
-	$('#language').html(d20.makeCheckbox(d20.getLanguage(),'language'));
-	$('#condition').html(d20.makeCheckbox(d20.getCondition(),'condition'));
-	$('#immune').html(d20.makeCheckbox(d20.getDamage(),'immune'));
-	$('#resist').html(d20.makeCheckbox(d20.getDamage(),'resist'));
-	$('#formType').html(d20.makeSelect(d20.getOrigin(),'type','Humanoid'));
-	$('#formSize').html(d20.makeSelect(d20.getSize(),'size','Medium'));
-	$('#formArmour').html(d20.makeSelect(d20.getArmourStyle(),'size','None'));
-	//Easy reference to our div
-	var attackDiv = $('#AttackForm');
-	var traitDiv = $('#TraitForm');
-	var reactionDiv = $('#ReactionForm');
 	// If Javascript is enabled, then remove our hidden option
 	$('#addAttack, #addTrait, #addReaction, .removeInput').removeClass('hidden');
 	// Add Attack form line
@@ -389,24 +341,6 @@
 	       	<input id="attack_name_'+i+'" class="form-control attack_name" type="text" placeholder="Name" name="attack_name_'+i+'"> \
 	    	<textarea id="attack_detail_'+i+'" class="form-control attack_detail" placeholder="Details" name="attack_detail_'+i+'"></textarea> \
 	    	<a class="btn btn-danger removeInput" href="#"> Remove</a>').appendTo(attackDiv);
-	    return false;
-	});
-	// Add Trait form line
-	$('#addTrait').on('click', function() {
-	    var i = $('#TraitForm .form-group').size() + 1;
-	    $('<div class="form-group">\
-	       	<input id="trait_name_'+i+'" class="form-control trait_name" type="text" placeholder="Name" name="trait_name_'+i+'"> \
-	    	<textarea id="trait_detail_'+i+'" class="form-control trait_detail" placeholder="Details" name="trait_detail_'+i+'"></textarea> \
-	    	<a class="btn btn-danger removeInput" href="#"> Remove</a>').appendTo(traitDiv);
-	    return false;
-	});
-	// Add Reaction form line
-	$('#addReaction').on('click', function() {
-	    var i = $('#ReactionForm .form-group').size() + 1;
-	    $('<div class="form-group">\
-	       	<input id="reaction_name_'+i+'" class="form-control reaction_name" type="text" placeholder="Name" name="reaction_name_'+i+'"> \
-	    	<textarea id="reaction_detail_'+i+'" class="form-control reaction_detail" placeholder="Details" name="reaction_detail_'+i+'"></textarea> \
-	    	<a class="btn btn-danger removeInput" href="#"> Remove</a>').appendTo(reactionDiv);
 	    return false;
 	});
 	// When a remove button is clicked, delete the owning div and renumber everything
@@ -422,38 +356,6 @@
 	    $('#AttackForm .form-group .attack_detail').each(function() {
 	        this.id='attack_detail_'+i;
 	        this.name='attack_detail_'+i;
-	        i++;
-	    });
-	    return false;
-	});
-	$('#TraitForm').on('click', '.removeInput', function() { 
-	    $(this).parent('.form-group').remove();
-	    var i = 1;
-	    $('#TraitForm .form-group .trait_name').each(function() {
-	        this.id='trait_name_'+i;
-	        this.name='trait_name_'+i;
-	        i++;
-	    });
-	    var i = 1;
-	    $('#TraitForm .form-group .trait_detail').each(function() {
-	        this.id='trait_detail_'+i;
-	        this.name='trait_detail_'+i;
-	        i++;
-	    });
-	    return false;
-	});
-	$('#ReactionForm').on('click', '.removeInput', function() { 
-	    $(this).parent('.form-group').remove();
-	    var i = 1;
-	    $('#ReactionForm .form-group .reaction_name').each(function() {
-	        this.id='reaction_name_'+i;
-	        this.name='reaction_name_'+i;
-	        i++;
-	    });
-	    var i = 1;
-	    $('#ReactionForm .form-group .reaction_detail').each(function() {
-	        this.id='reaction_detail_'+i;
-	        this.name='reaction_detail_'+i;
 	        i++;
 	    });
 	    return false;
@@ -926,38 +828,6 @@
 	    //    }
 	    //});
 	}
-	// Attribute changes
-	$("#str").change(function () { $('#str_mod').html(Math.floor(($("#str").val()-10)/2)); calcAC(); });
-	$("#con").change(function () { $('#con_mod').html(Math.floor(($("#con").val()-10)/2)); calcHP(); calcAC(); });
-	$("#dex").change(function () { $('#dex_mod').html(Math.floor(($("#dex").val()-10)/2)); calcAC(); });
-	$("#int").change(function () { $('#int_mod').html(Math.floor(($("#int").val()-10)/2)); calcAC(); });
-	$("#wis").change(function () { $('#wis_mod').html(Math.floor(($("#wis").val()-10)/2)); calcAC(); });
-	$("#cha").change(function () { $('#cha_mod').html(Math.floor(($("#cha").val()-10)/2)); calcAC(); });
-	// Size-changes
-	$('#size').change(function () { calcHP(); });
-	// HP changes
-	$("#hit_die").change(function () { calcHP(); });
-	$("#hit_bonus").change(function () { calcHP(); });
-	$("input[name='resist']").on("click",function () { calcDCR(); });
-	$("input[name='immune']").on("click",function () { calcDCR(); });
-	$("#effective_hp_bonus").change(function () { calcDCR(); });
-	$("#effective_ac_bonus").change(function () { calcDCR(); });
-	// AC changes
-	$('#ac_bonus').change(function () { calcAC(); });
-	$('#shielded').on("click", function () { calcAC(); });
-	$('#addDex').on("click", function () { calcAC(); });
-	$('#addCon').on("click", function () { calcAC(); });
-	$("#armour_bonus").change(function () { calcAC(); });
-	$('#saveStr').on("click", function () { calcAC(); });
-	$('#saveDex').on("click", function () { calcAC(); });
-	$('#saveCon').on("click", function () { calcAC(); });
-	$('#saveInt').on("click", function () { calcAC(); });
-	$('#saveWis').on("click", function () { calcAC(); });
-	$('#saveCha').on("click", function () { calcAC(); });
-	// Offensive changes
-	$('#offense_bonus').change( function () { calcAC(); });
-	$('#rnd_1_dmg').change( function () { calcAC(); });
-	$('#rnd_2_dmg').change( function () { calcAC(); });
-	$('#rnd_3_dmg').change( function () { calcAC(); });*/
+	*/
 </script>
 </html>

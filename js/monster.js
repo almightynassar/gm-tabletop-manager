@@ -51,34 +51,46 @@ var Monster = new function () {
 		"armr": "armo+modifier_dexterity",
 		"attr": {
 			"strength": {
+				"attack": "$+prof",
 				"min": 5,
 				"max": 30,
-				"mod": "Math.floor(($-10)/2)"
+				"mod": "Math.floor(($-10)/2)",
+				"save": "8+$+prof"
 			},
 			"dexterity": {
+				"attack": "$+prof",
 				"min": 5,
 				"max": 30,
-				"mod": "Math.floor(($-10)/2)"
+				"mod": "Math.floor(($-10)/2)",
+				"save": "8+$+prof"
 			},
 			"constitution": {
+				"attack": "$+prof",
 				"min": 5,
 				"max": 30,
-				"mod": "Math.floor(($-10)/2)"
+				"mod": "Math.floor(($-10)/2)",
+				"save": "8+$+prof"
 			},
 			"intelligence": {
+				"attack": "$+prof",
 				"min": 5,
 				"max": 30,
-				"mod": "Math.floor(($-10)/2)"
+				"mod": "Math.floor(($-10)/2)",
+				"save": "8+$+prof"
 			},
 			"wisdom": {
+				"attack": "$+prof",
 				"min": 5,
 				"max": 30,
-				"mod": "Math.floor(($-10)/2)"
+				"mod": "Math.floor(($-10)/2)",
+				"save": "8+$+prof"
 			},
 			"charisma": {
+				"attack": "$+prof",
 				"min": 5,
 				"max": 30,
-				"mod": "Math.floor(($-10)/2)"
+				"mod": "Math.floor(($-10)/2)",
+				"save": "8+$+prof"
 			},
 		},
 		"bonu":	["ac","hp"],
@@ -86,12 +98,12 @@ var Monster = new function () {
 			"defence": [
 			    "if (hp<85) { Math.round(((hp/10)/14)*100)/100; } else if (hp<400) { Math.floor((hp-70)/15)+1; } else { Math.floor(((hp-355)/45)+20) }",
 			    "$+(((a_c-(13+Math.floor(Math.abs($-1)/3)))/2)|0)",
-			    "if ($>1) { Math.floor($); } else { $; }"
+			    "if ($>1) { Math.floor($); } else { Math.max(0,$); }"
 			],
 			"offence": [
 			    "if ($<14) { Math.round(($/16)*100)/100; } else if ($<123) { Math.floor(($-8)/6); } else { Math.floor((($-122)/18)+19) }",
 			    "if ($<1) { $+((((prof+attribute)-((($)*2)))/2)|0); } else { $+((((prof+attribute)-(((($+1)/3)|0)+4))/2)|0); }",
-			    //"if ($>1) { Math.floor($); } else { $; }"
+			    "if ($>1) { Math.floor($); } else { Math.max(0,$); }"
 			],
 			"final": "(defence+offence)/2"
 		},
@@ -245,7 +257,21 @@ var Monster = new function () {
 		         ["ooze",1],
 		         ["outsider",1],
 		         ["plant",1],
-		         ["undead",1]]
+		         ["undead",1]],
+		"moral": [
+			["virtuous", "They actively seek out good causes and have a strong moral code. Extremely Good and Selfless"],
+			["good", "Generally do the right thing by others. Altruistic and Respectful"],
+			["neutral", "Mainly influenced by self-preservation than by morality"],
+			["evil", "Generally seek to exploit others for personal gain. Corrupt, Greedy and Selfish"],
+			["vile", "They actively oppress or destroy others in their quest for power or riches. Extremely Evil and Sadistic"]
+		],
+		"ethic": [
+			["conservative", "Actively seek the imposition of standing traditions, order and legal structures. Authoritive and Principled"],
+			["order", "Believes that a strong, well-ordered society is beneficial to them and their loved ones. Lawful, Organised, and Respectful"],
+			["neutral", "Mainly influenced by pragmatism than by civic extremes"],
+			["liberal", "Believes in freedom and choice over tradition. Free-minded, Individualistic, and Skeptical of authority"],
+			["progressive", "Actively seeks to topple or destroy what they deem as oppressive authoritorian regimes or traditions. Extremely Liberal, Anarchists, and Rebellious"]
+		]
 	};
 	// Our setting on whether we should use average rolls or not
 	var useAverage = false;
@@ -262,6 +288,8 @@ var Monster = new function () {
         }
         return result;
     };
+    // Our local name value
+    var name = "Commoner";
 	// Our local level value
 	var level = 0;
 	// Local value of attributes
@@ -276,6 +304,10 @@ var Monster = new function () {
 	var monsterSize = Math.floor((config["size"].length-1)/2);
 	// Local type value
 	var monsterType = Math.floor((config["type"].length-1)/2);
+	// Local morality value
+	var monsterMoral = Math.floor((config["moral"].length-1)/2);
+	// Local ethics value
+	var monsterEthic = Math.floor((config["ethic"].length-1)/2);
 	// Local value of skills
 	var skills = new function () {
 		var array = [];
@@ -297,7 +329,7 @@ var Monster = new function () {
 	// Local value of bonuses
 	var bonuses = new function () {
 		var array = [];
-		for (attr in config["bonu"]) {
+		for (var attr in config["bonu"]) {
 			array[config["bonu"][attr]] = 0;
 		}
 		return array;
@@ -305,7 +337,7 @@ var Monster = new function () {
 	// Local value of languages
 	var languages = new function () {
 		var array = [];
-		for (attr in config["lang"]) {
+		for (var attr in config["lang"]) {
 			array[config["lang"][attr]] = false;
 		}
 		return array;
@@ -344,6 +376,34 @@ var Monster = new function () {
 		}
 		return 0;
 	};
+	// Calculate the attack for a given attribute
+	function attackDC(attribute) {
+		// Normalise input
+		attribute = (typeof attribute === "string") ? attribute : "strength";
+		// Get our configured values for this attribute
+		var attr = config["attr"][attribute];
+		if (attr.attack && attributes[attribute]) {
+			// Replace out the marker text
+			var calc = attr.attack.replace(/\$/g,mod(attribute,attributes[attribute]));
+			// Execute and return the value
+			return eval(parse(calc));
+		}
+		return 0;
+	};
+	// Calculate the attack for a given attribute
+	function saveDC(attribute) {
+		// Normalise input
+		attribute = (typeof attribute === "string") ? attribute : "strength";
+		// Get our configured values for this attribute
+		var attr = config["attr"][attribute];
+		if (attr.save && attributes[attribute]) {
+			// Replace out the marker text
+			var calc = attr.save.replace(/\$/g,mod(attribute,attributes[attribute]));
+			// Execute and return the value
+			return eval(parse(calc));
+		}
+		return 0;
+	};
 	// Parse our calculations and return as a string
 	function parse(calculation,code) {
 		var flags = (typeof code === "string") ? code.split(','): [];
@@ -353,11 +413,13 @@ var Monster = new function () {
 			calculation = calculation.replace(/size/g,config["size"][monsterSize][1]);
 			calculation = calculation.replace(/type/g,config["type"][monsterType][1]);
 			calculation = calculation.replace(/armo/g,config["armo"][armour].ac);
-			for (var key in attributes) {
-				var re = new RegExp("modifier_"+key,"g");
-				calculation = calculation.replace(re,mod(key,attributes[key]));
-				re = new RegExp(key,"g");
-				calculation = calculation.replace(re,attributes[key]);
+			if (!(flags.indexOf('M') > -1)) {
+				for (var key in attributes) {
+					var re = new RegExp("modifier_"+key,"g");
+					calculation = calculation.replace(re,mod(key,attributes[key]));
+					re = new RegExp(key,"g");
+					calculation = calculation.replace(re,attributes[key]);
+				}
 			}
 			for (var key in bonuses) {
 				var re = new RegExp("bonus_"+key,"g");
@@ -404,6 +466,12 @@ var Monster = new function () {
 			level = value;
 			return level;
 		}),
+		// Functions that deal with level
+		getName: (function () { return name; }),
+		setName: (function (value) { 
+			name = value;
+			return name;
+		}),
 		// Toggle the use of average rolls
 		setAverageRoll: (function (input) { useAverage = (input) ? true : false; }),
 		// Functions that deal with proficiency
@@ -422,6 +490,7 @@ var Monster = new function () {
 			}
 			return config["size"][monsterSize][0];
 		}),
+		listSize: (function () { return config["size"]; }),
 		// Functions that deal with type
 		getType: (function () { return config["type"][monsterType][0]; }),
 		setType: (function (value) {
@@ -432,8 +501,33 @@ var Monster = new function () {
 			}
 			return config["type"][monsterType][0];
 		}),
+		listType: (function () { return config["type"]; }),
+		// Functions that deal with morals
+		getMoral: (function () { return config["moral"][monsterMoral][0]; }),
+		setMoral: (function (value) {
+			for (var values in config["moral"]) {
+				if (config["moral"][values][0] === value) {
+					monsterMoral = values;
+				}
+			}
+			return config["moral"][monsterMoral][0];
+		}),
+		listMoral: (function () { return config["moral"]; }),
+		// Functions that deal with ethics
+		getEthic: (function () { return config["ethic"][monsterEthic][0]; }),
+		setEthic: (function (value) {
+			for (var values in config["ethic"]) {
+				if (config["ethic"][values][0] === value) {
+					monsterEthic = values;
+				}
+			}
+			return config["ethic"][monsterEthic][0];
+		}),
+		listEthic: (function () { return config["ethic"]; }),
 		// Functions that deal with attributes
-		getMod: (function (attribute) { if (attributes[attribute]) { return mod(attribute,attributes[attribute]); } }),
+		getMod: (function (attribute) { if (attributes[attribute]) { return mod(attribute,attributes[attribute]); } return 0; }),
+		getAttack: (function (attribute) { if (attributes[attribute]) { return attackDC(attribute,attributes[attribute]); } return 0; }),
+		getSave: (function (attribute) { if (attributes[attribute]) { return saveDC(attribute,attributes[attribute]); } return 0; }),
 		getAttributes: (function (attribute) {
 			if (attributes[attribute]) {
 				return attributes[attribute];
@@ -449,6 +543,7 @@ var Monster = new function () {
 				attributes[attribute] = value;
 				return attributes[attribute];
 			}
+			return 0;
 		}),
 		// Functions that deal with skills
 		getSkills: (function (skill) {
@@ -465,6 +560,13 @@ var Monster = new function () {
 			if (config["skil"][skill]) {
 				return config["skil"][skill]["description"];
 			}
+			return "";
+		}),
+		getSkillProf: (function (skill) {
+			if (config["skil"][skill]) {
+				return skills[skill][1];
+			}
+			return false;
 		}),
 		setSkillProf: (function (skill, proficient) {
 			proficient = (proficient) ? true : false;
@@ -488,6 +590,7 @@ var Monster = new function () {
 			if (config["tool"][tool]) {
 				return config["tool"][tool];
 			}
+			return "";
 		}),
 		setToolProf: (function (tool, proficient) {
 			proficient = (proficient) ? true : false;
@@ -495,6 +598,12 @@ var Monster = new function () {
 				tools[tool] = proficient;
 			}
 			return tools[tool];
+		}),
+		getToolProf: (function (tool) {
+			if (tools[tool]) {
+				return tools[tool];
+			}
+			return false;
 		}),
 		// Functions that deal with languages
 		getLang: (function (lang) {
@@ -563,6 +672,7 @@ var Monster = new function () {
 			return this.getArmour();
 		}),
 		getArmourScore: (function() { return armr(); }),
+		listArmour: (function () { return config["armo"]; }),
 		// Functions for Challenge Ratings
 		getDCR: (function () {
 			var result = 0;
@@ -603,7 +713,9 @@ var Monster = new function () {
 			var calc = config["cr"]["final"];
 			calc = calc.replace(/defence/g,this.getDCR());
 			calc = calc.replace(/offence/g,this.getOCR(damage,attribute));
-			return eval(calc);
+			var result = eval(calc);
+			result = (result > 1) ? Math.floor(result) :Math.max(0,result);
+			return result;
 		})
 	};
 };
