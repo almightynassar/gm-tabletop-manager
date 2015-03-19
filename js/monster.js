@@ -101,7 +101,7 @@ var Monster = new function () {
 			    "if ($>1) { Math.floor($); } else { Math.max(0,$); }"
 			],
 			"offence": [
-			    "if ($<14) { Math.round(($/16)*100)/100; } else if ($<123) { Math.floor(($-8)/6); } else { Math.floor((($-122)/18)+19) }",
+			    "if (damage<14) { Math.round((damage/16)*100)/100; } else if (damage<123) { Math.floor((damage-8)/6); } else { Math.floor(((damage-122)/18)+19) }",
 			    "if ($<1) { $+((((prof+attribute)-((($)*2)))/2)|0); } else { $+((((prof+attribute)-(((($+1)/3)|0)+4))/2)|0); }",
 			    "if ($>1) { Math.floor($); } else { Math.max(0,$); }"
 			],
@@ -695,11 +695,8 @@ var Monster = new function () {
 			var result = 0;
 			for (var i in config["cr"]["offence"]) {
 				var calc = config["cr"]["offence"][i];
-				if (i > 0) {
-					calc = calc.replace(/\$/g,eval(result));
-				} else {
-					calc = calc.replace(/\$/g,damage);
-				}
+				calc = calc.replace(/\$/g,eval(result));
+				calc = calc.replace(/damage/g,damage);
 				calc = calc.replace(/attribute/g,mod(attribute,attributes[attribute]));
 				result = parse(calc);
 			}
@@ -716,6 +713,15 @@ var Monster = new function () {
 			var result = eval(calc);
 			result = (result > 1) ? Math.floor(result) :Math.max(0,result);
 			return result;
-		})
+		}),
+		showDCR: function() {
+			return config["cr"]["defence"];
+		},
+		showOCR: function() {
+			return config["cr"]["offence"];
+		},
+		showCR: function() {
+			return config["cr"]["final"];
+		}
 	};
 };
