@@ -43,7 +43,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12 well">
-				<p><em>Here are the calculations, in order they will be executed. A <strong>$</strong> is placeholder for the previous calculated result, except for the first offensive calculation where it is a placeholder for the average damage. <strong>hp</strong> and <strong>a_c</strong> are directly linked to their respective values, while <strong>prof+attribute</strong> refers to the Attack Bonus.</em></p>
+				<p><em>Here are the calculations, in order they will be executed. A <strong>$</strong> is placeholder for the previous calculated result. <strong>damage</strong> is a placeholder for the average damage. <strong>hp</strong> and <strong>a_c</strong> are directly linked to their respective values. <strong>prof+attribute</strong> refers to the Attack Bonus.</em></p>
 				<div id="calculator"></div>
 				<p><button class="btn btn-block btn-lg btn-primary" onclick='generate();'>Generate</button></p>
 			</div>
@@ -56,6 +56,7 @@
 	<script src="../js/lib/jquery.js"></script>
 	<script src="../js/monster.js"></script>
 	<script>
+	Monster.loadConfig();
 	var dcr = Monster.showDCR();
 	$('#calculator').append("<h3>Defensive CR calculations</h3>");
 	for (var d in dcr) {

@@ -21,7 +21,7 @@ var Monster = new function () {
 				"name": "lamellar",
 				"ac": 1,
 				"limit": 3,
-				"description": "Lacquered and hardened leather scales connected together in parrallel rows by rivets and lace. Light weight, cheap and quick to make. Weak to piercing, slashing could sever the lace, and generally not very durable."
+				"description": "Lacquered and hardened leather scales connected together in parrallel rows by rivets and lace. Light armour that is cheap and quick to make. Weak to piercing. Slashing could sever the lace. Generally not very durable."
 			},
 			{
 				"name": "mail",
@@ -39,13 +39,13 @@ var Monster = new function () {
 				"name": "plate",
 				"ac": 6,
 				"limit": 8,
-				"description": "Full suit of iron plated armour. Heavy armour that is protects against all damage types, and still provides adequate manuervability"
+				"description": "Full suit of iron plated armour. Heavy armour that is protects against all damage types. Still provides adequate manuervability"
 			},
 			{
 				"name": "scale",
 				"ac": 5,
 				"limit": 7,
-				"description": "Metal strips with iron on the inside and steel on the outside, held together with leather straps and worn with a padded undergarment. Heavy Armour that offers decent protection against all damage types but still has some exposed weak areas"
+				"description": "Metal strips with iron on the inside and steel on the outside that is held together with leather straps and worn with a padded undergarment. Heavy Armour that offers decent protection against all damage types but still has some exposed weak areas"
 			}
 		],
 		"armr": "armo+modifier_dexterity",
@@ -105,7 +105,7 @@ var Monster = new function () {
 			    "if ($<1) { $+((((prof+attribute)-((($)*2)))/2)|0); } else { $+((((prof+attribute)-(((($+1)/3)|0)+4))/2)|0); }",
 			    "if ($>1) { Math.floor($); } else { Math.max(0,$); }"
 			],
-			"final": "(defence+offence)/2"
+			"final": "(((defence+offence)/2) > 1) ? Math.floor((defence+offence)/2) :Math.max(0,(defence+offence)/2)"
 		},
 		"hp":	"if (level>0) { leveldsize*type+(level*modifier_constitution)+bonus_hp } else { 1+modifier_constitution+bonus_hp }",
 		"lang": ["abyssal","aquan","auran","celestial","common","draconic","druidic","dwarven","elven","giant","gnome","goblin","gnoll","halfling","ignan","infernal","orc","sylvan","terran","undercommon"],
@@ -113,19 +113,19 @@ var Monster = new function () {
 		"skil": {
 			"acrobatics": {
 				"base": "dexterity",
-				"description": "Balancing, Diving, Flipping, Jumping, Rolling, Tumbling"
+				"description": "Balancing / Diving / Flipping / Jumping / Rolling / Tumbling"
 			},
 			"animals": {
 				"base": "wisdom",
-				"description": "You are trained to work with animals, and can teach them tricks"
+				"description": "You are trained to work with animals and can teach them tricks"
 			},
 			"arcana": {
 				"base": "intelligence",
-				"description": "You studied ancient mysteries, magic, symbols, constructs, dragons and magical beasts"
+				"description": "You studied ancient mysteries / magic / symbols / constructs / dragons / magical beasts"
 			},
 			"athletics": {
 				"base": "strength",
-				"description": "Breaking obstacles, Climbing, Jumping, Pulling, Pushing, Restraining"
+				"description": "Breaking / Climbing /Jumping / Pulling / Pushing / Restraining"
 			},
 			"appraise": {
 				"base": "intelligence",
@@ -133,7 +133,7 @@ var Monster = new function () {
 			},
 			"bluff": {
 				"base": "charisma",
-				"description": "Usually an opposed check to insight. Fool, Lie, Mislead"
+				"description": "Usually an opposed check to insight. Fool / Lie / Mislead"
 			},
 			"brawling": {
 				"base": "strength",
@@ -141,19 +141,19 @@ var Monster = new function () {
 			},
 			"diplomacy": {
 				"base": "charisma",
-				"description": "Convince, Influence, Persuade, Negotiate, Resolve"
+				"description": "Convince / Influence / Persuade / Negotiate / Resolve"
 			},
 			"engineering": {
 				"base": "intelligence",
-				"description": "You studied the science and math behind buildings, bridges, machines and fortifications"
+				"description": "You studied the science and math behind buildings / bridges / machines / fortifications"
 			},
 			"heal": {
 				"base": "wisdom",
-				"description": "You are skilled at tending to wounds and ailments, and have extensive medical knowledge"
+				"description": "You are skilled at tending to wounds and ailments and have extensive medical knowledge"
 			},
 			"history": {
 				"base": "intelligence",
-				"description": "You studied wars, colonies, migrations, foundings of cities, and major events"
+				"description": "You studied wars / colonies / migrations / foundings of cities / major events"
 			},
 			"insight": {
 				"base": "wisdom",
@@ -161,7 +161,7 @@ var Monster = new function () {
 			},
 			"intimidate": {
 				"base": "charisma",
-				"description": "Hostility, Threats, Violence"
+				"description": "Hostility / Threats / Violence"
 			},
 			"investigation": {
 				"base": "intelligence",
@@ -169,31 +169,31 @@ var Monster = new function () {
 			},
 			"nature": {
 				"base": "intelligence",
-				"description": "You studied animals, fey, monsters, plants, seasons, cycles, weather and terrain"
+				"description": "You studied animals / fey / monsters / plants / seasons / cycles / weather / terrain"
 			},
 			"perception": {
 				"base": "wisdom",
-				"description": "You are aware of your surroundings and are alert to danger. This also covers the five senses of sight, hearing, touch, taste and smell"
+				"description": "You are aware of your surroundings and are alert to danger. This also covers the five senses of sight / hearing / touch / taste / smell"
 			},
 			"perform": {
 				"base": "charisma",
-				"description": "You are skilled at a form of entertainment such as singing, acting, comedy, dance, oratory, and juggling"
+				"description": "You are skilled at a form of entertainment such as singing / acting / comedy / dance / oratory / juggling"
 			},
 			"religion": {
 				"base": "intelligence",
-				"description": "You studied deities, mythic history, ecclesiastic tradition, holy symbols, and the undead"
+				"description": "You studied deities / mythic history / ecclesiastic tradition / holy symbols / undead"
 			},
 			"sleight": {
 				"base": "dexterity",
-				"description": "Picking pockets, drawing hidden weapons, and taking actions without notice"
+				"description": "Picking pockets / drawing hidden weapons / taking actions without notice"
 			},
 			"stealth": {
 				"base": "dexterity",
-				"description": "Avoid detection, Hiding, Moving silently"
+				"description": "Avoid detection / Hiding / Moving silently"
 			},
 			"survival": {
 				"base": "wisdom",
-				"description": "You are skilled in surviving in the wilderness. You can find trails, tracks, food and water"
+				"description": "You are skilled in surviving in the wilderness. You can find trails / tracks / food / water"
 			},
 			"swim": {
 				"base": "strength",
@@ -209,7 +209,7 @@ var Monster = new function () {
 		         ["gargantuan",20]],
 		"spdy": ["fly","speed","swim"],
 		"tool": {
-			"alchemist": "Ability to craft herbal mixtures, chemistry and magic elixirs",
+			"alchemist": "Ability to craft herbal mixtures / chemicals / magic elixirs",
 		    "blacksmith": "Ability to shape metals to craft objects",
 		    "bowyer": "Ability to craft bows and arrows",
 		    "brass": "Skilled in brass instruments",
@@ -220,7 +220,7 @@ var Monster = new function () {
 		    "cook": "Ability to craft and prepare food",
 		    "disguise": "Ability to craft convincing disguises",
 		    "farming": "Skilled in working the land",
-		    "fishing": "Skilled in working seas, lakes and rivers",
+		    "fishing": "Skilled in working seas / lakes / rivers",
 		    "gambling": "Skilled in games of chance",
 		    "gardening": "Skilled in horticulture",
 		    "glassblower": "Ability to craft objects with glass",
@@ -358,6 +358,68 @@ var Monster = new function () {
 		}
 		return array;
 	};
+	// Set up the values
+	function revalue () {
+		attributes = new function () {
+			var array = [];
+			for (var attr in config["attr"]) {
+				array[attr] = Math.floor((config["attr"][attr].max - config["attr"][attr].min)/2);
+			}
+			return array;
+		};
+		monsterSize = Math.floor((config["size"].length-1)/2);
+		monsterType = Math.floor((config["type"].length-1)/2);
+		monsterMoral = Math.floor((config["moral"].length-1)/2);
+		monsterEthic = Math.floor((config["ethic"].length-1)/2);
+		skills = new function () {
+			var array = [];
+			for (var attr in config["skil"]) {
+				array[attr] = [config["skil"][attr]["base"], false];
+			}
+			return array;
+		};
+		tools = new function () {
+			var array = [];
+			for (var attr in config["tool"]) {
+				array[attr] = false;
+			}
+			return array;
+		};
+		// Local value of armour
+		armour = Math.floor((config["armo"].length-1)/2);
+		// Local value of bonuses
+		bonuses = new function () {
+			var array = [];
+			for (var attr in config["bonu"]) {
+				array[config["bonu"][attr]] = 0;
+			}
+			return array;
+		};
+		// Local value of languages
+		languages = new function () {
+			var array = [];
+			for (var attr in config["lang"]) {
+				array[config["lang"][attr]] = false;
+			}
+			return array;
+		};
+		// Local value of senses
+		senses = new function () {
+			var array = [];
+			for (attr in config["sens"]) {
+				array[config["sens"][attr]] = 0;
+			}
+			return array;
+		};
+		// Local value of speeds
+		speeds = new function () {
+			var array = [];
+			for (attr in config["spdy"]) {
+				array[config["spdy"][attr]] = 0;
+			}
+			return array;
+		};
+	}
 	// Calculate the modifier for a given attribute
 	function mod(attribute, value) {
 		// Normalise input
@@ -458,6 +520,84 @@ var Monster = new function () {
 		}
 		return value;
 	}
+	// ref: http://stackoverflow.com/a/1293163/2343
+    // This will parse a delimited string into an array of
+    // arrays. The default delimiter is the comma, but this
+    // can be overriden in the second argument.
+    function CSVToArray( strData, strDelimiter ){
+        // Check to see if the delimiter is defined. If not,
+        // then default to comma.
+        strDelimiter = (strDelimiter || ",");
+
+        // Create a regular expression to parse the CSV values.
+        var objPattern = new RegExp(
+            (
+                // Delimiters.
+                "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+
+                // Quoted fields.
+                "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+
+                // Standard fields.
+                "([^\"\\" + strDelimiter + "\\r\\n]*))"
+            ),
+            "gi"
+            );
+        
+        // Create an array to hold our data. Give the array
+        // a default empty first row.
+        var arrData = [[]];
+
+        // Create an array to hold our individual pattern
+        // matching groups.
+        var arrMatches = null;
+
+        // Keep looping over the regular expression matches
+        // until we can no longer find a match.
+        while (arrMatches = objPattern.exec( strData )){
+
+            // Get the delimiter that was found.
+            var strMatchedDelimiter = arrMatches[ 1 ];
+
+            // Check to see if the given delimiter has a length
+            // (is not the start of string) and if it matches
+            // field delimiter. If id does not, then we know
+            // that this delimiter is a row delimiter.
+            if ( strMatchedDelimiter.length && strMatchedDelimiter !== strDelimiter ){
+                // Since we have reached a new row of data,
+                // add an empty row to our data array.
+                arrData.push( [] );
+            }
+
+            var strMatchedValue;
+
+            // Now that we have our delimiter out of the way,
+            // let's check to see which kind of value we
+            // captured (quoted or unquoted).
+            if (arrMatches[ 2 ]){
+
+                // We found a quoted value. When we capture
+                // this value, unescape any double quotes.
+                strMatchedValue = arrMatches[ 2 ].replace(
+                    new RegExp( "\"\"", "g" ),
+                    "\""
+                    );
+
+            } else {
+
+                // We found a non-quoted value.
+                strMatchedValue = arrMatches[ 3 ];
+
+            }
+
+            // Now that we have our value string, let's add
+            // it to the data array.
+            arrData[ arrData.length - 1 ].push( strMatchedValue.replace(/(^\s*)|(\s*$)/g,''));
+        }
+
+        // Return the parsed data.
+        return( arrData );
+    }
 	return {
 		// Functions that deal with level
 		getLevel: (function () { return level; }),
@@ -711,7 +851,6 @@ var Monster = new function () {
 			calc = calc.replace(/defence/g,this.getDCR());
 			calc = calc.replace(/offence/g,this.getOCR(damage,attribute));
 			var result = eval(calc);
-			result = (result > 1) ? Math.floor(result) :Math.max(0,result);
 			return result;
 		}),
 		showDCR: function() {
@@ -722,6 +861,165 @@ var Monster = new function () {
 		},
 		showCR: function() {
 			return config["cr"]["final"];
-		}
+		},
+		// Save and Load the config
+        saveConfig: (function () {
+    		// Save the new object
+    		localStorage.setItem('monster.config', JSON.stringify(config));
+    	}),
+    	loadConfig: (function () {
+    		// Load the stored object
+    		if (localStorage['monster.config']) {
+    			config = JSON.parse(localStorage['monster.config']);
+    		}
+    		revalue();
+    	}),
+		// Get and Set the list of armours in CSV format
+		getArmourCSV: (function () {
+			var csv = "";
+			if (config["armo"]) {
+				for (var item in config["armo"]) {
+					if (csv !== "") {
+						csv += "\n";
+					}
+					var i = 0;
+					for (var entry in config["armo"][item]) {
+						if (i > 0) {
+							csv += ", ";
+						}
+						csv += config["armo"][item][entry];
+						i++;
+					}
+				}
+			}
+			return csv;
+		}),
+		setArmourCSV: (function (inputString) {
+			var csv = [];
+			if (inputString) {
+				csv = CSVToArray( inputString );
+				if (csv.length > 0) {
+					config["armo"] = [];
+					for (var item in csv) {
+						if (csv[item].length === 4) {
+							config["armo"][item] = {
+								"name": csv[item][0],
+								"ac": csv[item][1],
+								"limit": csv[item][2],
+								"description": csv[item][3]
+							}
+						}
+					}
+				}
+			}
+			return config["armo"];
+		}),
+		// Get and Set the list of attributes in CSV format
+		getAttributesCSV: (function () {
+			var csv = "";
+			if (config["attr"]) {
+				for (var item in config["attr"]) {
+					if (csv !== "") {
+						csv += "\n";
+					}
+					csv += item;
+					var i = 0;
+					for (var entry in config["attr"][item]) {
+						csv += ", " + config["attr"][item][entry];
+						i++;
+					}
+				}
+			}
+			return csv;
+		}),
+		setAttributesCSV: (function (inputString) {
+			var csv = [];
+			if (inputString) {
+				csv = CSVToArray( inputString );
+				if (csv.length > 0) {
+					config["attr"] = {};
+					for (var item in csv) {
+						if (csv[item].length === 6) {
+							var key =csv[item][0]; 
+							config["attr"][key] =  {
+								"attack": csv[item][1],
+								"min": csv[item][2],
+								"max": csv[item][3],
+								"mod": csv[item][4],
+								"save": csv[item][5]
+							};
+						}
+					}
+				}
+			}
+			return config["attr"];
+		}),
+		// Get and Set the list of skills in CSV format
+		getSkillsCSV: (function () {
+			var csv = "";
+			if (config["skil"]) {
+				for (var item in config["skil"]) {
+					if (csv !== "") {
+						csv += "\n";
+					}
+					csv += item;
+					var i = 0;
+					for (var entry in config["skil"][item]) {
+						csv += ", " + config["skil"][item][entry];
+						i++;
+					}
+				}
+			}
+			return csv;
+		}),
+		setSkillsCSV: (function (inputString) {
+			var csv = [];
+			if (inputString) {
+				csv = CSVToArray( inputString );
+				if (csv.length > 0) {
+					config["skil"] = {};
+					for (var item in csv) {
+						if (csv[item].length === 3) {
+							var key = csv[item][0];
+							config["skil"][key] = {
+								"base": csv[item][1],
+								"description": csv[item][2]
+							}
+						}
+					}
+				}
+			}
+			return config["skil"];
+		}),
+		// Get and Set the list of tools in CSV format
+		getToolsCSV: (function () {
+			var csv = "";
+			if (config["tool"]) {
+				for (var item in config["tool"]) {
+					if (csv !== "") {
+						csv += "\n";
+					}
+					csv += item + ", " + config["tool"][item];
+				}
+			}
+			return csv;
+		}),
+		setToolsCSV: (function (inputString) {
+			var csv = [];
+			if (inputString) {
+				csv = CSVToArray( inputString );
+				if (csv.length > 0) {
+					config["tool"] = {};
+					for (var item in csv) {
+						if (csv[item].length === 2) {
+							var key = csv[item][0];
+							config["tool"][key] = csv[item][1];
+						}
+					}
+				}
+			}
+			return config["tool"];
+		}),
+		getConfig: function () { return config; }
 	};
 };
