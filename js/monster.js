@@ -1020,6 +1020,111 @@ var Monster = new function () {
 			}
 			return config["tool"];
 		}),
+		// Get and Set the list of languages in CSV format
+		getLangsCSV: (function () {
+			var csv = "";
+			if (config["lang"]) {
+				for (var item in config["lang"]) {
+					if (csv !== "") {
+						csv += ",";
+					}
+					csv += config["lang"][item];
+				}
+			}
+			return csv;
+		}),
+		setLangsCSV: (function (inputString) {
+			var csv = [];
+			if (inputString) {
+				csv = CSVToArray( inputString );
+				if (csv[0].length > 0) {
+					config["lang"] = [];
+					for (var item in csv[0]) {
+						config["lang"][item] = csv[0][item];
+					}
+				}
+			}
+			return config["lang"];
+		}),
+		// Get and Set the list of bonuses in CSV format
+		getBonusCSV: (function () {
+			var csv = "";
+			if (config["bonu"]) {
+				for (var item in config["bonu"]) {
+					if (csv !== "") {
+						csv += ",";
+					}
+					csv += config["bonu"][item];
+				}
+			}
+			return csv;
+		}),
+		setBonusCSV: (function (inputString) {
+			var csv = [];
+			if (inputString) {
+				csv = CSVToArray( inputString );
+				if (csv[0].length > 0) {
+					config["bonu"] = [];
+					for (var item in csv[0]) {
+						config["bonu"][item] = csv[0][item];
+					}
+				}
+			}
+			return config["bonu"];
+		}),
+		// Get and Set the list of senses in CSV format
+		getSensesCSV: (function () {
+			var csv = "";
+			if (config["sens"]) {
+				for (var item in config["sens"]) {
+					if (csv !== "") {
+						csv += ",";
+					}
+					csv += config["sens"][item];
+				}
+			}
+			return csv;
+		}),
+		setSensesCSV: (function (inputString) {
+			var csv = [];
+			if (inputString) {
+				csv = CSVToArray( inputString );
+				if (csv[0].length > 0) {
+					config["sens"] = [];
+					for (var item in csv[0]) {
+						config["sens"][item] = csv[0][item];
+					}
+				}
+			}
+			return config["sens"];
+		}),
+		// Get and Set the list of speeds in CSV format
+		getSpeedsCSV: (function () {
+			var csv = "";
+			if (config["spdy"]) {
+				for (var item in config["spdy"]) {
+					if (csv !== "") {
+						csv += ",";
+					}
+					csv += config["spdy"][item];
+				}
+			}
+			return csv;
+		}),
+		setSpeedsCSV: (function (inputString) {
+			var csv = [];
+			if (inputString) {
+				csv = CSVToArray( inputString );
+				if (csv[0].length > 0) {
+					config["spdy"] = [];
+					for (var item in csv[0]) {
+						config["spdy"][item] = csv[0][item];
+					}
+				}
+			}
+			return config["spdy"];
+		}),
+		// Grab the current configuration
 		getConfig: function () { return config; }
 	};
 };
