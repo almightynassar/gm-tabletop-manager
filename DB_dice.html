@@ -48,14 +48,36 @@
 	    		</ul>
 	    	</div>
     	</div>
-    	<div class="row">
-            <div class="col-md-12">
-           		<p>Choose an option above</p>
-           	</div>
-    	</div>
-    </div>
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/lib/jquery.js"></script>
-    <script src="bootstrap/js/bootstrap.js"></script>
+		<div class="row">
+			<div class="col-md-12 well form">
+				<p>To Export, click on the Export button and save the text that appears in the text box below. Each die parameter will be seperated by a comma.</p>
+				<p>The format is: <strong>[name],[dice number],[dice sides],[positive modifier],[modifier value]</strong></p>
+				<div class="btn-group">
+					<button class="btn btn-info" id="Export">Export</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form">
+				<textarea id="importarea" class="form-control" rows=20></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form">
+				<p>To Import, paste edit or write into the box above and then click Import.</p>
+				<div class="form-inline">
+					<button class="btn btn-primary" id="Import">Import</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../js/lib/jquery.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="js/dice.js"></script>
+	<script>
+		// Load the stored lists and chains
+		$('#Export').click(function(){$('#importarea').val(Dice.ExportCSV());});
+		$('#Import').click(function(){Dice.ImportCSV($('#importarea').val());})
+	</script>
 </body>
 </html>

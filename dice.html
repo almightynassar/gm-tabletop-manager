@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>Tabletop Manager</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/shapies.css" media="all">
+</head>
+<body>
+    <div class="container">
+    	<div class="row">
+    		<div class="col-md-12"> 
+	    		<ul class="nav nav-pills">
+	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Generators <span class="caret"></span></a>
+	    				<ul class="dropdown-menu">
+			    			<li><a id="dice" href="dice.html">Dice Roller</a></li>
+			    			<li><a id="fictional" href="fictional.html">Fictional Text</a></li>
+			    			<li><a id="item" href="item.html">Item List</a></li>
+			    			<li><a id="name" href="markov.html">Markov Names</a></li>
+			    			<li><a id="monsters" href="monster.html">Monster Creator</a></li>
+			    			<li><a id="rumour" href="rumours.html">Rumours</a></li>
+			    			<li><a id="stat" href="stat.html">Stat Blocks</a></li>
+			    			<li><a id="title" href="titles.html">Title for a Book/Tavern</a></li>
+			    		</ul>
+	    			</li>
+	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Databases <span class="caret"></span></a>
+		    			<ul class="dropdown-menu">
+			    			<li><a id="diceDB" href="DB_dice.html">Dice</a></li>
+			    			<li><a id="itemsDB" href="DB_item.html">Items</a></li>
+			    			<li><a id="namesDB" href="DB_markov.html">Names</a></li>
+			    			<li><a id="rumoursDB" href="DB_rumours.html">Rumours</a></li>
+			    			<li><a id="titlesDB" href="DB_titles.html">Titles</a></li>
+			    		</ul>
+	    			</li>
+	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools <span class="caret"></span></a>
+	    				<ul class="dropdown-menu">
+			    			<li><a id="calculator" href="calculator.html">Monster CR Calculator</a></li>
+			    			<li><a id="exportImport" href="exportImport.html">Export/Import</a></li>
+			    		</ul>
+	    			</li>
+	    		</ul>
+	    	</div>
+    	</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="form">
+					<div class="form-group">
+						<label>Formula (see <em>How to use</em>):</label>
+						<input type="text" id="formula" class="form-control" value="roll(1,20)" />
+					</div>
+					<div class="form-group">
+						<label>Notes (descriptor for the log history):</label>
+						<input type="text" id="notes" class="form-control" value="" />
+					</div>
+					<button onclick='roll();' class="btn btn-primary">Roll!</button>
+				</div>
+			</div>
+			<div class="col-md-6 table-bordered">
+				<div id="Dice">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 well" role="tabpanel">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a role="tab" href="#collapseAbout" data-toggle="tab" aria-controls="collapseAbout">How to use</a></li>
+					<li role="presentation"><a role="tab" href="#collapseSave" data-toggle="tab" aria-controls="collapseSave">Saved Dice</a></li>
+				</ul>
+				<div class="tab-content">
+					 <div id="collapseAbout" class="tab-pane active" role="tab-panel">
+					 	<p>This section will briefly outline the rules used by the built-in engine used in this project. The engine currently has three in-built functions (in addition to normal JavaScript functions):</p>
+					    <p><ul><li>roll(number of dice, sides on dice)</li><li>drop(number of dice, sides on dice, number to drop, 1=drop highest/0=drop lowest)</li><li>advantage(number of dice, sides on dice, 1=advantage/0=disadvantage)</li></ul></p>
+					    <p>Examples:</p>
+					    <p><ul><li><b>roll(1,20)+2</b>: Standard D20 roll with modifier</li><li><b>drop(4,6,1,0)</b>: Roll 4, drop lowest (for D&D stat generation)</li></ul></p>
+					    <p>You can also save Dice entries to make it easier to recall certain formulas and macros. Just click on the "Saved Dice" item below.</p>
+					    
+					  </div>
+					  <div id="collapseSave" class="tab-pane" role="tab-panel">
+					      <p class="form-inline">
+					 		<input id="name" class="form-control"  value='Dice Name' />
+					 		<button onclick='save();' class="btn btn-success">Save</button>
+					 		<a onclick='exportXML.apply($(this));' class="btn btn-primary">Export XML</a>
+						  </p>
+					      <div id="saves">
+					      </div>
+					  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/lib/jquery.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="js/shapies.js"></script>
+	<script>
+	function roll() {
+		var parser = new Parser();
+		var formula = $("#formula").val();
+		var result = parser.parse(formula).evaluate({roll: Dice.roll, drop: Dice.drop, advantage: Dice.advantage});
+		$("#Dice").prepend("<p>"+formula+" = <label class='label label-info'>"+result+"</label></p><p><em>"+$('#notes').val()+"</em></p><hr />");
+		$('#notes').val('');
+	}
+	function save() {
+		var saver = new Saver();
+		var name = $("#name").val();
+		var formula = $("#formula").val();
+		saver.save("dice", name, formula);
+		list();
+	}
+	function list() {
+		$('#saves').html('');
+		var saver = new Saver();
+		var dies = saver.load("dice");
+		for (var dice in dies) {
+			$('#saves').append('<p><b>'+dice+':</b> '+dies[dice]+' <span class="btn-group"><button onclick="load(\''+dice+'\');" class="btn btn-xs btn-info">Load</button> <button onclick="removeDice(\''+dice+'\');" class="btn btn-xs btn-danger">Delete</button></span></p><hr />');
+		}
+	}
+	function load(diceName) {
+		var dice = Saver.loadKey("dice",diceName);
+		if (dice) {
+			$('#formula').val(dice);
+		}
+	}
+	function removeDice(diceName) {
+		Saver.removeKey('dice',diceName);
+		list();
+	}
+	function exportXML() {
+		$(this).attr({
+			'download': 'dice.xml',
+			'href': Saver.getXmlEncoded("dice"),
+			'target': '_blank'
+		});
+	}
+	list();
+	</script>
+</body>
+</html>

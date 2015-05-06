@@ -48,14 +48,67 @@
 	    		</ul>
 	    	</div>
     	</div>
-    	<div class="row">
-            <div class="col-md-12">
-           		<p>Choose an option above</p>
-           	</div>
-    	</div>
-    </div>
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/lib/jquery.js"></script>
-    <script src="bootstrap/js/bootstrap.js"></script>
+		<div class="row">
+			<div class="col-md-12 well form">
+				<p>To Export, click on the Export button and save the text that appears in the text box below. Each name will be seperated by a comma.</p>
+				<div class="form-group">
+					<label>Chain</label>
+					<select id="race_input" class="form-control" name="race_input" ></select>
+				</div>
+				<div class="btn-group">
+					<button class="btn btn-info" id="Export">Export</button>
+					<button class="btn btn-danger" id="Delete">Delete</button>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form">
+				<textarea id="importarea" class="form-control" rows=20></textarea>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 form">
+				<p>To Import, paste edit or write into the box above. In the box below give the data-set a name and then click Import. Note that each name should be seperated by a comma.</p>
+				<div class="form-inline">
+					<input id="name" class="form-control"  value='Race' />
+					<button class="btn btn-primary" id="Import">Import</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/lib/jquery.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="js/markov.js"></script>
+	<script>
+		// Load the stored lists and chains
+		function load() {
+			$('#race_input').html('');
+			Markov.load();
+			Markov.loadList(Markov.races()[0]);
+			for(var race in Markov.all()) {
+				var title = race.replace(/\b[a-z]/g, function(letter) {
+				    return letter.toUpperCase();
+				});
+				$('#race_input').append('<option value="'+race+'">'+title+'</option>');
+			}
+		}
+		load();
+		$('#Export').click(function(){
+			var race = $('#race_input').val();
+			$('#importarea').html(Markov.getCSV(race));
+		});
+		$('#Import').click(function(){
+			var race = $('#name').val();
+			Markov.setCSV(race,$('#importarea').val());
+			Markov.save();
+			load();
+		});
+		$('#Delete').click(function(){
+			var race = $('#race_input').val();
+			Markov.deleteList(race);
+			Markov.save();
+			load();
+		});
+	</script>
 </body>
 </html>

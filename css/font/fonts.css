@@ -1,0 +1,169 @@
+@font-face {
+    font-family: 'klingon';
+    src:url('klingon/klingon.eot');
+    src:url('klingon/klingon.eot?#iefix') format('embedded-opentype'),
+        url('klingon/klingon.woff') format('woff'),
+        url('klingon/klingon.ttf') format('truetype'),
+        url('klingon/klingon.svg#klingon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.klingon {
+    font-family: 'klingon';
+}
+@font-face {
+    font-family: 'angerthas';
+    src:url('angerthas/angerthas.eot');
+    src:url('angerthas/angerthas.eot?#iefix') format('embedded-opentype'),
+        url('angerthas/angerthas.woff') format('woff'),
+        url('angerthas/angerthas.ttf') format('truetype'),
+        url('angerthas/angerthas.svg#angerthas') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.angerthas {
+    font-family: 'angerthas';
+}
+@font-face {
+    font-family: 'elderfuthark';
+    src:url('elderfuthark/elderfuthark.eot');
+    src:url('elderfuthark/elderfuthark.eot?#iefix') format('embedded-opentype'),
+        url('elderfuthark/elderfuthark.woff') format('woff'),
+        url('elderfuthark/elderfuthark.ttf') format('truetype'),
+        url('elderfuthark/elderfuthark.svg#elderfuthark') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.elderfuthark {
+    font-family: 'elderfuthark';
+}
+@font-face {
+    font-family: 'dovahzul';
+    src:url('dovahzul/dovahzul.eot');
+    src:url('dovahzul/dovahzul.eot?#iefix') format('embedded-opentype'),
+        url('dovahzul/dovahzul.woff') format('woff'),
+        url('dovahzul/dovahzul.ttf') format('truetype'),
+        url('dovahzul/dovahzul.svg#dovahzul') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.dovahzul {
+    font-family: 'dovahzul';
+}
+@font-face {
+    font-family: 'iokharic';
+    src:url('iokharic/iokharic.eot');
+    src:url('iokharic/iokharic.eot?#iefix') format('embedded-opentype'),
+        url('iokharic/iokharic.woff') format('woff'),
+        url('iokharic/iokharic.ttf') format('truetype'),
+        url('iokharic/iokharic.svg#iokharic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.iokharic {
+    font-family: 'iokharic';
+}
+@font-face {
+    font-family: 'hylian64';
+    src:url('hylian64/hylian64.eot');
+    src:url('hylian64/hylian64.eot?#iefix') format('embedded-opentype'),
+        url('hylian64/hylian64.woff') format('woff'),
+        url('hylian64/hylian64.ttf') format('truetype'),
+        url('hylian64/hylian64.svg#hylian64') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.hylian64 {
+    font-family: 'hylian64';
+}
+@font-face {
+    font-family: 'hylianTP';
+    src:url('hylianTP/hylianTP.eot');
+    src:url('hylianTP/hylianTP.eot?#iefix') format('embedded-opentype'),
+        url('hylianTP/hylianTP.woff') format('woff'),
+        url('hylianTP/hylianTP.ttf') format('truetype'),
+        url('hylianTP/hylianTP.svg#hylianTP') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.hylianTP {
+    font-family: 'hylianTP';
+}
+@font-face {
+    font-family: 'barazhad';
+    src:url('barazhad/barazhad.eot');
+    src:url('barazhad/barazhad.eot?#iefix') format('embedded-opentype'),
+        url('barazhad/barazhad.woff') format('woff'),
+        url('barazhad/barazhad.ttf') format('truetype'),
+        url('barazhad/barazhad.svg#barazhad') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.barazhad {
+    font-family: 'barazhad';
+}
+@font-face {
+    font-family: 'daedra';
+    src:url('daedra/daedra.eot');
+    src:url('daedra/daedra.eot?#iefix') format('embedded-opentype'),
+        url('daedra/daedra.woff') format('woff'),
+        url('daedra/daedra.ttf') format('truetype'),
+        url('daedra/daedra.svg#daedra') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.daedra {
+    font-family: 'daedra';
+}
+@font-face {
+    font-family: 'davek';
+    src:url('davek/davek.eot');
+    src:url('davek/davek.eot?#iefix') format('embedded-opentype'),
+        url('davek/davek.woff') format('woff'),
+        url('davek/davek.ttf') format('truetype'),
+        url('davek/davek.svg#davek') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.davek {
+    font-family: 'davek';
+}
+@font-face {
+    font-family: 'rellanic';
+    src:url('rellanic/rellanic.eot');
+    src:url('rellanic/rellanic.eot?#iefix') format('embedded-opentype'),
+        url('rellanic/rellanic.woff') format('woff'),
+        url('rellanic/rellanic.ttf') format('truetype'),
+        url('rellanic/rellanic.svg#rellanic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.rellanic {
+    font-family: 'rellanic';
+}
+@font-face {
+    font-family: 'qijomi';
+    src:url('qijomi/qijomi.eot');
+    src:url('qijomi/qijomi.eot?#iefix') format('embedded-opentype'),
+        url('qijomi/qijomi.woff') format('woff'),
+        url('qijomi/qijomi.ttf') format('truetype'),
+        url('qijomi/qijomi.svg#qijomi') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.qijomi {
+    font-family: 'qijomi';
+}
+@font-face {
+    font-family: 'pulsian';
+    src:url('pulsian/pulsian.eot');
+    src:url('pulsian/pulsian.eot?#iefix') format('embedded-opentype'),
+        url('pulsian/pulsian.woff') format('woff'),
+        url('pulsian/pulsian.ttf') format('truetype'),
+        url('pulsian/pulsian.svg#qijomi') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.pulsian {
+    font-family: 'pulsian';
+}

@@ -48,14 +48,56 @@
 	    		</ul>
 	    	</div>
     	</div>
-    	<div class="row">
-            <div class="col-md-12">
-           		<p>Choose an option above</p>
-           	</div>
-    	</div>
-    </div>
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/lib/jquery.js"></script>
-    <script src="bootstrap/js/bootstrap.js"></script>
+		<div class="row">
+			<div class="col-md-6" >
+				<p>This generator uses the Markov Chain process. It processes a series of words, gathers information about how the letters in the words are related, and then stores those relationships. When you generate a name, the computer will travel down the chain and link up all the pieces <em>in the style of the processed words</em>. This generally makes up a word similar in nature to the processed names (but this does not necessarily mean it makes sense!)</p>
+				<p><strong>Input names for chains:</strong></p>
+				<ul id="MarkovNotes">
+				</ul>
+			</div>
+			<div class="col-md-6 well">
+				<p>Chain: <select id="race_input" class="form-control" name="race_input" ></select></p>
+				<p>Number to generate: <input type="number" id="number_input" name="number_input" class="form-control" value='5' /></p>
+				<p>Name Length: <input type="number" id="length_input" name="length_input" class="form-control" value='7'/></p>
+				<p><button class="btn btn-block btn-lg btn-primary" onclick='generate();'>Generate</button></p>
+			</div>
+		</div>
+		<div class="row">
+			<div id="Result" class="col-md-12 well" >
+			</div>
+		</div>
+	</div>
+	<script src="js/lib/jquery.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="js/markov.js"></script>
+	<script>
+		// Load the lists and chains
+		Markov.load();
+		Markov.loadList(Markov.races()[0],'male');
+		for(var race in Markov.all()) {
+			var title = race.replace(/\b[a-z]/g, function(letter) {
+			    return letter.toUpperCase();
+			});
+			$('#race_input').append('<option value="'+race+'">'+title+'</option>');
+			$('#MarkovNotes').append("<li>"+title+" names: "+Markov.getLength(race)+" names</li>");
+		}
+		// Generates names
+		function generate() {
+			load();
+			var text = "";
+			var number = parseInt($('#number_input').val(), 10);
+			var length = parseInt($('#length_input').val(), 10);
+			for (var i = 0; i < number; i++) {
+				var new_name = Markov.make(1,length);
+				text += "<p>" + new_name.charAt(0).toUpperCase() + new_name.slice(1); + "</p>";
+			}
+			$('#Result').html(text);
+		};
+		// Load names
+		function load() {
+			var race = $('#race_input').val();
+			Markov.loadList(race);
+		}
+	</script>
 </body>
 </html>

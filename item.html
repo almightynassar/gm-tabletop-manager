@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>Tabletop Manager</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/shapies.css" media="all">
+</head>
+<body>
+    <div class="container">
+    	<div class="row">
+    		<div class="col-md-12"> 
+	    		<ul class="nav nav-pills">
+	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Generators <span class="caret"></span></a>
+	    				<ul class="dropdown-menu">
+			    			<li><a id="dice" href="dice.html">Dice Roller</a></li>
+			    			<li><a id="fictional" href="fictional.html">Fictional Text</a></li>
+			    			<li><a id="item" href="item.html">Item List</a></li>
+			    			<li><a id="name" href="markov.html">Markov Names</a></li>
+			    			<li><a id="monsters" href="monster.html">Monster Creator</a></li>
+			    			<li><a id="rumour" href="rumours.html">Rumours</a></li>
+			    			<li><a id="stat" href="stat.html">Stat Blocks</a></li>
+			    			<li><a id="title" href="titles.html">Title for a Book/Tavern</a></li>
+			    		</ul>
+	    			</li>
+	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Databases <span class="caret"></span></a>
+		    			<ul class="dropdown-menu">
+			    			<li><a id="diceDB" href="DB_dice.html">Dice</a></li>
+			    			<li><a id="itemsDB" href="DB_item.html">Items</a></li>
+			    			<li><a id="namesDB" href="DB_markov.html">Names</a></li>
+			    			<li><a id="rumoursDB" href="DB_rumours.html">Rumours</a></li>
+			    			<li><a id="titlesDB" href="DB_titles.html">Titles</a></li>
+			    		</ul>
+	    			</li>
+	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools <span class="caret"></span></a>
+	    				<ul class="dropdown-menu">
+			    			<li><a id="calculator" href="calculator.html">Monster CR Calculator</a></li>
+			    			<li><a id="exportImport" href="exportImport.html">Export/Import</a></li>
+			    		</ul>
+	    			</li>
+	    		</ul>
+	    	</div>
+    	</div>
+		<div class="row">
+			<div class="col-md-12" >
+				<p>The default dataset puts all prices in the LOWEST denomination, Copper Pieces, while Weight is given in kilograms. You can edit these values in the Database section to suit your own preferences.</p>
+				<div id="ItemList" class="panel-group" role="tablist" aria-multiselectable="true" >
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/lib/jquery.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="js/item.js"></script>
+	<script>
+	// Load the stock list
+	Item.load();
+	// Gives us a nice label for out item's rarity
+	function rarityLabel(rarity) {
+		label = 'default';
+		switch (rarity) {
+		case 'VERY RARE':
+			label = 'danger';
+			break;
+		case 'RARE':
+			label = 'warning';
+			break;
+		case 'UNCOMMON':
+			label = 'primary';
+			break;
+		case 'COMMON':
+			label = 'success';
+			break;
+		}
+		return '<span class="label label-'+label+'">'+rarity+'</span>';
+	}
+	// Loads up our list of items
+	function load() {
+		$('#ItemList').html('');
+		stock = Item.getStock();
+		for (var cat in stock) {
+			var html = "";
+			html += '<div class="panel panel-default">';
+			html += '<div class="panel-heading" role="tab" id="heading'+cat.replace(/[^\w]/g,'')+'">';
+			html += '<h4 class="panel-title"><a data-toggle="collapse" data-parent="#ItemList" href="#collapse'+cat.replace(/[^\w]/g,'')+'" aria-expanded="true" aria-controls="collapse'+cat.replace(/[^\w]/g,'')+'">'+cat+'</a></h4></div>';
+			html += '<div id="collapse'+cat.replace(/[^\w]/g,'')+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading'+cat.replace(/[^\w]/g,'')+'">';
+			html += '<div class="panel-body"><table class="table table-hover table-bordered tablesorter"><thead><th>Item</th><th>Price</th><th>Weight</th><th>Rarity</th></thead><tbody>';
+			for (var item in stock[cat]) {
+				html += '<tr title="'+stock[cat][item][3]+'">';
+				html += '<td>'+stock[cat][item][0]+'</td><td class="text-right">'+stock[cat][item][1]+'</td><td class="text-right">'+stock[cat][item][2]+'</td><td>'+rarityLabel(stock[cat][item][4].toUpperCase())+'</td>';
+				html += '</tr>';
+			}
+			html += '</tbody></table></div></div></div>';
+			$('#ItemList').append(html);
+			$('tr').tooltip();
+		}
+	}
+	load();
+	// Backgrounds
+    //for(var category in Item) {
+	//	$('#item_input').append('<option value="'+category+'">'+category.charAt(0).toUpperCase() + category.slice(1)+'</option>');
+	//}
+    //function generate() {
+    //	var category = $('#item_input').val();
+    //	$('#ItemList').html('');
+    //	for (var item in Item[category]) {
+    //		$('#ItemList').append('<tr><td>'+Item[category][item].name+'</td><td>'+Item[category][item].cost+' GP</td><td>'+Item[category][item].weight+' kg</td><td>'+Item[category][item].description+'</td></tr>');
+    //	}
+    //}
+	</script>
+</body>
+</html>

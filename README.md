@@ -5,7 +5,10 @@ What started out as a testing ground for trying out new features (such as canvas
 
 This is not an attempt to replace any licensed material from the publishers. This should be used as a supplement to published materials, and as such it will not include a lot of things that can be found in the official sources. Facilities may be provided to allow you to input the required content yourself.
 
-LICENSE NOTES: This project utilises some OGL content during processing and in its output. Therefore all content outputted by this project is also covered by the OGL license, while the actual 'code' (HTML/Javascript/CSS + others) are covered by the MIT license. Both are provided in the source directory.
+LICENSE NOTES: 
+ * This project may utilise some OGL content during processing and in its output. That content is covered by the OGL license, provided in OGL.txt
+ * Some of the JavaScript functions (namely xml2json and json2xml) are provided under LGPL. That license is provided in LGPL.txt
+ * All original code in this project (as well as Bootstrap, jQuery and html2canvas) is covered under the MIT license
 
 THANKS goes to Drow over at donjon.bin.sh and The Pathology Guy at pathguy.com for inspiration.
 
