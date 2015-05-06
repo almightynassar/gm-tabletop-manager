@@ -19,6 +19,7 @@
     	<div class="row">
     		<div class="col-md-12"> 
 	    		<ul class="nav nav-pills">
+	    			<li><a href="index.html">Home</a>
 	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools<span class="caret"></span></a>
 	    				<ul class="dropdown-menu">
 			    			<li><a href="dice.html">Dice Roller</a></li>
@@ -91,7 +92,7 @@
 	function inform() {
 		var script = $('#script_input').val();
 		var returnHtml = "<p><strong>"+Font[script].name+"</strong> (<em>"+Font[script].from+"</em>)</p>";
-		returnHtml += '<p><a href="../css/font/'+script+'/'+script+'.ttf">TTF Font file</a></p>';		
+		returnHtml += '<p><a href="css/font/'+script+'/'+script+'.ttf">TTF Font file</a></p>';		
 		returnHtml += "<p>"+Font[script].what+"</p><p>"+Font[script].notes+"</p>";
 		if (!$.isEmptyObject(Font[script].missing)) {
 			returnHtml += "<p>The following letters were missing from the alphabet and have been replaced:</p><ul>";

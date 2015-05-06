@@ -3,6 +3,24 @@
  *====================================================================
  */
 /**
+ * lb2kg
+ * 
+ * Simple function to convert pounds (lb) to kilograms
+ */
+function lb2kg(weight) {
+	weight= (isNaN(weight) || weight=="") ? 0 : weight;
+    return Math.round(weight*0.453*10)/10;
+} 
+/**
+ * kg2lb
+ * 
+ * Simple function to convert kilograms to pounds (lb)
+ */
+function kg2lb(weight) {
+	weight= (isNaN(weight) || weight=="") ? 0 : weight;
+    return Math.round(weight*2.2);
+}
+/**
  * xml2json
  * 
  * This function is licensed under Creative Commons GNU LGPL License.

@@ -18,6 +18,7 @@
     	<div class="row">
     		<div class="col-md-12"> 
 	    		<ul class="nav nav-pills">
+	    			<li><a href="index.html">Home</a>
 	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools<span class="caret"></span></a>
 	    				<ul class="dropdown-menu">
 			    			<li><a href="dice.html">Dice Roller</a></li>
@@ -48,8 +49,65 @@
 	    	</div>
     	</div>
 		<div class="row">
-			<div class="col-md-12" >
-				<p>The default dataset puts all prices in the LOWEST denomination, Copper Pieces, while Weight is given in kilograms. You can edit these values in the Database section to suit your own preferences.</p>
+			<div class="col-md-4" >
+				<p>This is your Shopping trolley.</p>
+				<div id="trolley" class="well"><em>empty</em></div>
+				<p>This is your current Backpack.</p>
+				<div id="backpack" class="well"><em>empty</em></div>
+			</div>
+			<div class="col-md-8" >
+				<div class="well" role="tabpanel">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a role="tab" href="#collapseOptions" data-toggle="tab" aria-controls="collapseOptions">Options</a></li>
+						<li role="presentation"><a role="tab" href="#collapseAdd" data-toggle="tab" aria-controls="collapseAdd">Add item</a></li>
+						<li role="presentation"><a role="tab" href="#collapseImport" data-toggle="tab" aria-controls="collapseImport">Import XML</a></li>
+					</ul>
+					<div class="tab-content">
+						<div id="collapseOptions" class="tab-pane active" role="tab-panel">
+							<p>The default dataset stores all prices in Copper Pieces, while weight is given in Kilograms. You can edit these values in the XML import to suit your own preferences.</p>
+							<label class="form-label">Show Fields</label>
+					    	<div class="form-inline">
+					 			<input type="checkbox" id="chk_item" checked onchange="load();" /> Item
+					 			<input type="checkbox" id="chk_price" checked onchange="load();" /> Price
+					 			<input type="checkbox" id="chk_weight" onchange="load();" /> Weight
+					 			<input type="checkbox" id="chk_rarity" checked onchange="load();" /> Rarity
+					 			<input type="checkbox" id="chk_description" onchange="load();" /> Description
+						  	</div>
+						  	<label class="form-label">Show Prices in:</label>
+					    	<div class="form-inline">
+					 			<input type="radio" name="rad_price" value="cp" onchange="load();" /> Copper (CP)
+					 			<input type="radio" name="rad_price" value="sp" onchange="load();" /> Silver (SP)
+					 			<input type="radio" name="rad_price" value="gp" onchange="load();" checked /> Gold (GP)
+					 			<input type="radio" name="rad_price" value="ep" onchange="load();" /> Electrum (EP)
+					 			<input type="radio" name="rad_price" value="pp" onchange="load();" /> Platinum (PP)
+						  	</div>
+						  	<label class="form-label">Show Weight in:</label>
+					    	<div class="form-inline">
+					 			<input type="radio" name="rad_weight" value="kg" onchange="load();" checked /> Kilograms (kg)
+					 			<input type="radio" name="rad_weight" value="lb" onchange="load();" /> Pounds (lb)
+						  	</div>
+					  	</div>
+					 	<div id="collapseAdd" class="tab-pane" role="tab-panel">
+					 		<p>The default dataset stores all prices in Copper Pieces, while weight is given in Kilograms. You can edit these values in the XML import to suit your own preferences.</p>
+					    	<div class="form-inline">
+					 			<input id="name" class="form-control"  value='Dice Name' />
+					 			<button onclick='save();' class="btn btn-success">Save</button>
+					 			<a onclick='exportXML.apply($(this));' class="btn btn-primary">Export XML</a>
+						  	</div>
+					      	<div id="saves">
+					      	</div>
+					  	</div>
+					  	<div id="collapseImport" class="tab-pane" role="tab-panel">
+					  		<p>Select a XML file and it will appear in the box below. Double-check the file (and even edit it if you know XML), and then hit either Overwrite/Merge to import the changes (NOTE: Overwrite will delete existing saved Dice!)</p>
+					      	<div class="form-group">
+					 			<input id="importedFile" type="file" class="form-control" onchange='handleFileImport();' value='' />
+						  	</div>
+					      	<textarea id="imported" class="form-control" rows="10"></textarea>
+					      	<button onclick='importDice(1);' class="btn btn-danger">Overwrite</button>
+					      	<button onclick='importDice(0);' class="btn btn-warning">Merge</button>
+					  	</div>
+					</div>
+				</div>
 				<div id="ItemList" class="panel-group" role="tablist" aria-multiselectable="true" >
 				</div>
 			</div>
@@ -58,6 +116,7 @@
 	<script src="js/lib/jquery.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
 	<script src="js/item.js"></script>
+	<script src="js/shapies.js"></script>
 	<script>
 	// Load the stock list
 	Item.load();
@@ -80,23 +139,89 @@
 		}
 		return '<span class="label label-'+label+'">'+rarity+'</span>';
 	}
+	function calcPrice(value) {
+		var type = $("input[name=rad_price]:checked").val();
+		switch (type) {
+		case "cp":
+			return value + " cp";
+			break;
+		case "sp":
+			return (value/10) + " sp";
+			break;
+		case "gp":
+			return (value/100) + " gp";
+			break;
+		case "ep":
+			return (value/50) + " ep";
+			break;
+		case "pp":
+			return (value/1000) + " pp";
+			break;
+		}
+		return value;
+	}
+	function calcWeight(value) {
+		var type = $("input[name=rad_weight]:checked").val();
+		switch (type) {
+		case "kg":
+			return value + " kg";
+			break;
+		case "lb":
+			return kg2lb(value) + " lb";
+			break;
+		}
+		return value;
+	}
+	function tableHeadString() {
+		var string = "<thead><tr>";
+		if ($("#chk_item")[0].checked) {
+			string += "<th>Item</th>";
+		}
+		if ($("#chk_price")[0].checked) {
+			string += "<th>Price</th>";
+		}
+		if ($("#chk_weight")[0].checked) {
+			string += "<th>Weight</th>";
+		}
+		if ($("#chk_rarity")[0].checked) {
+			string += "<th>Rarity</th>";
+		}
+		if ($("#chk_description")[0].checked) {
+			string += "<th>Description</th>";
+		}
+		return string+"</tr></thead>";
+	}
+	function tableRowString(item) {
+		var string = "<tr>";
+		if ($("#chk_item")[0].checked) {
+			string += "<td>"+item[0]+"</td>";
+		}
+		if ($("#chk_price")[0].checked) {
+			string += "<td>"+calcPrice(item[1])+"</td>";
+		}
+		if ($("#chk_weight")[0].checked) {
+			string += "<td>"+calcWeight(item[2])+"</td>";
+		}
+		if ($("#chk_rarity")[0].checked) {
+			string += "<td>"+rarityLabel(item[4].toUpperCase())+"</td>";
+		}
+		if ($("#chk_description")[0].checked) {
+			string += "<td>"+item[3]+"</td>";
+		}
+		return string+"</tr>";
+	}
 	// Loads up our list of items
 	function load() {
 		$('#ItemList').html('');
 		stock = Item.getStock();
 		for (var cat in stock) {
 			var html = "";
-			html += '<div class="panel panel-default">';
-			html += '<div class="panel-heading" role="tab" id="heading'+cat.replace(/[^\w]/g,'')+'">';
-			html += '<h4 class="panel-title"><a data-toggle="collapse" data-parent="#ItemList" href="#collapse'+cat.replace(/[^\w]/g,'')+'" aria-expanded="true" aria-controls="collapse'+cat.replace(/[^\w]/g,'')+'">'+cat+'</a></h4></div>';
-			html += '<div id="collapse'+cat.replace(/[^\w]/g,'')+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading'+cat.replace(/[^\w]/g,'')+'">';
-			html += '<div class="panel-body"><table class="table table-hover table-bordered tablesorter"><thead><th>Item</th><th>Price</th><th>Weight</th><th>Rarity</th></thead><tbody>';
+			html += '<div id="heading'+cat.replace(/[^\w]/g,'')+'"><h4>'+cat+'</h4></div>';
+			html += '<div id="collapse'+cat.replace(/[^\w]/g,'')+'"><table class="table table-hover table-bordered tablesorter">'+tableHeadString()+'<tbody>';
 			for (var item in stock[cat]) {
-				html += '<tr title="'+stock[cat][item][3]+'">';
-				html += '<td>'+stock[cat][item][0]+'</td><td class="text-right">'+stock[cat][item][1]+'</td><td class="text-right">'+stock[cat][item][2]+'</td><td>'+rarityLabel(stock[cat][item][4].toUpperCase())+'</td>';
-				html += '</tr>';
+				html += tableRowString(stock[cat][item]);
 			}
-			html += '</tbody></table></div></div></div>';
+			html += '</tbody></table></div>';
 			$('#ItemList').append(html);
 			$('tr').tooltip();
 		}
