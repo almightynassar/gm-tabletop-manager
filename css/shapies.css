@@ -8,50 +8,56 @@
 /**
  * For creating stat blocks inspired by D&D 5E
  */
-hr.gradient {
-    background: linear-gradient(10deg, #A73335, white);
+#editable {
+	background: white;
+	width: 100%;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+	padding-bottom: 15px;
+}
+#editable div {
+	margin-left: 10px;
+}
+#editable hr.gradient {
+    background: #A73335;
     height:5px;
     margin:7px 0px;
 }
-.name {
-    font-size:225%;
+#editable .name {
+    font-size:32px;
     font-family:Georgia, serif;
     font-variant:small-caps;
     font-weight:bold;
     color:#A73335;
 }
-.description {
+#editable .description {
     font-style:italic;    
 }
-.bold {
+#editable .bold {
     font-weight:bold;
 }
 .red {
     color:#A73335;
 }
-.stattable {
+#editable .stattable {
     width:100%;
     border:0px;
     border-collapse:collapse;
     color:#A73335;
 }
-.stattable th, .stattable td {
+#editable .stattable th, #editable .stattable td {
     width:50px;
     text-align:center;
 }
-.actions {
-    font-size:175%;
+#editable .actions {
+    font-size:25px;
     font-variant:small-caps;
-    margin:17px 0px 0px 0px;
 }
-hr.hr {
+#editable hr.hr {
     background: #A73335;
     height:2px;
 }
-.attack {
-    margin:5px 0px;
-}
-.attackname {
+#editable .attackname {
     font-weight:bold;
     font-style:italic;
 }

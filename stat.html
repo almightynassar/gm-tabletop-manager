@@ -18,7 +18,7 @@
     	<div class="row">
     		<div class="col-md-12"> 
 	    		<ul class="nav nav-pills">
-	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Generators <span class="caret"></span></a>
+	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools<span class="caret"></span></a>
 	    				<ul class="dropdown-menu">
 			    			<li><a href="dice.html">Dice Roller</a></li>
 			    			<li><a href="fictional.html">Fictional Text</a></li>
@@ -38,7 +38,7 @@
 			    			<li><a href="DB_titles.html">Titles</a></li>
 			    		</ul>
 	    			</li>
-	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools <span class="caret"></span></a>
+	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Misc<span class="caret"></span></a>
 	    				<ul class="dropdown-menu">
 			    			<li><a href="calculator.html">Monster CR Calculator</a></li>
 			    			<li><a href="exportImport.html">Export/Import</a></li>
@@ -48,8 +48,8 @@
 	    	</div>
     	</div>
 		<div class="row">
-			<div class="col-md-3">
-				<div id="editable" contenteditable="true"  style="width:100%; font-family:Arial,Helvetica,sans-serif;font-size:11px;">
+			<div class="col-md-5">
+				<div id="editable" contenteditable="true"  style="width:100%">
 					<div class="name">Ogre</div>
 					<div class="description">Large giant, chaotic evil</div>
 					<hr class="gradient" />
@@ -74,11 +74,11 @@
 					<div class="attack"><span class="attackname">Javelin.</span><span class="description"> Melee or Ranged Weapon Attack:</span><span>+6 to hit, reach 5 ft. or 30ft./120, one target.</span><span class="description">Hit:</span><span>11 (2d6+4) piercing damage.</span></div>    
 				</div>
 			</div>
-			<div class="col-md-3 well">
+			<div class="col-md-2 well">
 				<p>Unfortunately some HTML styling does not convert well to the canvas image object, so there will be stylistic differences.</p>
 				<button id="convert" class="btn btn-block btn-primary" onclick="convert();">Convert to image -></button>
 			</div>
-			<div class="col-md-3" id="Result">
+			<div class="col-md-5" id="Result">
 			</div>
 		</div>
 	</div>
@@ -88,11 +88,9 @@
 	<script>
 	var editableDiv = $('#editable');
 	function convert () {
-		var copiedDiv = editableDiv;
-		html2canvas(copiedDiv, {
-		    onrendered: function(canvas) {
-		   		$('#Result').html(canvas);
-		    }
+		var copiedDiv = editableDiv[0];
+		html2canvas(copiedDiv, {"logging": true, "letterRendering": true}).then(function(canvas) {
+		   	$('#Result').html(canvas);
 		});
 	}
 	</script>

@@ -18,7 +18,7 @@
     	<div class="row">
     		<div class="col-md-12"> 
 	    		<ul class="nav nav-pills">
-	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Generators <span class="caret"></span></a>
+	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools<span class="caret"></span></a>
 	    				<ul class="dropdown-menu">
 			    			<li><a href="dice.html">Dice Roller</a></li>
 			    			<li><a href="fictional.html">Fictional Text</a></li>
@@ -38,7 +38,7 @@
 			    			<li><a href="DB_titles.html">Titles</a></li>
 			    		</ul>
 	    			</li>
-	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools <span class="caret"></span></a>
+	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Misc<span class="caret"></span></a>
 	    				<ul class="dropdown-menu">
 			    			<li><a href="calculator.html">Monster CR Calculator</a></li>
 			    			<li><a href="exportImport.html">Export/Import</a></li>
@@ -69,20 +69,12 @@
 		<div class="row">
 			<div class="col-md-12 well" role="tabpanel">
 				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a role="tab" href="#collapseAbout" data-toggle="tab" aria-controls="collapseAbout">How to use</a></li>
-					<li role="presentation"><a role="tab" href="#collapseSave" data-toggle="tab" aria-controls="collapseSave">Saved Dice</a></li>
+					<li role="presentation" class="active"><a role="tab" href="#collapseSave" data-toggle="tab" aria-controls="collapseSave">Saved Dice</a></li>
+					<li role="presentation"><a role="tab" href="#collapseAbout" data-toggle="tab" aria-controls="collapseAbout">How to use</a></li>
 					<li role="presentation"><a role="tab" href="#collapseImport" data-toggle="tab" aria-controls="collapseImport">Import XML</a></li>
 				</ul>
 				<div class="tab-content">
-					 <div id="collapseAbout" class="tab-pane active" role="tab-panel">
-					 	<p>This section will briefly outline the rules used by the built-in engine used in this project. The engine currently has three in-built functions (in addition to normal JavaScript functions):</p>
-					    <p><ul><li>roll(number of dice, sides on dice)</li><li>drop(number of dice, sides on dice, number to drop, 1=drop highest/0=drop lowest)</li><li>advantage(number of dice, sides on dice, 1=advantage/0=disadvantage)</li></ul></p>
-					    <p>Examples:</p>
-					    <p><ul><li><b>roll(1,20)+2</b>: Standard D20 roll with modifier</li><li><b>drop(4,6,1,0)</b>: Roll 4, drop lowest (for D&D stat generation)</li></ul></p>
-					    <p>You can also save Dice entries to make it easier to recall certain formulas and macros. Just click on the "Saved Dice" item below.</p>
-					    
-					  </div>
-					  <div id="collapseSave" class="tab-pane" role="tab-panel">
+					 <div id="collapseSave" class="tab-pane active" role="tab-panel">
 					      <p class="form-inline">
 					 		<input id="name" class="form-control"  value='Dice Name' />
 					 		<button onclick='save();' class="btn btn-success">Save</button>
@@ -90,6 +82,14 @@
 						  </p>
 					      <div id="saves">
 					      </div>
+					  </div>
+					 <div id="collapseAbout" class="tab-pane" role="tab-panel">
+					 	<p>This section will briefly outline the rules used by the built-in engine used in this project. The engine currently has three in-built functions (in addition to normal JavaScript functions):</p>
+					    <p><ul><li>roll(number of dice, sides on dice)</li><li>drop(number of dice, sides on dice, number to drop, 1=drop highest/0=drop lowest)</li><li>advantage(number of dice, sides on dice, 1=advantage/0=disadvantage)</li></ul></p>
+					    <p>Examples:</p>
+					    <p><ul><li><b>roll(1,20)+2</b>: Standard D20 roll with modifier</li><li><b>drop(4,6,1,0)</b>: Roll 4, drop lowest (for D&D stat generation)</li><li><b>advantage(3,20,0)</b>: Roll 3d20, all at a disadvantage</li></ul></p>
+					    <p>You can also save Dice entries to make it easier to recall certain formulas and macros. Just click on the "Saved Dice" item below.</p>
+					    
 					  </div>
 					  <div id="collapseImport" class="tab-pane" role="tab-panel">
 					  	  <p>Select a XML file and it will appear in the box below. Double-check the file (and even edit it if you know XML), and then hit either Overwrite/Merge to import the changes (NOTE: Overwrite will delete existing saved Dice!)</p>
