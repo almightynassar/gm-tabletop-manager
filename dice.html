@@ -71,6 +71,7 @@
 				<ul class="nav nav-tabs" role="tablist">
 					<li role="presentation" class="active"><a role="tab" href="#collapseAbout" data-toggle="tab" aria-controls="collapseAbout">How to use</a></li>
 					<li role="presentation"><a role="tab" href="#collapseSave" data-toggle="tab" aria-controls="collapseSave">Saved Dice</a></li>
+					<li role="presentation"><a role="tab" href="#collapseImport" data-toggle="tab" aria-controls="collapseImport">Import XML</a></li>
 				</ul>
 				<div class="tab-content">
 					 <div id="collapseAbout" class="tab-pane active" role="tab-panel">
@@ -89,6 +90,15 @@
 						  </p>
 					      <div id="saves">
 					      </div>
+					  </div>
+					  <div id="collapseImport" class="tab-pane" role="tab-panel">
+					  	  <p>Select a XML file and it will appear in the box below. Double-check the file (and even edit it if you know XML), and then hit either Overwrite/Merge to import the changes (NOTE: Overwrite will delete existing saved Dice!)</p>
+					      <div class="form-group">
+					 		<input id="importedFile" type="file" class="form-control" onchange='handleFileImport();' value='' />
+						  </div>
+					      <textarea id="imported" class="form-control" rows="10"></textarea>
+					      <button onclick='importDice(1);' class="btn btn-danger">Overwrite</button>
+					      <button onclick='importDice(0);' class="btn btn-warning">Merge</button>
 					  </div>
 				</div>
 			</div>
@@ -136,6 +146,47 @@
 			'href': Saver.getXmlEncoded("dice"),
 			'target': '_blank'
 		});
+	}
+	function receivedText() {
+		var reg = /(>)\s*(<)(\/*)/g;
+		var xml = fr.result;
+		$('#imported').val(xml.replace(reg, '$1\r\n$2$3'));
+	}
+	function handleFileImport() {               
+	    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+	      console.log('The File APIs are not fully supported in this browser.');
+	      return;
+	    }   
+	    input = $("#importedFile")[0];
+	    if (!input) {
+	    	console.log("Couldn't find the file input element.");
+	    }
+	    else if (!input.files) {
+	    	console.log("This browser doesn't seem to support the `files` property of file inputs.");
+	    }
+	    else if (!input.files[0]) {
+	    	console.log("Please select a file before clicking 'Load'");               
+	    }
+	    else {
+	    	file = input.files[0];
+	    	fr = new FileReader();
+	    	fr.onload = receivedText;
+	    	fr.readAsText(file);
+	    	return fr;
+		}
+	}
+	function importDice(overwrite) {
+		var saver = new Saver();
+		if (overwrite) {
+			saver.removeAll("dice");
+		}
+		var xml = $.parseXML($("#imported").val());
+		var json = $.parseJSON(xml2json(xml));
+		for (var d in json.dicegroup.dice) {
+			saver.save("dice", json.dicegroup.dice[d].key, json.dicegroup.dice[d].value);
+		}
+		alert("Import Complete!");
+		list();
 	}
 	list();
 	</script>
