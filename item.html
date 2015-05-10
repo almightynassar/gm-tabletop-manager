@@ -378,7 +378,7 @@
 		var xml = $.parseXML($("#imported").val());
 		var json = $.parseJSON(xml2json(xml));
 		for (var d in json.itemsgroup.items) {
-			saver.save("items", json.itemsgroup.items[d].key, json.itemsgroup.items[d].value);
+			saver.save("items", json.itemsgroup.items[d].key, Item.fromJSOn(json.itemsgroup.items[d].value));
 		}
 		alert("Import Complete!");
 		load();

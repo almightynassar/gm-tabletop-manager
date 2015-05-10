@@ -1449,9 +1449,9 @@ var Item = function () {
 			setJSON: function (obj) {
 				this.name = (obj.name) ? obj.name : this.name;
 				this.price = (obj.price) ? obj.price : this.price;
-				this.weight = (obj.weight) ? obj.weight : this.weight;
-				this.tech = (obj.tech) ? obj.tech : this.tech;
-				this.rarity = (obj.rarity) ? obj.rarity : this.rarity;
+				this.weight = (obj.weight) ? parseFloat(obj.weight) : this.weight;
+				this.tech = (obj.tech) ? parseInt(obj.tech) : this.tech;
+				this.rarity = (obj.rarity) ? parseInt(obj.rarity) : this.rarity;
 				this.description = (obj.description) ? obj.description : this.description;
 				this.category = (obj.category) ? obj.category : this.category;
 				return this;

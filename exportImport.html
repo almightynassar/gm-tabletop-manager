@@ -132,7 +132,7 @@
 			}
 			// Dice
 			for (var d in json.root.itemsgroup.items) {
-				saver.save("items", json.root.itemsgroup.items[d].key, json.root.itemsgroup.items[d].value);
+				saver.save("items", json.root.itemsgroup.items[d].key, Item.fromJSON(json.root.itemsgroup.items[d].value));
 			}
 			alert("Import Complete!");
 		}
