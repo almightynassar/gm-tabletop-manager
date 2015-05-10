@@ -1239,6 +1239,9 @@ var Saver = function () {
 	Saver.getXml = function (area) {
 		return new Saver().getXml(area);
 	}
+	Saver.encodeXmlString = function (string) {
+		return new Saver().encodeXmlString(string);
+	}
 	
 	Saver.prototype = {
 			save: function (area, key, obj) {
@@ -1296,18 +1299,25 @@ var Saver = function () {
 				}
 			},
 			getXmlString: function (area) {
-				var string = '<?xml version="1.0" encoding="UTF-8"?>';
+				var string = "";
 				if (typeof area === "string") {
 					var data = json2xml(this.loadStructured(area));
 					string += '<'+area+'group>'+data+'</'+area+'group>';
 				}
 				return string;
 			},
+			getXmlFull: function (area) {
+				var string = '<?xml version="1.0" encoding="UTF-8"?>';
+				return string + this.getXmlString(area);
+			},
 			getXmlEncoded: function (area) {
-				return 'data:text/xml;charset=utf-8,'+encodeURIComponent(this.getXmlString(area));
+				return 'data:text/xml;charset=utf-8,'+encodeURIComponent(this.getXmlFull(area));
+			},
+			encodeXmlString: function (string) {
+				return 'data:text/xml;charset=utf-8,<?xml version="1.0" encoding="UTF-8"?>'+encodeURIComponent(string);
 			},
 			getXml: function (area) {
-				return $.parseXML(this.getXmlString(area));
+				return $.parseXML(this.getXmlFull(area));
 			}
 	}
 	
