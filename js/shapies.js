@@ -1313,3 +1313,143 @@ var Saver = function () {
 	
 	return Saver;
 }();
+/**
+ * =====================================================================
+ * ITEM
+ * 
+ * Basic Item descriptor
+ * =====================================================================
+ */
+var Item = function () {
+	// Debug is flag for console reporting
+	//
+	// Tech-Levels
+	// 0 - Basic (primitive tools and resources)
+	// 1 - Village (some basic conversion of resources into industrial goods)
+	// 2 - Town (converts resources and industrial goods into basic products)
+	// 3 - Large Town (significant trade hub, with specialised industry)
+	// 4 - City (multiple specialised industries, and major trade hub)
+	// 5 - Large City (Access to most technology and magic)
+	// 6 - Metropolis (Most advanced technology/magic available)
+	//
+	// Rarity
+	// 0 - Basic
+	// 1 - Common
+	// 2 - Uncommon
+	// 3 - Rare
+	// 4 - Very Rare
+	// 5 - Legendary
+	function Item() {
+		this.debug = false;
+		this.name = "Generic";
+		this.price = 1;
+		this.weight = 1;
+		this.tech = 0;
+		this.rarity = 0;
+		this.description = "This is a generic item";
+		this.category = "Miscellaneous";
+	}
+	
+	Item.create = function (name, price, weight, tech, rarity, description, category) {
+		return new Item().update(name, price, weight, tech, rarity, description, category);
+	}
+	Item.fromJSON = function (obj) {
+		return new Item().setJSON(obj);
+	}
+	Item.sort = function(a,b) {
+		if (a.name > b.name) {
+			return 1;
+		} else if (a.name < b.name) {
+			return -1;
+		}
+		return 0;
+	}
+
+	Item.prototype = {
+			update: function (name, price, weight, tech, rarity, description, category) {
+				// Creates a new dice object
+		    	if (typeof name === "string" && typeof description === "string") {
+			    	this.name = name;
+			    	this.price = parseInt(price);
+			    	this.weight = weight;
+			    	this.tech = parseInt(tech);
+			    	this.rarity = parseInt(rarity);
+			    	this.description = description;
+			    	this.category = category;
+		    	}
+		    	return this;
+			},
+			getTech: function () {
+				switch (this.tech) {
+				case 1:
+					return "TL1 (Village)";
+					break;
+				case 2:
+					return "TL2 (Town)";
+					break;
+				case 3:
+					return "TL3 (Town)";
+					break;
+				case 4:
+					return "TL4 (City)";
+					break;
+				case 5:
+					return "TL5 (Large City)";
+					break;
+				case 6:
+					return "TL6 (Metropolis)";
+					break;
+				default:
+					return "TL0 (Basic)";
+				}
+			},
+			getRarity: function () {
+				switch (this.rarity) {
+				case 1:
+					return "Common";
+					break;
+				case 2:
+					return "Uncommon";
+					break;
+				case 3:
+					return "Rare";
+					break;
+				case 4:
+					return "Very Rare";
+					break;
+				case 5:
+					return "Legendary";
+					break;
+				default:
+					return "Basic";
+					break;
+				}
+			},
+			getJSON: function () {
+				return {
+					"name": this.name,
+					"price": this.price,
+					"weight": this.weight,
+					"tech": this.tech,
+					"rarity": this.rarity,
+					"description": this.description,
+					"category": this.category
+				};
+			},
+			setJSON: function (obj) {
+				this.name = (obj.name) ? obj.name : this.name;
+				this.price = (obj.price) ? obj.price : this.price;
+				this.weight = (obj.weight) ? obj.weight : this.weight;
+				this.tech = (obj.tech) ? obj.tech : this.tech;
+				this.rarity = (obj.rarity) ? obj.rarity : this.rarity;
+				this.description = (obj.description) ? obj.description : this.description;
+				this.category = (obj.category) ? obj.category : this.category;
+				return this;
+			},
+			revalue: function (denominator) {
+				return this.price / denominator;
+			}
+	}
+	
+	return Item;
+}();

@@ -33,7 +33,6 @@
 	    			</li>
 	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Databases <span class="caret"></span></a>
 		    			<ul class="dropdown-menu">
-			    			<li><a href="DB_item.html">Items</a></li>
 			    			<li><a href="DB_markov.html">Names</a></li>
 			    			<li><a href="DB_rumours.html">Rumours</a></li>
 			    			<li><a href="DB_titles.html">Titles</a></li>
@@ -51,9 +50,16 @@
 		<div class="row">
 			<div class="col-md-4" >
 				<p>This is your Shopping trolley.</p>
-				<div id="trolley" class="well"><em>empty</em></div>
-				<p>This is your current Backpack.</p>
-				<div id="backpack" class="well"><em>empty</em></div>
+				<div class="well">
+					<table class="table table-bordered">
+						<thead>
+							<tr><th>Item</th><th>$</th><th>Qty</th></tr>
+						</thead>
+						<tbody id="trolley">
+						</tbody>
+					</table>
+					<p id="trolley_total">0 GP</p>
+				</div>
 			</div>
 			<div class="col-md-8" >
 				<div class="well" role="tabpanel">
@@ -61,6 +67,8 @@
 						<li role="presentation" class="active"><a role="tab" href="#collapseOptions" data-toggle="tab" aria-controls="collapseOptions">Options</a></li>
 						<li role="presentation"><a role="tab" href="#collapseAdd" data-toggle="tab" aria-controls="collapseAdd">Add item</a></li>
 						<li role="presentation"><a role="tab" href="#collapseImport" data-toggle="tab" aria-controls="collapseImport">Import XML</a></li>
+						<li role="presentation"><a role="tab" href="#collapseExport" data-toggle="tab" aria-controls="collapseExport">Export</a></li>
+						<li role="presentation"><a role="tab" href="#collapseAbout" data-toggle="tab" aria-controls="collapseAbout">How to use</a></li>
 					</ul>
 					<div class="tab-content">
 						<div id="collapseOptions" class="tab-pane active" role="tab-panel">
@@ -70,8 +78,10 @@
 					 			<input type="checkbox" id="chk_item" checked onchange="load();" /> Item
 					 			<input type="checkbox" id="chk_price" checked onchange="load();" /> Price
 					 			<input type="checkbox" id="chk_weight" onchange="load();" /> Weight
+					 			<input type="checkbox" id="chk_tech" onchange="load();" /> Tech-Level
 					 			<input type="checkbox" id="chk_rarity" checked onchange="load();" /> Rarity
 					 			<input type="checkbox" id="chk_description" onchange="load();" /> Description
+					 			<input type="checkbox" id="chk_category" checked onchange="load();" /> Category
 						  	</div>
 						  	<label class="form-label">Show Prices in:</label>
 					    	<div class="form-inline">
@@ -88,14 +98,80 @@
 						  	</div>
 					  	</div>
 					 	<div id="collapseAdd" class="tab-pane" role="tab-panel">
-					 		<p>The default dataset stores all prices in Copper Pieces, while weight is given in Kilograms. You can edit these values in the XML import to suit your own preferences.</p>
-					    	<div class="form-inline">
-					 			<input id="name" class="form-control"  value='Dice Name' />
+					    	<div class="form-horizontal">
+					    		<div class="form-group">
+					    			<div class="col-md-2">
+					    				<label class="form-label">Name</label>
+					    			</div>
+					    			<div class="col-md-10">
+					 					<input id="name" class="form-control"  value='Name' />
+					 				</div>
+					 			</div>
+					 			<div class="form-group">
+					    			<div class="col-md-2">
+					    				<label class="form-label">Price</label>
+					    			</div>
+					    			<div class="col-md-10">
+					 					<input id="price" class="form-control"  type="number" value='1' />
+					 				</div>
+					 			</div>
+					 			<div class="form-group">
+					    			<div class="col-md-2">
+					    				<label class="form-label">Weight</label>
+					    			</div>
+					    			<div class="col-md-10">
+					 					<input id="weight" class="form-control"  type="number" value='1' />
+					 				</div>
+					 			</div>
+					 			<div class="form-group">
+					    			<div class="col-md-2">
+					    				<label class="form-label">Tech</label>
+					    			</div>
+					    			<div class="col-md-10">
+					 					<select id="tech" class="form-control">
+					 						<option value="0">TL0 - Basic</option>
+					 						<option value="1">TL1 - Village</option>
+					 						<option value="2">TL2 - Town</option>
+					 						<option value="3">TL3 - Large Town</option>
+					 						<option value="4">TL4 - City</option>
+					 						<option value="5">TL5 - Large City</option>
+					 						<option value="6">TL6 - Metropolis</option>
+					 					</select>
+					 				</div>
+					 			</div>
+					 			<div class="form-group">
+					    			<div class="col-md-2">
+					    				<label class="form-label">Rarity</label>
+					    			</div>
+					    			<div class="col-md-10">
+					 					<select id="rarity" class="form-control">
+					 						<option value="0">Basic</option>
+					 						<option value="1">Common</option>
+					 						<option value="2">Uncommon</option>
+					 						<option value="3">Rare</option>
+					 						<option value="4">Very Rare</option>
+					 						<option value="5">Legendary</option>
+					 					</select>
+					 				</div>
+					 			</div>
+					 			<div class="form-group">
+					 				<div class="col-md-2">
+					    				<label class="form-label">Description</label>
+					    			</div>
+					    			<div class="col-md-10">
+					 					<input id="description" class="form-control"  value='Description' />
+					 				</div>
+					 			</div>
+					 			<div class="form-group">
+					 				<div class="col-md-2">
+					    				<label class="form-label">Category</label>
+					    			</div>
+					    			<div class="col-md-10">
+					 					<input id="category" class="form-control"  value='Category' />
+					 				</div>
+					 			</div>
 					 			<button onclick='save();' class="btn btn-success">Save</button>
-					 			<a onclick='exportXML.apply($(this));' class="btn btn-primary">Export XML</a>
 						  	</div>
-					      	<div id="saves">
-					      	</div>
 					  	</div>
 					  	<div id="collapseImport" class="tab-pane" role="tab-panel">
 					  		<p>Select a XML file and it will appear in the box below. Double-check the file (and even edit it if you know XML), and then hit either Overwrite/Merge to import the changes (NOTE: Overwrite will delete existing saved Dice!)</p>
@@ -103,8 +179,28 @@
 					 			<input id="importedFile" type="file" class="form-control" onchange='handleFileImport();' value='' />
 						  	</div>
 					      	<textarea id="imported" class="form-control" rows="10"></textarea>
-					      	<button onclick='importDice(1);' class="btn btn-danger">Overwrite</button>
-					      	<button onclick='importDice(0);' class="btn btn-warning">Merge</button>
+					      	<button onclick='importItems(1);' class="btn btn-danger">Overwrite</button>
+					      	<button onclick='importItems(0);' class="btn btn-warning">Merge</button>
+					  	</div>
+					  	<div id="collapseExport" class="tab-pane" role="tab-panel">
+					 		<p>Use Export XML to get a file you can share with friends and fans. Use Export JSON to get a JSON representation useful for editing defaults in js/data/items.js</p>
+					    	<div class="form-inline">
+					 			<a onclick='exportXML.apply($(this));' class="btn btn-primary">Export XML</a>
+					 			<a onclick="exportJSON();" class="btn btn-primary">Export JSON</a> 
+						  	</div>
+					      	<textarea id="exported" class="form-control" rows="10"></textarea>
+					  	</div>
+					  	<div id="collapseAbout" class="tab-pane" role="tab-panel">
+					  		<p>Tech-Levels</p>
+					  		<ul>
+					  			<li>0 = Wilderness; no tech</li>
+					  			<li>1 = Village; basic tech</li>
+					  			<li>2 = Town; basic industry</li>
+					  			<li>3 = Large Town; basic industry &amp; commerce</li>
+					  			<li>4 = City; advanced industry &amp;  standard commerce</li>
+					  			<li>5 = Large City; advanvanced industry &amp; commerce</li>
+					  			<li>6 = Metropolis; world leader</li>
+					  		</ul>
 					  	</div>
 					</div>
 				</div>
@@ -115,30 +211,9 @@
 	</div>
 	<script src="js/lib/jquery.js"></script>
 	<script src="bootstrap/js/bootstrap.js"></script>
-	<script src="js/item.js"></script>
 	<script src="js/shapies.js"></script>
+	<script src="js/data/item.js"></script>
 	<script>
-	// Load the stock list
-	Item.load();
-	// Gives us a nice label for out item's rarity
-	function rarityLabel(rarity) {
-		label = 'default';
-		switch (rarity) {
-		case 'VERY RARE':
-			label = 'danger';
-			break;
-		case 'RARE':
-			label = 'warning';
-			break;
-		case 'UNCOMMON':
-			label = 'primary';
-			break;
-		case 'COMMON':
-			label = 'success';
-			break;
-		}
-		return '<span class="label label-'+label+'">'+rarity+'</span>';
-	}
 	function calcPrice(value) {
 		var type = $("input[name=rad_price]:checked").val();
 		switch (type) {
@@ -183,48 +258,130 @@
 		if ($("#chk_weight")[0].checked) {
 			string += "<th>Weight</th>";
 		}
+		if ($("#chk_tech")[0].checked) {
+			string += "<th>Tech Level</th>";
+		}
 		if ($("#chk_rarity")[0].checked) {
 			string += "<th>Rarity</th>";
 		}
 		if ($("#chk_description")[0].checked) {
 			string += "<th>Description</th>";
 		}
+		if ($("#chk_category")[0].checked) {
+			string += "<th>Category</th>";
+		}
 		return string+"</tr></thead>";
 	}
 	function tableRowString(item) {
 		var string = "<tr>";
 		if ($("#chk_item")[0].checked) {
-			string += "<td>"+item[0]+"</td>";
+			string += "<td>"+item.name+"</td>";
 		}
 		if ($("#chk_price")[0].checked) {
-			string += "<td>"+calcPrice(item[1])+"</td>";
+			string += "<td>"+calcPrice(item.price)+"</td>";
 		}
 		if ($("#chk_weight")[0].checked) {
-			string += "<td>"+calcWeight(item[2])+"</td>";
+			string += "<td>"+calcWeight(item.weight)+"</td>";
+		}
+		if ($("#chk_tech")[0].checked) {
+			string += "<td>"+item.getTech().toUpperCase()+"</td>";
 		}
 		if ($("#chk_rarity")[0].checked) {
-			string += "<td>"+rarityLabel(item[4].toUpperCase())+"</td>";
+			string += "<td>"+item.getRarity().toUpperCase()+"</td>";
 		}
 		if ($("#chk_description")[0].checked) {
-			string += "<td>"+item[3]+"</td>";
+			string += "<td>"+item.description+"</td>";
+		}
+		if ($("#chk_category")[0].checked) {
+			string += "<td>"+item.category+"</td>";
 		}
 		return string+"</tr>";
 	}
-	// Loads up our list of items
+	// Loads up our table of items
 	function load() {
-		$('#ItemList').html('');
-		stock = Item.getStock();
-		for (var cat in stock) {
-			var html = "";
-			html += '<div id="heading'+cat.replace(/[^\w]/g,'')+'"><h4>'+cat+'</h4></div>';
-			html += '<div id="collapse'+cat.replace(/[^\w]/g,'')+'"><table class="table table-hover table-bordered tablesorter">'+tableHeadString()+'<tbody>';
-			for (var item in stock[cat]) {
-				html += tableRowString(stock[cat][item]);
-			}
-			html += '</tbody></table></div>';
-			$('#ItemList').append(html);
-			$('tr').tooltip();
+		// Load the stock list
+		var list = Saver.load("items");
+		var stock = [];
+		for (var l in list) {
+			stock.push(Item.fromJSON(list[l]));
 		}
+		stock.sort(Item.sort);
+		$('#ItemList').html('');
+		var html = '<div id="collapseStock"><table class="table table-hover table-bordered tablesorter">'+tableHeadString()+'<tbody>';;
+		for (var items in stock) {
+			html += tableRowString(stock[items]);
+		}
+		html += '</tbody></table></div>';
+		$('#ItemList').append(html);
+	}
+	// Export XML
+	function exportXML() {
+		$(this).attr({
+			'download': 'items.xml',
+			'href': Saver.getXmlEncoded("items"),
+			'target': '_blank'
+		});
+	}
+	// Export JSON
+	function exportJSON() {
+		var obj = Saver.load("items");
+		$("#exported").val(JSON.stringify(obj, null, '\t'));
+	}
+	// Saves the Item
+	function save() {
+		var obj = {
+			"name": $("#name").val(),
+			"price": parseInt($("#price").val()),
+			"weight": parseFloat($("#weight").val()),
+			"tech": parseInt($("#tech").val()),
+			"rarity": parseInt($("#rarity").val()),
+			"description": $("#description").val(),
+			"category": $("#category").val()
+		};
+		Saver.save("items", obj.name, obj);
+		load();
+	}
+	// File importer
+	function receivedText() {
+		var reg = /(>)\s*(<)(\/*)/g;
+		var xml = fr.result;
+		$('#imported').val(xml.replace(reg, '$1\r\n$2$3'));
+	}
+	function handleFileImport() {               
+	    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+	      console.log('The File APIs are not fully supported in this browser.');
+	      return;
+	    }   
+	    input = $("#importedFile")[0];
+	    if (!input) {
+	    	console.log("Couldn't find the file input element.");
+	    }
+	    else if (!input.files) {
+	    	console.log("This browser doesn't seem to support the `files` property of file inputs.");
+	    }
+	    else if (!input.files[0]) {
+	    	console.log("Please select a file before clicking 'Load'");               
+	    }
+	    else {
+	    	file = input.files[0];
+	    	fr = new FileReader();
+	    	fr.onload = receivedText;
+	    	fr.readAsText(file);
+	    	return fr;
+		}
+	}
+	function importItems(overwrite) {
+		var saver = new Saver();
+		if (overwrite) {
+			saver.removeAll("items");
+		}
+		var xml = $.parseXML($("#imported").val());
+		var json = $.parseJSON(xml2json(xml));
+		for (var d in json.itemsgroup.items) {
+			saver.save("items", json.itemsgroup.items[d].key, json.itemsgroup.items[d].value);
+		}
+		alert("Import Complete!");
+		load();
 	}
 	load();
 	// Backgrounds

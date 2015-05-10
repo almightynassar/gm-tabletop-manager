@@ -110,7 +110,7 @@ var Font = {
 	},
 	"pulsian": {
 		"name": "Pulsian",
-		"what": "Con-lang script for someone's RPG world.",
+		"what": "Designed for Final Fantasy, but drawn by hechicero on dafont.com",
 		"from": "Final Fantasy XIII universe by Square Enix",
 		"notes": "No capital letters.",
 		"capitals": 0,
