@@ -226,6 +226,37 @@ function json2xml(o, tab) {
 	return tab ? xml.replace(/\t/g, tab) : xml.replace(/\t|\n/g, "");
 }
 /**
+ * renderString
+ * 
+ * Parses a string and inputs values based on an input object array
+ */
+function renderString(string, values) {
+	if (typeof string === "string") {
+		var replaceable = string.match(/:\w+\b/g);
+		for (var i in replaceable) {
+			if (typeof replaceable[i] === "string") {
+				var split = replaceable[i].split(':');
+				// Replace the matched words
+				while (string.match(replaceable[i]) !== null && string.match(replaceable[i]) !== undefined && values.hasOwnProperty(split[1])) {
+					string = string.replace(replaceable[i], returnRandom(values[split[1]]).toUpperCase());
+				}
+			}
+		}
+	}
+	return string;
+}
+/**
+ * returnRandom
+ * 
+ * Returns a random element from the array
+ */
+function returnRandom(array) {
+	if ($.isArray(array)) {
+		return array[Dice.roll(1,array.length)-1];
+	}
+	return "";
+}
+/**
  * =====================================================================
  * PARSER
  * 

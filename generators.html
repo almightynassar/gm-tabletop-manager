@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Tabletop RPG Manager" name="description">
+	<meta content="Almighty Nassar" name="author">
+	<link rel="icon" href="favicon.ico">
+	<title>Tabletop Manager</title>
+	<!-- CSS SCRIPTS -->
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" media="all">
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/shapies.css" media="all">
+</head>
+<body>
+    <div class="container">
+    	<div class="row">
+    		<div class="col-md-12"> 
+	    		<ul class="nav nav-pills">
+	    			<li><a href="index.html">Home</a>
+	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools<span class="caret"></span></a>
+	    				<ul class="dropdown-menu">
+			    			<li><a href="dice.html">Dice Roller</a></li>
+			    			<li><a href="fictional.html">Fictional Text</a></li>
+			    			<li><a href="item.html">Item List</a></li>
+			    			<li><a href="markov.html">Markov Names</a></li>
+			    			<li><a href="monster.html">Monster Creator</a></li>
+			    			<li><a href="generators.html">Generators</a></li>
+			    			<li><a href="stat.html">Stat Blocks</a></li>
+			    		</ul>
+	    			</li>
+	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Misc<span class="caret"></span></a>
+	    				<ul class="dropdown-menu">
+			    			<li><a href="calculator.html">Monster CR Calculator</a></li>
+			    			<li><a href="exportImport.html">Export/Import</a></li>
+			    		</ul>
+	    			</li>
+	    		</ul>
+	    	</div>
+    	</div>
+		<div class="row">
+			<div class="col-md-12 well" role="tabpanel">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a role="tab" href="#collapseGenerate" data-toggle="tab" aria-controls="collapseGenerate">Generate</a></li>
+					<li role="presentation"><a role="tab" href="#collapseSave" data-toggle="tab" aria-controls="collapseSave">Editor</a></li>
+					<li role="presentation"><a role="tab" href="#collapseAbout" data-toggle="tab" aria-controls="collapseAbout">How to use</a></li>
+					<li role="presentation"><a role="tab" href="#collapseImport" data-toggle="tab" aria-controls="collapseImport">Import XML</a></li>
+				</ul>
+				<div class="tab-content">
+					<div id="collapseGenerate" class="tab-pane active" role="tab-panel">
+						<div class="form-group">
+							<label class="form-label">Number to generate</label>
+							<input type="number" id="number" class="form-control" value="1"/>
+						</div>
+						<div class="form-group">
+							<label  class="form-label">Generator</label>
+							<select id="generator" class="form-control" name="generator" ></select>
+						</div>
+						<p><button class="btn btn-primary" onclick='generate();'>Generate</button></p>
+					</div>
+					<div id="collapseSave" class="tab-pane" role="tab-panel">
+						<div class="form-group form-inline">
+							<a onclick='exportXML.apply($(this));' class="btn btn-primary">Export XML</a>
+							<select id="show" class="form-control" name="show">
+							</select>
+							<button onclick='show();' class="btn btn-info">Show</button>
+						</div>
+						<div class="form-group form-inline">
+							<select id="type" class="form-control" name="type">
+								<option value="words">Words</option>
+								<option value="generators">Generators</option>
+							</select>
+							<input id="list" class="form-control"  value='direction' />
+							<input id="name" class="form-control"  value='North-West' />
+					 		<button onclick='save();' class="btn btn-success">Save</button>
+						</div>
+					    <div id="saves" class="row">
+					    </div>
+					 </div>
+					 <div id="collapseAbout" class="tab-pane" role="tab-panel">
+					 	<p>This section will briefly outline the rules used by the built-in parser engine used in this project. The project has two lists:</p>
+					    <p><ul><li><strong>words</strong>: A list of words to be randomly substituted</li><li><strong>generators</strong>: A list of sentences with placeholders for the random words</li></ul></p>
+					    <p>Examples of generator strings:</p>
+					    <p><ul><li><b>The enemy will come from the :direction</b>: The ":direction" placeholder will be substituted by one of the "direction" word list. The substituted word will be in all-caps to make it easier to find.</li><li><b>The :noun now lives in :urban to the :direction</b>: This sentence has three placeholder words, designated by the ":" at the front of them</li></ul></p>
+					    <p>You can modify word and generator lists to suit your needs in the Edit section.</p>
+					  </div>
+					  <div id="collapseImport" class="tab-pane" role="tab-panel">
+					  	  <p>Select a XML file and it will appear in the box below. Double-check the file (and even edit it if you know XML), and then hit either Overwrite/Merge to import the changes (NOTE: Overwrite will delete existing saved Dice!)</p>
+					      <div class="form-group">
+					 		<input id="importedFile" type="file" class="form-control" onchange='handleFileImport();' value='' />
+						  </div>
+					      <textarea id="imported" class="form-control" rows="10"></textarea>
+					      <button onclick='importGenerators(1);' class="btn btn-danger">Overwrite</button>
+					      <button onclick='importGenerators(0);' class="btn btn-warning">Merge</button>
+					  </div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 well">
+				<div id="Rumour">
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/lib/jquery.js"></script>
+	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="js/shapies.js"></script>
+	<script src="js/data/generators.js"></script>
+	<script>
+	var words = {};
+	var generators = {};
+	function load() {
+		words = Saver.load("words");
+		generators = Saver.load("generators");
+		$("#generator").html("");
+		$("#show").html("");
+		for (var w in words) {
+			$("#show").append("<option value='words."+w+"'>words."+w+"</option>");;
+		}
+		for (var g in generators) {
+			$("#show").append("<option value='generators."+g+"'>generators."+g+"</option>");;
+			$("#generator").append("<option value='"+g+"'>"+g.toUpperCase()+"</option>");
+		}
+	}
+	function generate() {
+		var num = $("#number").val();
+		var gen = $("#generator").val();
+		$("#Rumour").html("");
+		for (var i = 1; i <= num; i++) {
+			var string = returnRandom(generators[gen]);
+			$("#Rumour").append("<p>"+i+". "+renderString(string, words)+"</p>");
+		}
+	}
+	function exportXML(){
+		var words = Saver.getXmlString("words");
+		var generators = Saver.getXmlString("generators");
+		$(this).attr({
+			'download': 'generators.xml',
+			'href': Saver.encodeXmlString('<root>'+words+generators+'</root>'),
+			'target': '_blank'
+		});
+	};
+	function receivedText() {
+		var reg = /(>)\s*(<)(\/*)/g;
+		var xml = fr.result;
+		$('#imported').val(xml.replace(reg, '$1\r\n$2$3'));
+	}
+	function handleFileImport() {               
+	    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+	      console.log('The File APIs are not fully supported in this browser.');
+	      return;
+	    }   
+	    input = $("#importedFile")[0];
+	    if (!input) {
+	    	console.log("Couldn't find the file input element.");
+	    }
+	    else if (!input.files) {
+	    	console.log("This browser doesn't seem to support the `files` property of file inputs.");
+	    }
+	    else if (!input.files[0]) {
+	    	console.log("Please select a file before clicking 'Load'");         
+	    }
+	    else {
+	    	file = input.files[0];
+	    	fr = new FileReader();
+	    	fr.onload = receivedText;
+	    	fr.readAsText(file);
+	    	return fr;
+		}
+	}
+	function importGenerators(overwrite) {
+		var saver = new Saver();
+		if (overwrite) {
+			saver.removeAll("words");
+			saver.removeAll("generators");
+		}
+		var xml = $.parseXML($("#imported").val());
+		var json = $.parseJSON(xml2json(xml));
+		if (json.root.wordsgroup) {
+			for (var d in json.root.wordsgroup.words) {
+				saver.save("words", json.root.wordsgroup.words[d].key, json.root.wordsgroup.words[d].value);
+			}
+		}
+		if (json.root.generatorsgroup) {
+			for (var d in json.root.generatorsgroup.generators) {
+				saver.save("generators", json.root.generatorsgroup.generators[d].key, json.root.generatorsgroup.generators[d].value);
+			}
+		}
+		alert("Import Complete!");
+		load();
+	}
+	function show() {
+		var source = $("#show").val();
+		var split = source.split(".");
+		var obj = (split[0] === "words") ? words : generators;
+		$("#saves").html("");
+		for (var i in obj[split[1]]) {
+			$("#saves").append("<div class='col-md-3'>"+obj[split[1]][i]+"</div");
+		}
+	}
+	function save() {
+		var list = $("#list").val();
+		var name = $("#name").val();
+		var obj = ($("#type").val() === "words") ? words : generators;
+		if (obj[list]) {
+			obj[list].push(name);
+			Saver.save($("#type").val(), list, obj[list]);
+		}
+		load();
+	}
+	load();
+	</script>
+</body>
+</html>

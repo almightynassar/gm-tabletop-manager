@@ -26,16 +26,8 @@
 			    			<li><a href="item.html">Item List</a></li>
 			    			<li><a href="markov.html">Markov Names</a></li>
 			    			<li><a href="monster.html">Monster Creator</a></li>
-			    			<li><a href="rumours.html">Rumours</a></li>
+			    			<li><a href="generators.html">Generators</a></li>
 			    			<li><a href="stat.html">Stat Blocks</a></li>
-			    			<li><a href="titles.html">Title for a Book/Tavern</a></li>
-			    		</ul>
-	    			</li>
-	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Databases <span class="caret"></span></a>
-		    			<ul class="dropdown-menu">
-			    			<li><a href="DB_markov.html">Names</a></li>
-			    			<li><a href="DB_rumours.html">Rumours</a></li>
-			    			<li><a href="DB_titles.html">Titles</a></li>
 			    		</ul>
 	    			</li>
 	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Misc<span class="caret"></span></a>
@@ -78,6 +70,8 @@
 		function reset(overwrite) {
 			localStorage.removeItem('dice');
 			localStorage.removeItem('items');
+			localStorage.removeItem('words');
+			localStorage.removeItem('generators');
 			if (!overwrite) {
 				alert("Data has been resetted");
 			}
@@ -85,9 +79,11 @@
 		function exportXML(){
 			var dice = Saver.getXmlString("dice");
 			var items = Saver.getXmlString("items");
+			var words = Saver.getXmlString("words");
+			var generators = Saver.getXmlString("generators");
 			$(this).attr({
 				'download': 'shapies.xml',
-				'href': Saver.encodeXmlString('<root>'+dice+items+'</root>'),
+				'href': Saver.encodeXmlString('<root>'+dice+items+words+generators+'</root>'),
 				'target': '_blank'
 			});
 		};
@@ -127,12 +123,28 @@
 			var xml = $.parseXML($("#importarea").val());
 			var json = $.parseJSON(xml2json(xml));
 			// Dice
-			for (var d in json.root.dicegroup.dice) {
-				saver.save("dice", json.root.dicegroup.dice[d].key, json.root.dicegroup.dice[d].value);
+			if (json.root.dicegroup) {
+				for (var d in json.root.dicegroup.dice) {
+					saver.save("dice", json.root.dicegroup.dice[d].key, json.root.dicegroup.dice[d].value);
+				}
 			}
-			// Dice
-			for (var d in json.root.itemsgroup.items) {
-				saver.save("items", json.root.itemsgroup.items[d].key, Item.fromJSON(json.root.itemsgroup.items[d].value));
+			// Items
+			if (json.root.itemsgroup) {
+				for (var d in json.root.itemsgroup.items) {
+					saver.save("items", json.root.itemsgroup.items[d].key, Item.fromJSON(json.root.itemsgroup.items[d].value));
+				}
+			}
+			// Words
+			if (json.root.wordsgroup) {
+				for (var d in json.root.wordsgroup.words) {
+					saver.save("words", json.root.wordsgroup.words[d].key, json.root.wordsgroup.words[d].value);
+				}
+			}
+			// Generators
+			if (json.root.generatorsgroup) {
+				for (var d in json.root.generatorsgroup.generators) {
+					saver.save("items", json.root.generatorsgroup.generators[d].key, json.root.generatorsgroup.generators[d].value);
+				}
 			}
 			alert("Import Complete!");
 		}
