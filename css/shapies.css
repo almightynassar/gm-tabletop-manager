@@ -2,21 +2,21 @@
  * Dice styles
  */
 #Dice {
-	overflow: auto;
-	height: 20em;
+    overflow: auto;
+    height: 20em;
 }
 /**
  * For creating stat blocks inspired by D&D 5E
  */
 #editable {
-	background: white;
-	width: 100%;
-	font-size: 11px;
-	font-family: Arial, Helvetica, sans-serif;
-	padding-bottom: 15px;
+    background: white;
+    width: 100%;
+    font-size: 11px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-bottom: 15px;
 }
 #editable div {
-	margin-left: 10px;
+    margin-left: 10px;
 }
 #editable hr.gradient {
     background: #A73335;
@@ -31,7 +31,7 @@
     color:#A73335;
 }
 #editable .description {
-    font-style:italic;    
+    font-style:italic;
 }
 #editable .bold {
     font-weight:bold;
