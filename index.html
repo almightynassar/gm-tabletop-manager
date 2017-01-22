@@ -1,55 +1,483 @@
 <!doctype html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-	<meta content="width=device-width, initial-scale=1" name="viewport">
-	<meta content="Tabletop RPG Manager" name="description">
-	<meta content="Almighty Nassar" name="author">
-	<link rel="icon" href="favicon.ico">
-	<title>Tabletop Manager</title>
-	<!-- CSS SCRIPTS -->
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" media="all">
-	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css" media="all">
-	<link rel="stylesheet" type="text/css" href="css/shapies.css" media="all">
+    <meta charset="utf-8">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Tabletop RPG Manager" name="description">
+    <meta content="Almighty Nassar" name="author">
+    <link rel="icon" href="favicon.ico">
+    <title>Tabletop Manager</title>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" media="all">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-theme.css" media="all">
+    <link rel="stylesheet" type="text/css" href="css/shapies.css" media="all">
+	<link rel="stylesheet" type="text/css" href="css/font/fonts.css" media="all">
 </head>
 <body>
     <div class="container">
-    	<div class="row">
-    		<div class="col-md-12"> 
-	    		<ul class="nav nav-pills">
-	    			<li><a href="index.html">Home</a>
-	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools<span class="caret"></span></a>
-	    				<ul class="dropdown-menu">
-			    			<li><a href="dice.html">Dice Roller</a></li>
-			    			<li><a href="fictional.html">Fictional Text</a></li>
-			    			<li><a href="item.html">Item List</a></li>
-			    			<li><a href="markov.html">Markov Names</a></li>
-			    			<li><a href="monster.html">Monster Creator</a></li>
-			    			<li><a href="generators.html">Generators</a></li>
-			    			<li><a href="stat.html">Stat Blocks</a></li>
-			    		</ul>
-	    			</li>
-	    			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Misc<span class="caret"></span></a>
-	    				<ul class="dropdown-menu">
-			    			<li><a href="calculator.html">Monster CR Calculator</a></li>
-			    			<li><a href="exportImport.html">Export/Import</a></li>
-			    		</ul>
-	    			</li>
-	    		</ul>
-	    	</div>
-    	</div>
-    	<div class="row">
-            <div class="col-md-12">
-	            <p><strong>GM Tabletop Manager v0.0.4</strong> <em>by almightynassar. <a href="https://github.com/almightynassar/shapies/">Click here to access the GitHub Repository</a></em></p>
-	            <p><strong class="label label-danger">WARNING:</strong> <em>Cleaning out your cookies will delete <strong>ALL</strong> stored/edited data! This is because these tools use LocalStorage to save data. If you are clearing out your cookies, chances are it will clear your saved data!</em></p>
-				<p>This is not an attempt to replace any licensed material from the publishers. This should be used as a supplement to published materials, and as such it will not include a lot of things that can be found in the official sources. Functions may be provided to allow you to input the required content yourself.</p>
-				<p>These tools can all run locally on your desktop without the need for a server. This is because it uses JavaScript and the HTML5 LocalStorage feature (think of it as advanced cookies). To download these tools, click on the github link provided above and download the zip file. When you extract the files, double-click on index.html to open the system in your browser!</p>
-           	</div>
-    	</div>
+        <div class="row">
+            <div class="col-md-12 navbar navbar-default">
+                <ul class="nav  nav-tabs" role="tablist">
+                    <li role="presentation" class="active" id="home-tab"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation" id="dice-tab"><a href="#dice" aria-controls="dice" role="tab" data-toggle="tab">Dice Roller</a></li>
+                            <li role="presentation" id="dice-tab"><a href="#fictional" aria-controls="fictional" role="tab" data-toggle="tab">Fictional Text</a></li>
+                            <li><a href="item.html">Item List</a></li>
+                            <li role="presentation" id="markov-tab"><a href="#markov" aria-controls="markov" role="tab" data-toggle="tab">Markov Names</a></li>
+                            <li><a href="monster.html">Monster Creator</a></li>
+                            <li><a href="generators.html">Generators</a></li>
+                            <li><a href="stat.html">Stat Blocks</a></li>
+                        </ul>
+                    </li>
+                    <li role="presentation" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Misc<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="calculator.html">Monster CR Calculator</a></li>
+                            <li role="presentation" id="export-import-tab"><a href="#export-import" aria-controls="markov" role="tab" data-toggle="tab">Export/Import</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 tab-content">
+                <!--
+                ============================
+                HOME
+                ============================
+                -->
+                <div role="tabpanel" class="tab-pane fade in active" id="home">
+                    <div class="gem-controls btn-group btn-group-sm">
+                        <button class="btn btn-success" onclick="speakDiv('#home-intro')">Play</button>
+                        <button class="btn btn-warning" onclick="$().articulate('pause')">Pause</button>
+                        <button class="btn btn-danger" onclick="$().articulate('stop')">Stop</button>
+                    </div>
+                    <hr />
+                    <div id="home-intro">
+                        <p>Thank you for choosing me, GEM, for all of your management needs! I am your interactive personal guide to the world. In fact, I may just be your most knowledgable resource about this world! To use me, just select your desired option from the menu above. I will always be available to help you along your journey; just click the PLAY button!</p>
+                    </div>
+                    <div id="home-alerts">
+                        <p class="alert alert-warning"><strong class="label label-danger">WARNING:</strong> <em>Cleaning out your cookies will delete <strong>ALL</strong> stored/edited data! This is because these tools use LocalStorage to save data. If you are clearing out your cookies, chances are it will clear your saved data!</em></p>
+                        <p class="alert alert-warning"><strong class="label label-danger">WARNING:</strong> <em>You must save any changes by going to the 'Misc' > 'Export / Import' function. Otherwise all changes will be cleared the next time you visit.</em></p>
+                    </div>
+                    <p><small><strong>GMTM v0.0.5</strong> <em>by almightynassar. <a href="https://github.com/almightynassar/shapies/">Click here to access the GitHub Repository</a>. This project strives to use open licensed materials only; please support game designers by purchasing licensed material.</em></small></p>
+                </div>
+                <!--
+                ============================
+                DICE
+                ============================
+                -->
+                <div role="tabpanel" class="tab-pane fade" id="dice">
+                    <div id="dice-rules">
+                        <p>The dice roller offers the following functions:</p>
+                        <ul>
+                            <li>roll(number of dice, sides on dice) <em>example: roll(1,20)+2</em></li>
+                            <li>drop(number of dice, sides on dice, number to drop, 1=drop highest/0=drop lowest) <em>example: drop(4,6,1,0)</em></li>
+                            <li>advantage(number of dice, sides on dice, 1=advantage/0=disadvantage) <em>example: advantage(3,20,0)</em></li>
+                        </ul>
+                    </div>
+                    <div id="DiceSaves" class="well">
+                        <h4>Saved Dice</h4>
+                        <span></span>
+                    </div>
+                    <div id="dice-controls" class="form">
+                        <div class="form-group">
+                            <label>Formula:</label>
+                            <input type="text" id="DiceFormula" class="form-control" value="roll(1,20)" />
+                        </div>
+                        <div class="form-group">
+                            <label>Notes (descriptor for the log history):</label>
+                            <input type="text" id="DiceNotes" class="form-control" value="" />
+                        </div>
+                        <div class="form-group">
+                            <label>Name (Only used for saving dice formula):</label>
+                            <input type="text" id="DiceName" class="form-control"  value='Dice Name' />
+                        </div>
+                        <div class="gem-controls btn-group btn-group-sm">
+                            <button onclick='DiceRoll();' class="btn btn-primary">Roll!</button>
+                            <button class="btn btn-success" onclick="DiceSave();">Save Dice</button>
+                        </div>
+                    </div>
+                    <hr />
+                    <div id="DiceResults">
+                    </div>
+                </div>
+                <!--
+                ============================
+                FICTIONAL TEXT
+                ============================
+                -->
+                <div role="tabpanel" class="tab-pane fade" id="fictional">
+                    <p>This convertor uses a Font File to convert english text to it's fantasy script counter-part. The convertor is mapped <strong>exactly</strong> as it would be if you downloaded and installed the font onto your computer (in fact, I recommend you do that for best results). This convertor is pretty much only good for previewing the fantasy fonts.</p>
+                    <div id="FictionalLanguage" class="well"></div>
+                    <div id="FictionalForm" class="form" >
+                        <div class="form-group">
+                            <label>Font:</label>
+                            <select id="fictional_input" class="form-control" onChange="FictionalInform()"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Font Size (pt):</label>
+                            <input type="number" id="FictionalSize" name="FictionalSize" class="form-control"  value="22"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Canvas length (em):</label>
+                            <input type="number" id="FictionalLength" name="FictionalCanvas" class="form-control"  value="20"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Canvas width (em):</label>
+                            <input type="number" id="FictionalWidth" name="FictionalWidth" class="form-control"  value="20"/></p>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="FictionalConvert" class="form-control">please enter your text here that you wish to convert (note that this script does not translate, and depending on the font file it does not rewrite special characters like !;:= or capitals). see the scripts notes for script-specific translation details</textarea>
+                        </div>
+                        <button class="btn btn-block btn-lg btn-primary" onclick='FictionalConvert();'>Convert</button>
+                    </div>
+                    <hr />
+                    <div id='FictionalResult' class="col-lg-12" style="height:20em;width:20em;border-style:solid;border-width:1px;" >
+                        <canvas id="Result" width="100%" height="100%"></canvas>
+                    </div>
+                </div>
+                <!--
+                ============================
+                MARKOV
+                ============================
+                -->
+                <div role="tabpanel" class="tab-pane fade" id="markov">
+                    <div class="gem-controls btn-group btn-group-sm">
+                        <button class="btn btn-success" onclick="speakDiv('#markov-intro')">Play</button>
+                        <button class="btn btn-warning" onclick="$().articulate('pause')">Pause</button>
+                        <button class="btn btn-danger" onclick="$().articulate('stop')">Stop</button>
+                    </div>
+                    <hr />
+                    <p id="markov-intro">This system is based on the Markov Chain process. It gathers information about how the letters in words are related, and then stores those relationships. When you generate a name, the computer will use this information to create a new word that is <em>in the style of the processed words</em>. This generally makes up a nonsense word that is similar in style to the other words. The more words you give the system to analyse, the better it will be at generating new words!</p>
+                    <p>Chain: <select id="Markov-Input" class="form-control" name="Markov-Input" ></select></p>
+                    <p># names to generate: <input type="number" id="Markov-Number" name="Markov-Number" class="form-control" value='5' /></p>
+                    <p>Standard name Length: <input type="number" id="Markov-Length" name="Markov-Length" class="form-control" value='7'/></p>
+                    <p><button class="btn btn-block btn-lg btn-dnd" onclick='MarkovGenerate();'>Generate</button></p>
+                    <div id="Markov-Result" class="well" >
+                    </div>
+                </div>
+                <!--
+                ============================
+                EXPORT / IMPORT
+                ============================
+                -->
+                <div role="tabpanel" class="tab-pane fade" id="export-import">
+                    <div class="gem-controls btn-group btn-group-sm">
+                        <button class="btn btn-success" onclick="speakDiv('#export-import-intro')">Play</button>
+                        <button class="btn btn-warning" onclick="$().articulate('pause')">Pause</button>
+                        <button class="btn btn-danger" onclick="$().articulate('stop')">Stop</button>
+                    </div>
+                    <hr />
+                    <div id="export-import-intro">
+                        <p>Here we can simply and easily share data with friends. 'Save' will store all your changes so that you can look at it later. 'Export' will create a link to a downloadable file. To import a file, click on the file input and select the file. The contents will be displayed in the text box for review. Then click on either 'Overwrite' or 'Merge' to finalise the import. <strong>Reset will clear EVERYTHING in the database, and is irreversible</strong>.</p>
+                    </div>
+                    <hr />
+                    <div id="module-div">
+                        <h4>Module</h4>
+                        <div class="target form-group">
+                        </div>
+                    </div>
+                    <hr />
+                    <div id="control-div">
+                        <h4>Display</h4>
+                        <div class="form-group">
+                            <input type="file" class="form-control" id="importedFile" name="importedFile" enctype="multipart/form-data" onchange='ExportImportHandleFile();' />
+                        </div>
+                        <div class="form-group">
+                            <textarea id="ExportImportArea" class="form-control" rows=20></textarea>
+                        </div>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-success" onclick="ExportImportView( ExportImportGetModuleInputs() );">View Local</button>
+                            <button class="btn btn-success" onclick="LocalStorageSave( ExportImportGetModuleInputs() );">Save Local</button>
+                        </div>
+                        <div class="btn-group btn-group-sm">
+                            <a class="btn btn-primary" onclick="LocalStorageDownload(ExportImportGetModuleInputs());" href="#">Export Local</a>
+                        </div>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-danger" onclick="localStorage.clear();">Reset All</button>
+                            <button onclick='ExportImportTextToStorage(true);' class="btn btn-warning">Overwrite Local with Text</button>
+                            <button onclick='ExportImportTextToStorage(false);' class="btn btn-info">Merge Local with Text</button>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
     </div>
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/lib/jquery.js"></script>
     <script src="bootstrap/js/bootstrap.js"></script>
+    <script src="js/lib/articulate.js"></script>
+    <script src="js/dice.js"></script>
+    <script src="js/localstorage.js"></script>
+    <script src="js/markov.js"></script>
+    <script src="js/parser.js"></script>
+    <script>
+        /*===================
+         * EXPORT / IMPORT
+         *===================
+         */
+        function ExportImportGetModuleInputs() {
+            return $('input[name="ei-modules[]"]:checked').map(function () { return this.value; }).toArray();
+        }
+        function ExportImportView(modules) {
+            var local_data = LocalStorageLimitedModules(modules);
+            if ( local_data ) {
+                $('#ExportImportArea').val(JSON.stringify(local_data, null, 2));
+            } else {
+                $('#ExportImportArea').val('');
+            }
+        }
+        function ExportImportModules() {
+            for (var i = 0; i < data['module'].length; i++) {
+                var $module_div = $("<div>", {
+                    class: "checkbox"
+                });
+                var $module_label = $("<label>", {
+                    for: "module-"+data['module'][i],
+                }).append ( $("<input>", {
+                    id: "module-"+data['module'][i],
+                    name: 'ei-modules[]',
+                    value: data['module'][i],
+                    type: 'checkbox',
+                    class: 'checkbox',
+                    checked: true,
+                } ) ).append(data['module'][i]);
+                $module_label.appendTo( $module_div );
+                $module_div.appendTo( $('#module-div .target') );
+            }
+        }
+        function ExportImportReceivedText() {
+            $('#ExportImportArea').val(fr.result);
+        }
+        function ExportImportHandleFile() {
+            if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+              console.log('The File API is not fully supported in this browser.');
+              return;
+            }
+            input = $("#importedFile")[0];
+            if (!input) {
+                console.log("Couldn't find the file input element.");
+            }
+            else if (!input.files) {
+                console.log("This browser doesn't seem to support the `files` property of file inputs.");
+            }
+            else if (!input.files[0]) {
+                console.log("Please select a file before clicking 'Load'");
+            }
+            else {
+                file = input.files[0];
+                fr = new FileReader();
+                fr.onload = ExportImportReceivedText;
+                fr.readAsText(file);
+                return fr;
+            }
+        }
+        function ExportImportTextToStorage(overwrite) {
+            var json = JSON.parse($("#ExportImportArea").val());
+            var modules = ExportImportGetModuleInputs();
+            for (var i = 0; i < modules.length; i++) {
+                if (json[modules[i]]) {
+                    if (overwrite) {
+                        data[modules[i]] = json[modules[i]];
+                    } else {
+                        Object.assign(data[modules[i]], json[modules[i]])
+                    }
+                }
+            }
+            alert("Import Complete! Note: Changes have not been saved");
+        }
+        ExportImportModules();
+        /*===================
+         * DICE ROLLER
+         *===================
+         */
+        var parser = new Parser();
+        function DiceRoll() {
+            var formula = $("#DiceFormula").val();
+            var result = parser.parse(formula).evaluate({roll: Dice.roll, drop: Dice.drop, advantage: Dice.advantage});
+            $("#DiceResults").prepend("<p>" + formula + " = <label class='label label-info'>"+result+"</label></p><p><em>"+$('#DiceNotes').val()+"</em></p><hr />");
+            $('#DiceNotes').val('');
+        }
+        function DiceSave() {
+            var dice = {};
+            dice[$("#DiceName").val()] = {
+                formula: $("#DiceFormula").val(),
+                note: $('#DiceNotes').val(),
+            }
+            Object.assign(data['dice'], dice);
+            DiceList();
+        }
+        function DiceList() {
+            $('#DiceSaves').html('');
+            for (var dice in data['dice']) {
+                $('#DiceSaves').append('<p><span class="btn-group"><button onclick="DiceLoad(\''+dice+'\');" class="btn btn-xs btn-info">Load</button> <button onclick="DiceRemove(\'' + dice + '\');" class="btn btn-xs btn-danger">Delete</button></span> <b>' + dice + ':</b> ' + data['dice'][dice].formula + ' <em>'+ data['dice'][dice].note +'</em></p><hr />');
+            }
+        }
+        function DiceLoad(diceName) {
+            if (data['dice'][diceName]) {
+                $('#DiceFormula').val(data['dice'][diceName].formula);
+                $('#DiceName').val(diceName);
+                $('#DiceNotes').val(data['dice'][diceName].note);
+            }
+        }
+        function DiceRemove(diceName) {
+            delete data['dice'][diceName];
+            DiceList();
+        }
+        DiceList();
+        /*===================
+         * FICTIONAL TEXT
+         *===================
+         */
+        var FictionalIndex = 0;
+        var FictionalCanvas = $('#FictionalResult #Result')[0];
+        var FictionalContext = FictionalCanvas.getContext("2d");
+        for(var font in data['font']) {
+            $('#fictional_input').append('<option value="'+font+'">'+data['font'][font].name+'</option>');
+            FictionalContext.font = "20px "+font;
+            FictionalContext.fillText('Test',0,0);
+        }
+        function FictionalResetCanvas() {
+            // Store the current transformation matrix
+            FictionalContext.save();
+            // Use the identity matrix while clearing the canvas
+            FictionalContext.setTransform(1, 0, 0, 1, 0, 0);
+            FictionalContext.clearRect(0, 0, FictionalCanvas.width, FictionalCanvas.height);
+            // Restore the transform
+            FictionalContext.restore();
+        };
+        function FictionalInform() {
+            var script = $('#fictional_input').val();
+            var returnHtml = "<p><strong>"+data['font'][script].name+"</strong> (<em>"+data['font'][script].from+"</em>)</p>";
+            returnHtml += '<p><a href="css/font/'+script+'/'+script+'.ttf">TTF Font file</a></p>';
+            returnHtml += "<p>"+data['font'][script].what+"</p><p>"+data['font'][script].notes+"</p>";
+            if (!$.isEmptyObject(data['font'][script].missing)) {
+                returnHtml += "<p>The following letters were missing from the alphabet and have been replaced:</p><ul>";
+                for (var key in data['font'][script].missing) {
+                    returnHtml += "<li>"+key+" = "+data['font'][script].missing[key]+"</li>";
+                }
+                returnHtml += "</ul>";
+            }
+            if (!$.isEmptyObject(data['font'][script].mapping)) {
+                returnHtml += "<p>The following sounds are mapped to the following letters (note that case is important!):</p><ul>";
+                for (var key in data['font'][script].mapping) {
+                    returnHtml += "<li>"+key+" = "+data['font'][script].mapping[key]+"</li>";
+                }
+                returnHtml += "</ul>";
+            }
+            $('#FictionalLanguage').html(returnHtml);
+        }
+        function FictionalConvert() {
+            var text = $('#FictionalConvert').val();
+            var script = $('#fictional_input').val();
+            var size = $('#FictionalSize').val();
+            $('#FictionalResult').height($('#FictionalLength').val() + 'em');
+            $('#FictionalResult').width($('#FictionalWidth').val() + 'em');
+            FictionalCanvas.width = $('#FictionalResult').width();
+            FictionalCanvas.height = $("#FictionalResult").height();
+            FictionalWriteCanvas(text, script, size);
+        }
+        function FictionalWriteCanvas(text, script, size) {
+            FictionalResetCanvas();
+            FictionalContext.font = size+"px "+script;
+            FictionalWrapText(text, 10, size, FictionalCanvas.width, size);
+        }
+        function FictionalWrapText(text, x, y, maxWidth, lineHeight) {
+            x = parseInt(x, 10);
+            y = parseInt(y, 10);
+            maxWidth = parseInt(maxWidth, 10);
+            lineHeight = parseInt(lineHeight, 10);
+            var words = text.split(' ');
+            var line = '';
+            for(var n = 0; n < words.length; n++) {
+                var testLine = line + words[n] + ' ';
+                var metrics = FictionalContext.measureText(testLine);
+                var testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    FictionalContext.fillText(line, x, y);
+                    line = words[n] + ' ';
+                    y += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            FictionalContext.fillText(line, x, y);
+        }
+        FictionalCanvas.width = $('#FictionalResult').width();
+        FictionalCanvas.height = $("#FictionalResult").height();
+        FictionalResetCanvas();
+        FictionalInform();
+        /*===================
+         * MARKOV NAMES
+         *===================
+         */
+        // Load the lists and chains
+        var markov = new Markov();
+        function MarkovSetup() {
+            for(var race in data['markov']) {
+                var title = race.replace(/\b[a-z]/g, function(letter) {
+                    return letter.toUpperCase();
+                });
+                for(var gender in data['markov'][race]) {
+                    $('#Markov-Input').append('<option value="'+race+'-'+gender+'">'+title+' '+gender+'</option>');
+                    if (data['config'].debug) {
+                        console.log(title+" "+gender+" names: "+data['markov'][race][gender].length);
+                    }
+                }
+            }
+        };
+        // Generates names
+        function MarkovGenerate() {
+            MarkovLoad();
+            var text = "";
+            var number = parseInt($('#Markov-Number').val(), 10);
+            var length = parseInt($('#Markov-Length').val(), 10);
+            for (var i = 0; i < number; i++) {
+                var new_name = markov.make(1,length);
+                text += "<p>" + new_name.charAt(0).toUpperCase() + new_name.slice(1); + "</p>";
+            }
+            $('#Markov-Result').html(text);
+        };
+        // Load names
+        function MarkovLoad() {
+            var tag = $('#Markov-Input').val();
+            if ( tag !== markov.current()) {
+                var input = ($('#Markov-Input').val()).split("-");
+                if (data['config'].debug) {
+                    console.log('Loading names from : '+input[0]+' '+input[1]);
+                }
+                markov.load(data['markov'][input[0]][input[1]], tag);
+            }
+        }
+        MarkovSetup();
+        /*===================
+         * GEM
+         *===================
+         */
+        // Stops any playback on tab change
+        $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+            if ( $().articulate('isSpeaking') ) {
+                $().articulate('stop');
+            }
+        });
+        // GEM voice controls
+        function speakDiv(divId) {
+            if ( $().articulate('isSpeaking') ) {
+                $().articulate('resume');
+            } else {
+                $(divId).articulate('speak');
+            }
+        }
+        // Resets GEM defaults
+        if ( $().articulate('enabled') ) {
+            $().articulate('rate', 0.9).articulate('pitch', 1.1).articulate('volume', 10);
+        } else {
+            $('.gem-controls').hide();
+        }
+    </script>
 </body>
 </html>

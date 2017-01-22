@@ -1,6 +1,9 @@
 // Load our initial data object
 var data = {
     'config': ((typeof localStorage['config'] !== "undefined") ? JSON.parse(localStorage['config']) : initConfig()),
+    'dice': ((typeof localStorage['dice'] !== "undefined") ? JSON.parse(localStorage['dice']) : initDice()),
+    'font': ((typeof localStorage['font'] !== "undefined") ? JSON.parse(localStorage['font']) : initFont()),
+    'item': ((typeof localStorage['item'] !== "undefined") ? JSON.parse(localStorage['item']) : initItem()),
     'markov': ((typeof localStorage['markov'] !== "undefined") ? JSON.parse(localStorage['markov']) : initMarkov()),
     'module': ['config','markov'],
 };
@@ -54,6 +57,368 @@ function LocalStorageDownload(modules) {
 function initConfig() {
     return {
         'debug': true,
+    }
+};
+// Initialise our dice data object
+function initDice() {
+    return {
+        'd20': {
+            formula: 'roll(1,20)',
+            note: 'Standard D20 roll',
+        },
+        'd6': {
+            formula: 'roll(1,6)',
+            note: 'Standard D6 roll',
+        },
+    }
+};
+// Initilialise our font data object
+function initFont() {
+    return {
+        "angerthas": {
+            name: "Angerthas",
+            what: "Runic Script based on Cirth (created by Elves), and adopted by the Dwarves in Moria and Erebor",
+            from: "Middle-Earth Universe by J.R.R. Tolkien",
+            notes: "Matches one-to-one with alphabet, including captials. Numbers are just fancy arabic numbers.",
+            capitals: 1,
+            missing: {},
+            mapping: {}
+        },
+        "barazhad": {
+            name: "Barazhad",
+            what: "The script used by Primordials and Demons",
+            from: "D&D Universe by Wizards of the Coast",
+            notes: "Matches one-to-one with alphabet, including captials.",
+            capitals: 1,
+            missing: {},
+            mapping: {}
+        },
+        "daedra": {
+            name: "Daedra",
+            what: "The script used by the Demons and other things behind the portals",
+            from: "The Elder Scrolls universe by Bethseda",
+            notes: "Matches one-to-one with alphabet, including captials.",
+            capitals: 1,
+            missing: {},
+            mapping: {}
+        },
+        "davek": {
+            name: "Davek",
+            what: "The script used by Dwarves and Giants",
+            from: "D&D universe by Wizards of the Coast",
+            notes: "Matches one-to-one with alphabet, including captials.",
+            capitals: 1,
+            missing: {},
+            mapping: {}
+        },
+        "dovahzul": {
+            name: "Dovahzul",
+            what: "34-rune script for the Dragon Language in Skyrim",
+            from: "The Elder Scrolls universe by Bethseda",
+            notes: "No capital letters except for those dipthongs that are mapped.",
+            capitals: 0,
+            missing: {
+                "c": "k"
+            },
+            mapping: {
+                "aa": "A",
+                "ah": "H",
+                "ei": "E",
+                "ey": "W",
+                "ii": "I",
+                "ir": "J",
+                "oo": "O",
+                "uu": "U",
+                "ur": "R"
+            }
+        },
+        "elderfuthark": {
+            name: "Elder Futhark",
+            what: "Ancient Norse Rune script that was used in The Hobbit.",
+            from: "Ancient Vikings",
+            notes: "Capitals are just mirrored letters (this changes the runes' meaning into a negative one though). No number system. J is pronounced as an 'Y', V/W is German-like.",
+            capitals: 1,
+            missing: {
+                "c": "k",
+                "v": "w"
+            },
+            mapping: {
+                "x": "th",
+                "y": "ei",
+                "q": "ng"
+            }
+        },
+        "hylian64": {
+            name: "Hylian (N64)",
+            what: "The script for the people of Hyrule.",
+            from: "Zelda universe by Nintendo",
+            notes: "No special mappings",
+            capitals: 0,
+            missing: {},
+            mapping: {}
+        },
+        "hylianTP": {
+            name: "Hylian (Twilight Princess)",
+            what: "The script for the people of Hyrule.",
+            from: "Zelda universe by Nintendo",
+            notes: "No special mappings",
+            capitals: 0,
+            missing: {},
+            mapping: {}
+        },
+        "iokharic": {
+            name: "Iokharic",
+            what: "Dragon script for Dragons, Dragonborn and Kobolds.",
+            from: "D&D universe by Wizard of the Coast",
+            notes: "No special mappings.",
+            capitals: 0,
+            missing: {},
+            mapping: {}
+        },
+        "klingon": {
+            name: "Klingon",
+            what: "Spoken by the galatic Klingon Empire.",
+            from: "Star Trek universe",
+            notes: "No capital letters. 'x' is just 'qs' letters crammed into one space. Pronounciations: 'c'='ch', 'f'='ng', 'g'='gh', 'z'='th'",
+            capitals: 0,
+            missing: {},
+            mapping: {}
+        },
+        "pulsian": {
+            name: "Pulsian",
+            what: "Designed for Final Fantasy, but drawn by hechicero on dafont.com",
+            from: "Final Fantasy XIII universe by Square Enix",
+            notes: "No capital letters.",
+            capitals: 0,
+            missing: {},
+            mapping: {}
+        },
+        "qijomi": {
+            name: "Qijomi",
+            what: "Con-lang script for someone's RPG world.",
+            from: "Free online script",
+            notes: "Special capital letter characters.",
+            capitals: 1,
+            missing: {},
+            mapping: {}
+        },
+        "rellanic": {
+            name: "Rellanic",
+            what: "Elvish script for Elves, Mind Flayers and Dryads.",
+            from: "D&D universe by Wizard of the Coast",
+            notes: "No special mappings.",
+            capitals: 0,
+            missing: {},
+            mapping: {}
+        }
+    };
+};
+// Initialise our item data object
+// Tech-Levels
+// 0 - Stone (primitive hunter and gather tools)
+// 1 - Ancient (simple metals; arithmetic; writing)
+// 2 - Medieval (steel; calculus; books)
+// 3 - Industrial (steam; mechanical calculators; telegraph)
+// 4 - Mechanized (fossil fuels; electrical calculators; radio)
+// 5 - Digital (renewable energy; personal computers; networking)
+// 6 - Robotic (nanotech; artificial intelligence; human-machine interfaces)
+// 7 - Interstellar (space travel)
+// 8 - Exotic (extremely high-tech)
+function initItem() {
+    return {
+        // Conventional weapons
+        'Light Pistol': {
+            tech: 4,
+            cost: 100,
+            weight: .5,
+            type: "weapon",
+            detail: "Range: 10/20/40, Damage: 2d6, ROF: 1, Shots: 12, Semi-Auto",
+            description: "Small, lightweight pistol that fires bullets using chemical-based propellants. Magazine weighs .25 kg and costs 2 Credits."
+        },
+        'Pistol': {
+            tech: 4,
+            cost: 200,
+            weight: 1,
+            type: "weapon",
+            detail: "Range: 12/24/48, Damage: 2d6, ROF: 1, Shots: 24, AP: 1, Semi-Auto",
+            description: "Standard pistol that fires bullets using chemical-based propellants. Magazine weighs .5 kg and costs 5 Credits."
+        },
+        'Assault Rifle': {
+            tech: 4,
+            cost: 500,
+            weight: 5,
+            type: "weapon",
+            detail: "Range: 24/48/96, Damage: 2d8, ROF: 3, Shots: 30, AP: 2, Auto, 3RB, Min Strength: d6",
+            description: "Standard assault rifle that fires bullets using chemical-based propellants. Magazine weighs .5 kg and costs 6 Credits."
+        },
+        'Machine Gun': {
+            tech: 4,
+            cost: 600,
+            weight: 15,
+            type: "weapon",
+            detail: "Range: 30/60/120, Damage: 2d8, ROF: 4, Shots: 200, AP: 3, Min Strength: d8, Auto, Snapfire",
+            description: "Large, powerful gun that fires bullets using chemical-based propellants. Magazine weighs 3.5 kg and costs 35 Credits"
+        },
+        'Revolver': {
+            tech: 3,
+            cost: 300,
+            weight: 4,
+            type: "weapon",
+            detail: "Range: 12/24/48, Damage: 2d8, ROF: 1, Shots: 6, AP: 2, Revolver",
+            description: "Powerful revolver pistol that fires bullets using chemical-based propellants. 6 bullets weighs .25 kg and costs 2 Credits."
+        },
+        'Rifle': {
+            tech: 3,
+            cost: 300,
+            weight: 5,
+            type: "weapon",
+            detail: "Range: 24/48/96, Damage: 2d8, ROF: 1, Shots: 15, AP: 2, Min. Strength: d6",
+            description: "Standard rifle that fires bullets using chemical-based propellants. Magazine weighs .3 kg and costs 3 Credits."
+        },
+        'Shotgun': {
+            tech: 3,
+            cost: 500,
+            weight: 5,
+            type: "weapon",
+            detail: "Range: 12/24/48, Damage: 3d6/2d6/1d6, ROF: 1, Shots: 6, +2 Shooting",
+            description: "Powerful close quarters gun that fires shells using chemical-based propellants that spreads out across an area. Magazine weighs .5 kg and costs 6 Credits."
+        },
+        'SMG': {
+            tech: 4,
+            cost: 300,
+            weight: 5,
+            type: "weapon",
+            detail: "Range: 12/24/48, Damage: 2d6, ROF: 3, Shots: 30, AP: 1, Auto",
+            description: "Small, portable automatic gun that fires bullets using chemical-based propellants. Magazine weighs .5 kg and costs 6 Credits."
+        },
+        'Sniper Rifle': {
+            tech: 4,
+            cost: 600,
+            weight: 5,
+            type: "weapon",
+            detail: "Range: -/320/640, Damage: 2d10, ROF: 1, Shots: 10, AP: 4, Snapfire, Heavy Weapon",
+            description: "Long-range gun that fires bullets using chemical-based propellants. Magazine weighs .25 kg and costs 6 Credits."
+        },
+        'Gauss Gun': {
+            tech: 5,
+            cost: 800,
+            weight: 6,
+            type: "weapon",
+            detail: "Range: 48/96/192, Damage: 2d8+1, ROF: 1, Shots: 30, AP: 3, Semi-Auto, Min Strength: d8",
+            description: "Military-grade gun that fires bullets using electromagnetic coils. Also known as a Coilgun and Mag Gun. Magazine weighs .5 kg and costs 6 Credits."
+        },
+        'Plasma Gun': {
+            tech: 7,
+            cost: 1000,
+            weight: 6,
+            type: "weapon",
+            detail: "Range: 10/20/40, Damage: 3d6, ROF: 1, AP: 5, Shots: 30, Semi-Auto, Heavy Weapon",
+            description: "Military-grade gun that superheats a hydrogen pellet until it reaches it's plasma state, and then accelerates the plasma to it's target by magnetic coils. The plasma pellet dissapates relatively quickly, but causes a lot of damage. Magazine weighs .25 kg and costs 12 Credits."
+        },
+        'TDD Gun': {
+            tech: 8,
+            cost: 2000,
+            weight: 6,
+            type: "weapon",
+            detail: "Range: 12/24/48, Damage: 2d10, ROF: 1, AP: 5, Shots: 30, Semi-Auto, Heavy Weapon",
+            description: "Exotic gun that uses TDD technology to shoot particles at a target. Spending a round calibrating the weapon onto it's target means the weapon can ignore cover. Magazines are rare if they are produced at all and weighs .25 kg"
+        },
+        'Grenade': {
+            tech: 3,
+            cost: 50,
+            weight: 1,
+            type: "weapon",
+            detail: "Range: 5/10/20, Damage: 3d6, Medium Burst",
+            description: "Standard thrown grenade (can be launched from a modified weapon)"
+        },
+        'Stun Grenade': {
+            tech: 5,
+            cost: 50,
+            weight: 1,
+            type: "weapon",
+            detail: "Range: 5/10/20, Damage: 3d6, Medium Burst",
+            description: "Grenade that stuns and not kill your opponent. Deals non-lethal damage and inflicts fatigue loss instead of wounds."
+        },
+        'Crossbow': {
+            tech: 2,
+            cost: 100,
+            weight: 5,
+            type: "weapon",
+            detail: "Range: 15/30/60, Damage: 2d6, ROF: 1, AP: 1, Min Strength: d6, 1 action reload",
+            description: "Crossbows built on low tech worlds cannot affect modern armour"
+        },
+        'Sword': {
+            tech: 1,
+            cost: 100,
+            weight: 4,
+            type: "weapon",
+            detail: "Damage: Str+d8",
+            description: "Standard metal sword. If built on a high-tech world, add 1 AP for each tech-level above 4 (add additional cost)"
+        },
+        'Knife': {
+            tech: 1,
+            cost: 50,
+            weight: .5,
+            type: "weapon",
+            detail: "Damage: Str+d4",
+            description: "Standard metal knife. If built on a high-tech world, add 1 AP for every 2 tech-level above 4 (add additional cost)"
+        },
+        'Baton': {
+            tech: 0,
+            cost: 25,
+            weight: .5,
+            type: "weapon",
+            detail: "Damage: Str+d4",
+            description: "Standard baton or club."
+        },
+        'EMP Cannon': {
+            tech: 7,
+            cost: 1000,
+            weight: 6,
+            type: "weapon",
+            detail: "Range: Cone, Damage: 2d8, ROF: 1, Shots: 10, Min. Strength: d6, EMP, Snapfire",
+            description: "Designed to take out electronics quickly including Bots, Cyberware and Shells. They charge up and release a burst of EMP energy towards their target. Bots, Cyberware and Shells take normal damage ignoring armour. Everyone else suffers half damage as their neural system is overloaded."
+        },
+        'Portable Light': {
+            tech: 4,
+            cost: 30,
+            weight: .5,
+            type: "equipment",
+            detail: "Lantern mode: Large Burst, Torchlight: Cone",
+            description: "Rugged all-purpose, all-environ light source. Can be easily switched to lantern and flashlight mode. Can work underwater and in vacuum."
+        },
+        'Breather': {
+            tech: 5,
+            cost: 50,
+            weight: 1,
+            type: "equipment",
+            detail: "Screens out toxins, chemicals, spores and other harmful materials. Cannot smell anything.",
+            description: "Protection from noxious or toxic fumes in an otherwise breathable atmosphere. It also makes the native air smell sweeter."
+        },
+        'Climbing Gear': {
+            tech: 3,
+            cost: 40,
+            weight: 1.5,
+            type: "equipment",
+            detail: "+1 to Climbing rolls",
+            description: "A pack containing rope, hooks, climbing spikes and everything else you will need (except protective gear)."
+        },
+        'Secure-Cuffs': {
+            tech: 7,
+            cost: 75,
+            weight: 1,
+            type: "equipment",
+            detail: "Strength target of 10. For each failed attempt, increase Strength target by 1",
+            description: "Advanaced hand-cuffs that uses the energy from escape attempts to close the cuffs more.."
+        },
+        'Hand-cuffs': {
+            tech: 3,
+            cost: 20,
+            weight: 0.5,
+            type: "equipment",
+            detail: "Strength target of 10",
+            description: "Standard hand-cuffs."
+        },
     }
 };
 // Initialise our Markov data object
