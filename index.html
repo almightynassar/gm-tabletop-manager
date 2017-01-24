@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="css/font/fonts.css" media="all">
 </head>
 <body>
-    <div class="container">
+    <div id="gmtm" class="container">
         <div class="row">
             <div class="col-md-12 navbar navbar-default">
                 <ul class="nav  nav-tabs" role="tablist">
@@ -42,6 +42,13 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-12">
+                <gmtm-alert v-for="item in this.alerts" :type="item.type">
+                    {{ item.text }}
+                </gmtm-alert>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12 tab-content">
                 <!--
                 ============================
@@ -49,20 +56,16 @@
                 ============================
                 -->
                 <div role="tabpanel" class="tab-pane fade in active" id="home">
-                    <div class="gem-controls btn-group btn-group-sm">
-                        <button class="btn btn-success" onclick="speakDiv('#home-intro')">Play</button>
-                        <button class="btn btn-warning" onclick="$().articulate('pause')">Pause</button>
-                        <button class="btn btn-danger" onclick="$().articulate('stop')">Stop</button>
-                    </div>
+                    <gem-articulate target="#home-intro"></gem-articulate>
+                    <p id="home-intro">
+                        Thank you for choosing me, GEM, for all of your management needs! I am your interactive personal guide to the world. In fact, I may just be your most knowledgable resource about this world! To use me, just select your desired option from the menu above. I will always be available to help you along your journey; just click the PLAY button!
+                    </p>
                     <hr />
-                    <div id="home-intro">
-                        <p>Thank you for choosing me, GEM, for all of your management needs! I am your interactive personal guide to the world. In fact, I may just be your most knowledgable resource about this world! To use me, just select your desired option from the menu above. I will always be available to help you along your journey; just click the PLAY button!</p>
-                    </div>
-                    <div id="home-alerts">
-                        <p class="alert alert-warning"><strong class="label label-danger">WARNING:</strong> <em>Cleaning out your cookies will delete <strong>ALL</strong> stored/edited data! This is because these tools use LocalStorage to save data. If you are clearing out your cookies, chances are it will clear your saved data!</em></p>
-                        <p class="alert alert-warning"><strong class="label label-danger">WARNING:</strong> <em>You must save any changes by going to the 'Misc' > 'Export / Import' function. Otherwise all changes will be cleared the next time you visit.</em></p>
-                    </div>
-                    <p><small><strong>GMTM v0.0.5</strong> <em>by almightynassar. <a href="https://github.com/almightynassar/shapies/">Click here to access the GitHub Repository</a>. This project strives to use open licensed materials only; please support game designers by purchasing licensed material.</em></small></p>
+                    <p>
+                        <small>
+                            <strong>GMTM v0.0.5</strong> <em>by almightynassar. <a href="https://github.com/almightynassar/shapies/">Click here to access the GitHub Repository</a>. This project strives to use open licensed materials only; please support game designers by purchasing licensed material.</em>
+                        </small>
+                    </p>
                 </div>
                 <!--
                 ============================
@@ -70,7 +73,8 @@
                 ============================
                 -->
                 <div role="tabpanel" class="tab-pane fade" id="dice">
-                    <div id="dice-rules">
+                    <gem-articulate target="#dice-intro"></gem-articulate>
+                    <div id="dice-intro">
                         <p>The dice roller offers the following functions:</p>
                         <ul>
                             <li>roll(number of dice, sides on dice) <em>example: roll(1,20)+2</em></li>
@@ -95,7 +99,7 @@
                             <label>Name (Only used for saving dice formula):</label>
                             <input type="text" id="DiceName" class="form-control"  value='Dice Name' />
                         </div>
-                        <div class="gem-controls btn-group btn-group-sm">
+                        <div class="btn-group btn-group-sm">
                             <button onclick='DiceRoll();' class="btn btn-primary">Roll!</button>
                             <button class="btn btn-success" onclick="DiceSave();">Save Dice</button>
                         </div>
@@ -110,7 +114,10 @@
                 ============================
                 -->
                 <div role="tabpanel" class="tab-pane fade" id="fictional">
-                    <p>This convertor uses a Font File to convert english text to it's fantasy script counter-part. The convertor is mapped <strong>exactly</strong> as it would be if you downloaded and installed the font onto your computer (in fact, I recommend you do that for best results). This convertor is pretty much only good for previewing the fantasy fonts.</p>
+                    <gem-articulate target="#fictional-intro"></gem-articulate>
+                    <div id="fictional-intro">
+                        <p>This convertor uses a Font File to convert english text to it's fantasy script counter-part. The convertor is mapped <strong>exactly</strong> as it would be if you downloaded and installed the font onto your computer (in fact, I recommend you do that for best results). This convertor is pretty much only good for previewing the fantasy fonts.</p>
+                    </div>
                     <div id="FictionalLanguage" class="well"></div>
                     <div id="FictionalForm" class="form" >
                         <div class="form-group">
@@ -145,7 +152,10 @@
                 ============================
                 -->
                 <div role="tabpanel" class="tab-pane fade" id="item">
-                    <p>This section allows you to explore the equipment available to you and your character.</p>
+                    <gem-articulate target="#item-intro"></gem-articulate>
+                    <div id="item-intro">
+                        <p>This section allows you to explore the equipment available to you and your character.</p>
+                    </div>
                     <div id="ItemForm" class="form" >
                         <div class="form-group">
                             <label>Type:</label>
@@ -191,17 +201,25 @@
                 ============================
                 -->
                 <div role="tabpanel" class="tab-pane fade" id="markov">
-                    <div class="gem-controls btn-group btn-group-sm">
-                        <button class="btn btn-success" onclick="speakDiv('#markov-intro')">Play</button>
-                        <button class="btn btn-warning" onclick="$().articulate('pause')">Pause</button>
-                        <button class="btn btn-danger" onclick="$().articulate('stop')">Stop</button>
+                    <gem-articulate target="#markov-intro"></gem-articulate>
+                    <div id="markov-intro">
+                        <p>This system is based on the Markov Chain process. It gathers information about how the letters in words are related, and then stores those relationships. When you generate a name, the computer will use this information to create a new word that is <em>in the style of the processed words</em>. This generally makes up a nonsense word that is similar in style to the other words. The more words you give the system to analyse, the better it will be at generating new words!</p>
                     </div>
-                    <hr />
-                    <p id="markov-intro">This system is based on the Markov Chain process. It gathers information about how the letters in words are related, and then stores those relationships. When you generate a name, the computer will use this information to create a new word that is <em>in the style of the processed words</em>. This generally makes up a nonsense word that is similar in style to the other words. The more words you give the system to analyse, the better it will be at generating new words!</p>
-                    <p>Chain: <select id="Markov-Input" class="form-control" name="Markov-Input" ></select></p>
-                    <p># names to generate: <input type="number" id="Markov-Number" name="Markov-Number" class="form-control" value='5' /></p>
-                    <p>Standard name Length: <input type="number" id="Markov-Length" name="Markov-Length" class="form-control" value='7'/></p>
-                    <p><button class="btn btn-block btn-lg btn-dnd" onclick='MarkovGenerate();'>Generate</button></p>
+                    <div class="form">
+                        <div class="form-group">
+                            <label>Chain:</label>
+                            <select id="Markov-Input" class="form-control" name="Markov-Input" ></select>
+                        </div>
+                        <div class="form-group">
+                            <label># names to generate:</label>
+                            <input type="number" id="Markov-Number" name="Markov-Number" class="form-control" value='5' />
+                        </div>
+                        <div class="form-group">
+                            <label>Standard name Length:</label>
+                            <input type="number" id="Markov-Length" name="Markov-Length" class="form-control" value='7'/>
+                        </div>
+                        <button class="btn btn-block btn-lg btn-dnd" onclick='MarkovGenerate();'>Generate</button>
+                    </div>
                     <div id="Markov-Result" class="well" >
                     </div>
                 </div>
@@ -211,12 +229,7 @@
                 ============================
                 -->
                 <div role="tabpanel" class="tab-pane fade" id="export-import">
-                    <div class="gem-controls btn-group btn-group-sm">
-                        <button class="btn btn-success" onclick="speakDiv('#export-import-intro')">Play</button>
-                        <button class="btn btn-warning" onclick="$().articulate('pause')">Pause</button>
-                        <button class="btn btn-danger" onclick="$().articulate('stop')">Stop</button>
-                    </div>
-                    <hr />
+                    <gem-articulate target="#export-import-intro"></gem-articulate>
                     <div id="export-import-intro">
                         <p>Here we can simply and easily share data with friends. 'Save' will store all your changes so that you can look at it later. 'Export' will create a link to a downloadable file. To import a file, click on the file input and select the file. The contents will be displayed in the text box for review. Then click on either 'Overwrite' or 'Merge' to finalise the import. <strong>Reset will clear EVERYTHING in the database, and is irreversible</strong>.</p>
                     </div>
@@ -255,6 +268,7 @@
     </div>
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/lib/jquery.js"></script>
+    <script src="js/lib/vue.js"></script>
     <script src="bootstrap/js/bootstrap.js"></script>
     <script src="js/lib/articulate.js"></script>
     <script src="js/dice.js"></script>
@@ -262,6 +276,80 @@
     <script src="js/markov.js"></script>
     <script src="js/parser.js"></script>
     <script>
+        /*===================
+         * GEM
+         *===================
+         */
+        Vue.component('gem-articulate', {
+            props: ['target'],
+            template: '<div class="gem-controls" v-if="enabled()">\
+                <div class="btn-group btn-group-sm">\
+                    <button class="btn btn-success" v-on:click="speak()">Play</button>\
+                    <button class="btn btn-warning" v-on:click="pause()">Pause</button>\
+                    <button class="btn btn-danger" v-on:click="stop()">Stop</button>\
+                </div>\
+                <hr />\
+            </div>',
+            methods: {
+                enabled: function() {
+                    return $().articulate('enabled');
+                },
+                speak: function () {
+                    if ( $().articulate('isSpeaking') ) {
+                        $().articulate('resume');
+                    } else {
+                        $(this.target).articulate('speak');
+                    }
+                },
+                stop: function() {
+                    $().articulate('stop');
+                },
+                pause: function() {
+                    $().articulate('pause');
+                }
+            }
+        });
+        /*===================
+         * ALERTS
+         *===================
+         */
+        Vue.component('gmtm-alert', {
+            props: {
+                type: { default: 'info' },
+            },
+            computed: {
+                class: function () {
+                    return 'alert alert-'+this.type;
+                },
+            },
+            template: '<p :class="this.class">\
+                <slot></slot>\
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>\
+            </p>'
+        });
+        /*===================
+         * GMTM MAIN VUE APP
+         *===================
+         */
+        var gmtm = new Vue({
+            el: '#gmtm',
+            data: {
+                alerts: [
+                    {
+                        type: 'warning',
+                        text: 'Cleaning out your cookies will delete ALL stored data! You must save any changes by going to the \'Misc\' > \'Export / Import\' function. Otherwise all changes will be cleared the next time you visit.'
+                    }
+                ],
+            },
+            mounted: function() {
+                // Stops any playback on tab change
+                $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+                    if ( $().articulate('isSpeaking') ) {
+                        $().articulate('stop');
+                    }
+                });
+            }
+        });
         /*===================
          * EXPORT / IMPORT
          *===================
@@ -560,30 +648,6 @@
             }
         }
         MarkovSetup();
-        /*===================
-         * GEM
-         *===================
-         */
-        // Stops any playback on tab change
-        $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-            if ( $().articulate('isSpeaking') ) {
-                $().articulate('stop');
-            }
-        });
-        // GEM voice controls
-        function speakDiv(divId) {
-            if ( $().articulate('isSpeaking') ) {
-                $().articulate('resume');
-            } else {
-                $(divId).articulate('speak');
-            }
-        }
-        // Resets GEM defaults
-        if ( $().articulate('enabled') ) {
-            $().articulate('rate', 0.9).articulate('pitch', 1.1).articulate('volume', 10);
-        } else {
-            $('.gem-controls').hide();
-        }
     </script>
 </body>
 </html>
