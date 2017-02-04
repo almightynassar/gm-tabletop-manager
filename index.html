@@ -16,31 +16,64 @@
 </head>
 <body>
     <div id="gmtm" class="container">
+        <!--
+        ==================================
+            MENU BAR
+        ==================================
+        -->
         <div class="row">
             <div class="col-md-12 navbar navbar-default">
                 <ul class="nav  nav-tabs" role="tablist">
-                    <li role="presentation" class="active" id="home-tab"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a>
+                    <li role="presentation" class="active" id="home-tab">
+                        <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a>
+                    </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tools<span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Player<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li role="presentation" id="dice-tab"><a href="#dice" aria-controls="dice" role="tab" data-toggle="tab">Dice Roller</a></li>
-                            <li role="presentation" id="fictional-tab"><a href="#fictional" aria-controls="fictional" role="tab" data-toggle="tab">Fictional Text</a></li>
-                            <li role="presentation" id="item-tab"><a href="#item" aria-controls="item" role="tab" data-toggle="tab">Item List</a></li>
-                            <li role="presentation" id="markov-tab"><a href="#markov" aria-controls="markov" role="tab" data-toggle="tab">Markov Names</a></li>
-                            <li><a href="monster.html">Monster Creator</a></li>
-                            <li><a href="generators.html">Generators</a></li>
-                            <li><a href="stat.html">Stat Blocks</a></li>
+                            <li role="presentation" id="dice-tab">
+                                <a href="#dice" aria-controls="dice" role="tab" data-toggle="tab">Dice Roller</a>
+                            </li>
+                            <li role="presentation" id="item-tab">
+                                <a href="#item" aria-controls="item" role="tab" data-toggle="tab">Item List</a>
+                            </li>
+                            <li role="presentation" id="sector-tab">
+                                <a href="#sector" aria-controls="sector" role="tab" data-toggle="tab">Sector Viewer</a>
+                            </li>
                         </ul>
                     </li>
-                    <li role="presentation" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Misc<span class="caret"></span></a>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">GM<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="calculator.html">Monster CR Calculator</a></li>
-                            <li role="presentation" id="export-import-tab"><a href="#export-import" aria-controls="markov" role="tab" data-toggle="tab">Export/Import</a></li>
+                            <li role="presentation" id="fictional-tab">
+                                <a href="#fictional" aria-controls="fictional" role="tab" data-toggle="tab">Fictional Text</a>
+                            </li>
+                            <li role="presentation" id="generator-tab">
+                                <a href="#generator" aria-controls="generator" role="tab" data-toggle="tab">Generators</a>
+                            </li>
+                            <li role="presentation" id="markov-tab">
+                                <a href="#markov" aria-controls="markov" role="tab" data-toggle="tab">Markov Names</a>
+                            </li>
+                            <li role="presentation" id="stat-tab">
+                                <a href="#stat" aria-controls="stat" role="tab" data-toggle="tab">Stat Blocks</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">System<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation" id="export-import-tab">
+                                <a href="#export-import" aria-controls="markov" role="tab" data-toggle="tab">Export/Import</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
             </div>
         </div>
+        <!--
+        ==================================
+            ALERTS
+        ==================================
+        -->
         <div class="row">
             <div class="col-md-12">
                 <gmtm-alert v-for="item in this.alerts" :type="item.type">
@@ -48,6 +81,11 @@
                 </gmtm-alert>
             </div>
         </div>
+        <!--
+        ==================================
+            CONTENT
+        ==================================
+        -->
         <div class="row">
             <div class="col-md-12 tab-content">
                 <!--
@@ -82,68 +120,30 @@
                             <li>advantage(number of dice, sides on dice, 1=advantage/0=disadvantage) <em>example: advantage(3,20,0)</em></li>
                         </ul>
                     </div>
-                    <div id="DiceSaves" class="well">
+                    <div class="well">
                         <h4>Saved Dice</h4>
-                        <span></span>
+                        <gmtm-dice v-for="dice in this.dice" :dice="dice" v-on:dice-remove="diceRemove" v-on:dice-load="diceLoad"></gmtm-dice>
                     </div>
                     <div id="dice-controls" class="form">
                         <div class="form-group">
                             <label>Formula:</label>
-                            <input type="text" id="DiceFormula" class="form-control" value="roll(1,20)" />
+                            <input type="text" class="form-control" v-model="diceFormula" />
                         </div>
                         <div class="form-group">
                             <label>Notes (descriptor for the log history):</label>
-                            <input type="text" id="DiceNotes" class="form-control" value="" />
+                            <input type="text" class="form-control" v-model="diceNotes" />
                         </div>
                         <div class="form-group">
                             <label>Name (Only used for saving dice formula):</label>
-                            <input type="text" id="DiceName" class="form-control"  value='Dice Name' />
+                            <input type="text" class="form-control" v-model="diceName" />
                         </div>
                         <div class="btn-group btn-group-sm">
-                            <button onclick='DiceRoll();' class="btn btn-primary">Roll!</button>
-                            <button class="btn btn-success" onclick="DiceSave();">Save Dice</button>
+                            <button class="btn btn-primary" v-on:click='diceRoll();'>Roll!</button>
+                            <button class="btn btn-success" v-on:click="diceSave();">Save Dice</button>
                         </div>
                     </div>
                     <hr />
                     <div id="DiceResults">
-                    </div>
-                </div>
-                <!--
-                ============================
-                FICTIONAL TEXT
-                ============================
-                -->
-                <div role="tabpanel" class="tab-pane fade" id="fictional">
-                    <gem-articulate target="#fictional-intro"></gem-articulate>
-                    <div id="fictional-intro">
-                        <p>This convertor uses a Font File to convert english text to it's fantasy script counter-part. The convertor is mapped <strong>exactly</strong> as it would be if you downloaded and installed the font onto your computer (in fact, I recommend you do that for best results). This convertor is pretty much only good for previewing the fantasy fonts.</p>
-                    </div>
-                    <div id="FictionalLanguage" class="well"></div>
-                    <div id="FictionalForm" class="form" >
-                        <div class="form-group">
-                            <label>Font:</label>
-                            <select id="fictional_input" class="form-control" onChange="FictionalInform()"></select>
-                        </div>
-                        <div class="form-group">
-                            <label>Font Size (pt):</label>
-                            <input type="number" id="FictionalSize" name="FictionalSize" class="form-control"  value="22"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Canvas length (em):</label>
-                            <input type="number" id="FictionalLength" name="FictionalCanvas" class="form-control"  value="20"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Canvas width (em):</label>
-                            <input type="number" id="FictionalWidth" name="FictionalWidth" class="form-control"  value="20"/></p>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="FictionalConvert" class="form-control">please enter your text here that you wish to convert (note that this script does not translate, and depending on the font file it does not rewrite special characters like !;:= or capitals). see the scripts notes for script-specific translation details</textarea>
-                        </div>
-                        <button class="btn btn-block btn-lg btn-primary" onclick='FictionalConvert();'>Convert</button>
-                    </div>
-                    <hr />
-                    <div id='FictionalResult' style="height:20em;width:20em;border-style:solid;border-width:1px;" >
-                        <canvas id="Result" width="100%" height="100%"></canvas>
                     </div>
                 </div>
                 <!--
@@ -177,7 +177,7 @@
                         </div>
                     </div>
                     <hr />
-                    <div id='ItemResult' >
+                    <div>
                         <table class="table table-bordered table-stripe">
                             <thead>
                                 <tr>
@@ -193,6 +193,60 @@
                             <tbody>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <!--
+                ============================
+                SECTOR VIEWER
+                ============================
+                -->
+                <div role="tabpanel" class="tab-pane fade" id="sector">
+                    <gem-articulate target="#sector-intro"></gem-articulate>
+                    <div id="sector-intro">
+                        <p>Allows us to manage a sector.</p>
+                    </div>
+                    <div id="SectorMap" >
+                        <img id="hexmap" height="820" width="563" style="display: block; margin-left: auto; margin-right: auto;" src="img/hexmap.png">
+                    </div>
+                </div>
+                <!--
+                ============================
+                FICTIONAL TEXT
+                ============================
+                -->
+                <div role="tabpanel" class="tab-pane fade" id="fictional">
+                    <gem-articulate target="#fictional-intro"></gem-articulate>
+                    <div id="fictional-intro">
+                        <p>This convertor uses a Font File to convert english text to it's fantasy script counter-part. The convertor is mapped <strong>exactly</strong> as it would be if you downloaded and installed the font onto your computer (in fact, I recommend you do that for best results). This convertor is pretty much only good for previewing the fantasy fonts.</p>
+                    </div>
+                    <div id="FictionalLanguage" class="well"></div>
+                    <div id="fictional-controls" class="form" >
+                        <div class="form-group">
+                            <label>Font:</label>
+                            <select class="form-control" v-model="fictionalSelect" v-on:change="fictionalInform()">
+                                <option v-for="font in this.font" :value="font.font" >{{ font.name }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Font Size (pt):</label>
+                            <input type="number" class="form-control"  v-model="fictionalSize" />
+                        </div>
+                        <div class="form-group">
+                            <label>Canvas length (em):</label>
+                            <input type="number" class="form-control"  v-model="fictionalLength" />
+                        </div>
+                        <div class="form-group">
+                            <label>Canvas width (em):</label>
+                            <input type="number" class="form-control"  v-model="fictionalWidth" /></p>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" v-model="fictionalInput" ></textarea>
+                        </div>
+                        <button class="btn btn-block btn-lg btn-primary" v-on:click='fictionalConvert();'>Convert</button>
+                    </div>
+                    <hr />
+                    <div id='FictionalResult' style="height:20em;width:20em;border-style:solid;border-width:1px;" >
+                        <canvas id="Result" width="100%" height="100%"></canvas>
                     </div>
                 </div>
                 <!--
@@ -234,31 +288,30 @@
                         <p>Here we can simply and easily share data with friends. 'Save' will store all your changes so that you can look at it later. 'Export' will create a link to a downloadable file. To import a file, click on the file input and select the file. The contents will be displayed in the text box for review. Then click on either 'Overwrite' or 'Merge' to finalise the import. <strong>Reset will clear EVERYTHING in the database, and is irreversible</strong>.</p>
                     </div>
                     <hr />
-                    <div id="module-div">
+                    <div id="export-import-modules">
                         <h4>Module</h4>
-                        <div class="target form-group">
-                        </div>
+                        <gmtm-modules v-for="module in this.config.modules" :type="module" v-on:module-changed="modulesToggle"></gmtm-modules>
                     </div>
                     <hr />
-                    <div id="control-div">
+                    <div id="export-import-control">
                         <h4>Display</h4>
                         <div class="form-group">
-                            <input type="file" class="form-control" id="importedFile" name="importedFile" enctype="multipart/form-data" onchange='ExportImportHandleFile();' />
+                            <input type="file" class="form-control" enctype="multipart/form-data" v-on:change='modulesHandleFile' />
                         </div>
                         <div class="form-group">
-                            <textarea id="ExportImportArea" class="form-control" rows=20></textarea>
+                            <textarea v-model="exportimport" class="form-control" rows=20></textarea>
                         </div>
                         <div class="btn-group btn-group-sm">
-                            <button class="btn btn-success" onclick="ExportImportView( ExportImportGetModuleInputs() );">View Local</button>
-                            <button class="btn btn-success" onclick="LocalStorageSave( ExportImportGetModuleInputs() );">Save Local</button>
+                            <button class="btn btn-success" v-on:click="modulesView()">View Local</button>
+                            <button class="btn btn-success" v-on:click="modulesSave( checkedModules );">Save Local</button>
                         </div>
                         <div class="btn-group btn-group-sm">
-                            <a class="btn btn-primary" onclick="LocalStorageDownload(ExportImportGetModuleInputs());" href="#">Export Local</a>
+                            <button class="btn btn-primary" v-on:click="modulesDownload( checkedModules );">Export Local</button>
                         </div>
                         <div class="btn-group btn-group-sm">
-                            <button class="btn btn-danger" onclick="localStorage.clear();">Reset All</button>
-                            <button onclick='ExportImportTextToStorage(true);' class="btn btn-warning">Overwrite Local with Text</button>
-                            <button onclick='ExportImportTextToStorage(false);' class="btn btn-info">Merge Local with Text</button>
+                            <button class="btn btn-danger" v-on:click="modulesReset();">Factory Defaults</button>
+                            <button v-on:click='modulesImport(true);' class="btn btn-warning">Overwrite Local with Text</button>
+                            <button v-on:click='modulesImport(false);' class="btn btn-info">Merge Local with Text</button>
                         </div>
                     </div>
                     <hr />
@@ -266,16 +319,37 @@
             </div>
         </div>
     </div>
-    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- 3rd Party libraries -->
     <script src="js/lib/jquery.js"></script>
     <script src="js/lib/vue.js"></script>
     <script src="bootstrap/js/bootstrap.js"></script>
     <script src="js/lib/articulate.js"></script>
-    <script src="js/dice.js"></script>
-    <script src="js/localstorage.js"></script>
-    <script src="js/markov.js"></script>
-    <script src="js/parser.js"></script>
-    <script>
+    <script src="js/init.js"></script>
+    <!-- Default data functions -->
+    <script src="js/data/config.js"></script>
+    <script src="js/data/dice.js"></script>
+    <script src="js/data/font.js"></script>
+    <script src="js/data/generator.js"></script>
+    <script src="js/data/item.js"></script>
+    <script src="js/data/markov.js"></script>
+    <script src="js/data/words.js"></script>
+    <!-- Custom objects -->
+    <script src="js/object/dice.js"></script>
+    <script src="js/object/markov.js"></script>
+    <script src="js/object/parser.js"></script>
+    <!-- Vue.js app and components -->
+    <script type="text/javascript" >
+        const techLevels = [
+            "Stone",
+            "Ancient",
+            "Medieval",
+            "Industrial",
+            "Mechanized",
+            "Digital",
+            "Robotic",
+            "Interstellar",
+            "Exotic",
+        ];
         /*===================
          * GEM
          *===================
@@ -328,233 +402,311 @@
             </p>'
         });
         /*===================
+         * DICE
+         *===================
+         */
+        Vue.component('gmtm-dice', {
+            props: {
+                dice: { default: function() { return {}; } },
+            },
+            methods: {
+                eventLoad: function ( local_name) {
+                    this.$emit( 'dice-load', local_name );
+                },
+                eventRemove: function ( local_name) {
+                    this.$emit( 'dice-remove', local_name );
+                }
+            },
+            template: '<p>\
+                <span class="btn-group btn-group-sm">\
+                    <button v-on:click="eventLoad(dice.name);" class="btn btn-xs btn-info">Load</button>\
+                    <button v-on:click="eventRemove(dice.name);" class="btn btn-xs btn-danger">Delete</button>\
+                </span>\
+                <b>{{ dice.name }}:</b> {{ dice.formula }} <em>{{ this.dice.note }}</em>\
+            </p>'
+        });
+        /*===================
+         * MODULES CHECKLIST
+         *===================
+         */
+        Vue.component('gmtm-modules', {
+            props: {
+                type: { default: 'config' },
+            },
+            computed: {
+                elementId: function () {
+                    return "module-"+this.type;
+                },
+            },
+            methods: {
+                eventChange: function ( local_type ) {
+                    this.$emit( 'module-changed', local_type );
+                }
+            },
+            template: '<div class="form-group checkbox">\
+                <input :id="elementId" :value="type" v-on:change="eventChange(type)" type="checkbox" /> {{ type }}\
+            </div>'
+        });
+        /*===================
          * GMTM MAIN VUE APP
          *===================
          */
         var gmtm = new Vue({
             el: '#gmtm',
             data: {
+                // System data
                 alerts: [
                     {
                         type: 'warning',
                         text: 'Cleaning out your cookies will delete ALL stored data! You must save any changes by going to the \'Misc\' > \'Export / Import\' function. Otherwise all changes will be cleared the next time you visit.'
                     }
                 ],
+                checkedModules: [],
+                diceFormula: 'roll(1,20)',
+                diceName: 'Generic Roll',
+                diceNotes: '',
+                exportimport: '',
+                fictionalInput: 'please enter your text here that you wish to convert (note that this may not rewrite special characters like !;:= or capitals). see the scripts notes for script-specific translation details',
+                fictionalSelect: '',
+                fictionalSize: '22',
+                fictionalLength: '20',
+                fictionalWidth: '20',
+                parser: new Parser(),
+                // User data
+                config: InitMake('config', true),
+                dice: InitMake('dice'),
+                font: InitMake('font'),
+                generator: InitMake('generator', true),
+                item: InitMake('item'),
+                markov: InitMake('markov', true),
+                words: InitMake('words', true),
+            },
+            methods: {
+                dataOutput : function (modules) {
+                    var local_data = {};
+                    if ( Array.isArray(modules) ) {
+                        for (var i = 0; i < modules.length; i++) {
+                            var copy = this.dataOutput(modules[i]);
+                            local_data = Object.assign(local_data, copy);
+                        }
+                    } else if (modules) {
+                        local_data[modules] = this[modules];
+                    }
+                    return local_data;
+                },
+                diceLoad: function (diceName) {
+                    var index = this.dice.findIndex(function(obj) { return obj.name === diceName; });
+                    if (this.dice[index]) {
+                        this.diceFormula = this.dice[index].formula;
+                        this.diceName = this.dice[index].name;
+                        this.diceNotes = this.dice[index].note;
+                    }
+                },
+                diceRemove: function ( diceName ) {
+                    var index = this.dice.findIndex(function(obj) { return obj.name === diceName; });
+                    if ( index >=0 ) {
+                        this.dice.splice(index, 1);
+                    }
+                },
+                diceRoll: function () {
+                    var result = this.parser.parse(this.diceFormula).evaluate({roll: Dice.roll, drop: Dice.drop, advantage: Dice.advantage});
+                    $("#DiceResults").prepend("<p>" + this.diceFormula + " = <label class='label label-info'>"+result+"</label></p><p><em>"+this.diceNotes+"</em></p><hr />");
+                },
+                diceSave: function () {
+                    this.dice.push( CreateDice( this.diceName, this.diceFormula, this.diceNotes ) );
+                },
+                fictionalConvert: function () {
+                    $('#FictionalResult').height(this.fictionalLength + 'em');
+                    $('#FictionalResult').width(this.fictionalWidth + 'em');
+                    $('#FictionalResult #Result')[0].width = $('#FictionalResult').width();
+                    $('#FictionalResult #Result')[0].height = $("#FictionalResult").height();
+                    this.fictionalWrite(this.fictionalInput, this.fictionalSelect, this.fictionalSize);
+                },
+                fictionalInform: function () {
+                    var select = this.fictionalSelect;
+                    var index = this.font.findIndex(function(obj) {
+                        return obj.font === select;
+                    });
+                    if ( index >= 0 ) {
+                        var returnHtml = "<p>\
+                            <strong>"+this.font[index].name+"</strong> (<em>"+this.font[index].from+"</em>)\
+                        </p>\
+                        <p>\
+                            <a href='css/font/"+index+"/"+index+".ttf'>TTF Font file</a>\
+                        </p>\
+                        <p>"+this.font[index].what+"</p>\
+                        <p>"+this.font[index].notes+"</p>";
+                        if (!$.isEmptyObject(this.font[index].missing)) {
+                            returnHtml += "<p>The following letters were missing from the alphabet and have been replaced:</p><ul>";
+                            for (var key in this.font[index].missing) {
+                                returnHtml += "<li>"+key+" = "+this.font[index].missing[key]+"</li>";
+                            }
+                            returnHtml += "</ul>";
+                        }
+                        if (!$.isEmptyObject(this.font[index].mapping)) {
+                            returnHtml += "<p>The following sounds are mapped to the following letters (note that case is important!):</p><ul>";
+                            for (var key in this.font[index].mapping) {
+                                returnHtml += "<li>"+key+" = "+this.font[index].mapping[key]+"</li>";
+                            }
+                            returnHtml += "</ul>";
+                        }
+                        $('#FictionalLanguage').html(returnHtml);
+                        //this.fictionalConvert();
+                    } else {
+                        $('#FictionalLanguage').html('');
+                    }
+                },
+                fictionalResetCanvas: function () {
+                    // Store the current transformation matrix
+                    $('#FictionalResult #Result')[0].getContext("2d").save();
+                    // Use the identity matrix while clearing the canvas
+                    $('#FictionalResult #Result')[0].getContext("2d").setTransform(1, 0, 0, 1, 0, 0);
+                    $('#FictionalResult #Result')[0].getContext("2d").clearRect(0, 0, $('#FictionalResult #Result')[0].width, $('#FictionalResult #Result')[0].height);
+                    // Restore the transform
+                    $('#FictionalResult #Result')[0].getContext("2d").restore();
+                },
+                fictionalWrite: function (text, script, size) {
+                    //this.fictionalResetCanvas();
+                    $('#FictionalResult #Result')[0].getContext("2d").font = size+"px "+script;
+                    this.fictionalWrapText(text, 10, size, $('#FictionalResult #Result')[0].width, size);
+                },
+                fictionalWrapText: function (text, x, y, maxWidth, lineHeight) {
+                    x = parseInt(x, 10);
+                    y = parseInt(y, 10);
+                    maxWidth = parseInt(maxWidth, 10);
+                    lineHeight = parseInt(lineHeight, 10);
+                    var words = text.split(' ');
+                    var line = '';
+                    for(var n = 0; n < words.length; n++) {
+                        var testLine = line + words[n] + ' ';
+                        var metrics = $('#FictionalResult #Result')[0].getContext("2d").measureText(testLine);
+                        var testWidth = metrics.width;
+                        if (testWidth > maxWidth && n > 0) {
+                            $('#FictionalResult #Result')[0].getContext("2d").fillText(line, x, y);
+                            line = words[n] + ' ';
+                            y += lineHeight;
+                        } else {
+                            line = testLine;
+                        }
+                    }
+                    $('#FictionalResult #Result')[0].getContext("2d").fillText(line, x, y);
+                },
+                modulesDownload: function ( modules ) {
+                    var local_data = this.dataOutput( modules );
+                    if ( local_data ) {
+                        location.href = 'data:application/octet-stream,' + encodeURIComponent( JSON.stringify(local_data, null, 2) );
+                    }
+                },
+                modulesHandleFile: function (e) {
+                    var files = e.target.files || e.dataTransfer.files;
+                    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+                        console.log('The File API is not fully supported in this browser.');
+                        return;
+                    }
+                    if (!files.length) {
+                        console.log("Couldn't find the file input element.");
+                        return;
+                    } else if (!files[0]) {
+                        console.log("Please select a file before clicking 'Load'");
+                        return;
+                    }
+                    else {
+                        file = files[0];
+                        var filereader = new FileReader();
+                        var local_vue_instance = this;
+                        filereader.onload = function() {
+                            if ( filereader.readyState == 2 ) {
+                                local_vue_instance.exportimport = filereader.result;
+                            } else {
+                                console.log( filereader.error );
+                            }
+                        };
+                        filereader.readAsText(file);
+                    }
+                },
+                modulesImport: function( overwrite ) {
+                    var local_string = this.exportimport.replace(/\s+|\r?\n|\r/g,' ').trim();
+                    var local_json = JSON.parse( local_string );
+                    for (var i = 0; i < this.checkedModules.length; i++) {
+                        if ( local_json[ this.checkedModules[i]]) {
+                            if (overwrite) {
+                                this[ this.checkedModules[i] ] = local_json[ this.checkedModules[i] ];
+                            } else {
+                                if ( Array.isArray( this[ this.checkedModules[i] ] ) ) {
+                                    this[ this.checkedModules[i] ].concat( local_json[ this.checkedModules[i] ] );
+                                } else {
+                                    Object.assign(this[ this.checkedModules[i] ], local_json[ this.checkedModules[i] ]);
+                                }
+                            }
+                        }
+                    }
+                    alert("Import Complete! Note: Changes have not been saved");
+                },
+                modulesReset: function () {
+                    localStorage.clear();
+                    // User data
+                    this.config = InitMake('config', true);
+                    this.dice = InitMake('dice');
+                    this.font = InitMake('font');
+                    this.item = InitMake('item');
+                    this.markov = InitMake('markov', true);
+                },
+                modulesSave: function ( modules ) {
+                    if ( Array.isArray( modules ) ) {
+                        for (var i = 0; i < modules.length; i++) {
+                            this.modulesSave( modules[i] );
+                        }
+                    } else if ( modules ) {
+                        localStorage.setItem(modules, JSON.stringify(this[modules]));
+                    } else {
+                        this.modulesSave(this['module']);
+                    }
+                },
+                modulesToggle: function ( type ) {
+                    var index = this.checkedModules.indexOf(type);
+                    if ( index > -1) {
+                        delete this.checkedModules[index];
+                    } else {
+                        this.checkedModules.push( type );
+                    }
+                },
+                modulesView: function () {
+                    var local_data = this.dataOutput( this.checkedModules );
+                    if ( local_data ) {
+                        this.exportimport = JSON.stringify(local_data, null, 2);
+                    } else {
+                        this.exportimport = '';
+                    }
+                }
             },
             mounted: function() {
-                // Stops any playback on tab change
+                // Stops articulate playback on tab change
                 $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
                     if ( $().articulate('isSpeaking') ) {
                         $().articulate('stop');
                     }
                 });
+                // Loads our fonts
+                for(f in this.font) {
+                    $('#FictionalResult #Result')[0].getContext("2d").font = "20px "+f.font;
+                    $('#FictionalResult #Result')[0].getContext("2d").fillText('Test',0,0);
+                }
+                // Sets up our canvas
+                $('#FictionalResult #Result')[0].width = $('#FictionalResult').width();
+                $('#FictionalResult #Result')[0].height = $("#FictionalResult").height();
+                this.fictionalResetCanvas();
             }
         });
-        /*===================
-         * EXPORT / IMPORT
-         *===================
-         */
-        function ExportImportGetModuleInputs() {
-            return $('input[name="ei-modules[]"]:checked').map(function () { return this.value; }).toArray();
-        }
-        function ExportImportView(modules) {
-            var local_data = LocalStorageLimitedModules(modules);
-            if ( local_data ) {
-                $('#ExportImportArea').val(JSON.stringify(local_data, null, 2));
-            } else {
-                $('#ExportImportArea').val('');
-            }
-        }
-        function ExportImportModules() {
-            for (var i = 0; i < data['module'].length; i++) {
-                var $module_div = $("<div>", {
-                    class: "checkbox"
-                });
-                var $module_label = $("<label>", {
-                    for: "module-"+data['module'][i],
-                }).append ( $("<input>", {
-                    id: "module-"+data['module'][i],
-                    name: 'ei-modules[]',
-                    value: data['module'][i],
-                    type: 'checkbox',
-                    class: 'checkbox',
-                    checked: true,
-                } ) ).append(data['module'][i]);
-                $module_label.appendTo( $module_div );
-                $module_div.appendTo( $('#module-div .target') );
-            }
-        }
-        function ExportImportReceivedText() {
-            $('#ExportImportArea').val(fr.result);
-        }
-        function ExportImportHandleFile() {
-            if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
-              console.log('The File API is not fully supported in this browser.');
-              return;
-            }
-            input = $("#importedFile")[0];
-            if (!input) {
-                console.log("Couldn't find the file input element.");
-            }
-            else if (!input.files) {
-                console.log("This browser doesn't seem to support the `files` property of file inputs.");
-            }
-            else if (!input.files[0]) {
-                console.log("Please select a file before clicking 'Load'");
-            }
-            else {
-                file = input.files[0];
-                fr = new FileReader();
-                fr.onload = ExportImportReceivedText;
-                fr.readAsText(file);
-                return fr;
-            }
-        }
-        function ExportImportTextToStorage(overwrite) {
-            var json = JSON.parse($("#ExportImportArea").val());
-            var modules = ExportImportGetModuleInputs();
-            for (var i = 0; i < modules.length; i++) {
-                if (json[modules[i]]) {
-                    if (overwrite) {
-                        data[modules[i]] = json[modules[i]];
-                    } else {
-                        Object.assign(data[modules[i]], json[modules[i]])
-                    }
-                }
-            }
-            alert("Import Complete! Note: Changes have not been saved");
-        }
-        ExportImportModules();
-        /*===================
-         * DICE ROLLER
-         *===================
-         */
-        var parser = new Parser();
-        function DiceRoll() {
-            var formula = $("#DiceFormula").val();
-            var result = parser.parse(formula).evaluate({roll: Dice.roll, drop: Dice.drop, advantage: Dice.advantage});
-            $("#DiceResults").prepend("<p>" + formula + " = <label class='label label-info'>"+result+"</label></p><p><em>"+$('#DiceNotes').val()+"</em></p><hr />");
-            $('#DiceNotes').val('');
-        }
-        function DiceSave() {
-            var dice = {};
-            dice[$("#DiceName").val()] = {
-                formula: $("#DiceFormula").val(),
-                note: $('#DiceNotes').val(),
-            }
-            Object.assign(data['dice'], dice);
-            DiceList();
-        }
-        function DiceList() {
-            $('#DiceSaves').html('');
-            for (var dice in data['dice']) {
-                $('#DiceSaves').append('<p><span class="btn-group"><button onclick="DiceLoad(\''+dice+'\');" class="btn btn-xs btn-info">Load</button> <button onclick="DiceRemove(\'' + dice + '\');" class="btn btn-xs btn-danger">Delete</button></span> <b>' + dice + ':</b> ' + data['dice'][dice].formula + ' <em>'+ data['dice'][dice].note +'</em></p><hr />');
-            }
-        }
-        function DiceLoad(diceName) {
-            if (data['dice'][diceName]) {
-                $('#DiceFormula').val(data['dice'][diceName].formula);
-                $('#DiceName').val(diceName);
-                $('#DiceNotes').val(data['dice'][diceName].note);
-            }
-        }
-        function DiceRemove(diceName) {
-            delete data['dice'][diceName];
-            DiceList();
-        }
-        DiceList();
-        /*===================
-         * FICTIONAL TEXT
-         *===================
-         */
-        var FictionalIndex = 0;
-        var FictionalCanvas = $('#FictionalResult #Result')[0];
-        var FictionalContext = FictionalCanvas.getContext("2d");
-        for(var font in data['font']) {
-            $('#fictional_input').append('<option value="'+font+'">'+data['font'][font].name+'</option>');
-            FictionalContext.font = "20px "+font;
-            FictionalContext.fillText('Test',0,0);
-        }
-        function FictionalResetCanvas() {
-            // Store the current transformation matrix
-            FictionalContext.save();
-            // Use the identity matrix while clearing the canvas
-            FictionalContext.setTransform(1, 0, 0, 1, 0, 0);
-            FictionalContext.clearRect(0, 0, FictionalCanvas.width, FictionalCanvas.height);
-            // Restore the transform
-            FictionalContext.restore();
-        };
-        function FictionalInform() {
-            var script = $('#fictional_input').val();
-            var returnHtml = "<p><strong>"+data['font'][script].name+"</strong> (<em>"+data['font'][script].from+"</em>)</p>";
-            returnHtml += '<p><a href="css/font/'+script+'/'+script+'.ttf">TTF Font file</a></p>';
-            returnHtml += "<p>"+data['font'][script].what+"</p><p>"+data['font'][script].notes+"</p>";
-            if (!$.isEmptyObject(data['font'][script].missing)) {
-                returnHtml += "<p>The following letters were missing from the alphabet and have been replaced:</p><ul>";
-                for (var key in data['font'][script].missing) {
-                    returnHtml += "<li>"+key+" = "+data['font'][script].missing[key]+"</li>";
-                }
-                returnHtml += "</ul>";
-            }
-            if (!$.isEmptyObject(data['font'][script].mapping)) {
-                returnHtml += "<p>The following sounds are mapped to the following letters (note that case is important!):</p><ul>";
-                for (var key in data['font'][script].mapping) {
-                    returnHtml += "<li>"+key+" = "+data['font'][script].mapping[key]+"</li>";
-                }
-                returnHtml += "</ul>";
-            }
-            $('#FictionalLanguage').html(returnHtml);
-        }
-        function FictionalConvert() {
-            var text = $('#FictionalConvert').val();
-            var script = $('#fictional_input').val();
-            var size = $('#FictionalSize').val();
-            $('#FictionalResult').height($('#FictionalLength').val() + 'em');
-            $('#FictionalResult').width($('#FictionalWidth').val() + 'em');
-            FictionalCanvas.width = $('#FictionalResult').width();
-            FictionalCanvas.height = $("#FictionalResult").height();
-            FictionalWriteCanvas(text, script, size);
-        }
-        function FictionalWriteCanvas(text, script, size) {
-            FictionalResetCanvas();
-            FictionalContext.font = size+"px "+script;
-            FictionalWrapText(text, 10, size, FictionalCanvas.width, size);
-        }
-        function FictionalWrapText(text, x, y, maxWidth, lineHeight) {
-            x = parseInt(x, 10);
-            y = parseInt(y, 10);
-            maxWidth = parseInt(maxWidth, 10);
-            lineHeight = parseInt(lineHeight, 10);
-            var words = text.split(' ');
-            var line = '';
-            for(var n = 0; n < words.length; n++) {
-                var testLine = line + words[n] + ' ';
-                var metrics = FictionalContext.measureText(testLine);
-                var testWidth = metrics.width;
-                if (testWidth > maxWidth && n > 0) {
-                    FictionalContext.fillText(line, x, y);
-                    line = words[n] + ' ';
-                    y += lineHeight;
-                } else {
-                    line = testLine;
-                }
-            }
-            FictionalContext.fillText(line, x, y);
-        }
-        FictionalCanvas.width = $('#FictionalResult').width();
-        FictionalCanvas.height = $("#FictionalResult").height();
-        FictionalResetCanvas();
-        FictionalInform();
         /*===================
          * ITEMS
          *===================
          */
         function ItemUniqueTypes() {
             var unique = [];
-            for (var item in data['item']) {
-                if (data['item'].hasOwnProperty(item)) {
-                    if (unique.indexOf(data['item'][item].type) < 0) {
-                        unique.push(data['item'][item].type);
+            for (var item in gmtm['item']) {
+                if (gmtm['item'].hasOwnProperty(item)) {
+                    if (unique.indexOf(gmtm['item'][item].type) < 0) {
+                        unique.push(gmtm['item'][item].type);
                     }
                 }
             }
@@ -594,7 +746,7 @@
         function ItemSearch() {
             $('#ItemResult table tbody').html('');
             var item_tech = $('#item_tech').val();
-            var items = data['item'].filter( function(obj) { return obj.type === $('#item_type').val(); } );
+            var items = gmtm['item'].filter( function(obj) { return obj.type === $('#item_type').val(); } );
             for (var item in items) {
                 if (items.hasOwnProperty(item)) {
                     //Item    Tech    Weight (kg)    Cost (Base)    Cost (Adj.)    Rules    Description
@@ -612,14 +764,14 @@
         // Load the lists and chains
         var markov = new Markov();
         function MarkovSetup() {
-            for(var race in data['markov']) {
+            for(var race in gmtm['markov']) {
                 var title = race.replace(/\b[a-z]/g, function(letter) {
                     return letter.toUpperCase();
                 });
-                for(var gender in data['markov'][race]) {
+                for(var gender in gmtm['markov'][race]) {
                     $('#Markov-Input').append('<option value="'+race+'-'+gender+'">'+title+' '+gender+'</option>');
-                    if (data['config'].debug) {
-                        console.log(title+" "+gender+" names: "+data['markov'][race][gender].length);
+                    if (gmtm['config'].debug) {
+                        console.log(title+" "+gender+" names: "+gmtm['markov'][race][gender].length);
                     }
                 }
             }
@@ -641,10 +793,10 @@
             var tag = $('#Markov-Input').val();
             if ( tag !== markov.current()) {
                 var input = ($('#Markov-Input').val()).split("-");
-                if (data['config'].debug) {
+                if (gmtm['config'].debug) {
                     console.log('Loading names from : '+input[0]+' '+input[1]);
                 }
-                markov.load(data['markov'][input[0]][input[1]], tag);
+                markov.load(gmtm['markov'][input[0]][input[1]], tag);
             }
         }
         MarkovSetup();
