@@ -566,7 +566,7 @@
                     $('#FictionalResult #Result')[0].getContext("2d").restore();
                 },
                 fictionalWrite: function (text, script, size) {
-                    //this.fictionalResetCanvas();
+                    this.fictionalResetCanvas();
                     $('#FictionalResult #Result')[0].getContext("2d").font = size+"px "+script;
                     this.fictionalWrapText(text, 10, size, $('#FictionalResult #Result')[0].width, size);
                 },
@@ -688,7 +688,7 @@
                 });
                 // Loads our fonts
                 for(f in this.font) {
-                    $('#FictionalResult #Result')[0].getContext("2d").font = "20px "+f.font;
+                    $('#FictionalResult #Result')[0].getContext("2d").font = "20px "+this.font[f].font;
                     $('#FictionalResult #Result')[0].getContext("2d").fillText('Test',0,0);
                 }
                 // Sets up our canvas
