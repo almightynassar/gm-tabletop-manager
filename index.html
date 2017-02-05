@@ -262,17 +262,19 @@
                     <div class="form">
                         <div class="form-group">
                             <label>Chain:</label>
-                            <select id="Markov-Input" class="form-control" name="Markov-Input" ></select>
+                            <select class="form-control" v-model="markovInput" v-on:change="markovLoad();">
+                                <option v-for="obj in this.markovTransformed" :value="obj.race+'-'+obj.gender">{{obj.race}} {{obj.gender}}</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label># names to generate:</label>
-                            <input type="number" id="Markov-Number" name="Markov-Number" class="form-control" value='5' />
+                            <input type="number" v-model="markovNumber" class="form-control" />
                         </div>
                         <div class="form-group">
                             <label>Standard name Length:</label>
-                            <input type="number" id="Markov-Length" name="Markov-Length" class="form-control" value='7'/>
+                            <input type="number" v-model="markovLength" class="form-control" />
                         </div>
-                        <button class="btn btn-block btn-lg btn-dnd" onclick='MarkovGenerate();'>Generate</button>
+                        <button class="btn btn-block btn-lg btn-dnd" v-on:click='markovGenerate();'>Generate</button>
                     </div>
                     <div id="Markov-Result" class="well" >
                     </div>
@@ -471,7 +473,12 @@
                 fictionalSize: '22',
                 fictionalLength: '20',
                 fictionalWidth: '20',
-                parser: new Parser(),
+                markovInput: '',
+                markovNumber: 5,
+                markovLength: 7,
+                // Important sub-systems
+                diceParser: new Parser(),
+                markovSystem: new Markov(),
                 // User data
                 config: InitMake('config', true),
                 dice: InitMake('dice'),
@@ -480,6 +487,24 @@
                 item: InitMake('item'),
                 markov: InitMake('markov', true),
                 words: InitMake('words', true),
+            },
+            computed: {
+                markovTransformed: function() {
+                    var returnArray = [];
+                    for (var race in this.markov) {
+                        if (this.markov.hasOwnProperty(race)) {
+                            for (var gender in this.markov[race]) {
+                                if (this.markov[race].hasOwnProperty(gender)) {
+                                    returnArray.push( {
+                                        race: race,
+                                        gender: gender
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    return returnArray;
+                }
             },
             methods: {
                 dataOutput : function (modules) {
@@ -509,7 +534,7 @@
                     }
                 },
                 diceRoll: function () {
-                    var result = this.parser.parse(this.diceFormula).evaluate({roll: Dice.roll, drop: Dice.drop, advantage: Dice.advantage});
+                    var result = this.diceParser.parse(this.diceFormula).evaluate({roll: Dice.roll, drop: Dice.drop, advantage: Dice.advantage});
                     $("#DiceResults").prepend("<p>" + this.diceFormula + " = <label class='label label-info'>"+result+"</label></p><p><em>"+this.diceNotes+"</em></p><hr />");
                 },
                 diceSave: function () {
@@ -590,6 +615,23 @@
                         }
                     }
                     $('#FictionalResult #Result')[0].getContext("2d").fillText(line, x, y);
+                },
+                markovGenerate: function () {
+                    var text = "";
+                    for (var i = 0; i < this.markovNumber; i++) {
+                        var new_name = this.markovSystem.make(1,this.markovLength);
+                        text += "<p>" + new_name.charAt(0).toUpperCase() + new_name.slice(1); + "</p>";
+                    }
+                    $('#Markov-Result').html(text);
+                },
+                markovLoad: function () {
+                    if ( this.markovInput !== this.markovSystem.current()) {
+                        var input = this.markovInput.split("-");
+                        if (this.config.debug) {
+                            console.log('Loading names from : '+input[0]+' '+input[1]);
+                        }
+                        this.markovSystem.load(this.markov[input[0]][input[1]], this.markovInput);
+                    }
                 },
                 modulesDownload: function ( modules ) {
                     var local_data = this.dataOutput( modules );
@@ -757,49 +799,6 @@
         }
         ItemPopulateForm();
         ItemSearch();
-        /*===================
-         * MARKOV NAMES
-         *===================
-         */
-        // Load the lists and chains
-        var markov = new Markov();
-        function MarkovSetup() {
-            for(var race in gmtm['markov']) {
-                var title = race.replace(/\b[a-z]/g, function(letter) {
-                    return letter.toUpperCase();
-                });
-                for(var gender in gmtm['markov'][race]) {
-                    $('#Markov-Input').append('<option value="'+race+'-'+gender+'">'+title+' '+gender+'</option>');
-                    if (gmtm['config'].debug) {
-                        console.log(title+" "+gender+" names: "+gmtm['markov'][race][gender].length);
-                    }
-                }
-            }
-        };
-        // Generates names
-        function MarkovGenerate() {
-            MarkovLoad();
-            var text = "";
-            var number = parseInt($('#Markov-Number').val(), 10);
-            var length = parseInt($('#Markov-Length').val(), 10);
-            for (var i = 0; i < number; i++) {
-                var new_name = markov.make(1,length);
-                text += "<p>" + new_name.charAt(0).toUpperCase() + new_name.slice(1); + "</p>";
-            }
-            $('#Markov-Result').html(text);
-        };
-        // Load names
-        function MarkovLoad() {
-            var tag = $('#Markov-Input').val();
-            if ( tag !== markov.current()) {
-                var input = ($('#Markov-Input').val()).split("-");
-                if (gmtm['config'].debug) {
-                    console.log('Loading names from : '+input[0]+' '+input[1]);
-                }
-                markov.load(gmtm['markov'][input[0]][input[1]], tag);
-            }
-        }
-        MarkovSetup();
     </script>
 </body>
 </html>
