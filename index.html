@@ -159,25 +159,19 @@
                     <div id="ItemForm" class="form" >
                         <div class="form-group">
                             <label>Type:</label>
-                            <select id="item_type" class="form-control" onChange="ItemSearch();"></select>
+                            <select class="form-control" v-model="itemType" v-on:change="itemSearch();">
+                                <option v-for="obj in this.itemUniqueTypes" :value="obj">{{obj}}</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>Tech-level of market:</label>
-                            <select id="item_tech" class="form-control" onChange="ItemSearch();">
-                                <option value="0">Stone (primitive hunter and gather tools)</option>
-                                <option value="1">Ancient (simple metals; arithmetic; writing)</option>
-                                <option value="2">Medieval (steel; calculus; books)</option>
-                                <option value="3">Industrial (steam; mechanical calculators; telegraph)</option>
-                                <option value="4">Mechanized (fossil fuels; electrical calculators; radio)</option>
-                                <option value="5">Digital (renewable energy; personal computers; networking)</option>
-                                <option value="6">Robotic (nanotech; artificial intelligence; human-machine interfaces)</option>
-                                <option value="7">Interstellar (space travel)</option>
-                                <option value="8">Exotic (extremely high-tech)</option>
+                            <select class="form-control" v-model="itemTechSelect" v-on:change="itemSearch();">
+                                <option v-for="(value, key) in this.itemTech" :value="key">{{value}}</option>
                             </select>
                         </div>
                     </div>
                     <hr />
-                    <div>
+                    <div id="ItemResult">
                         <table class="table table-bordered table-stripe">
                             <thead>
                                 <tr>
@@ -341,17 +335,6 @@
     <script src="js/object/parser.js"></script>
     <!-- Vue.js app and components -->
     <script type="text/javascript" >
-        const techLevels = [
-            "Stone",
-            "Ancient",
-            "Medieval",
-            "Industrial",
-            "Mechanized",
-            "Digital",
-            "Robotic",
-            "Interstellar",
-            "Exotic",
-        ];
         /*===================
          * GEM
          *===================
@@ -473,6 +456,19 @@
                 fictionalSize: '22',
                 fictionalLength: '20',
                 fictionalWidth: '20',
+                itemType: '',
+                itemTech: [
+                    "Stone",
+                    "Ancient",
+                    "Medieval",
+                    "Industrial",
+                    "Mechanized",
+                    "Digital",
+                    "Robotic",
+                    "Interstellar",
+                    "Exotic"
+                ],
+                itemTechSelect: 0,
                 markovInput: '',
                 markovNumber: 5,
                 markovLength: 7,
@@ -504,6 +500,21 @@
                         }
                     }
                     return returnArray;
+                },
+                itemFiltered: function () {
+                    var select = this.itemType;
+                    return this.item.filter( function(obj) { return obj.type === select; } );
+                },
+                itemUniqueTypes: function () {
+                    var unique = [];
+                    for (var item in this.item) {
+                        if (this.item.hasOwnProperty(item)) {
+                            if (unique.indexOf(this.item[item].type) < 0) {
+                                unique.push(this.item[item].type);
+                            }
+                        }
+                    }
+                    return unique;
                 }
             },
             methods: {
@@ -615,6 +626,30 @@
                         }
                     }
                     $('#FictionalResult #Result')[0].getContext("2d").fillText(line, x, y);
+                },
+                itemAdjustCost: function (market,tech,cost) {
+                    if (market > tech) {
+                        return Math.round(cost / Math.round((market-tech)/2));
+                    } else if (market < tech) {
+                        return Math.round(cost * Math.pow(tech-market, 2));
+                    }
+                    return cost;
+                },
+                itemSearch: function () {
+                    $('#ItemResult table tbody').html('');
+                    for (var item in this.itemFiltered) {
+                        if (this.itemFiltered.hasOwnProperty(item)) {
+                            //Item    Tech    Weight (kg)    Cost (Base)    Cost (Adj.)    Rules    Description
+                            var $elem = $("<tr>", {id: item}).html('<td>'+this.itemFiltered[item].name+'</td>\
+                                <td>'+this.itemTech[ this.itemFiltered[item].tech ]+'</td>\
+                                <td>'+this.itemFiltered[item].weight+'</td>\
+                                <td>'+this.itemFiltered[item].cost+'</td>\
+                                <td>'+this.itemAdjustCost(this.itemTechSelect,this.itemFiltered[item].tech,this.itemFiltered[item].cost)+'</td>\
+                                <td>'+this.itemFiltered[item].detail+'</td>\
+                                <td>'+this.itemFiltered[item].description+'</td>');
+                            $elem.appendTo( $('#ItemResult table tbody') );
+                        }
+                    }
                 },
                 markovGenerate: function () {
                     var text = "";
@@ -739,66 +774,6 @@
                 this.fictionalResetCanvas();
             }
         });
-        /*===================
-         * ITEMS
-         *===================
-         */
-        function ItemUniqueTypes() {
-            var unique = [];
-            for (var item in gmtm['item']) {
-                if (gmtm['item'].hasOwnProperty(item)) {
-                    if (unique.indexOf(gmtm['item'][item].type) < 0) {
-                        unique.push(gmtm['item'][item].type);
-                    }
-                }
-            }
-            return unique;
-        }
-        function ItemPopulateForm() {
-            var unique = ItemUniqueTypes();
-            for (var i = 0; i < unique.length; i++) {
-                var $elem = $("<option>", {
-                    value: unique[i]
-                }).html(unique[i]);
-                $elem.appendTo( $('#item_type') );
-            }
-        }
-        function ItemConvertTechNumber(tech) {
-            switch (tech) {
-                case 0: return "Stone";
-                case 1: return "Ancient";
-                case 2: return "Medieval";
-                case 3: return "Industrial";
-                case 4: return "Mechanized";
-                case 5: return "Digital";
-                case 6: return "Robotic";
-                case 7: return "Interstellar";
-                case 8: return "Exotic";
-            }
-            return "Unknown";
-        }
-        function ItemAdjustCost(market,tech,cost) {
-            if (market > tech) {
-                return Math.round(cost / Math.round((market-tech)/2));
-            } else if (market < tech) {
-                return Math.round(cost * Math.pow(tech-market, 2));
-            }
-            return cost;
-        }
-        function ItemSearch() {
-            $('#ItemResult table tbody').html('');
-            var item_tech = $('#item_tech').val();
-            var items = gmtm['item'].filter( function(obj) { return obj.type === $('#item_type').val(); } );
-            for (var item in items) {
-                if (items.hasOwnProperty(item)) {
-                    //Item    Tech    Weight (kg)    Cost (Base)    Cost (Adj.)    Rules    Description
-                    var $elem = $("<tr>", {id: item}).html('<td>'+items[item].name+'</td><td>'+ItemConvertTechNumber(items[item].tech)+'</td><td>'+items[item].weight+'</td><td>'+items[item].cost+'</td><td>'+ItemAdjustCost(item_tech,items[item].tech,items[item].cost)+'</td><td>'+items[item].detail+'</td><td>'+items[item].description+'</td>');
-                    $elem.appendTo( $('#ItemResult table tbody') );
-                }
-            }
-        }
-        ItemPopulateForm();
-        ItemSearch();
     </script>
 </body>
 </html>
